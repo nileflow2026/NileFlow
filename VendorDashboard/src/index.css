@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+/* src/index.css */
+/* Add to your global CSS for authentic African patterns */
+.african-pattern {
+  background-image: linear-gradient(
+      45deg,
+      transparent 40%,
+      rgba(120, 75, 15, 0.05) 40%
+    ),
+    linear-gradient(-45deg, transparent 40%, rgba(120, 75, 15, 0.05) 40%);
+  background-size: 20px 20px;
+}
+
+.tribal-lines {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 2px,
+    rgba(120, 75, 15, 0.1) 2px,
+    rgba(120, 75, 15, 0.1) 4px
+  );
+}
+
+@layer components {
+  .sidebar-item {
+    @apply flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors;
+  }
+
+  .sidebar-item.active {
+    @apply bg-blue-100 text-blue-700;
+  }
+
+  .sidebar-item:not(.active) {
+    @apply text-gray-600 hover:bg-gray-100 hover:text-gray-900;
+  }
+
+  .stat-card {
+    @apply bg-white rounded-lg border border-gray-200 p-6 shadow-sm;
+  }
+
+  .table-header {
+    @apply bg-gray-50 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+  }
+
+  .table-cell {
+    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
+  }
+}

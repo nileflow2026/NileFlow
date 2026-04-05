@@ -1,0 +1,11 @@
+export const APPWRITE_API_KEY =
+  "standard_873626da967491e0bf4e1e78b923f1ec6b6ed3cbdfbbb6a6b140f968b23cc6bdf7fb16b645ec504bbc6e2b28ae09a3ca2d5341d6351ffe6fe9b970dc87a3afda7128a62bc941949e2739aeed73eacbcf2da987f5b7a5cb49f1cba0a46ba49e20aac7cb1bf67e2f853c80ffdf0a60eac816e5171621bf542ddb488c0ec2feec4a";
+export const FLW_SECRET_KEY = "FLWSECK_TEST-e88739af8b049a9b72fde3759df0a1a4-X";
+
+export const FLW_PUBLIC_KEY = "FLWPUBK_TEST-3f46003263d0059485f45fcb5719fccd-X";
+
+export const STRIPE_PUBLISH_KEY =
+  "pk_test_51SYB9CJABwlNBb9PMEfcXqFA1OlYwpdVmKl3R1pcaRCvziYrTXsVjrjae3IZvDs7wMJzLZcTJqUURvoBZTt8Izbc00J9QDoAwq";
+
+export const PAYPAL_CLIENT_ID =
+  "AYoBTuR4XOz_Hi7W4TzL317cTR4cSkA8VNgjGxIk_LcJY5HmEFJBfiiN_1t2OAk5msJ_Omqox9xmQhSW";

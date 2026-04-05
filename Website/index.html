@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- ✅ Optimized favicon with minimal requests -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/new1.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/new1.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ✅ Critical meta tags -->
+    <meta
+      name="description"
+      content="Nile Flow Africa - Premium African E-commerce Marketplace. Authentic products from across Africa."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#B45309" />
+
+    <meta property="og:site_name" content="Nile Flow Africa" />
+    <meta
+      property="og:title"
+      content="Nile Flow Africa | Premium African E-commerce"
+    />
+    <meta
+      property="og:description"
+      content="Discover authentic African products, crafts, and premium marketplace experiences."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nileflowafrica.com/" />
+    <meta property="og:image" content="https://nileflowafrica.com/new1.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Nile Flow Africa | Premium African E-commerce"
+    />
+    <meta
+      name="twitter:description"
+      content="Discover authentic African products, crafts, and premium marketplace experiences."
+    />
+    <meta name="twitter:image" content="https://nileflowafrica.com/new1.png" />
+
+    <!-- ✅ DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+
+    <!-- ✅ Preconnect for critical fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- ✅ Load critical font with font-display: swap -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media = 'all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+
+    <!-- ✅ Defer manifest load -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <title>Nile Flow Africa | Premium African E-commerce</title>
+
+    <!-- ✅ Canonical URL for SEO (dynamically updated by useCanonical hook) -->
+    <link rel="canonical" href="https://nileflowafrica.com/" />
+
+    <!-- ✅ Optimized critical inline styles -->
+    <style>
+      /* Critical above-the-fold styles */
+      html {
+        direction: ltr;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: #000000;
+        color: #ffffff;
+        overflow-x: hidden;
+        direction: ltr;
+        font-display: swap;
+      }
+
+      #root {
+        min-height: 100vh;
+        direction: ltr;
+      }
+
+      /* Optimized scrollbar hiding */
+      ::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
+      }
+
+      /* Critical loading spinner styles */
+      .loading-spinner {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        border: 3px solid #333;
+        border-top: 3px solid #b45309;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        z-index: 10000;
+        opacity: 1;
+        transition: opacity 0.3s ease-out;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(4px);
+        padding: 20px;
+        border-radius: 50px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        100% {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      /* Critical layout styles to prevent CLS */
+      .header-placeholder {
+        height: 80px;
+        background: #000;
+      }
+
+      /* Optimize font loading */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: local("Inter Regular"), local("Inter-Regular");
+      }
+    </style>
+
+    <!-- ✅ Structured data for SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Nile Flow Africa",
+        "url": "https://www.nileflowafrica.com",
+        "logo": "https://www.nileflowafrica.com/logo.png",
+        "description": "Nile Flow Africa is a hyperlocal e-commerce platform designed to connect local merchants and consumers through accessible, culturally adaptive digital commerce solutions.",
+        "founder": {
+          "@type": "Person",
+          "name": "Anthony Wai Chol",
+          "jobTitle": "Founder & CEO"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Nile Flow Africa",
+        "url": "https://www.nileflowafrica.com",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.nileflowafrica.com/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Critical loading indicator -->
+    <div id="initial-loader" class="loading-spinner"></div>
+
+    <div id="root"></div>
+
+    <!-- Defer main script loading -->
+    <script type="module" src="/src/main.jsx" defer></script>
+
+    <!-- Optimize service worker registration -->
+    <script>
+      // Remove initial loader immediately when React starts loading
+      const removeInitialLoader = () => {
+        const loader = document.getElementById("initial-loader");
+        if (loader) {
+          loader.style.opacity = "0";
+          setTimeout(() => loader.remove(), 300);
+        }
+      };
+
+      // Remove loader when DOM is ready
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", removeInitialLoader);
+      } else {
+        removeInitialLoader();
+      }
+
+      // Also remove when React starts mounting
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.addedNodes.length > 0) {
+            // React has started mounting, remove initial loader
+            removeInitialLoader();
+            observer.disconnect();
+          }
+        });
+      });
+
+      const rootElement = document.getElementById("root");
+      if (rootElement) {
+        observer.observe(rootElement, { childList: true });
+      }
+
+      // Optimized service worker registration
+      if ("serviceWorker" in navigator && "requestIdleCallback" in window) {
+        requestIdleCallback(() => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((registration) => {
+              console.log("🟢 SW registered successfully:", registration.scope);
+            })
+            .catch((registrationError) => {
+              console.error("❌ SW registration failed:", registrationError);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>

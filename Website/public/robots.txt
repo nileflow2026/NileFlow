@@ -1,0 +1,26 @@
+# robots.txt for https://nileflowafrica.com
+
+User-agent: *
+Disallow: /cart
+Disallow: /checkout
+Disallow: /profile
+Disallow: /orders
+Disallow: /addresses
+Disallow: /settings
+Disallow: /signin
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /payment
+Disallow: /payment-success
+Disallow: /payment-cancelled
+Disallow: /subscription/success
+Disallow: /admin
+Allow: /
+
+# Allow external resources for SEO
+User-agent: Googlebot
+Allow: /
+
+# Sitemap
+Sitemap: https://nileflowafrica.com/sitemap.xml
