@@ -258,6 +258,7 @@ try {
           "https://nile-flow-website.onrender.com",
           "https://admin.nileflowafrica.com",
           "https://vendor.nileflowafrica.com",
+          "https://nile-flow-backend.onrender.com",
         ];
 
         // Allow requests with no origin (like mobile apps or curl requests)
@@ -375,6 +376,7 @@ app.use((req, res, next) => {
       "https://nile-flow-website.onrender.com",
       "https://admin.nileflowafrica.com",
       "https://vendor.nileflowafrica.com",
+      "https://nile-flow-backend.onrender.com",
     ];
 
     if (!origin || allowedOrigins.includes(origin)) {
@@ -605,6 +607,7 @@ app.use("/api/admin/auth", (req, res, next) => {
     "https://admin.nileflowafrica.com",
     "https://nile-flow-adminpanel.onrender.com",
     "https://nileflowafrica.com",
+    "https://nile-flow-backend.onrender.com",
   ];
 
   if (!origin || allowedOrigins.includes(origin)) {

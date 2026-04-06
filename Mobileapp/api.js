@@ -11,7 +11,7 @@ import axios from "axios";
 
 // 2. For PHYSICAL DEVICE or EXPO GO - Use your computer's local IP:
 // Your computer's IP: 192.168.1.4
-const API_BASE_URL = "https://nileflowbackend-3cww.onrender.com";
+const API_BASE_URL = "https://nile-flow-backend.onrender.com";
 
 // 3. For IOS SIMULATOR - Use localhost:
 // const API_BASE_URL = "http://localhost:3000";
