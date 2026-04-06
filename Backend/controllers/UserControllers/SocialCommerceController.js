@@ -4,6 +4,7 @@
  * All authenticated routes get req.user.userId from authMiddleware.
  */
 
+const { InputFile } = require("node-appwrite");
 const socialService = require("../../services/SocialCommerceService");
 
 // ===================== POSTS =====================
@@ -445,6 +446,32 @@ const getUserProfile = async (req, res) => {
   }
 };
 
+// ===================== MEDIA UPLOAD =====================
+
+/**
+ * POST /api/social/upload-media
+ * Upload a media file (image or video) to storage
+ */
+const uploadMedia = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: "No file provided." });
+    }
+
+    const file = InputFile.fromBuffer(req.file.buffer, req.file.originalname);
+    const result = await socialService.uploadMedia(file);
+
+    res.json({
+      success: true,
+      fileId: result.fileId,
+      fileUrl: result.fileUrl,
+    });
+  } catch (error) {
+    console.error("Error uploading media:", error.message);
+    res.status(500).json({ error: "Failed to upload media." });
+  }
+};
+
 module.exports = {
   createPost,
   getFeed,
@@ -466,4 +493,5 @@ module.exports = {
   getTrending,
   getCreatorStats,
   getUserProfile,
+  uploadMedia,
 };

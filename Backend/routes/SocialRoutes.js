@@ -30,6 +30,7 @@
 const express = require("express");
 const router = express.Router();
 const authMiddleware = require("../middleware/authMiddleware");
+const upload = require("../Config/multer");
 const socialController = require("../controllers/UserControllers/SocialCommerceController");
 
 // Optional auth middleware - attaches user if logged in, but doesn't block
@@ -108,5 +109,13 @@ router.get(
 
 // Creator
 router.get("/creator/stats", authMiddleware, socialController.getCreatorStats);
+
+// Media Upload
+router.post(
+  "/upload-media",
+  authMiddleware,
+  upload.single("file"),
+  socialController.uploadMedia,
+);
 
 module.exports = router;

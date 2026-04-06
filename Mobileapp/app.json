@@ -51,7 +51,8 @@
           "merchantIdentifier": "merchant.com.nileflow",
           "enableStripeSdk": true
         }
-      ]
+      ],
+      "expo-video"
     ],
     "experiments": {
       "typedRoutes": true,

@@ -1,4 +1,6 @@
-import { ResizeMode, Video } from "expo-av";
+/* eslint-disable no-unused-vars */
+import { useIsFocused } from "@react-navigation/native";
+import { useVideoPlayer, VideoView } from "expo-video";
 import {
   Heart,
   MessageCircle,
@@ -6,7 +8,7 @@ import {
   Share2,
   ShoppingCart,
 } from "lucide-react-native";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import {
   Animated,
   Dimensions,
@@ -21,9 +23,12 @@ import { useCart } from "../../../Context/CartContext_NEW";
 import { useSocial } from "../../../Context/SocialContext";
 import { useTheme } from "../../../Context/ThemeProvider";
 import CommentsSheet from "./CommentsSheet";
-import SocialShare from "./SocialShare";
+import socialShare from "./SocialShare";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+
+const DEFAULT_AVATAR =
+  "https://fra.cloud.appwrite.io/v1/storage/buckets/692a3b700039c02fb4bc/files/695439130011158bb8af/view?project=6926c7df002fa7831d94";
 
 /**
  * FeedItem - Core social commerce feed component
@@ -41,31 +46,39 @@ export default function FeedItem({
   const { themeStyles, theme } = useTheme();
   const { addToCart } = useCart();
   const { earnMiles } = useSocial();
+  const isFocused = useIsFocused();
 
   const [isLiked, setIsLiked] = useState(item.isLiked || false);
   const [likeCount, setLikeCount] = useState(
     item.likesCount || item.likes || 0,
   );
   const [isPlaying, setIsPlaying] = useState(isVisible);
-  const [isMuted, setIsMuted] = useState(true);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  const [captionExpanded, setCaptionExpanded] = useState(false);
 
-  const videoRef = useRef(null);
+  const videoSource =
+    item.type === "video" ? item.videoUrl || item.mediaUrl : null;
+  const player = useVideoPlayer(videoSource, (p) => {
+    p.loop = true;
+    p.muted = false;
+  });
+
   const likeAnimValue = useRef(new Animated.Value(1)).current;
   const cartAnimValue = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    if (videoRef.current) {
-      if (isVisible && item.type === "video") {
-        videoRef.current.playAsync();
+    if (player && item.type === "video") {
+      if (isVisible && isFocused) {
+        player.currentTime = 0;
+        player.play();
         setIsPlaying(true);
       } else {
-        videoRef.current.pauseAsync();
+        player.pause();
         setIsPlaying(false);
       }
     }
-  }, [isVisible, item.type]);
+  }, [isVisible, isFocused, item.type, player]);
 
   const handleLike = () => {
     const newLikedState = !isLiked;
@@ -128,9 +141,10 @@ export default function FeedItem({
 
   const handleShare = async () => {
     try {
-      const doShare = SocialShare({ item, onShare });
-      if (typeof doShare === "function") {
-        await doShare();
+      const shared = await socialShare(item);
+      if (shared) {
+        const milesEarned = earnMiles("SHARE");
+        onShare?.(item, milesEarned);
       }
     } catch (error) {
       console.error("Error sharing:", error);
@@ -138,18 +152,14 @@ export default function FeedItem({
   };
 
   const togglePlayPause = () => {
-    if (item.type !== "video") return;
+    if (item.type !== "video" || !player) return;
 
     if (isPlaying) {
-      videoRef.current.pauseAsync();
+      player.pause();
     } else {
-      videoRef.current.playAsync();
+      player.play();
     }
     setIsPlaying(!isPlaying);
-  };
-
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
   };
 
   const renderTrendingBadge = () => {
@@ -166,25 +176,14 @@ export default function FeedItem({
     switch (item.type) {
       case "video":
         return (
-          <Pressable onPress={togglePlayPause} style={styles.contentContainer}>
-            <Video
-              ref={videoRef}
-              source={{ uri: item.videoUrl || item.mediaUrl }}
+          <View style={styles.contentContainer} pointerEvents="box-none">
+            <VideoView
+              player={player}
               style={styles.media}
-              resizeMode={ResizeMode.COVER}
-              isLooping
-              isMuted={isMuted}
-              shouldPlay={isVisible && isPlaying}
+              contentFit="cover"
+              nativeControls={false}
             />
-            <TouchableOpacity style={styles.muteButton} onPress={toggleMute}>
-              <Text style={styles.muteText}>{isMuted ? "🔇" : "🔊"}</Text>
-            </TouchableOpacity>
-            {!isPlaying && (
-              <View style={styles.playButtonOverlay}>
-                <Play size={60} color="white" fill="white" />
-              </View>
-            )}
-          </Pressable>
+          </View>
         );
 
       case "image":
@@ -193,6 +192,7 @@ export default function FeedItem({
             <Image
               source={{ uri: item.imageUrl || item.mediaUrl }}
               style={styles.media}
+              resizeMode="cover"
             />
           </View>
         );
@@ -244,19 +244,45 @@ export default function FeedItem({
 
       {renderContent()}
 
+      {/* Transparent tap overlay for play/pause - sits above native VideoView */}
+      {item.type === "video" && (
+        <Pressable onPress={togglePlayPause} style={styles.videoTapOverlay} />
+      )}
+
+      {/* Play icon indicator */}
+      {item.type === "video" && !isPlaying && (
+        <View style={styles.playButtonOverlay} pointerEvents="none">
+          <Play size={60} color="white" fill="white" />
+        </View>
+      )}
+
       {/* User info */}
       <View style={styles.userInfo}>
         <Image
-          source={{ uri: item.user?.avatar || item.userAvatar }}
+          source={{
+            uri: item.user?.avatar || item.userAvatar || DEFAULT_AVATAR,
+          }}
           style={styles.avatar}
         />
         <View style={styles.userDetails}>
           <Text style={[styles.username, { color: themeStyles.text }]}>
             @{item.user?.username || item.username}
           </Text>
-          <Text style={[styles.caption, { color: themeStyles.text }]}>
+          <Text
+            style={[styles.caption, { color: themeStyles.text }]}
+            numberOfLines={captionExpanded ? undefined : 2}
+          >
             {item.caption}
           </Text>
+          {item.caption && item.caption.length > 80 && (
+            <TouchableOpacity
+              onPress={() => setCaptionExpanded(!captionExpanded)}
+            >
+              <Text style={styles.moreText}>
+                {captionExpanded ? "less" : "more"}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
 
@@ -333,6 +359,15 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
   },
+  videoTapOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 5,
+    elevation: 5,
+  },
   playButtonOverlay: {
     position: "absolute",
     top: "50%",
@@ -344,18 +379,10 @@ const styles = StyleSheet.create({
     height: 70,
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 20,
+    elevation: 20,
   },
-  muteButton: {
-    position: "absolute",
-    top: 50,
-    right: 20,
-    backgroundColor: "rgba(0,0,0,0.6)",
-    borderRadius: 20,
-    padding: 8,
-  },
-  muteText: {
-    fontSize: 20,
-  },
+
   trendingBadge: {
     position: "absolute",
     top: 100,
@@ -378,6 +405,8 @@ const styles = StyleSheet.create({
     right: 80,
     flexDirection: "row",
     alignItems: "flex-start",
+    zIndex: 20,
+    elevation: 20,
   },
   avatar: {
     width: 40,
@@ -397,11 +426,19 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 18,
   },
+  moreText: {
+    fontSize: 14,
+    color: "#A8A8A8",
+    fontWeight: "600",
+    marginTop: 2,
+  },
   actionsContainer: {
     position: "absolute",
     right: 20,
     bottom: 120,
     alignItems: "center",
+    zIndex: 20,
+    elevation: 20,
   },
   actionButton: {
     alignItems: "center",

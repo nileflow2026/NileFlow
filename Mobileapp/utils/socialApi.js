@@ -36,6 +36,27 @@ export async function fetchTrending({ limit = 10, campus = null } = {}) {
 // ===================== POSTS =====================
 
 /**
+ * Upload media file (image or video)
+ * @param {string} uri - Local file URI
+ * @param {string} fileName - File name
+ * @param {string} mimeType - MIME type (image/jpeg, video/mp4, etc.)
+ * @param {function} onProgress - Optional progress callback (0-1)
+ * @returns {Promise<{ fileId, fileUrl }>}
+ */
+export async function uploadMedia(uri, fileName, mimeType, onProgress) {
+  const formData = new FormData();
+  formData.append("file", { uri, name: fileName, type: mimeType });
+
+  const res = await axiosClient.post(`${BASE}/upload-media`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+    onUploadProgress: onProgress
+      ? (e) => onProgress(e.loaded / (e.total || 1))
+      : undefined,
+  });
+  return res.data;
+}
+
+/**
  * Create a new post
  * @param {Object} data - Post data
  */
