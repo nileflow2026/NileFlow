@@ -14,6 +14,7 @@ import Cart from "../(Screens)/Cart";
 import Explore from "../(Screens)/Explore";
 import Feed from "../(Screens)/Feed";
 import Home from "../(Screens)/Home";
+import CreatorMode from "../(Screens)/CreatorMode";
 import Profile from "../(Screens)/Profile";
 import { icons } from "../../constants";
 import { useTheme } from "../../Context/ThemeProvider";
@@ -258,24 +259,23 @@ const BottomTabs = () => {
           }}
         />
 
-        {/* {isPremium && (
-          <BottomTab.Screen
-            name="Create"
-            component={CreatorMode}
-            options={{
-              title: "Create",
-              tabBarIcon: ({ focused }) => (
-                <TabIcon
-                  icon={icons.upload}
-                  focused={focused}
-                  title={i18n.t("Create")}
-                  theme={theme}
-                />
-              ),
-            }}
-          />
-        )}
- */}
+        {/* {isPremium && ( */}
+        <BottomTab.Screen
+          name="Create"
+          component={CreatorMode}
+          options={{
+            title: "Create",
+            tabBarIcon: ({ focused }) => (
+              <TabIcon
+                icon={icons.upload}
+                focused={focused}
+                title={i18n.t("Create")}
+                theme={theme}
+              />
+            ),
+          }}
+        />
+
         <BottomTab.Screen
           name="Profile"
           component={Profile}

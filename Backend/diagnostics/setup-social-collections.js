@@ -5,9 +5,9 @@
  * Usage: node backend/setup-social-collections.js
  */
 
-const { db, ID } = require("./src/appwrite");
-const { env } = require("./src/env");
-const { SOCIAL_COLLECTIONS } = require("./schemas/socialCommerceSchemas");
+const { db, ID } = require("../src/appwrite");
+const { env } = require("../src/env");
+const { SOCIAL_COLLECTIONS } = require("../schemas/socialCommerceSchemas");
 
 const DATABASE_ID = env.APPWRITE_DATABASE_ID;
 
