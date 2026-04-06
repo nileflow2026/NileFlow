@@ -8,7 +8,7 @@ const createNotificationInternal = async (notificationData) => {
 
     if (!message || !type || !userId) {
       console.error(
-        "Error creating notification: Missing required fields in data"
+        "Error creating notification: Missing required fields in data",
       );
       return; // Or throw an error if you want the signup to fail
     }
@@ -30,7 +30,7 @@ const createNotificationInternal = async (notificationData) => {
         Permission.read(`user:${userId}`),
         Permission.update(`user:${userId}`),
         Permission.delete(`user:${userId}`),
-      ]
+      ],
     );
 
     console.log("Notification created:", response);
@@ -148,7 +148,7 @@ const createNotification = async (req, res) => {
         Permission.read(`user:${userId}`),
         Permission.update(`user:${userId}`),
         Permission.delete(`user:${userId}`),
-      ]
+      ],
     );
 
     // ✅ FIX: Only use res if it exists and has status method
@@ -227,12 +227,13 @@ const fetchCustomerNotification = async (req, res) => {
         Permission.read(`user:${userId}`),
         Permission.update(`user:${userId}`),
         Permission.delete(`user:${userId}`),
-      ]
+      ],
     );
     /*  console.log('Fetched admin notifications:', result.documents); */
     res.status(200).json({ result: result.documents });
   } catch (err) {
     console.error("Failed to fetch customer notifications:", err.message);
+    return res.status(500).json({ error: "Failed to fetch notifications" });
   }
 };
 
@@ -251,7 +252,7 @@ const markAllNotificationsAsRead = async (req, res) => {
         Query.equal("userId", userId),
         Query.equal("type", "userNotification"),
         Query.equal("read", false),
-      ]
+      ],
     );
 
     for (const note of result.documents) {
@@ -259,7 +260,7 @@ const markAllNotificationsAsRead = async (req, res) => {
         env.APPWRITE_DATABASE_ID,
         env.APPWRITE_NOTIFICATIONS_COLLECTION_ID,
         note.$id,
-        { read: true }
+        { read: true },
       );
     }
 
