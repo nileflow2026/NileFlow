@@ -4,7 +4,7 @@
  * All authenticated routes get req.user.userId from authMiddleware.
  */
 
-const socialService = require("../../services/socialCommerceService");
+const socialService = require("../../services/SocialCommerceService");
 
 // ===================== POSTS =====================
 
