@@ -223,11 +223,6 @@ const fetchCustomerNotification = async (req, res) => {
         Query.equal("type", "userNotification"),
         Query.orderDesc("$createdAt"),
       ],
-      [
-        Permission.read(`user:${userId}`),
-        Permission.update(`user:${userId}`),
-        Permission.delete(`user:${userId}`),
-      ],
     );
     /*  console.log('Fetched admin notifications:', result.documents); */
     res.status(200).json({ result: result.documents });
