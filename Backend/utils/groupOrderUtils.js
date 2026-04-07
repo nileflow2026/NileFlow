@@ -7,6 +7,11 @@ const { env } = require("../src/env");
  * computeCurrentPrice
  * Accepts { basePrice, strategy, tiers, participantsCount }
  * Returns newPrice (number)
+ *
+ * Strategies:
+ *  - "tiered": DB-driven tiers [{min, discount}] — discount is a fraction 0-1
+ *  - "linear": configurable perUserDiscount & cap from tier[0] config or defaults
+ *  - "fixed":  tiers are [{minParticipants, price}] — absolute price per tier
  */
 function computeCurrentPrice({
   basePrice,
@@ -15,26 +20,83 @@ function computeCurrentPrice({
   participantsCount = 1,
 }) {
   if (strategy === "linear") {
-    // Example linear: 5% per participant beyond 1, capped at 30%
-    const perUser = 0.05;
-    const cap = 0.3;
+    // Linear: perUserDiscount and cap are taken from tiers[0].meta if present
+    const meta = tiers && tiers[0] && tiers[0].meta ? tiers[0].meta : {};
+    const perUser = meta.perUserDiscount != null ? meta.perUserDiscount : 0.05;
+    const cap = meta.cap != null ? meta.cap : 0.3;
     const discount = Math.min((participantsCount - 1) * perUser, cap);
     return parseFloat((basePrice * (1 - discount)).toFixed(2));
-  } else {
-    // Tiered strategy: find the highest tier where min <= participantsCount
+  }
+
+  if (strategy === "fixed") {
+    // Fixed: tiers store absolute prices [{minParticipants, price}]
     if (!tiers || !Array.isArray(tiers) || tiers.length === 0) {
-      // fallback to no discount
       return parseFloat(basePrice.toFixed(2));
     }
-    // sort tiers by min ascending
-    const sorted = [...tiers].sort((a, b) => a.min - b.min);
+    const sorted = [...tiers].sort(
+      (a, b) => (a.minParticipants || a.min || 0) - (b.minParticipants || b.min || 0)
+    );
     let chosen = sorted[0];
     for (const t of sorted) {
-      if (participantsCount >= t.min) chosen = t;
+      const threshold = t.minParticipants || t.min || 0;
+      if (participantsCount >= threshold) chosen = t;
     }
-    const discount = chosen.discount || 0;
-    return parseFloat((basePrice * (1 - discount)).toFixed(2));
+    const price = chosen.price != null ? chosen.price : basePrice;
+    return parseFloat(Number(price).toFixed(2));
   }
+
+  // Default "tiered" strategy — discount fraction per tier
+  if (!tiers || !Array.isArray(tiers) || tiers.length === 0) {
+    return parseFloat(Number(basePrice).toFixed(2));
+  }
+  const sorted = [...tiers].sort(
+    (a, b) => (a.min || a.minParticipants || 0) - (b.min || b.minParticipants || 0)
+  );
+  let chosen = sorted[0];
+  for (const t of sorted) {
+    const threshold = t.min || t.minParticipants || 0;
+    if (participantsCount >= threshold) chosen = t;
+  }
+  const discount = chosen.discount || 0;
+  return parseFloat((Number(basePrice) * (1 - discount)).toFixed(2));
+}
+
+/**
+ * computePriceByTiers
+ * Alternative helper — accepts explicit tier array in the format:
+ * [{minParticipants: 1, price: 10}, {minParticipants: 3, price: 8}, ...]
+ * Returns the matching absolute price.
+ */
+function computePriceByTiers(tiers, participantsCount, fallbackPrice) {
+  if (!tiers || !Array.isArray(tiers) || tiers.length === 0) {
+    return parseFloat(Number(fallbackPrice).toFixed(2));
+  }
+  const sorted = [...tiers].sort(
+    (a, b) => (a.minParticipants || a.min || 0) - (b.minParticipants || b.min || 0)
+  );
+  let chosen = sorted[0];
+  for (const t of sorted) {
+    const threshold = t.minParticipants || t.min || 0;
+    if (participantsCount >= threshold) chosen = t;
+  }
+  const price = chosen.price != null ? chosen.price : fallbackPrice;
+  return parseFloat(Number(price).toFixed(2));
+}
+
+/**
+ * getSavingsAmount — returns the raw currency savings vs base price
+ */
+function getSavingsAmount(basePrice, currentPrice) {
+  return parseFloat((Number(basePrice) - Number(currentPrice)).toFixed(2));
+}
+
+/**
+ * getSavingsPercent — returns savings as a percentage string e.g. "20%"
+ */
+function getSavingsPercent(basePrice, currentPrice) {
+  if (!basePrice || basePrice === 0) return "0%";
+  const pct = ((Number(basePrice) - Number(currentPrice)) / Number(basePrice)) * 100;
+  return `${Math.round(pct)}%`;
 }
 
 /**
@@ -90,6 +152,8 @@ function sleep(ms) {
 
 module.exports = {
   computeCurrentPrice,
-  computePriceByTiers: computeCurrentPrice,
+  computePriceByTiers,
+  getSavingsAmount,
+  getSavingsPercent,
   retryUpdateDocumentWithOptimisticLock,
 };

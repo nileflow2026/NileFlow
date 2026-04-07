@@ -17,6 +17,7 @@ import UserPage from "./Pages/UserPage";
 import AuthProvider from "./context/AuthContext";
 import ProductApprovals from "./Pages/ProductApprovals";
 import Finance from "./Pages/FinancePage";
+import GroupBuyManagement from "./Pages/GroupBuyManagement";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
               <Route path="/settings" element={<Settings />} />
               <Route path="/productapprovals" element={<ProductApprovals />} />
               <Route path="/finance" element={<Finance />} />
+              <Route path="/group-buy" element={<GroupBuyManagement />} />
 
               {/* Catch-all fallback */}
               <Route path="*" element={<h1>404 - Not Found</h1>} />

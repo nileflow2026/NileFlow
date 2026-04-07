@@ -976,6 +976,20 @@ async function startServer() {
       // Continue without subscription service
     }
 
+    // Initialize group buy cron jobs
+    console.log("Initializing group buy cron service...");
+    try {
+      const GroupBuyCronService = require("../services/groupBuyCronService");
+      GroupBuyCronService.initialize();
+      console.log("✅ Group buy cron service initialized");
+    } catch (groupBuyError) {
+      console.error(
+        "⚠️  Group buy cron service failed to initialize:",
+        groupBuyError.message,
+      );
+      // Non-critical — server continues
+    }
+
     // Initialize newsletter scheduled campaigns processor
     console.log("Initializing newsletter scheduler...");
     let processScheduledCampaigns = null;

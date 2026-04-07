@@ -44,6 +44,7 @@ import { formatPrice } from "../../utils/priceFormatter";
 import axiosClient from "../../api";
 import { useCustomerAuth } from "../../Context/CustomerAuthContext";
 import SeoHead from "../components/SeoHead";
+import GroupBuySection from "../components/GroupBuySection";
 
 // Premium StarRating Component
 const StarRating = ({
@@ -1059,6 +1060,13 @@ const ProductDetailPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Group Buying Section */}
+      {product && (
+        <div className="px-4 sm:px-6 lg:px-8 py-8 max-w-8xl mx-auto">
+          <GroupBuySection product={product} />
+        </div>
+      )}
 
       {/* Reviews Section */}
       <main className="pb-20 px-4 sm:px-6 lg:px-8">

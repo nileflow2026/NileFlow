@@ -9,20 +9,45 @@ const {
   joinGroupOrder,
   leaveGroupOrder,
   expireGroupOrders,
+  getActiveGroupsForProduct,
+  getGroupShareData,
 } = require("../controllers/AdminControllers/groupOrderController");
 
-// Define a POST route for creating a group order
+// ── Public / customer endpoints ───────────────────────────────────────────────
+
+// GET  /api/group-orders/active?productId=XYZ   — active groups for a product
+router.get("/active", getActiveGroupsForProduct);
+
+// GET  /api/group-orders/:id/share              — share link + OG metadata
+router.get("/:id/share", getGroupShareData);
+
+// POST /api/group-orders/create                 — create a new group buy
 router.post("/create", createGroupOrder);
+
+// POST /api/group-orders/                       — alias for create
 router.post("/", createGroupOrder);
+
+// GET  /api/group-orders/                       — list (filter: productId, status, creatorId)
 router.get("/", listGroupOrders);
+
+// GET  /api/group-orders/:id                    — single group order detail
 router.get("/:id", getGroupOrder);
-router.patch("/:id", updateGroupOrder); // admin or owner
+
+// PATCH /api/group-orders/:id                   — admin / owner update
+router.patch("/:id", updateGroupOrder);
+
+// DELETE /api/group-orders/:id                  — admin / owner cancel
 router.delete("/:id", cancelGroupOrder);
 
+// POST /api/group-orders/:id/join               — join a group
 router.post("/:id/join", joinGroupOrder);
+
+// POST /api/group-orders/:id/leave              — leave a group
 router.post("/:id/leave", leaveGroupOrder);
 
-// Endpoint to run by scheduler (cron/Appwrite functions) to expire orders
+// ── Internal / cron endpoints ─────────────────────────────────────────────────
+
+// POST /api/group-orders/expire-check           — trigger expiry (called by cron)
 router.post("/expire-check", expireGroupOrders);
 
 module.exports = router;

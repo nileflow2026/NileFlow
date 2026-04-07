@@ -51,6 +51,7 @@ const PrivacyPolicy = lazy(() => import("./Pages/PrivacyPolicy"));
 const CancelOrderPage = lazy(() => import("./Pages/CancelOrderPage"));
 const PremiumDealsPage = lazy(() => import("./Pages/PremiumDealsPage"));
 const SubscriptionSuccess = lazy(() => import("./Pages/SubscriptionSuccess"));
+const GroupBuyPage = lazy(() => import("./Pages/GroupBuyPage"));
 
 // Lazy load heavy components
 const ApplicationForm = lazy(() => import("../components/ApplicationForm"));
@@ -66,6 +67,7 @@ import CustomerAuthProvider, {
 } from "../Context/CustomerAuthContext";
 import { PremiumProvider } from "../Context/PremiumContext";
 import { FavoritesProvider } from "../Context/FavoritesContext.jsx";
+import { GroupBuyProvider } from "../Context/GroupBuyContext";
 import { CurrencyProvider } from "../Context/CurrencyProvider";
 import ScrollToTopButton from "../components/ScrollToTopButton.jsx";
 import NotificationToast from "../components/NotificationToast";
@@ -189,6 +191,7 @@ const AppContent = () => {
               path="/subscription/success"
               element={<SubscriptionSuccess />}
             />
+            <Route path="/group/:id" element={<GroupBuyPage />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             {/* Add more routes here */}
@@ -223,7 +226,9 @@ const App = () => {
             <FavoritesProvider>
               <NotificationProvider>
                 <CartProvider>
-                  <AppContent />
+                  <GroupBuyProvider>
+                    <AppContent />
+                  </GroupBuyProvider>
                 </CartProvider>
               </NotificationProvider>
             </FavoritesProvider>

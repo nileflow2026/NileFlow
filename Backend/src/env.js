@@ -47,6 +47,10 @@ const schema = Joi.object({
   SOCIAL_COMMENTS_COLLECTION_ID: Joi.string().optional(),
   SOCIAL_SHARES_COLLECTION_ID: Joi.string().optional(),
   SOCIAL_FOLLOWS_COLLECTION_ID: Joi.string().optional(),
+  // Group Buy System Collections
+  APPWRITE_GROUP_ORDER_COLLECTION_ID: Joi.string().optional(),
+  APPWRITE_PRICING_TIERS_COLLECTION_ID: Joi.string().optional(),
+  APPWRITE_GROUP_BUY_SETTINGS_COLLECTION_ID: Joi.string().optional(),
   // Refresh tokens collection used by auth controllers
   APPWRITE_REFRESH_TOKEN_COLLECTION_ID: Joi.string().required(),
   // Vendor Payout System Collections
