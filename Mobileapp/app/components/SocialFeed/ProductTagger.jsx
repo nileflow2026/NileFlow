@@ -35,16 +35,24 @@ export default function ProductTagger({
           {taggedProducts.map((product) => (
             <View key={product.id} style={styles.taggedChip}>
               {product.image && (
-                <Image source={{ uri: product.image }} style={styles.chipImage} />
+                <Image
+                  source={{ uri: product.image }}
+                  style={styles.chipImage}
+                />
               )}
               <View style={styles.chipInfo}>
-                <Text style={styles.chipName} numberOfLines={1}>{product.name}</Text>
+                <Text style={styles.chipName} numberOfLines={1}>
+                  {product.name}
+                </Text>
                 <Text style={styles.chipPrice}>
                   ${product.price}
                   {product.discount ? ` · ${product.discount}% off` : ""}
                 </Text>
               </View>
-              <TouchableOpacity onPress={() => onRemove(product.id)} style={styles.chipRemove}>
+              <TouchableOpacity
+                onPress={() => onRemove(product.id)}
+                style={styles.chipRemove}
+              >
                 <X size={14} color="#fff" />
               </TouchableOpacity>
             </View>
@@ -53,7 +61,12 @@ export default function ProductTagger({
       )}
 
       {/* Search input */}
-      <View style={[styles.searchRow, { borderColor: themeStyles.border || "#333" }]}>
+      <View
+        style={[
+          styles.searchRow,
+          { borderColor: themeStyles.border || "#333" },
+        ]}
+      >
         <Search size={18} color="#8E8E8E" />
         <TextInput
           style={[styles.searchInput, { color: themeStyles.text }]}
@@ -67,22 +80,36 @@ export default function ProductTagger({
 
       {/* Results dropdown */}
       {productResults.length > 0 && (
-        <View style={[styles.dropdown, { backgroundColor: themeStyles.cardBackground || "#1C1C1E" }]}>
+        <View
+          style={[
+            styles.dropdown,
+            { backgroundColor: themeStyles.cardBackground || "#1C1C1E" },
+          ]}
+        >
           <FlatList
             data={productResults}
             keyExtractor={(item) => item.id}
             scrollEnabled={false}
             renderItem={({ item }) => (
-              <TouchableOpacity style={styles.resultRow} onPress={() => onTag(item)}>
+              <TouchableOpacity
+                style={styles.resultRow}
+                onPress={() => onTag(item)}
+              >
                 {item.image ? (
-                  <Image source={{ uri: item.image }} style={styles.resultImage} />
+                  <Image
+                    source={{ uri: item.image }}
+                    style={styles.resultImage}
+                  />
                 ) : (
                   <View style={[styles.resultImage, styles.resultPlaceholder]}>
                     <ShoppingBag size={16} color="#8E8E8E" />
                   </View>
                 )}
                 <View style={styles.resultInfo}>
-                  <Text style={[styles.resultName, { color: themeStyles.text }]} numberOfLines={1}>
+                  <Text
+                    style={[styles.resultName, { color: themeStyles.text }]}
+                    numberOfLines={1}
+                  >
                     {item.name}
                   </Text>
                   <Text style={styles.resultPrice}>

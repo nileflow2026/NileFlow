@@ -1,36 +1,40 @@
-import { ShoppingBag } from "lucide-react-native";
+import * as Haptics from "expo-haptics";
+import { Globe, MapPin } from "lucide-react-native";
+import { useRef } from "react";
 import {
   ActivityIndicator,
   Alert,
-  Animated,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../../Context/ThemeProvider";
 import useCreatorPost from "../../hooks/useCreatorPost";
-import MediaPicker from "../components/SocialFeed/MediaPicker";
-import NileMilesDisplay from "../components/SocialFeed/NileMilesDisplay";
-import ProductTagger from "../components/SocialFeed/ProductTagger";
+import usePostSettings from "../../hooks/usePostSettings";
+import AudiencePickerModal from "../components/Creator/AudiencePickerModal";
+import CaptionInput from "../components/Creator/CaptionInput";
+import LocationPickerModal from "../components/Creator/LocationPickerModal";
+import MediaPreview from "../components/Creator/MediaPreview";
+import ProductTagSection from "../components/Creator/ProductTagSection";
+import SettingsRow from "../components/Creator/SettingsRow";
+
+const ACCENT = "#FF4458";
 
 export default function CreatorMode() {
   const { themeStyles } = useTheme();
   const {
-    // Media
     mediaItems,
     pickMedia,
     removeMedia,
     maxMedia,
-    // Caption
     caption,
     setCaption,
     maxCaption,
-    // Products
     taggedProducts,
     productQuery,
     setProductQuery,
@@ -38,292 +42,212 @@ export default function CreatorMode() {
     searchingProducts,
     tagProduct,
     removeProduct,
-    // Submission
+    maxProducts,
     isSubmitting,
-    submitStep,
     uploadProgress,
     canSubmit,
     submitPost,
-    // Stats
-    creatorStats,
-    statsLoading,
+    user,
   } = useCreatorPost();
 
+  const {
+    location,
+    selectLocation,
+    locationModalVisible,
+    openLocationPicker,
+    closeLocationPicker,
+    audience,
+    selectAudience,
+    audienceModalVisible,
+    openAudiencePicker,
+    closeAudiencePicker,
+    audienceOptions,
+  } = usePostSettings();
+
+  const scrollRef = useRef(null);
+
+  const scrollToProductSearch = () => {
+    setTimeout(() => {
+      scrollRef.current?.scrollToEnd({ animated: true });
+    }, 300);
+  };
+
   const handleShare = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     const result = await submitPost();
     if (result?.success) {
-      const milesMsg =
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      const msg =
         result.milesEarned > 0
           ? `\nYou earned ${result.milesEarned} Nile Miles!`
           : "";
-      Alert.alert("Success!", `Content posted!${milesMsg}`);
+      Alert.alert("Posted!", `Your content is live.${msg}`);
     }
   };
 
-  const progressPercent = Math.round(uploadProgress * 100);
+  const progress = Math.round(uploadProgress * 100);
+  const isDark = themeStyles.name === "dark";
+  const divider = isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)";
+  const bg = isDark ? "#0f172a" : "#f8fafc";
+
+  const audienceLabel =
+    audienceOptions.find((o) => o.key === audience)?.label || "Public";
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-    >
-      <ScrollView
-        style={[styles.container, { backgroundColor: themeStyles.background }]}
-        keyboardShouldPersistTaps="handled"
-      >
-        {/* Header */}
-        <View style={styles.header}>
-          <Text style={[styles.title, { color: themeStyles.text }]}>
-            Creator Mode
-          </Text>
-          <NileMilesDisplay showDetails={false} />
-        </View>
-
-        {/* Creator Stats */}
-        <View
-          style={[
-            styles.statsContainer,
-            { backgroundColor: themeStyles.cardBackground },
-          ]}
+    <SafeAreaView style={[s.safe, { backgroundColor: bg }]} edges={["top"]}>
+      {/* ─── Top Navigation Bar (fixed) ─── */}
+      <View style={[s.topBar, { borderBottomColor: divider }]}>
+        <View style={s.topBarSpacer} />
+        <Text style={[s.topBarTitle, { color: themeStyles.text }]}>
+          New Post
+        </Text>
+        <TouchableOpacity
+          style={[s.shareBtn, !canSubmit && s.shareBtnOff]}
+          onPress={handleShare}
+          disabled={!canSubmit}
+          activeOpacity={0.7}
         >
-          {statsLoading ? (
-            <ActivityIndicator size="small" color="#8E8E8E" />
+          {isSubmitting ? (
+            <ActivityIndicator size="small" color="#fff" />
           ) : (
-            <View style={styles.statsRow}>
-              <StatItem label="Posts" value={creatorStats.postsCount} theme={themeStyles} />
-              <StatItem label="Views" value={creatorStats.totalViews} theme={themeStyles} />
-              <StatItem label="Likes" value={creatorStats.totalLikes} theme={themeStyles} />
-              <StatItem label="Shares" value={creatorStats.totalShares} theme={themeStyles} />
-            </View>
+            <Text style={s.shareBtnText}>Share</Text>
           )}
-        </View>
+        </TouchableOpacity>
+      </View>
 
-        {/* Media Picker */}
-        <View
-          style={[styles.section, { backgroundColor: themeStyles.cardBackground }]}
+      {/* ─── Progress Bar ─── */}
+      {isSubmitting && (
+        <View style={s.progressTrack}>
+          <View style={[s.progressBar, { width: `${progress}%` }]} />
+        </View>
+      )}
+
+      {/* ─── Single scrollable area ─── */}
+      <KeyboardAvoidingView
+        style={s.flex}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+      >
+        <ScrollView
+          ref={scrollRef}
+          style={s.flex}
+          contentContainerStyle={s.scrollContent}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
         >
-          <Text style={[styles.sectionTitle, { color: themeStyles.text }]}>
-            Add Media
-          </Text>
-          <MediaPicker
+          {/* Media Preview — full bleed */}
+          <MediaPreview
             mediaItems={mediaItems}
             onPickGallery={() => pickMedia("library")}
             onPickCamera={() => pickMedia("camera")}
             onRemove={removeMedia}
             maxCount={maxMedia}
           />
-        </View>
 
-        {/* Caption */}
-        <View
-          style={[styles.section, { backgroundColor: themeStyles.cardBackground }]}
-        >
-          <Text style={[styles.sectionTitle, { color: themeStyles.text }]}>
-            Caption
-          </Text>
-          <TextInput
-            style={[
-              styles.captionInput,
-              {
-                color: themeStyles.text,
-                borderColor: themeStyles.border,
-                backgroundColor: themeStyles.background,
-              },
-            ]}
-            placeholder="Write a caption..."
-            placeholderTextColor="#8E8E8E"
-            value={caption}
-            onChangeText={setCaption}
-            multiline
-            maxLength={maxCaption}
-            textAlignVertical="top"
-          />
-          <Text style={[styles.charCount, { color: "#8E8E8E" }]}>
-            {caption.length}/{maxCaption}
-          </Text>
-        </View>
+          {/* Padded content */}
+          <View style={s.content}>
+            <CaptionInput
+              value={caption}
+              onChangeText={setCaption}
+              maxLength={maxCaption}
+              userAvatar={user?.avatar || user?.avatarUrl}
+            />
 
-        {/* Product Tagging */}
-        <View
-          style={[styles.section, { backgroundColor: themeStyles.cardBackground }]}
-        >
-          <View style={styles.sectionHeader}>
-            <ShoppingBag size={16} color={themeStyles.text} />
-            <Text style={[styles.sectionTitle, { color: themeStyles.text, marginBottom: 0 }]}>
-              Tag Products
-            </Text>
-            <Text style={styles.optionalLabel}>Optional</Text>
+            <View style={[s.divider, { backgroundColor: divider }]} />
+
+            <ProductTagSection
+              taggedProducts={taggedProducts}
+              productQuery={productQuery}
+              onChangeQuery={setProductQuery}
+              productResults={productResults}
+              searching={searchingProducts}
+              onTag={tagProduct}
+              onRemove={removeProduct}
+              maxProducts={maxProducts}
+              onSearchFocus={scrollToProductSearch}
+            />
+
+            <View style={[s.divider, { backgroundColor: divider }]} />
+
+            <SettingsRow
+              icon={MapPin}
+              label={location ? location.name : "Add Location"}
+              onPress={openLocationPicker}
+            />
+            <View style={[s.divider, { backgroundColor: divider }]} />
+            <SettingsRow
+              icon={Globe}
+              label="Audience"
+              value={audienceLabel}
+              onPress={openAudiencePicker}
+            />
+
+            {/* Tab bar spacer */}
+            <View style={s.bottomSpacer} />
           </View>
-          <ProductTagger
-            taggedProducts={taggedProducts}
-            productQuery={productQuery}
-            onChangeQuery={setProductQuery}
-            productResults={productResults}
-            searching={searchingProducts}
-            onTag={tagProduct}
-            onRemove={removeProduct}
-          />
-        </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
 
-        {/* Upload Progress */}
-        {isSubmitting && (
-          <View style={styles.progressContainer}>
-            <Text style={styles.progressLabel}>
-              {submitStep === "uploading"
-                ? `Uploading media... ${progressPercent}%`
-                : "Creating post..."}
-            </Text>
-            <View style={styles.progressTrack}>
-              <Animated.View
-                style={[styles.progressBar, { width: `${progressPercent}%` }]}
-              />
-            </View>
-          </View>
-        )}
-
-        {/* Share Button */}
-        <TouchableOpacity
-          style={[
-            styles.shareButton,
-            !canSubmit && styles.shareButtonDisabled,
-          ]}
-          onPress={handleShare}
-          disabled={!canSubmit}
-          activeOpacity={0.8}
-        >
-          {isSubmitting ? (
-            <ActivityIndicator size="small" color="#fff" />
-          ) : (
-            <Text style={styles.shareButtonText}>Share Content</Text>
-          )}
-        </TouchableOpacity>
-
-        <View style={{ height: 40 }} />
-      </ScrollView>
-    </KeyboardAvoidingView>
+      {/* ─── Modals ─── */}
+      <LocationPickerModal
+        visible={locationModalVisible}
+        onClose={closeLocationPicker}
+        onSelect={selectLocation}
+        currentLocation={location}
+      />
+      <AudiencePickerModal
+        visible={audienceModalVisible}
+        onClose={closeAudiencePicker}
+        options={audienceOptions}
+        selected={audience}
+        onSelect={selectAudience}
+      />
+    </SafeAreaView>
   );
 }
 
-const StatItem = ({ label, value, theme }) => (
-  <View style={styles.statItem}>
-    <Text style={[styles.statValue, { color: theme.text }]}>
-      {typeof value === "number" && value >= 1000
-        ? `${(value / 1000).toFixed(1)}k`
-        : value}
-    </Text>
-    <Text style={[styles.statLabel, { color: theme.secondaryText || "#8E8E8E" }]}>
-      {label}
-    </Text>
-  </View>
-);
+const s = StyleSheet.create({
+  flex: { flex: 1 },
+  safe: { flex: 1 },
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  header: {
+  /* Top bar */
+  topBar: {
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  statsContainer: {
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 16,
-    minHeight: 60,
-    justifyContent: "center",
-  },
-  statsRow: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  statItem: {
-    alignItems: "center",
-  },
-  statValue: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 4,
-  },
-  statLabel: {
-    fontSize: 11,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-  },
-  section: {
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 16,
-  },
-  sectionHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-    marginBottom: 12,
-  },
-  sectionTitle: {
+  topBarSpacer: { width: 64 },
+  topBarTitle: {
     fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 12,
+    fontWeight: "700",
+    letterSpacing: 0.2,
   },
-  optionalLabel: {
-    fontSize: 12,
-    color: "#8E8E8E",
-    marginLeft: "auto",
+  shareBtn: {
+    backgroundColor: ACCENT,
+    borderRadius: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    minWidth: 64,
+    alignItems: "center",
   },
-  captionInput: {
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 12,
-    minHeight: 100,
-    fontSize: 15,
-    lineHeight: 22,
-  },
-  charCount: {
-    textAlign: "right",
-    fontSize: 12,
-    marginTop: 6,
-  },
-  progressContainer: {
-    marginBottom: 16,
-  },
-  progressLabel: {
-    fontSize: 13,
-    color: "#8E8E8E",
-    marginBottom: 6,
-    textAlign: "center",
-  },
+  shareBtnOff: { opacity: 0.35 },
+  shareBtnText: { color: "#fff", fontSize: 14, fontWeight: "700" },
+
+  /* Progress */
   progressTrack: {
-    height: 4,
-    backgroundColor: "rgba(255,255,255,0.1)",
-    borderRadius: 2,
-    overflow: "hidden",
+    height: 2,
+    backgroundColor: "rgba(0,0,0,0.05)",
   },
   progressBar: {
     height: "100%",
-    backgroundColor: "#FF4458",
-    borderRadius: 2,
+    backgroundColor: ACCENT,
   },
-  shareButton: {
-    backgroundColor: "#FF4458",
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: "center",
-    justifyContent: "center",
-    minHeight: 52,
-  },
-  shareButtonDisabled: {
-    opacity: 0.4,
-  },
-  shareButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "700",
-  },
+
+  /* Content */
+  content: { paddingHorizontal: 16 },
+  scrollContent: { flexGrow: 1 },
+  divider: { height: StyleSheet.hairlineWidth },
+  bottomSpacer: { height: 40 },
 });

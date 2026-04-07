@@ -71,7 +71,7 @@ const Addresses = () => {
     const newAddressData = { ...newAddress, fullName: userName };
     const addedAddress = await AddressService.addAddress(
       user.userId,
-      newAddressData
+      newAddressData,
     );
     if (addedAddress) {
       setAddresses([...addresses, addedAddress]);
@@ -98,7 +98,7 @@ const Addresses = () => {
     setIsMapModalVisible(false); // Close the map modal after selection
     const address = await reverseGeocode(
       coordinate.latitude,
-      coordinate.longitude
+      coordinate.longitude,
     );
     if (address) {
       // You can choose to directly save here or show a confirmation to the user
@@ -112,7 +112,7 @@ const Addresses = () => {
     if (!user?.$id) {
       Alert.alert(
         "Authentication Required",
-        "Please log in to save addresses."
+        "Please log in to save addresses.",
       );
       return;
     }
@@ -126,7 +126,7 @@ const Addresses = () => {
       };
       const addedAddress = await AddressService.addAddress(
         user.$id,
-        newAddressData
+        newAddressData,
       );
       if (addedAddress) {
         setAddresses([...addresses, addedAddress]);

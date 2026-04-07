@@ -4,15 +4,32 @@
  */
 
 import { Camera, Images, X } from "lucide-react-native";
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useTheme } from "../../../Context/ThemeProvider";
 
-export default function MediaPicker({ mediaItems, maxMedia, onPickLibrary, onPickCamera, onRemove }) {
+export default function MediaPicker({
+  mediaItems,
+  maxMedia,
+  onPickLibrary,
+  onPickCamera,
+  onRemove,
+}) {
   const { themeStyles } = useTheme();
 
   return (
     <View style={styles.container}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scroll}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scroll}
+      >
         {mediaItems.map((item, index) => (
           <View key={`${item.uri}-${index}`} style={styles.mediaThumb}>
             <Image source={{ uri: item.uri }} style={styles.thumbImage} />
@@ -23,7 +40,10 @@ export default function MediaPicker({ mediaItems, maxMedia, onPickLibrary, onPic
                 </Text>
               </View>
             )}
-            <TouchableOpacity style={styles.removeBtn} onPress={() => onRemove(index)}>
+            <TouchableOpacity
+              style={styles.removeBtn}
+              onPress={() => onRemove(index)}
+            >
               <X size={14} color="#fff" />
             </TouchableOpacity>
             {index === 0 && mediaItems.length > 1 && (
@@ -37,18 +57,28 @@ export default function MediaPicker({ mediaItems, maxMedia, onPickLibrary, onPic
         {mediaItems.length < maxMedia && (
           <View style={styles.addButtons}>
             <TouchableOpacity
-              style={[styles.addBtn, { borderColor: themeStyles.border || "#333" }]}
+              style={[
+                styles.addBtn,
+                { borderColor: themeStyles.border || "#333" },
+              ]}
               onPress={() => onPickLibrary("library")}
             >
               <Images size={22} color={themeStyles.text} />
-              <Text style={[styles.addText, { color: themeStyles.text }]}>Gallery</Text>
+              <Text style={[styles.addText, { color: themeStyles.text }]}>
+                Gallery
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.addBtn, { borderColor: themeStyles.border || "#333" }]}
+              style={[
+                styles.addBtn,
+                { borderColor: themeStyles.border || "#333" },
+              ]}
               onPress={() => onPickCamera("camera")}
             >
               <Camera size={22} color={themeStyles.text} />
-              <Text style={[styles.addText, { color: themeStyles.text }]}>Camera</Text>
+              <Text style={[styles.addText, { color: themeStyles.text }]}>
+                Camera
+              </Text>
             </TouchableOpacity>
           </View>
         )}

@@ -15,6 +15,7 @@ import { createPost, getCreatorStats, uploadMedia } from "../utils/socialApi";
 
 const MAX_MEDIA = 10;
 const MAX_CAPTION = 2200;
+const MAX_PRODUCTS = 5;
 const PRODUCT_SEARCH_DEBOUNCE = 400;
 
 export default function useCreatorPost() {
@@ -193,6 +194,7 @@ export default function useCreatorPost() {
 
   const tagProduct = useCallback((product) => {
     setTaggedProducts((prev) => {
+      if (prev.length >= MAX_PRODUCTS) return prev;
       if (prev.some((p) => p.id === product.id)) return prev;
       return [...prev, product];
     });
@@ -207,7 +209,10 @@ export default function useCreatorPost() {
   // ===================== SUBMISSION =====================
 
   const canSubmit =
-    !isSubmitting && caption.trim().length > 0 && mediaItems.length > 0 && !!user;
+    !isSubmitting &&
+    caption.trim().length > 0 &&
+    mediaItems.length > 0 &&
+    !!user;
 
   const submitPost = useCallback(async () => {
     if (!canSubmit) return false;
@@ -303,7 +308,15 @@ export default function useCreatorPost() {
       setIsSubmitting(false);
       setSubmitStep("");
     }
-  }, [canSubmit, mediaItems, caption, taggedProducts, user, earnMiles, loadStats]);
+  }, [
+    canSubmit,
+    mediaItems,
+    caption,
+    taggedProducts,
+    user,
+    earnMiles,
+    loadStats,
+  ]);
 
   // ===================== RESET =====================
 
@@ -338,6 +351,7 @@ export default function useCreatorPost() {
     searchingProducts,
     tagProduct,
     removeProduct,
+    maxProducts: MAX_PRODUCTS,
 
     // Submission
     isSubmitting,

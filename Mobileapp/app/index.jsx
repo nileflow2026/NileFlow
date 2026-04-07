@@ -1,9 +1,10 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useEffect } from "react";
-import { Image, SafeAreaView, Text, View } from "react-native";
+import { Image, InteractionManager, Text, View } from "react-native";
 import { useGlobalContext } from "../Context/GlobalProvider";
 import CustomButton from "./components/CusttomButton";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Index = () => {
   const router = useRouter();
@@ -12,7 +13,9 @@ const Index = () => {
   useEffect(() => {
     if (!loading && !isLogged) {
       const timer = setTimeout(() => {
-        router.replace("/(tabs)/BottomTabs");
+        InteractionManager.runAfterInteractions(() => {
+          router.push("/(tabs)/BottomTabs");
+        });
       }, 3000);
       return () => clearTimeout(timer);
     }
