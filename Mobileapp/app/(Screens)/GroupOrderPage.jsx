@@ -104,7 +104,7 @@ export default function GroupOrderPage() {
               }),
           },
           { text: "Later", style: "cancel" },
-        ]
+        ],
       );
     }
   }, [group?.status]);
@@ -234,11 +234,17 @@ export default function GroupOrderPage() {
         {(isFull || isExpired) && (
           <View
             className={`mx-4 mt-4 rounded-xl px-4 py-3 ${
-              isFull ? "bg-emerald-900/60 border border-emerald-500/40" : "bg-red-900/40 border border-red-500/30"
+              isFull
+                ? "bg-emerald-900/60 border border-emerald-500/40"
+                : "bg-red-900/40 border border-red-500/30"
             }`}
           >
-            <Text className={`font-bold text-sm ${isFull ? "text-emerald-300" : "text-red-300"}`}>
-              {isFull ? "🎉 Group Complete — Price Locked!" : "⏰ This deal has expired"}
+            <Text
+              className={`font-bold text-sm ${isFull ? "text-emerald-300" : "text-red-300"}`}
+            >
+              {isFull
+                ? "🎉 Group Complete — Price Locked!"
+                : "⏰ This deal has expired"}
             </Text>
           </View>
         )}
@@ -260,7 +266,10 @@ export default function GroupOrderPage() {
               )}
               <View className="flex-1 justify-center">
                 {productName && (
-                  <Text className="text-white font-bold text-base" numberOfLines={2}>
+                  <Text
+                    className="text-white font-bold text-base"
+                    numberOfLines={2}
+                  >
                     {productName}
                   </Text>
                 )}
@@ -290,7 +299,9 @@ export default function GroupOrderPage() {
             <View className="mt-4">
               <CountdownTimer
                 expiresAt={expiresAt}
-                onExpired={() => setGroup((g) => g ? { ...g, status: "expired" } : g)}
+                onExpired={() =>
+                  setGroup((g) => (g ? { ...g, status: "expired" } : g))
+                }
               />
             </View>
           )}
@@ -340,7 +351,9 @@ export default function GroupOrderPage() {
           {isMember ? (
             <View className="gap-2">
               <View className="bg-emerald-900/50 border border-emerald-500/40 rounded-xl px-4 py-3 items-center">
-                <Text className="text-emerald-300 font-bold">✅ You're in this group!</Text>
+                <Text className="text-emerald-300 font-bold">
+                  ✅ You're in this group!
+                </Text>
                 <Text className="text-emerald-400/70 text-xs mt-0.5">
                   Share to fill the group faster
                 </Text>
@@ -360,7 +373,9 @@ export default function GroupOrderPage() {
               onPress={handleJoin}
               disabled={joining || isFull || isExpired}
               className={`rounded-2xl py-4 items-center ${
-                joining || isFull || isExpired ? "bg-slate-600" : "bg-emerald-600"
+                joining || isFull || isExpired
+                  ? "bg-slate-600"
+                  : "bg-emerald-600"
               }`}
             >
               {joining ? (
@@ -372,7 +387,8 @@ export default function GroupOrderPage() {
                   </Text>
                   {!isFull && (
                     <Text className="text-emerald-200 text-xs mt-0.5">
-                      {remainingSlots} spot{remainingSlots !== 1 ? "s" : ""} remaining
+                      {remainingSlots} spot{remainingSlots !== 1 ? "s" : ""}{" "}
+                      remaining
                     </Text>
                   )}
                 </>
@@ -407,4 +423,3 @@ export default function GroupOrderPage() {
     </View>
   );
 }
-

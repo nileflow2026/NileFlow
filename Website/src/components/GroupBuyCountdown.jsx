@@ -33,7 +33,9 @@ export default function GroupBuyCountdown({
   compact = false,
   className = "",
 }) {
-  const [rem, setRem] = useState(() => (expiresAt ? getRemaining(expiresAt) : null));
+  const [rem, setRem] = useState(() =>
+    expiresAt ? getRemaining(expiresAt) : null,
+  );
 
   useEffect(() => {
     if (!expiresAt) return;
@@ -49,7 +51,9 @@ export default function GroupBuyCountdown({
 
   if (!rem) {
     return (
-      <span className={`inline-flex items-center gap-1 text-red-400 font-semibold text-sm ${className}`}>
+      <span
+        className={`inline-flex items-center gap-1 text-red-400 font-semibold text-sm ${className}`}
+      >
         ⏰ Deal Expired
       </span>
     );
@@ -83,9 +87,9 @@ export default function GroupBuyCountdown({
         {days > 0 && (
           <TimeUnit value={pad(days)} label="Days" urgent={isUrgent} />
         )}
-        <TimeUnit value={pad(hours)} label="Hrs"  urgent={isUrgent} />
-        <TimeUnit value={pad(mins)}  label="Min"  urgent={isUrgent} />
-        <TimeUnit value={pad(secs)}  label="Sec"  urgent={isUrgent} />
+        <TimeUnit value={pad(hours)} label="Hrs" urgent={isUrgent} />
+        <TimeUnit value={pad(mins)} label="Min" urgent={isUrgent} />
+        <TimeUnit value={pad(secs)} label="Sec" urgent={isUrgent} />
       </div>
     </div>
   );
@@ -100,7 +104,9 @@ function TimeUnit({ value, label, urgent }) {
           : "bg-amber-950/60 border-amber-500/30 text-amber-300"
       }`}
     >
-      <span className="text-2xl font-bold tabular-nums leading-tight">{value}</span>
+      <span className="text-2xl font-bold tabular-nums leading-tight">
+        {value}
+      </span>
       <span className="text-[10px] text-slate-400 uppercase tracking-wider mt-0.5">
         {label}
       </span>

@@ -34,7 +34,8 @@ function computeCurrentPrice({
       return parseFloat(basePrice.toFixed(2));
     }
     const sorted = [...tiers].sort(
-      (a, b) => (a.minParticipants || a.min || 0) - (b.minParticipants || b.min || 0)
+      (a, b) =>
+        (a.minParticipants || a.min || 0) - (b.minParticipants || b.min || 0),
     );
     let chosen = sorted[0];
     for (const t of sorted) {
@@ -50,7 +51,8 @@ function computeCurrentPrice({
     return parseFloat(Number(basePrice).toFixed(2));
   }
   const sorted = [...tiers].sort(
-    (a, b) => (a.min || a.minParticipants || 0) - (b.min || b.minParticipants || 0)
+    (a, b) =>
+      (a.min || a.minParticipants || 0) - (b.min || b.minParticipants || 0),
   );
   let chosen = sorted[0];
   for (const t of sorted) {
@@ -72,7 +74,8 @@ function computePriceByTiers(tiers, participantsCount, fallbackPrice) {
     return parseFloat(Number(fallbackPrice).toFixed(2));
   }
   const sorted = [...tiers].sort(
-    (a, b) => (a.minParticipants || a.min || 0) - (b.minParticipants || b.min || 0)
+    (a, b) =>
+      (a.minParticipants || a.min || 0) - (b.minParticipants || b.min || 0),
   );
   let chosen = sorted[0];
   for (const t of sorted) {
@@ -95,7 +98,8 @@ function getSavingsAmount(basePrice, currentPrice) {
  */
 function getSavingsPercent(basePrice, currentPrice) {
   if (!basePrice || basePrice === 0) return "0%";
-  const pct = ((Number(basePrice) - Number(currentPrice)) / Number(basePrice)) * 100;
+  const pct =
+    ((Number(basePrice) - Number(currentPrice)) / Number(basePrice)) * 100;
   return `${Math.round(pct)}%`;
 }
 
@@ -109,14 +113,14 @@ async function retryUpdateDocumentWithOptimisticLock(
   docId,
   transformFn,
   maxAttempts = 5,
-  backoffMs = 80
+  backoffMs = 80,
 ) {
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     // fetch latest doc
     const order = await db.getDocument(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_GROUP_ORDER_COLLECTION_ID,
-      docId
+      docId,
     );
     if (!order) throw { code: 404, msg: "Order not found" };
 
@@ -130,7 +134,7 @@ async function retryUpdateDocumentWithOptimisticLock(
         env.APPWRITE_DATABASE_ID,
         env.APPWRITE_GROUP_ORDER_COLLECTION_ID,
         docId,
-        updatePatch
+        updatePatch,
       );
       return updated;
     } catch (err) {

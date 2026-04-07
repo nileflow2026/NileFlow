@@ -117,8 +117,8 @@ export default function GroupBuyCard({ group, onPress, onJoin }) {
             {isExpired
               ? "Deal Expired"
               : isFull
-              ? "Group Full"
-              : `Join & Save ${savingsPercent || ""}`}
+                ? "Group Full"
+                : `Join & Save ${savingsPercent || ""}`}
           </Text>
         </TouchableOpacity>
       </View>

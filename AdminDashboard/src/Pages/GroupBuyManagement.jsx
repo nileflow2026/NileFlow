@@ -103,7 +103,7 @@ function TierEditorModal({ productId, tiers: initialTiers, onClose, onSave }) {
   const [tiers, setTiers] = useState(
     initialTiers && initialTiers.length > 0
       ? initialTiers
-      : [{ minParticipants: 2, price: "" }]
+      : [{ minParticipants: 2, price: "" }],
   );
   const [saving, setSaving] = useState(false);
 
@@ -112,7 +112,7 @@ function TierEditorModal({ productId, tiers: initialTiers, onClose, onSave }) {
   const removeTier = (i) => setTiers((t) => t.filter((_, idx) => idx !== i));
   const update = (i, field, val) =>
     setTiers((t) =>
-      t.map((tier, idx) => (idx === i ? { ...tier, [field]: val } : tier))
+      t.map((tier, idx) => (idx === i ? { ...tier, [field]: val } : tier)),
     );
 
   const handleSave = async () => {
@@ -220,9 +220,10 @@ function GroupRow({ group, onForceExpire, onDelete }) {
   const [expanded, setExpanded] = useState(false);
   const savingsPct =
     group.basePrice > 0 && group.currentPrice > 0
-      ? (((group.basePrice - group.currentPrice) / group.basePrice) * 100).toFixed(
-          1
-        )
+      ? (
+          ((group.basePrice - group.currentPrice) / group.basePrice) *
+          100
+        ).toFixed(1)
       : null;
 
   return (
@@ -279,14 +280,9 @@ function GroupRow({ group, onForceExpire, onDelete }) {
           )}
         </td>
         <td className="px-4 py-3 text-xs text-gray-500">
-          {group.expiresAt
-            ? new Date(group.expiresAt).toLocaleString()
-            : "-"}
+          {group.expiresAt ? new Date(group.expiresAt).toLocaleString() : "-"}
         </td>
-        <td
-          className="px-4 py-3"
-          onClick={(e) => e.stopPropagation()}
-        >
+        <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
           <div className="flex gap-2">
             {group.status === "pending" && (
               <button
@@ -417,15 +413,15 @@ export default function GroupBuyManagement() {
 
     const totalParticipants = list.reduce(
       (acc, g) => acc + (g.participantsCount ?? 0),
-      0
+      0,
     );
-    const avgGroupSize =
-      total > 0 ? (totalParticipants / total).toFixed(1) : 0;
+    const avgGroupSize = total > 0 ? (totalParticipants / total).toFixed(1) : 0;
 
     const savings = list
       .filter((g) => g.basePrice && g.currentPrice)
       .reduce((acc, g) => {
-        const saved = (g.basePrice - g.currentPrice) * (g.participantsCount ?? 1);
+        const saved =
+          (g.basePrice - g.currentPrice) * (g.participantsCount ?? 1);
         return acc + (saved > 0 ? saved : 0);
       }, 0);
 
@@ -444,7 +440,9 @@ export default function GroupBuyManagement() {
     const now = Date.now();
     for (let i = 13; i >= 0; i--) {
       const d = new Date(now - i * 86400000);
-      buckets[d.toLocaleDateString("en-US", { month: "short", day: "numeric" })] = {
+      buckets[
+        d.toLocaleDateString("en-US", { month: "short", day: "numeric" })
+      ] = {
         date: d.toLocaleDateString("en-US", {
           month: "short",
           day: "numeric",
@@ -658,24 +656,22 @@ export default function GroupBuyManagement() {
             />
           </div>
           <div className="flex gap-2 flex-wrap">
-            {["all", "pending", "active", "completed", "expired"].map(
-              (s) => (
-                <button
-                  key={s}
-                  onClick={() => {
-                    setStatusFilter(s);
-                    setPage(1);
-                  }}
-                  className={`px-4 py-2 rounded-xl text-sm font-medium border transition-colors ${
-                    statusFilter === s
-                      ? "bg-indigo-600 text-white border-indigo-600"
-                      : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
-                  }`}
-                >
-                  {s.charAt(0).toUpperCase() + s.slice(1)}
-                </button>
-              )
-            )}
+            {["all", "pending", "active", "completed", "expired"].map((s) => (
+              <button
+                key={s}
+                onClick={() => {
+                  setStatusFilter(s);
+                  setPage(1);
+                }}
+                className={`px-4 py-2 rounded-xl text-sm font-medium border transition-colors ${
+                  statusFilter === s
+                    ? "bg-indigo-600 text-white border-indigo-600"
+                    : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                }`}
+              >
+                {s.charAt(0).toUpperCase() + s.slice(1)}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -712,20 +708,14 @@ export default function GroupBuyManagement() {
               <tbody className="divide-y divide-gray-50">
                 {loading ? (
                   <tr>
-                    <td
-                      colSpan={8}
-                      className="text-center py-16 text-gray-400"
-                    >
+                    <td colSpan={8} className="text-center py-16 text-gray-400">
                       <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-2" />
                       Loading group orders…
                     </td>
                   </tr>
                 ) : paginated.length === 0 ? (
                   <tr>
-                    <td
-                      colSpan={8}
-                      className="text-center py-16 text-gray-400"
-                    >
+                    <td colSpan={8} className="text-center py-16 text-gray-400">
                       No group orders found.
                     </td>
                   </tr>
@@ -778,9 +768,9 @@ export default function GroupBuyManagement() {
           <p className="text-xs text-gray-400 mb-4">
             Enter a product ID to view and edit its group buy pricing tiers.
           </p>
-          <TierQuickEditor onOpenModal={(productId) =>
-            setTierModal({ productId, tiers: [] })
-          } />
+          <TierQuickEditor
+            onOpenModal={(productId) => setTierModal({ productId, tiers: [] })}
+          />
         </div>
       </div>
 

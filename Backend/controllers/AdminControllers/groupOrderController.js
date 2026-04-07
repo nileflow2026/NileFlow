@@ -8,7 +8,9 @@ const {
   getSavingsAmount,
   getSavingsPercent,
 } = require("../../utils/groupOrderUtils");
-const { sendGroupBuyNotification } = require("../../services/groupBuyNotificationService");
+const {
+  sendGroupBuyNotification,
+} = require("../../services/groupBuyNotificationService");
 
 /**
  * Create Group Order
@@ -32,7 +34,7 @@ async function createGroupOrder(req, res) {
     }
 
     const expiresAt = new Date(
-      Date.now() + ttlHours * 60 * 60 * 1000
+      Date.now() + ttlHours * 60 * 60 * 1000,
     ).toISOString();
     const initialPrice = computeCurrentPrice({
       basePrice,
@@ -58,7 +60,7 @@ async function createGroupOrder(req, res) {
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_GROUP_ORDER_COLLECTION_ID,
       ID.unique(),
-      payload
+      payload,
     );
 
     return res.status(201).json(order);
@@ -77,7 +79,7 @@ async function getGroupOrder(req, res) {
     const order = await db.getDocument(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_GROUP_ORDER_COLLECTION_ID,
-      id
+      id,
     );
     if (!order) return res.status(404).json({ error: "Not found" });
 
@@ -87,8 +89,13 @@ async function getGroupOrder(req, res) {
       ...order,
       savingsAmount: getSavingsAmount(order.basePrice, order.currentPrice),
       savingsPercent: getSavingsPercent(order.basePrice, order.currentPrice),
-      remainingSlots: Math.max(0, (order.maxParticipants || 0) - (order.participants?.length || 0)),
-      isExpired: order.expiresAt ? new Date(order.expiresAt) <= new Date() : false,
+      remainingSlots: Math.max(
+        0,
+        (order.maxParticipants || 0) - (order.participants?.length || 0),
+      ),
+      isExpired: order.expiresAt
+        ? new Date(order.expiresAt) <= new Date()
+        : false,
       shareLink,
       shareMessage: `Join my group buy on NileFlow & save ${getSavingsPercent(order.basePrice, order.currentPrice)}! ${shareLink}`,
     });
@@ -117,7 +124,7 @@ async function listGroupOrders(req, res) {
     const result = await db.listDocuments(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_GROUP_ORDER_COLLECTION_ID,
-      queries
+      queries,
     );
 
     // Enrich each group with savings metadata
@@ -125,7 +132,10 @@ async function listGroupOrders(req, res) {
       ...g,
       savingsAmount: getSavingsAmount(g.basePrice, g.currentPrice),
       savingsPercent: getSavingsPercent(g.basePrice, g.currentPrice),
-      remainingSlots: Math.max(0, (g.maxParticipants || 0) - (g.participants?.length || 0)),
+      remainingSlots: Math.max(
+        0,
+        (g.maxParticipants || 0) - (g.participants?.length || 0),
+      ),
       isExpired: g.expiresAt && new Date(g.expiresAt) <= new Date(),
     }));
 
@@ -149,7 +159,7 @@ async function updateGroupOrder(req, res) {
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_GROUP_ORDER_COLLECTION_ID,
       id,
-      updates
+      updates,
     );
     return res.json(updated);
   } catch (err) {
@@ -169,7 +179,7 @@ async function cancelGroupOrder(req, res) {
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_GROUP_ORDER_COLLECTION_ID,
       id,
-      { status: "cancelled" }
+      { status: "cancelled" },
     );
     return res.json(updated);
   } catch (err) {
@@ -230,7 +240,7 @@ async function joinGroupOrder(req, res) {
           currentPrice: newPrice,
           status: newStatus,
         };
-      }
+      },
     );
 
     // Fire-and-forget notifications (don't block the response)
@@ -263,7 +273,10 @@ async function joinGroupOrder(req, res) {
       ...result,
       savingsAmount: getSavingsAmount(result.basePrice, result.currentPrice),
       savingsPercent: getSavingsPercent(result.basePrice, result.currentPrice),
-      remainingSlots: Math.max(0, (result.maxParticipants || 0) - (result.participants?.length || 0)),
+      remainingSlots: Math.max(
+        0,
+        (result.maxParticipants || 0) - (result.participants?.length || 0),
+      ),
       shareLink: `${frontendUrl}/group/${id}`,
     });
   } catch (err) {
@@ -325,7 +338,7 @@ async function leaveGroupOrder(req, res) {
             status: newStatus,
           };
         }
-      }
+      },
     );
 
     return res.json(result);
@@ -351,7 +364,7 @@ async function expireGroupOrders(req, res) {
         Query.equal("status", "pending"),
         Query.lessThan("expiresAt", now),
         Query.limit(100),
-      ]
+      ],
     );
 
     const updated = [];
@@ -361,7 +374,7 @@ async function expireGroupOrders(req, res) {
           env.APPWRITE_DATABASE_ID,
           env.APPWRITE_GROUP_ORDER_COLLECTION_ID,
           order.$id,
-          { status: "expired" }
+          { status: "expired" },
         );
         updated.push(updatedDoc);
 
@@ -396,7 +409,8 @@ async function expireGroupOrders(req, res) {
 async function getActiveGroupsForProduct(req, res) {
   try {
     const { productId, limit = 10 } = req.query;
-    if (!productId) return res.status(400).json({ error: "productId required" });
+    if (!productId)
+      return res.status(400).json({ error: "productId required" });
 
     const now = new Date().toISOString();
     const queries = [
@@ -410,14 +424,17 @@ async function getActiveGroupsForProduct(req, res) {
     const result = await db.listDocuments(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_GROUP_ORDER_COLLECTION_ID,
-      queries
+      queries,
     );
 
     const enriched = (result.documents || []).map((g) => ({
       ...g,
       savingsAmount: getSavingsAmount(g.basePrice, g.currentPrice),
       savingsPercent: getSavingsPercent(g.basePrice, g.currentPrice),
-      remainingSlots: Math.max(0, (g.maxParticipants || 0) - (g.participants?.length || 0)),
+      remainingSlots: Math.max(
+        0,
+        (g.maxParticipants || 0) - (g.participants?.length || 0),
+      ),
       shareLink: `${env.FRONTEND_URL || "https://nileflow.com"}/group/${g.$id}`,
     }));
 
@@ -438,15 +455,20 @@ async function getGroupShareData(req, res) {
     const order = await db.getDocument(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_GROUP_ORDER_COLLECTION_ID,
-      id
+      id,
     );
     if (!order) return res.status(404).json({ error: "Not found" });
 
     const frontendUrl = env.FRONTEND_URL || "https://nileflow.com";
     const shareLink = `${frontendUrl}/group/${id}`;
     const savingsPct = getSavingsPercent(order.basePrice, order.currentPrice);
-    const remainingSlots = Math.max(0, (order.maxParticipants || 0) - (order.participants?.length || 0));
-    const timeLeftMs = order.expiresAt ? new Date(order.expiresAt) - new Date() : 0;
+    const remainingSlots = Math.max(
+      0,
+      (order.maxParticipants || 0) - (order.participants?.length || 0),
+    );
+    const timeLeftMs = order.expiresAt
+      ? new Date(order.expiresAt) - new Date()
+      : 0;
     const hoursLeft = Math.max(0, Math.floor(timeLeftMs / (1000 * 60 * 60)));
 
     const shareMessages = {

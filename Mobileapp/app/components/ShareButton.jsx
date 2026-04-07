@@ -33,7 +33,7 @@ export default function ShareButton({
     try {
       await Share.share({
         message: getShareMessage("generic"),
-        url: groupUrl,     // iOS uses url; Android uses message
+        url: groupUrl, // iOS uses url; Android uses message
         title: "Group Deal on NileFlow",
       });
     } catch (err) {
@@ -45,16 +45,16 @@ export default function ShareButton({
   const handleWhatsApp = () => {
     const text = encodeURIComponent(getShareMessage("whatsapp"));
     Linking.openURL(`https://wa.me/?text=${text}`).catch(() =>
-      handleNativeShare()
+      handleNativeShare(),
     );
   };
 
   // Deep link to Telegram
   const handleTelegram = () => {
     const text = encodeURIComponent(getShareMessage("telegram"));
-    Linking.openURL(`https://t.me/share/url?url=${encodeURIComponent(groupUrl)}&text=${text}`).catch(
-      () => handleNativeShare()
-    );
+    Linking.openURL(
+      `https://t.me/share/url?url=${encodeURIComponent(groupUrl)}&text=${text}`,
+    ).catch(() => handleNativeShare());
   };
 
   if (compact) {
@@ -64,7 +64,9 @@ export default function ShareButton({
         className="flex-row items-center gap-1 bg-emerald-900/40 border border-emerald-500/30 rounded-full px-3 py-1.5"
         accessibilityLabel="Share group deal"
       >
-        <Text className="text-emerald-400 text-sm font-semibold">📤 Share & Save</Text>
+        <Text className="text-emerald-400 text-sm font-semibold">
+          📤 Share & Save
+        </Text>
       </TouchableOpacity>
     );
   }
@@ -75,9 +77,24 @@ export default function ShareButton({
         Share this deal
       </Text>
       <View className="flex-row gap-2 flex-wrap">
-        <SocialButton emoji="💬" label="WhatsApp" color="bg-green-900/40 border-green-500/30" onPress={handleWhatsApp} />
-        <SocialButton emoji="✈️" label="Telegram" color="bg-blue-900/40 border-blue-500/30"  onPress={handleTelegram} />
-        <SocialButton emoji="📤" label="More"     color="bg-slate-700/60 border-slate-500/30" onPress={handleNativeShare} />
+        <SocialButton
+          emoji="💬"
+          label="WhatsApp"
+          color="bg-green-900/40 border-green-500/30"
+          onPress={handleWhatsApp}
+        />
+        <SocialButton
+          emoji="✈️"
+          label="Telegram"
+          color="bg-blue-900/40 border-blue-500/30"
+          onPress={handleTelegram}
+        />
+        <SocialButton
+          emoji="📤"
+          label="More"
+          color="bg-slate-700/60 border-slate-500/30"
+          onPress={handleNativeShare}
+        />
       </View>
     </View>
   );
@@ -95,4 +112,3 @@ function SocialButton({ emoji, label, color, onPress }) {
     </TouchableOpacity>
   );
 }
-

@@ -28,7 +28,7 @@ export default function GroupBuyPricingTiers({
 
   const sorted = [...tiers].sort(
     (a, b) =>
-      (a.minParticipants ?? a.min ?? 0) - (b.minParticipants ?? b.min ?? 0)
+      (a.minParticipants ?? a.min ?? 0) - (b.minParticipants ?? b.min ?? 0),
   );
 
   return (
@@ -71,8 +71,8 @@ export default function GroupBuyPricingTiers({
                 isCurrent
                   ? "bg-emerald-900/50 border-emerald-500/50 ring-1 ring-emerald-500/30"
                   : isActive
-                  ? "bg-slate-700/40 border-slate-600/30"
-                  : "bg-slate-800/30 border-slate-700/20 opacity-70"
+                    ? "bg-slate-700/40 border-slate-600/30"
+                    : "bg-slate-800/30 border-slate-700/20 opacity-70"
               }`}
             >
               <span
@@ -118,10 +118,12 @@ export default function GroupBuyPricingTiers({
               (() => {
                 const match = [...sorted]
                   .reverse()
-                  .find((t) => currentSize >= (t.minParticipants ?? t.min ?? 0));
+                  .find(
+                    (t) => currentSize >= (t.minParticipants ?? t.min ?? 0),
+                  );
                 return match?.price ?? basePrice;
               })(),
-              currency
+              currency,
             )}
           </span>{" "}
           per person

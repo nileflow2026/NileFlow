@@ -16,14 +16,18 @@ function parseRemaining(expiresAt) {
   const diff = new Date(expiresAt) - Date.now();
   if (diff <= 0) return null;
   const totalSecs = Math.floor(diff / 1000);
-  const days  = Math.floor(totalSecs / 86400);
+  const days = Math.floor(totalSecs / 86400);
   const hours = Math.floor((totalSecs % 86400) / 3600);
-  const mins  = Math.floor((totalSecs % 3600) / 60);
-  const secs  = totalSecs % 60;
+  const mins = Math.floor((totalSecs % 3600) / 60);
+  const secs = totalSecs % 60;
   return { days, hours, mins, secs, totalSecs };
 }
 
-export default function CountdownTimer({ expiresAt, onExpired, compact = false }) {
+export default function CountdownTimer({
+  expiresAt,
+  onExpired,
+  compact = false,
+}) {
   const [remaining, setRemaining] = useState(() => parseRemaining(expiresAt));
 
   useEffect(() => {
@@ -72,9 +76,9 @@ export default function CountdownTimer({ expiresAt, onExpired, compact = false }
         {days > 0 && (
           <TimeUnit value={pad(days)} label="Days" urgent={isUrgent} />
         )}
-        <TimeUnit value={pad(hours)} label="Hrs"  urgent={isUrgent} />
-        <TimeUnit value={pad(mins)}  label="Min"  urgent={isUrgent} />
-        <TimeUnit value={pad(secs)}  label="Sec"  urgent={isUrgent} />
+        <TimeUnit value={pad(hours)} label="Hrs" urgent={isUrgent} />
+        <TimeUnit value={pad(mins)} label="Min" urgent={isUrgent} />
+        <TimeUnit value={pad(secs)} label="Sec" urgent={isUrgent} />
       </View>
     </View>
   );
@@ -84,7 +88,9 @@ function TimeUnit({ value, label, urgent }) {
   return (
     <View
       className={`items-center justify-center rounded-xl px-3 py-2 min-w-[48px] ${
-        urgent ? "bg-red-950/60 border border-red-500/40" : "bg-amber-950/60 border border-amber-500/30"
+        urgent
+          ? "bg-red-950/60 border border-red-500/40"
+          : "bg-amber-950/60 border border-amber-500/30"
       }`}
     >
       <Text
@@ -100,4 +106,3 @@ function TimeUnit({ value, label, urgent }) {
     </View>
   );
 }
-

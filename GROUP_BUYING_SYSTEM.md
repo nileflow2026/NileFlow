@@ -63,6 +63,7 @@ A full-stack, production-ready **social commerce group buying engine** for the N
 ```
 
 **Key design principles:**
+
 - **Zero hardcoded logic** — all prices, limits, TTLs, and tier structures are stored in Appwrite and fetched at runtime.
 - **Optimistic concurrency** — join operations use a retry loop with exponential backoff to prevent double-join races.
 - **Realtime on mobile, polling on web** — Appwrite Realtime WebSocket subscriptions on mobile; 8-second HTTP polling on web for broad browser compatibility.
@@ -73,43 +74,43 @@ A full-stack, production-ready **social commerce group buying engine** for the N
 
 ### `group_orders` Collection
 
-| Attribute | Type | Description |
-|---|---|---|
-| `productId` | string | Appwrite document ID of the product |
-| `productName` | string | Denormalised product name for display |
-| `productImage` | string | URL of product image |
-| `basePrice` | number | Full retail price (reference) |
-| `currentPrice` | number | Live computed price based on participants |
-| `maxParticipants` | number | Hard cap on group size |
-| `participantsCount` | number | Current number of participants |
-| `participants` | string[] | Array of user IDs who joined |
-| `creatorId` | string | User ID of group creator |
-| `status` | string | `pending` \| `active` \| `completed` \| `expired` |
-| `pricingStrategy` | string | `tiered` \| `fixed` \| `linear` |
-| `tiersJson` | string | JSON-serialised array of `{ minParticipants, price }` |
-| `discountPercent` | number | Used by `linear` strategy — discount % per new participant |
-| `expiresAt` | string | ISO-8601 expiry datetime |
-| `shareLink` | string | Canonical URL for sharing |
+| Attribute           | Type     | Description                                                |
+| ------------------- | -------- | ---------------------------------------------------------- |
+| `productId`         | string   | Appwrite document ID of the product                        |
+| `productName`       | string   | Denormalised product name for display                      |
+| `productImage`      | string   | URL of product image                                       |
+| `basePrice`         | number   | Full retail price (reference)                              |
+| `currentPrice`      | number   | Live computed price based on participants                  |
+| `maxParticipants`   | number   | Hard cap on group size                                     |
+| `participantsCount` | number   | Current number of participants                             |
+| `participants`      | string[] | Array of user IDs who joined                               |
+| `creatorId`         | string   | User ID of group creator                                   |
+| `status`            | string   | `pending` \| `active` \| `completed` \| `expired`          |
+| `pricingStrategy`   | string   | `tiered` \| `fixed` \| `linear`                            |
+| `tiersJson`         | string   | JSON-serialised array of `{ minParticipants, price }`      |
+| `discountPercent`   | number   | Used by `linear` strategy — discount % per new participant |
+| `expiresAt`         | string   | ISO-8601 expiry datetime                                   |
+| `shareLink`         | string   | Canonical URL for sharing                                  |
 
 ### `pricing_tiers` Collection
 
-| Attribute | Type | Description |
-|---|---|---|
-| `productId` | string | Links to product |
-| `minParticipants` | number | Minimum group size to unlock this tier |
-| `price` | number | Absolute price at this tier |
-| `label` | string | Human-readable label, e.g. "Group of 5+" |
+| Attribute         | Type   | Description                              |
+| ----------------- | ------ | ---------------------------------------- |
+| `productId`       | string | Links to product                         |
+| `minParticipants` | number | Minimum group size to unlock this tier   |
+| `price`           | number | Absolute price at this tier              |
+| `label`           | string | Human-readable label, e.g. "Group of 5+" |
 
 ### `group_buy_settings` Collection
 
-| Attribute | Type | Description |
-|---|---|---|
-| `productId` | string | Links to product (unique) |
-| `enabled` | boolean | Whether group buying is active for this product |
-| `maxGroupSize` | number | Override for max participants |
-| `defaultTtlHours` | number | Default group lifetime in hours |
-| `pricingStrategy` | string | Default strategy for this product |
-| `minDiscount` | number | Minimum guaranteed discount % |
+| Attribute         | Type    | Description                                     |
+| ----------------- | ------- | ----------------------------------------------- |
+| `productId`       | string  | Links to product (unique)                       |
+| `enabled`         | boolean | Whether group buying is active for this product |
+| `maxGroupSize`    | number  | Override for max participants                   |
+| `defaultTtlHours` | number  | Default group lifetime in hours                 |
+| `pricingStrategy` | string  | Default strategy for this product               |
+| `minDiscount`     | number  | Minimum guaranteed discount %                   |
 
 ---
 
@@ -120,20 +121,22 @@ Located in `Backend/utils/groupOrderUtils.js`.
 ### Strategies
 
 #### `tiered` (recommended)
+
 Uses explicit price tiers stored in `tiersJson`. The highest tier whose `minParticipants ≤ participantsCount` is applied.
 
 ```js
 tiers = [
-  { minParticipants: 1,  price: 500 },   // solo — full price
-  { minParticipants: 3,  price: 420 },   // group of 3+
-  { minParticipants: 5,  price: 370 },   // group of 5+
-  { minParticipants: 10, price: 300 },   // group of 10+
-]
+  { minParticipants: 1, price: 500 }, // solo — full price
+  { minParticipants: 3, price: 420 }, // group of 3+
+  { minParticipants: 5, price: 370 }, // group of 5+
+  { minParticipants: 10, price: 300 }, // group of 10+
+];
 // 4 participants → EGP 420
 // 7 participants → EGP 370
 ```
 
 #### `linear`
+
 Each additional participant after the first shaves `discountPercent`% from the base price. Floored at a minimum of 10% of base price.
 
 ```
@@ -141,16 +144,17 @@ price = basePrice × max(0.10, 1 − (participantsCount − 1) × discountPercen
 ```
 
 #### `fixed`
+
 Identical to `tiered` but evaluates using flat discount fractions stored in the tiers array.
 
 ### Exported Functions
 
 ```js
 const {
-  computeCurrentPrice,       // main dispatcher
-  computePriceByTiers,       // explicit tier array resolver
-  getSavingsAmount,          // basePrice - currentPrice
-  getSavingsPercent,         // "25%" string
+  computeCurrentPrice, // main dispatcher
+  computePriceByTiers, // explicit tier array resolver
+  getSavingsAmount, // basePrice - currentPrice
+  getSavingsPercent, // "25%" string
   retryUpdateDocumentWithOptimisticLock, // race-safe Appwrite update
 } = require("./groupOrderUtils");
 ```
@@ -187,6 +191,7 @@ Content-Type: application/json
 ```
 
 **Response `201`:**
+
 ```json
 {
   "groupOrder": {
@@ -210,6 +215,7 @@ GET /api/group-orders?status=pending&productId=abc123&limit=20
 Supported query params: `status`, `productId`, `creatorId`, `limit`.
 
 **Response `200`:**
+
 ```json
 {
   "groupOrders": [
@@ -262,6 +268,7 @@ Content-Type: application/json
 - If `participantsCount` reaches `maxParticipants`, group is auto-completed (`group_completed` notification dispatched).
 
 **Response `200`:**
+
 ```json
 {
   "message": "Joined group",
@@ -325,6 +332,7 @@ GET /api/group-orders/:id/share
 ```
 
 **Response `200`:**
+
 ```json
 {
   "shareLink": "https://nileflow.com/group/grp_...",
@@ -352,14 +360,15 @@ Backend/services/groupBuyNotificationService.js
 
 Dispatches in-app and email notifications for 4 event types:
 
-| Event | When | Recipients |
-|---|---|---|
-| `group_created` | New group created | Creator |
-| `user_joined` | Someone joins | Creator + all participants |
-| `group_completed` | Group fills up | All participants |
-| `group_expired` | TTL elapsed without completion | All participants |
+| Event             | When                           | Recipients                 |
+| ----------------- | ------------------------------ | -------------------------- |
+| `group_created`   | New group created              | Creator                    |
+| `user_joined`     | Someone joins                  | Creator + all participants |
+| `group_completed` | Group fills up                 | All participants           |
+| `group_expired`   | TTL elapsed without completion | All participants           |
 
 Usage:
+
 ```js
 const GroupBuyNotificationService = require("./groupBuyNotificationService");
 
@@ -385,12 +394,13 @@ Backend/services/groupBuyCronService.js
 
 Registers two cron jobs via `node-cron`:
 
-| Job | Schedule | Action |
-|---|---|---|
-| Expire Overdue Groups | Every 5 minutes | Marks `pending` groups past `expiresAt` as `expired` |
-| Urgency Reminders | Every 30 minutes | Notifies participants of groups expiring in < 2 hours |
+| Job                   | Schedule         | Action                                                |
+| --------------------- | ---------------- | ----------------------------------------------------- |
+| Expire Overdue Groups | Every 5 minutes  | Marks `pending` groups past `expiresAt` as `expired`  |
+| Urgency Reminders     | Every 30 minutes | Notifies participants of groups expiring in < 2 hours |
 
 Initialised in `Backend/src/index.js`:
+
 ```js
 const GroupBuyCronService = require("../services/groupBuyCronService");
 GroupBuyCronService.initialize();
@@ -433,32 +443,32 @@ export default function RootLayout() {
 
 ```js
 const {
-  activeGroups,          // list of active groups for current product
-  currentGroup,          // currently viewed group detail
+  activeGroups, // list of active groups for current product
+  currentGroup, // currently viewed group detail
   loading,
   error,
-  createGroupBuy,        // (params) => Promise<group>
-  joinGroupBuy,          // (groupId, userId) => Promise<group>
-  leaveGroupBuy,         // (groupId, userId) => Promise<void>
-  fetchGroup,            // (groupId) => Promise<group>
-  fetchActiveGroups,     // (productId) => Promise<group[]>
-  getShareData,          // (groupId) => Promise<shareData>
-  subscribeToGroup,      // (groupId) — start Realtime subscription
-  unsubscribeFromGroup,  // (groupId) — stop subscription
+  createGroupBuy, // (params) => Promise<group>
+  joinGroupBuy, // (groupId, userId) => Promise<group>
+  leaveGroupBuy, // (groupId, userId) => Promise<void>
+  fetchGroup, // (groupId) => Promise<group>
+  fetchActiveGroups, // (productId) => Promise<group[]>
+  getShareData, // (groupId) => Promise<shareData>
+  subscribeToGroup, // (groupId) — start Realtime subscription
+  unsubscribeFromGroup, // (groupId) — stop subscription
 } = useGroupBuy();
 ```
 
 ### Key Components
 
-| Component | Location | Purpose |
-|---|---|---|
-| `GroupOrderPage` | `app/(Screens)/GroupOrderPage.jsx` | Full group detail screen |
-| `GroupBuyStarter` | `app/components/GroupBuyStarter.jsx` | Bottom sheet — start a new group |
-| `GroupBuyCard` | `app/components/GroupBuyCard.jsx` | Compact joinable group card |
-| `PricingTiersDisplay` | `app/components/PricingTiersDisplay.jsx` | Visual price ladder |
-| `CountdownTimer` | `app/components/CountdownTimer.jsx` | Live countdown with urgency styling |
-| `ParticipantList` | `app/components/ParticipantList.jsx` | Avatar list + progress bar |
-| `ShareButton` | `app/components/ShareButton.jsx` | WhatsApp / Telegram / native share |
+| Component             | Location                                 | Purpose                             |
+| --------------------- | ---------------------------------------- | ----------------------------------- |
+| `GroupOrderPage`      | `app/(Screens)/GroupOrderPage.jsx`       | Full group detail screen            |
+| `GroupBuyStarter`     | `app/components/GroupBuyStarter.jsx`     | Bottom sheet — start a new group    |
+| `GroupBuyCard`        | `app/components/GroupBuyCard.jsx`        | Compact joinable group card         |
+| `PricingTiersDisplay` | `app/components/PricingTiersDisplay.jsx` | Visual price ladder                 |
+| `CountdownTimer`      | `app/components/CountdownTimer.jsx`      | Live countdown with urgency styling |
+| `ParticipantList`     | `app/components/ParticipantList.jsx`     | Avatar list + progress bar          |
+| `ShareButton`         | `app/components/ShareButton.jsx`         | WhatsApp / Telegram / native share  |
 
 ### Navigate to a Group
 
@@ -474,6 +484,7 @@ router.push({
 ### Appwrite Realtime Config
 
 The mobile context subscribes to:
+
 ```
 databases.<databaseId>.collections.<groupOrderCollectionId>.documents.<groupId>
 ```
@@ -508,13 +519,13 @@ const { createGroupBuy, joinGroupBuy, currentGroup, loading } = useGroupBuy();
 
 ### Key Components
 
-| Component | Location | Purpose |
-|---|---|---|
-| `GroupBuyPage` | `src/Pages/GroupBuyPage.jsx` | Standalone page at `/group/:id` |
-| `GroupBuySection` | `src/components/GroupBuySection.jsx` | Embeddable section in `ProductDetailPage` |
-| `GroupBuyStartModal` | `src/components/GroupBuyStartModal.jsx` | Modal for creating a group |
-| `GroupBuyPricingTiers` | `src/components/GroupBuyPricingTiers.jsx` | Price ladder display |
-| `GroupBuyCountdown` | `src/components/GroupBuyCountdown.jsx` | Countdown timer |
+| Component              | Location                                  | Purpose                                   |
+| ---------------------- | ----------------------------------------- | ----------------------------------------- |
+| `GroupBuyPage`         | `src/Pages/GroupBuyPage.jsx`              | Standalone page at `/group/:id`           |
+| `GroupBuySection`      | `src/components/GroupBuySection.jsx`      | Embeddable section in `ProductDetailPage` |
+| `GroupBuyStartModal`   | `src/components/GroupBuyStartModal.jsx`   | Modal for creating a group                |
+| `GroupBuyPricingTiers` | `src/components/GroupBuyPricingTiers.jsx` | Price ladder display                      |
+| `GroupBuyCountdown`    | `src/components/GroupBuyCountdown.jsx`    | Countdown timer                           |
 
 ### Route
 
@@ -528,14 +539,17 @@ const { createGroupBuy, joinGroupBuy, currentGroup, loading } = useGroupBuy();
 `GroupBuySection` is automatically rendered inside `ProductDetailPage.jsx` between the "Add to Cart" block and the reviews section:
 
 ```jsx
-{product && (
-  <div className="px-4 sm:px-6 lg:px-8 py-8 max-w-8xl mx-auto">
-    <GroupBuySection product={product} />
-  </div>
-)}
+{
+  product && (
+    <div className="px-4 sm:px-6 lg:px-8 py-8 max-w-8xl mx-auto">
+      <GroupBuySection product={product} />
+    </div>
+  );
+}
 ```
 
 It displays:
+
 - Current savings banner
 - List of all active joinable groups (with countdowns + participant progress)
 - "Start a Group" CTA if no active groups exist
@@ -555,18 +569,19 @@ Registered in `AdminDashboard/src/App.jsx`.
 
 ### Features
 
-| Section | Description |
-|---|---|
-| **Stat Cards** | Total groups, conversion rate, avg group size, total savings generated |
+| Section            | Description                                                              |
+| ------------------ | ------------------------------------------------------------------------ |
+| **Stat Cards**     | Total groups, conversion rate, avg group size, total savings generated   |
 | **Activity Chart** | Area chart — groups created vs completed per day (14-day rolling window) |
-| **Group Table** | Full paginated table with status filter, product search, expandable rows |
-| **Force Expire** | Immediately expire a pending group (sends notifications) |
-| **Delete** | Hard-delete a group order |
-| **Tier Editor** | Enter a product ID → modal to edit/add/remove pricing tiers |
+| **Group Table**    | Full paginated table with status filter, product search, expandable rows |
+| **Force Expire**   | Immediately expire a pending group (sends notifications)                 |
+| **Delete**         | Hard-delete a group order                                                |
+| **Tier Editor**    | Enter a product ID → modal to edit/add/remove pricing tiers              |
 
 ### Adding a Nav Link
 
 Add to your admin sidebar component:
+
 ```jsx
 <NavLink to="/group-buy">
   <Layers className="w-5 h-5" />
@@ -585,11 +600,13 @@ node Backend/services/setupGroupBuyCollections.js
 ```
 
 This creates:
+
 - `group_orders` — main group buy records
 - `pricing_tiers` — per-product tier configurations
 - `group_buy_settings` — per-product feature flags and defaults
 
 The script will print the collection IDs:
+
 ```
 ✅ group_orders collection: 6123456789abcdef
 ✅ pricing_tiers collection: 6123456789abcde0
@@ -620,6 +637,7 @@ FRONTEND_URL=https://nileflow.com
 ```
 
 Also set in the mobile app's `Config/appwriteConfig.js` (or equivalent):
+
 ```js
 export const Config = {
   // ... existing config
@@ -638,22 +656,22 @@ export const Config = {
   "pricingStrategy": "tiered",
   "basePrice": 800,
   "tiers": [
-    { "minParticipants": 1,  "price": 800 },
-    { "minParticipants": 3,  "price": 680 },
-    { "minParticipants": 5,  "price": 600 },
+    { "minParticipants": 1, "price": 800 },
+    { "minParticipants": 3, "price": 680 },
+    { "minParticipants": 5, "price": 600 },
     { "minParticipants": 10, "price": 500 },
     { "minParticipants": 20, "price": 420 }
   ]
 }
 ```
 
-| Group Size | Price | Savings |
-|---|---|---|
-| 1 | EGP 800 | 0% |
-| 3–4 | EGP 680 | 15% |
-| 5–9 | EGP 600 | 25% |
-| 10–19 | EGP 500 | 38% |
-| 20+ | EGP 420 | 48% |
+| Group Size | Price   | Savings |
+| ---------- | ------- | ------- |
+| 1          | EGP 800 | 0%      |
+| 3–4        | EGP 680 | 15%     |
+| 5–9        | EGP 600 | 25%     |
+| 10–19      | EGP 500 | 38%     |
+| 20+        | EGP 420 | 48%     |
 
 ---
 
@@ -679,9 +697,9 @@ Each new participant shaves 3% off. At 10 participants: `250 × (1 − 9 × 0.03
   "pricingStrategy": "fixed",
   "basePrice": 120,
   "tiers": [
-    { "minParticipants": 5,  "discountFraction": 0.10 },
-    { "minParticipants": 10, "discountFraction": 0.20 },
-    { "minParticipants": 20, "discountFraction": 0.30 }
+    { "minParticipants": 5, "discountFraction": 0.1 },
+    { "minParticipants": 10, "discountFraction": 0.2 },
+    { "minParticipants": 20, "discountFraction": 0.3 }
   ]
 }
 ```
@@ -690,10 +708,10 @@ Each new participant shaves 3% off. At 10 participants: `250 × (1 − 9 × 0.03
 
 ## 12. Cron Jobs
 
-| Cron | Expression | Action |
-|---|---|---|
-| Expire overdue groups | `*/5 * * * *` | Marks pending groups past `expiresAt` as `expired`; sends notifications |
-| Urgency reminders | `*/30 * * * *` | Notifies participants of groups expiring within 2 hours |
+| Cron                  | Expression     | Action                                                                  |
+| --------------------- | -------------- | ----------------------------------------------------------------------- |
+| Expire overdue groups | `*/5 * * * *`  | Marks pending groups past `expiresAt` as `expired`; sends notifications |
+| Urgency reminders     | `*/30 * * * *` | Notifies participants of groups expiring within 2 hours                 |
 
 Both jobs are guarded: if `APPWRITE_GROUP_ORDER_COLLECTION_ID` is not set, they skip silently. No startup errors are thrown for missing collection IDs during development.
 
@@ -703,12 +721,12 @@ Both jobs are guarded: if `APPWRITE_GROUP_ORDER_COLLECTION_ID` is not set, they 
 
 All notifications are stored in the `notifications` Appwrite collection and optionally emailed via Resend.
 
-| Event Type | Title | Recipients |
-|---|---|---|
-| `group_created` | "Your Group Deal is Live! 🎉" | Creator |
-| `user_joined` | "{user} joined your group deal!" | Creator + all participants |
-| `group_completed` | "Your Group Deal is Complete! 🎯" | All participants |
-| `group_expired` | "Your Group Deal Expired 😔" | All participants |
+| Event Type        | Title                             | Recipients                 |
+| ----------------- | --------------------------------- | -------------------------- |
+| `group_created`   | "Your Group Deal is Live! 🎉"     | Creator                    |
+| `user_joined`     | "{user} joined your group deal!"  | Creator + all participants |
+| `group_completed` | "Your Group Deal is Complete! 🎯" | All participants           |
+| `group_expired`   | "Your Group Deal Expired 😔"      | All participants           |
 
 ### Notification Payload Shape
 
@@ -734,47 +752,51 @@ All notifications are stored in the `notifications` Appwrite collection and opti
 ## Files Created / Modified
 
 ### Backend
-| File | Status |
-|---|---|
-| `Backend/utils/groupOrderUtils.js` | ✏️ Rewritten — 5 exports, 3 pricing strategies |
+
+| File                                                           | Status                                                  |
+| -------------------------------------------------------------- | ------------------------------------------------------- |
+| `Backend/utils/groupOrderUtils.js`                             | ✏️ Rewritten — 5 exports, 3 pricing strategies          |
 | `Backend/controllers/AdminControllers/groupOrderController.js` | ✏️ Rewritten — proper Appwrite queries, 2 new endpoints |
-| `Backend/routes/groupOrderRoutes.js` | ✏️ Updated — 10 routes total |
-| `Backend/src/env.js` | ✏️ Updated — 3 new collection ID vars |
-| `Backend/src/index.js` | ✏️ Updated — GroupBuyCronService.initialize() |
-| `Backend/services/groupBuyNotificationService.js` | 🆕 New |
-| `Backend/services/groupBuyCronService.js` | 🆕 New |
-| `Backend/services/setupGroupBuyCollections.js` | 🆕 New |
+| `Backend/routes/groupOrderRoutes.js`                           | ✏️ Updated — 10 routes total                            |
+| `Backend/src/env.js`                                           | ✏️ Updated — 3 new collection ID vars                   |
+| `Backend/src/index.js`                                         | ✏️ Updated — GroupBuyCronService.initialize()           |
+| `Backend/services/groupBuyNotificationService.js`              | 🆕 New                                                  |
+| `Backend/services/groupBuyCronService.js`                      | 🆕 New                                                  |
+| `Backend/services/setupGroupBuyCollections.js`                 | 🆕 New                                                  |
 
 ### Mobile App
-| File | Status |
-|---|---|
-| `Mobileapp/Context/GroupBuyContext.js` | 🆕 New |
-| `Mobileapp/app/components/CountdownTimer.jsx` | ✏️ Rewritten |
-| `Mobileapp/app/components/ShareButton.jsx` | ✏️ Rewritten |
-| `Mobileapp/app/components/ParticipantList.jsx` | ✏️ Rewritten |
-| `Mobileapp/app/components/PricingTiersDisplay.jsx` | 🆕 New |
-| `Mobileapp/app/components/GroupBuyCard.jsx` | 🆕 New |
-| `Mobileapp/app/components/GroupBuyStarter.jsx` | 🆕 New |
-| `Mobileapp/app/(Screens)/GroupOrderPage.jsx` | ✏️ Rewritten |
+
+| File                                               | Status       |
+| -------------------------------------------------- | ------------ |
+| `Mobileapp/Context/GroupBuyContext.js`             | 🆕 New       |
+| `Mobileapp/app/components/CountdownTimer.jsx`      | ✏️ Rewritten |
+| `Mobileapp/app/components/ShareButton.jsx`         | ✏️ Rewritten |
+| `Mobileapp/app/components/ParticipantList.jsx`     | ✏️ Rewritten |
+| `Mobileapp/app/components/PricingTiersDisplay.jsx` | 🆕 New       |
+| `Mobileapp/app/components/GroupBuyCard.jsx`        | 🆕 New       |
+| `Mobileapp/app/components/GroupBuyStarter.jsx`     | 🆕 New       |
+| `Mobileapp/app/(Screens)/GroupOrderPage.jsx`       | ✏️ Rewritten |
 
 ### Web
-| File | Status |
-|---|---|
-| `Website/Context/GroupBuyContext.jsx` | 🆕 New |
-| `Website/src/components/GroupBuyCountdown.jsx` | 🆕 New |
-| `Website/src/components/GroupBuyPricingTiers.jsx` | 🆕 New |
-| `Website/src/components/GroupBuySection.jsx` | 🆕 New |
-| `Website/src/components/GroupBuyStartModal.jsx` | 🆕 New |
-| `Website/src/Pages/GroupBuyPage.jsx` | 🆕 New |
-| `Website/src/Pages/ProductDetailPage.jsx` | ✏️ Updated — GroupBuySection injected |
-| `Website/src/App.jsx` | ✏️ Updated — route + provider registered |
+
+| File                                              | Status                                   |
+| ------------------------------------------------- | ---------------------------------------- |
+| `Website/Context/GroupBuyContext.jsx`             | 🆕 New                                   |
+| `Website/src/components/GroupBuyCountdown.jsx`    | 🆕 New                                   |
+| `Website/src/components/GroupBuyPricingTiers.jsx` | 🆕 New                                   |
+| `Website/src/components/GroupBuySection.jsx`      | 🆕 New                                   |
+| `Website/src/components/GroupBuyStartModal.jsx`   | 🆕 New                                   |
+| `Website/src/Pages/GroupBuyPage.jsx`              | 🆕 New                                   |
+| `Website/src/Pages/ProductDetailPage.jsx`         | ✏️ Updated — GroupBuySection injected    |
+| `Website/src/App.jsx`                             | ✏️ Updated — route + provider registered |
 
 ### Admin Dashboard
-| File | Status |
-|---|---|
-| `AdminDashboard/src/Pages/GroupBuyManagement.jsx` | 🆕 New |
-| `AdminDashboard/src/App.jsx` | ✏️ Updated — route registered at `/group-buy` |
+
+| File                                              | Status                                        |
+| ------------------------------------------------- | --------------------------------------------- |
+| `AdminDashboard/src/Pages/GroupBuyManagement.jsx` | 🆕 New                                        |
+| `AdminDashboard/src/App.jsx`                      | ✏️ Updated — route registered at `/group-buy` |
 
 ---
 
-*Generated for NileFlow Platform — Group Buying System v1.0*
+_Generated for NileFlow Platform — Group Buying System v1.0_

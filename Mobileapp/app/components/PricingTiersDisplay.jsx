@@ -11,7 +11,9 @@
 import { Text, View } from "react-native";
 
 function formatPrice(price, currency = "USD") {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency }).format(price);
+  return new Intl.NumberFormat("en-US", { style: "currency", currency }).format(
+    price,
+  );
 }
 
 export default function PricingTiersDisplay({
@@ -24,7 +26,7 @@ export default function PricingTiersDisplay({
 
   const sorted = [...tiers].sort(
     (a, b) =>
-      (a.minParticipants ?? a.min ?? 0) - (b.minParticipants ?? b.min ?? 0)
+      (a.minParticipants ?? a.min ?? 0) - (b.minParticipants ?? b.min ?? 0),
   );
 
   return (
@@ -36,7 +38,9 @@ export default function PricingTiersDisplay({
       {/* Header row */}
       <View className="flex-row mb-2 px-1">
         <Text className="text-slate-400 text-xs flex-1">People</Text>
-        <Text className="text-slate-400 text-xs w-24 text-right">Price each</Text>
+        <Text className="text-slate-400 text-xs w-24 text-right">
+          Price each
+        </Text>
         <Text className="text-slate-400 text-xs w-16 text-right">Save</Text>
       </View>
 
@@ -51,7 +55,9 @@ export default function PricingTiersDisplay({
         const isCurrentTier = (() => {
           // current tier is the last one where threshold <= currentSize
           const next = sorted[idx + 1];
-          const nextThreshold = next ? (next.minParticipants ?? next.min ?? Infinity) : Infinity;
+          const nextThreshold = next
+            ? (next.minParticipants ?? next.min ?? Infinity)
+            : Infinity;
           return currentSize >= threshold && currentSize < nextThreshold;
         })();
 
@@ -62,8 +68,8 @@ export default function PricingTiersDisplay({
               isCurrentTier
                 ? "bg-emerald-900/50 border border-emerald-500/50"
                 : isActive
-                ? "bg-slate-700/40 border border-slate-600/30"
-                : "bg-slate-800/30 border border-slate-700/20"
+                  ? "bg-slate-700/40 border border-slate-600/30"
+                  : "bg-slate-800/30 border border-slate-700/20"
             }`}
           >
             {/* People count */}
@@ -115,10 +121,12 @@ export default function PricingTiersDisplay({
               (() => {
                 const match = [...sorted]
                   .reverse()
-                  .find((t) => currentSize >= (t.minParticipants ?? t.min ?? 0));
+                  .find(
+                    (t) => currentSize >= (t.minParticipants ?? t.min ?? 0),
+                  );
                 return match?.price ?? basePrice;
               })(),
-              currency
+              currency,
             )}
           </Text>
         </Text>

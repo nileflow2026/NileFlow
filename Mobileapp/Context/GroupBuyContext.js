@@ -59,7 +59,7 @@ export function GroupBuyProvider({ children }) {
   const fetchActiveGroups = useCallback(async (productId, limit = 5) => {
     try {
       const res = await axiosClient.get(
-        `/api/group-orders/active?productId=${productId}&limit=${limit}`
+        `/api/group-orders/active?productId=${productId}&limit=${limit}`,
       );
       setProductGroups(res.data.documents || []);
       return res.data.documents || [];
@@ -89,14 +89,15 @@ export function GroupBuyProvider({ children }) {
         setActiveGroup(res.data);
         return { data: res.data, error: null };
       } catch (err) {
-        const msg = err?.response?.data?.error || "Failed to create group deal.";
+        const msg =
+          err?.response?.data?.error || "Failed to create group deal.";
         setError(msg);
         return { error: msg };
       } finally {
         setLoading(false);
       }
     },
-    [currentUserId]
+    [currentUserId],
   );
 
   const joinGroupBuy = useCallback(
@@ -104,9 +105,12 @@ export function GroupBuyProvider({ children }) {
       if (!currentUserId) return { error: "You must be logged in." };
       try {
         setLoading(true);
-        const res = await axiosClient.post(`/api/group-orders/${groupId}/join`, {
-          userId: currentUserId,
-        });
+        const res = await axiosClient.post(
+          `/api/group-orders/${groupId}/join`,
+          {
+            userId: currentUserId,
+          },
+        );
         setActiveGroup(res.data);
         return { data: res.data, error: null };
       } catch (err) {
@@ -117,7 +121,7 @@ export function GroupBuyProvider({ children }) {
         setLoading(false);
       }
     },
-    [currentUserId]
+    [currentUserId],
   );
 
   const leaveGroupBuy = useCallback(
@@ -126,7 +130,7 @@ export function GroupBuyProvider({ children }) {
       try {
         const res = await axiosClient.post(
           `/api/group-orders/${groupId}/leave`,
-          { userId: currentUserId }
+          { userId: currentUserId },
         );
         setActiveGroup(res.data);
         return { data: res.data, error: null };
@@ -136,7 +140,7 @@ export function GroupBuyProvider({ children }) {
         return { error: msg };
       }
     },
-    [currentUserId]
+    [currentUserId],
   );
 
   const getShareData = useCallback(async (groupId) => {
@@ -150,35 +154,32 @@ export function GroupBuyProvider({ children }) {
 
   // ── Appwrite Realtime ───────────────────────────────────────────────────────
 
-  const subscribeToGroup = useCallback(
-    (groupId) => {
-      if (subscriptions.current.has(groupId)) return;
-      if (!Config?.databaseId) return;
+  const subscribeToGroup = useCallback((groupId) => {
+    if (subscriptions.current.has(groupId)) return;
+    if (!Config?.databaseId) return;
 
-      try {
-        const channel = `databases.${Config.databaseId}.collections.${Config.groupOrderCollectionId || "group_orders"}.documents.${groupId}`;
-        const unsubscribe = client.subscribe(channel, (msg) => {
-          try {
-            const response = typeof msg === "string" ? JSON.parse(msg) : msg;
-            const { payload, events } = response;
-            if (!payload || payload.$id !== groupId) return;
+    try {
+      const channel = `databases.${Config.databaseId}.collections.${Config.groupOrderCollectionId || "group_orders"}.documents.${groupId}`;
+      const unsubscribe = client.subscribe(channel, (msg) => {
+        try {
+          const response = typeof msg === "string" ? JSON.parse(msg) : msg;
+          const { payload, events } = response;
+          if (!payload || payload.$id !== groupId) return;
 
-            if (events?.some((e) => e.includes("delete"))) {
-              setActiveGroup(null);
-              return;
-            }
-            setActiveGroup((prev) => (prev?.$id === groupId ? payload : prev));
-          } catch (e) {
-            console.error("GroupBuy realtime parse error:", e);
+          if (events?.some((e) => e.includes("delete"))) {
+            setActiveGroup(null);
+            return;
           }
-        });
-        subscriptions.current.set(groupId, unsubscribe);
-      } catch (e) {
-        console.error("GroupBuy subscribe error:", e);
-      }
-    },
-    []
-  );
+          setActiveGroup((prev) => (prev?.$id === groupId ? payload : prev));
+        } catch (e) {
+          console.error("GroupBuy realtime parse error:", e);
+        }
+      });
+      subscriptions.current.set(groupId, unsubscribe);
+    } catch (e) {
+      console.error("GroupBuy subscribe error:", e);
+    }
+  }, []);
 
   const unsubscribeFromGroup = useCallback((groupId) => {
     const unsub = subscriptions.current.get(groupId);

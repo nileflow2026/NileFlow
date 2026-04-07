@@ -15,26 +15,42 @@ import { useGroupBuy } from "../../Context/GroupBuyContext";
 import GroupBuyPricingTiers from "./GroupBuyPricingTiers";
 
 const GROUP_SIZES = [3, 5, 10, 20];
-const DURATIONS  = [12, 24, 48, 72];
+const DURATIONS = [12, 24, 48, 72];
 
-export default function GroupBuyStartModal({ open, onClose, product, tiers = [] }) {
+export default function GroupBuyStartModal({
+  open,
+  onClose,
+  product,
+  tiers = [],
+}) {
   const navigate = useNavigate();
   const { createGroupBuy, loading } = useGroupBuy();
-  const [size, setSize]   = useState(5);
-  const [ttl, setTtl]     = useState(24);
+  const [size, setSize] = useState(5);
+  const [ttl, setTtl] = useState(24);
   const [custom, setCustom] = useState("");
-  const [error, setError]   = useState(null);
+  const [error, setError] = useState(null);
 
   if (!open) return null;
 
-  const effectiveSize = custom ? Math.max(2, Math.min(200, parseInt(custom) || size)) : size;
-  const productTiers  = tiers.length > 0 ? tiers : deriveDefaultTiers(product?.price, effectiveSize);
+  const effectiveSize = custom
+    ? Math.max(2, Math.min(200, parseInt(custom) || size))
+    : size;
+  const productTiers =
+    tiers.length > 0
+      ? tiers
+      : deriveDefaultTiers(product?.price, effectiveSize);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError(null);
-    if (!product?.$id) { setError("Product not found."); return; }
-    if (!product?.price) { setError("Product price is required."); return; }
+    if (!product?.$id) {
+      setError("Product not found.");
+      return;
+    }
+    if (!product?.price) {
+      setError("Product price is required.");
+      return;
+    }
 
     const { data, error: err } = await createGroupBuy(product.$id, {
       maxParticipants: effectiveSize,
@@ -46,7 +62,10 @@ export default function GroupBuyStartModal({ open, onClose, product, tiers = [] 
       productImage: product.images?.[0] ?? "",
     });
 
-    if (err) { setError(err); return; }
+    if (err) {
+      setError(err);
+      return;
+    }
     onClose();
     navigate(`/group/${data.$id}`);
   }
@@ -87,7 +106,10 @@ export default function GroupBuyStartModal({ open, onClose, product, tiers = [] 
                 <button
                   key={s}
                   type="button"
-                  onClick={() => { setSize(s); setCustom(""); }}
+                  onClick={() => {
+                    setSize(s);
+                    setCustom("");
+                  }}
                   className={`px-4 py-2 rounded-xl border text-sm font-semibold transition-colors ${
                     size === s && !custom
                       ? "bg-emerald-600 border-emerald-500 text-white"
@@ -159,7 +181,9 @@ export default function GroupBuyStartModal({ open, onClose, product, tiers = [] 
             className="w-full bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-600 text-white font-bold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2"
           >
             {loading ? (
-              <><Loader size={16} className="animate-spin" /> Creating…</>
+              <>
+                <Loader size={16} className="animate-spin" /> Creating…
+              </>
             ) : (
               `Create Group — ${effectiveSize} people`
             )}
@@ -175,8 +199,16 @@ function deriveDefaultTiers(basePrice, maxSize = 5) {
   const p = Number(basePrice);
   const t2 = Math.max(2, Math.ceil(maxSize * 0.4));
   return [
-    { minParticipants: 1,       price: +p.toFixed(2),             label: "Solo" },
-    { minParticipants: t2,      price: +(p * 0.9).toFixed(2),     label: `${t2}+ people` },
-    { minParticipants: maxSize, price: +(p * 0.75).toFixed(2),    label: `${maxSize} people (full)` },
+    { minParticipants: 1, price: +p.toFixed(2), label: "Solo" },
+    {
+      minParticipants: t2,
+      price: +(p * 0.9).toFixed(2),
+      label: `${t2}+ people`,
+    },
+    {
+      minParticipants: maxSize,
+      price: +(p * 0.75).toFixed(2),
+      label: `${maxSize} people (full)`,
+    },
   ];
 }

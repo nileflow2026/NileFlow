@@ -25,15 +25,23 @@ import PricingTiersDisplay from "./PricingTiersDisplay";
 
 const DEFAULT_GROUP_SIZES = [3, 5, 10, 20];
 
-export default function GroupBuyStarter({ visible, onClose, product, onCreated }) {
+export default function GroupBuyStarter({
+  visible,
+  onClose,
+  product,
+  onCreated,
+}) {
   const { createGroupBuy, loading } = useGroupBuy();
   const [selectedSize, setSelectedSize] = useState(5);
   const [customSize, setCustomSize] = useState("");
   const [ttlHours, setTtlHours] = useState(24);
   const [error, setError] = useState(null);
 
-  const tiers = product?.tiers ?? deriveDefaultTiers(product?.price, selectedSize);
-  const effectiveSize = customSize ? parseInt(customSize, 10) || selectedSize : selectedSize;
+  const tiers =
+    product?.tiers ?? deriveDefaultTiers(product?.price, selectedSize);
+  const effectiveSize = customSize
+    ? parseInt(customSize, 10) || selectedSize
+    : selectedSize;
 
   async function handleCreate() {
     if (!product) return;
@@ -75,7 +83,10 @@ export default function GroupBuyStarter({ visible, onClose, product, onCreated }
           <View className="w-10 h-1 bg-slate-600 rounded-full" />
         </View>
 
-        <ScrollView className="flex-1 px-5" showsVerticalScrollIndicator={false}>
+        <ScrollView
+          className="flex-1 px-5"
+          showsVerticalScrollIndicator={false}
+        >
           {/* Title */}
           <Text className="text-white text-xl font-bold mt-2">
             🛒 Start a Group Buy
@@ -94,7 +105,10 @@ export default function GroupBuyStarter({ visible, onClose, product, onCreated }
             {DEFAULT_GROUP_SIZES.map((sz) => (
               <TouchableOpacity
                 key={sz}
-                onPress={() => { setSelectedSize(sz); setCustomSize(""); }}
+                onPress={() => {
+                  setSelectedSize(sz);
+                  setCustomSize("");
+                }}
                 className={`rounded-xl px-5 py-2.5 border ${
                   selectedSize === sz && !customSize
                     ? "bg-emerald-600 border-emerald-500"
@@ -187,7 +201,10 @@ export default function GroupBuyStarter({ visible, onClose, product, onCreated }
               </Text>
             )}
           </TouchableOpacity>
-          <TouchableOpacity onPress={onClose} className="mt-3 items-center py-2">
+          <TouchableOpacity
+            onPress={onClose}
+            className="mt-3 items-center py-2"
+          >
             <Text className="text-slate-400 text-sm">Cancel</Text>
           </TouchableOpacity>
         </View>
@@ -207,8 +224,20 @@ function deriveDefaultTiers(basePrice, maxSize) {
   const t2 = Math.max(2, Math.ceil(maxSize * 0.4));
   const t3 = maxSize;
   return [
-    { minParticipants: 1,  price: parseFloat(price.toFixed(2)),              label: "1 person (solo)" },
-    { minParticipants: t2, price: parseFloat((price * 0.9).toFixed(2)),       label: `${t2}+ people` },
-    { minParticipants: t3, price: parseFloat((price * 0.75).toFixed(2)),      label: `${t3} people (full group)` },
+    {
+      minParticipants: 1,
+      price: parseFloat(price.toFixed(2)),
+      label: "1 person (solo)",
+    },
+    {
+      minParticipants: t2,
+      price: parseFloat((price * 0.9).toFixed(2)),
+      label: `${t2}+ people`,
+    },
+    {
+      minParticipants: t3,
+      price: parseFloat((price * 0.75).toFixed(2)),
+      label: `${t3} people (full group)`,
+    },
   ];
 }

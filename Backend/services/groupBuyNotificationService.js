@@ -30,7 +30,7 @@ async function createInAppNotification(userId, title, body, metadata = {}) {
         isRead: false,
         metadata: JSON.stringify(metadata),
         createdAt: new Date().toISOString(),
-      }
+      },
     );
   } catch (err) {
     console.error("createInAppNotification error:", err);
@@ -43,7 +43,7 @@ async function createInAppNotification(userId, title, body, metadata = {}) {
 async function notifyParticipants(userIds, title, body, metadata = {}) {
   if (!userIds || userIds.length === 0) return;
   await Promise.allSettled(
-    userIds.map((uid) => createInAppNotification(uid, title, body, metadata))
+    userIds.map((uid) => createInAppNotification(uid, title, body, metadata)),
   );
 }
 
@@ -103,7 +103,14 @@ async function sendGroupBuyNotification(eventType, data) {
 
     switch (eventType) {
       case "user_joined": {
-        const { groupId, participants, currentSize, maxSize, currentPrice, productId } = data;
+        const {
+          groupId,
+          participants,
+          currentSize,
+          maxSize,
+          currentPrice,
+          productId,
+        } = data;
         const remaining = Math.max(0, (maxSize || 0) - (currentSize || 0));
         const title = `Someone joined your group deal! 🎉`;
         const body = `${currentSize} of ${maxSize} people joined. ${remaining} more needed. Current price: $${currentPrice}`;
@@ -139,7 +146,7 @@ async function sendGroupBuyNotification(eventType, data) {
             `<p>Your group is now full! Your locked price is <strong>$${lockedPrice}</strong>.</p>
              <div class="highlight"><strong>Action required:</strong> Complete your payment to secure this deal. The locked price is valid for 24 hours.</div>`,
             groupUrl,
-            "Checkout Now →"
+            "Checkout Now →",
           );
           // Best-effort email per participant (no user email lookup here — extend as needed)
         }
@@ -165,7 +172,7 @@ async function sendGroupBuyNotification(eventType, data) {
           creatorId,
           `Your group deal is live! Share it to save 💰`,
           `Share your group with ${maxParticipants - 1} friends to unlock the lowest price.`,
-          { groupId, productId, eventType }
+          { groupId, productId, eventType },
         );
         break;
       }
