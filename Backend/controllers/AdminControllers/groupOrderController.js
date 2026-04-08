@@ -19,7 +19,11 @@ function parseTiers(tiers) {
   if (!tiers) return null;
   if (Array.isArray(tiers)) return tiers;
   if (typeof tiers === "string") {
-    try { return JSON.parse(tiers); } catch { return null; }
+    try {
+      return JSON.parse(tiers);
+    } catch {
+      return null;
+    }
   }
   return null;
 }
