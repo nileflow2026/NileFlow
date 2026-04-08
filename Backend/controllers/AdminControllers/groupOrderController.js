@@ -13,6 +13,18 @@ const {
 } = require("../../services/groupBuyNotificationService");
 
 /**
+ * Safely parse a tiers value that may be a JSON string, an array, or null.
+ */
+function parseTiers(tiers) {
+  if (!tiers) return null;
+  if (Array.isArray(tiers)) return tiers;
+  if (typeof tiers === "string") {
+    try { return JSON.parse(tiers); } catch { return null; }
+  }
+  return null;
+}
+
+/**
  * Create Group Order
  * Body: { productId, creatorId, maxParticipants, basePrice, priceStrategy, tiers(optional), ttlHours(optional) }
  */
@@ -26,6 +38,8 @@ async function createGroupOrder(req, res) {
       priceStrategy = "tiered",
       tiers = null,
       ttlHours = 24,
+      productName = "",
+      productImage = "",
     } = req.body;
     console.log("req.body:", req.body);
 
@@ -33,25 +47,30 @@ async function createGroupOrder(req, res) {
       return res.status(400).json({ error: "Missing required fields." });
     }
 
+    const parsedTiers = parseTiers(tiers);
+
     const expiresAt = new Date(
-      Date.now() + ttlHours * 60 * 60 * 1000,
+      Date.now() + Number(ttlHours) * 60 * 60 * 1000,
     ).toISOString();
     const initialPrice = computeCurrentPrice({
-      basePrice,
+      basePrice: Number(basePrice),
       strategy: priceStrategy,
-      tiers,
+      tiers: parsedTiers,
       participantsCount: 1,
     });
 
     const payload = {
-      productId,
-      creatorId,
-      participants: [creatorId],
-      maxParticipants,
-      basePrice,
+      productId: String(productId),
+      productName: String(productName),
+      productImage: String(productImage),
+      creatorId: String(creatorId),
+      participants: [String(creatorId)],
+      maxParticipants: Number(maxParticipants),
+      basePrice: Number(basePrice),
       currentPrice: initialPrice,
-      priceStrategy,
-      tiers,
+      priceStrategy: String(priceStrategy),
+      // Store tiers as a JSON string — Appwrite attribute type is string
+      ...(parsedTiers ? { tiers: JSON.stringify(parsedTiers) } : {}),
       status: "pending",
       expiresAt,
     };
@@ -219,7 +238,7 @@ async function joinGroupOrder(req, res) {
         const newPrice = computeCurrentPrice({
           basePrice: order.basePrice,
           strategy: order.priceStrategy,
-          tiers: order.tiers,
+          tiers: parseTiers(order.tiers),
           participantsCount,
         });
 
@@ -313,7 +332,7 @@ async function leaveGroupOrder(req, res) {
           const newPrice = computeCurrentPrice({
             basePrice: order.basePrice,
             strategy: order.priceStrategy,
-            tiers: order.tiers,
+            tiers: parseTiers(order.tiers),
             participantsCount,
           });
           const newStatus = participantsCount === 0 ? "cancelled" : "pending";
@@ -328,7 +347,7 @@ async function leaveGroupOrder(req, res) {
           const newPrice = computeCurrentPrice({
             basePrice: order.basePrice,
             strategy: order.priceStrategy,
-            tiers: order.tiers,
+            tiers: parseTiers(order.tiers),
             participantsCount,
           });
           const newStatus = participantsCount === 0 ? "cancelled" : "pending";
