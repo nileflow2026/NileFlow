@@ -533,9 +533,8 @@ app.use("/api/health", healthRoutes);
 
 // ========== CORS TEST ENDPOINT ==========
 app.get("/api/cors-test", (req, res) => {
-  console.log("🧪 CORS Test endpoint hit");
-  console.log("Origin:", req.headers.origin);
-  console.log("Headers:", req.headers);
+  /* console.log("🧪 CORS Test endpoint hit");
+  console.log("Origin:", req.headers.origin); */
 
   res.json({
     message: "CORS test successful",

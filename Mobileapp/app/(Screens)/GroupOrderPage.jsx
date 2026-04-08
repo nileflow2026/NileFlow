@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /**
  * GroupOrderPage.jsx — Full-featured Group Buy screen.
  *

@@ -27,7 +27,7 @@ const GroupBuyContext = createContext(null);
 
 export function GroupBuyProvider({ children }) {
   const { user } = useGlobalContext();
-  const currentUserId = user?.$id || user?.userId || null;
+  const currentUserId = user?.$id || user?.userId || user?.id || null;
 
   // Active group being viewed / tracked
   const [activeGroup, setActiveGroup] = useState(null);

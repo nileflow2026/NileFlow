@@ -2,6 +2,7 @@ import GlobalProvider from "@/Context/GlobalProvider";
 import { NotificationProvider } from "@/Context/NotificationContext";
 import { PremiumProvider } from "@/Context/PremiumContext";
 import { ThemeProvider } from "@/Context/ThemeProvider";
+import { GroupBuyProvider } from "../Context/GroupBuyContext";
 import { StripeProvider } from "@stripe/stripe-react-native";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -31,10 +32,12 @@ export default function RootLayout() {
               <GlobalProvider>
                 <SocialProvider>
                   <CartProvider>
-                    <FavoritesProvider>
-                      <Stack screenOptions={{ headerShown: false }} />
-                      <Toast />
-                    </FavoritesProvider>
+                    <GroupBuyProvider>
+                      <FavoritesProvider>
+                        <Stack screenOptions={{ headerShown: false }} />
+                        <Toast />
+                      </FavoritesProvider>
+                    </GroupBuyProvider>
                     <StatusBar style="auto" />
                   </CartProvider>
                 </SocialProvider>

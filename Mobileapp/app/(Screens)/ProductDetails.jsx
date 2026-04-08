@@ -24,6 +24,7 @@ import axiosClient from "../../api";
 import { Config, databases } from "../../Appwrite";
 import { useCart } from "../../Context/CartContext_NEW";
 import { useFavorites } from "../../Context/FavoritesContext";
+import { useGroupBuy } from "../../Context/GroupBuyContext";
 import {
   fetchReviews,
   fetchUserId,
@@ -38,6 +39,8 @@ import RatingModal from "../components/RatingModal";
 import RelatedProducts from "../components/RelatedProducts";
 import ReviewForm from "../components/ReviewForm";
 import ReviewList from "../components/ReviewList";
+import GroupBuyCard from "../components/GroupBuyCard";
+import GroupBuyStarter from "../components/GroupBuyStarter";
 
 const { width } = Dimensions.get("window");
 
@@ -92,7 +95,6 @@ const ProductDetails = () => {
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const [showAllReviews, setShowAllReviews] = useState(false);
   const initialReviewCount = 2;
-
   // Memoize displayedReviews to avoid recalculation on every render
   const displayedReviews = useMemo(() => {
     return showAllReviews
@@ -101,7 +103,6 @@ const ProductDetails = () => {
         ? reviews.slice(0, initialReviewCount)
         : [];
   }, [showAllReviews, reviews, initialReviewCount]);
-
   const { user, loading, isLogged, isGuest } = useGlobalContext();
   /* console.log("User in ProductDetails:", user); // Log user object for debugging */
   const [editingReviewId, setEditingReviewId] = useState(null);
@@ -109,6 +110,8 @@ const ProductDetails = () => {
   const [convertedPrice, setConvertedPrice] = useState("");
   const [selectedRating, setSelectedRating] = useState(null);
   const [isSignUpModalVisible, setIsSignUpModalVisible] = useState(false);
+  const { fetchActiveGroups, productGroups } = useGroupBuy();
+  const [showGroupStarter, setShowGroupStarter] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -189,33 +192,31 @@ const ProductDetails = () => {
     loadReviews();
   }, [product?.$id]); // Only run when product ID changes
 
-  if (loading) {
-    // eslint-disable-next-line react/jsx-no-undef
-    return <ActivityIndicator size="large" color="#fff" />;
-  }
-
   // A new useEffect to handle related products' ratings
   useEffect(() => {
+    if (product?.$id) {
+      fetchActiveGroups(product.$id).catch(() => {});
+    }
     // This is a single, combined function to handle all related product logic
     const fetchRelatedData = async () => {
-      // Step 1: Fetch related products
-      const token = await AsyncStorage.getItem("accessToken");
+      // Step 1: Fetch related products (no category query param — avoids Appwrite index requirement)
       let related = [];
       try {
         const response = await axiosClient.get(
-          `/api/customerprofile/fetch-product`,
+          `/api/customerprofile/fetch-product-mobile`,
           {
             params: {
-              category: product.category,
-              excludeId: product.$id,
+              limit: 50,
             },
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          },
         );
         if (Array.isArray(response.data?.products)) {
-          related = response.data.products;
+          // Filter by same category and exclude the current product client-side
+          related = response.data.products
+            .filter(
+              (p) => p.category === product.category && p.$id !== product.$id,
+            )
+            .slice(0, 10);
         }
       } catch (error) {
         console.error("Error fetching related products:", error);
@@ -235,7 +236,7 @@ const ProductDetails = () => {
             if (reviews.length > 0) {
               const totalRating = reviews.reduce(
                 (sum, review) => sum + review.rating,
-                0
+                0,
               );
               const averageRating = totalRating / reviews.length;
               ratingsData[relatedProduct.$id] = {
@@ -251,7 +252,7 @@ const ProductDetails = () => {
           } catch (error) {
             console.error(
               `Error fetching reviews for product ${relatedProduct.$id}:`,
-              error
+              error,
             );
             ratingsData[relatedProduct.$id] = {
               averageRating: 0,
@@ -323,7 +324,7 @@ const ProductDetails = () => {
       setCurrentImageIndex(newIndex);
       setActiveImage(product.images[newIndex]);
     },
-    [currentImageIndex, product?.images]
+    [currentImageIndex, product?.images],
   );
 
   const handleRatingSubmit = useCallback(
@@ -343,7 +344,7 @@ const ProductDetails = () => {
         if (!user) {
           Alert.alert(
             "Login Required",
-            "You need to log in to rate this product."
+            "You need to log in to rate this product.",
           );
           return;
         }
@@ -379,7 +380,7 @@ const ProductDetails = () => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
+          },
         );
 
         console.log("Review submitted successfully:", response);
@@ -387,7 +388,7 @@ const ProductDetails = () => {
         if (response) {
           Alert.alert(
             "Thank You",
-            `You rated this product ${selectedRating} stars.`
+            `You rated this product ${selectedRating} stars.`,
           );
           const updatedReviews = await fetchReviews(product.$id);
 
@@ -416,11 +417,11 @@ const ProductDetails = () => {
         console.error("Failed to submit rating:", error);
         Alert.alert(
           "Error",
-          "An error occurred while submitting your rating. Please try again."
+          "An error occurred while submitting your rating. Please try again.",
         );
       }
     },
-    [isLogged, user, product, reviewText]
+    [isLogged, user, product, reviewText],
   );
 
   const handleAddReview = useCallback(async () => {
@@ -431,7 +432,7 @@ const ProductDetails = () => {
     try {
       console.log(
         "Product ID:",
-        product && product.$id ? product.$id : "Product ID is missing"
+        product && product.$id ? product.$id : "Product ID is missing",
       );
       const userId = user?.$id || (await fetchUserId());
 
@@ -476,7 +477,7 @@ const ProductDetails = () => {
           console.warn(
             "Invalid selected rating:",
             selectedRating,
-            ". Review submitted without rating."
+            ". Review submitted without rating.",
           );
         }
       }
@@ -545,7 +546,7 @@ const ProductDetails = () => {
       if (!user) {
         Alert.alert(
           "Login Required",
-          "You need to log in to edit your review."
+          "You need to log in to edit your review.",
         );
         return;
       }
@@ -576,7 +577,7 @@ const ProductDetails = () => {
           reviewText: cleanedReviewText,
           imageUrl,
           updatedAt: new Date().toISOString(),
-        }
+        },
       );
 
       setReviewText("");
@@ -595,7 +596,7 @@ const ProductDetails = () => {
       if (!user) {
         Alert.alert(
           "Login Required",
-          "You need to log in to delete your review."
+          "You need to log in to delete your review.",
         );
         return;
       }
@@ -603,7 +604,7 @@ const ProductDetails = () => {
       await databases.deleteDocument(
         Config.databaseId,
         Config.reviewsCollectionId,
-        reviewId
+        reviewId,
       );
 
       const updatedReviews = await fetchReviews(String(product.id));
@@ -648,16 +649,16 @@ const ProductDetails = () => {
       paddingVerticalButton: width < 350 ? 8 : 10,
       marginVertical: width < 350 ? 8 : 12,
     }),
-    []
+    [],
   );
 
   const themedText = useMemo(
     () => (isDarkMode ? "text-white" : "text-black"),
-    [isDarkMode]
+    [isDarkMode],
   );
   const themedBackground = useMemo(
     () => (isDarkMode ? "bg-black" : "bg-white"),
-    [isDarkMode]
+    [isDarkMode],
   );
 
   return (
@@ -1341,6 +1342,123 @@ const ProductDetails = () => {
             onClose={() => setIsRatingModalVisible(false)}
             onSubmit={handleRatingSubmit}
           />
+          {/* ── Group Buying Section ────────────────────────────────── */}
+          <View style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
+            <View
+              style={{
+                backgroundColor: "#1a2e1a",
+                borderRadius: 16,
+                padding: 16,
+                borderWidth: 1,
+                borderColor: "#2d4f2d",
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 8,
+                  marginBottom: 12,
+                }}
+              >
+                <MaterialIcons name="groups" size={20} color="#f59e0b" />
+                <Text
+                  style={{ color: "#f59e0b", fontSize: 16, fontWeight: "bold" }}
+                >
+                  Group Buying
+                </Text>
+              </View>
+
+              {productGroups.length > 0 ? (
+                <>
+                  <Text
+                    style={{ color: "#9ca3af", fontSize: 13, marginBottom: 10 }}
+                  >
+                    {productGroups.length} active group
+                    {productGroups.length > 1 ? "s" : ""} — join and save up to{" "}
+                    {productGroups[0].savingsPercent || ""}
+                  </Text>
+                  {productGroups.slice(0, 3).map((g) => (
+                    <GroupBuyCard
+                      key={g.$id}
+                      group={g}
+                      onPress={() =>
+                        router.push({
+                          pathname: "/(Screens)/GroupOrderPage",
+                          params: { orderId: g.$id },
+                        })
+                      }
+                      onJoin={() =>
+                        router.push({
+                          pathname: "/(Screens)/GroupOrderPage",
+                          params: { orderId: g.$id },
+                        })
+                      }
+                    />
+                  ))}
+                  <TouchableOpacity
+                    onPress={() => setShowGroupStarter(true)}
+                    style={{ marginTop: 8, alignItems: "center" }}
+                  >
+                    <Text
+                      style={{
+                        color: "#f59e0b",
+                        fontSize: 13,
+                        fontWeight: "600",
+                      }}
+                    >
+                      + Start a new group
+                    </Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                  <Text
+                    style={{ color: "#9ca3af", fontSize: 13, marginBottom: 12 }}
+                  >
+                    No active groups yet. Start one and invite friends to unlock
+                    a group price!
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => setShowGroupStarter(true)}
+                    style={{
+                      backgroundColor: "#f59e0b",
+                      borderRadius: 10,
+                      paddingVertical: 12,
+                      alignItems: "center",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      gap: 8,
+                    }}
+                  >
+                    <MaterialIcons name="add" size={18} color="#000" />
+                    <Text
+                      style={{
+                        color: "#000",
+                        fontWeight: "bold",
+                        fontSize: 15,
+                      }}
+                    >
+                      Start a Group Buy
+                    </Text>
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
+          </View>
+
+          <GroupBuyStarter
+            visible={showGroupStarter}
+            onClose={() => setShowGroupStarter(false)}
+            product={product}
+            onCreated={(group) => {
+              setShowGroupStarter(false);
+              router.push({
+                pathname: "/(Screens)/GroupOrderPage",
+                params: { orderId: group.$id },
+              });
+            }}
+          />
 
           <RelatedProducts
             relatedProducts={relatedProducts}
@@ -1365,7 +1483,7 @@ const ProductDetails = () => {
             if (!user) {
               Alert.alert(
                 "Login Required",
-                "Please log in to add items to your cart."
+                "Please log in to add items to your cart.",
               );
               return;
             }
