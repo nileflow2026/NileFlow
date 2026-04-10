@@ -2,7 +2,7 @@
 // src/api/customerAxiosClient.js (or update your existing api.js)
 import axios from "axios";
 
-const API_BASE_URL = "https://new-nile-flow-backend.onrender.com"; // Update with your API base URL
+const API_BASE_URL = "https://nile-flow-backend.onrender.com"; // Update with your API base URL
 
 const axiosClient = axios.create({
   baseURL: API_BASE_URL,
