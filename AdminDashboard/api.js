@@ -3,7 +3,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "https://new-nile-flow-backend.onrender.com",
+  baseURL: "https://nile-flow-backend.onrender.com",
   headers: {
     "Content-Type": "application/json",
   },
@@ -57,7 +57,7 @@ axiosClient.interceptors.response.use(
         {
           withCredentials: true,
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
 
       // Process queued requests
@@ -83,7 +83,7 @@ axiosClient.interceptors.response.use(
     } finally {
       isRefreshing = false;
     }
-  }
+  },
 );
 
 export default axiosClient;

@@ -1,7 +1,7 @@
 // src/vendor/api/vendorAxiosClient.js
 import axios from "axios";
 
-const API_BASE_URL = "https://new-nile-flow-backend.onrender.com";
+const API_BASE_URL = "https://nile-flow-backend.onrender.com";
 
 const vendorAxiosClient = axios.create({
   baseURL: API_BASE_URL,

@@ -2,7 +2,7 @@
 // src/rider/api/riderAxiosClient.js
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://nile-flow-backend.onrender.com";
 
 const riderAxiosClient = axios.create({
   baseURL: API_BASE_URL,
@@ -50,7 +50,7 @@ riderAxiosClient.interceptors.response.use(
     // ✅ If on public pages, don't try to refresh
     const publicRoutes = ["/rider/login", "/rider/register"];
     const isPublicRoute = publicRoutes.some((route) =>
-      window.location.pathname.startsWith(route)
+      window.location.pathname.startsWith(route),
     );
 
     if (isPublicRoute) {
@@ -81,7 +81,7 @@ riderAxiosClient.interceptors.response.use(
         {
           withCredentials: true,
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
 
       console.log("[Rider Axios] Token refreshed successfully");
@@ -97,7 +97,7 @@ riderAxiosClient.interceptors.response.use(
 
       console.error(
         "[Rider Axios] Refresh token failed:",
-        refreshError.response?.data || refreshError.message
+        refreshError.response?.data || refreshError.message,
       );
 
       // ✅ Only trigger logout if not on public route
@@ -112,7 +112,7 @@ riderAxiosClient.interceptors.response.use(
 
       return Promise.reject(refreshError);
     }
-  }
+  },
 );
 
 export default riderAxiosClient;
