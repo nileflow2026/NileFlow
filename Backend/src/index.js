@@ -263,7 +263,7 @@ try {
 
         // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) {
-          console.log("✅ CORS: Allowing request with no origin");
+          /* console.log("✅ CORS: Allowing request with no origin"); */
           return callback(null, true);
         }
 

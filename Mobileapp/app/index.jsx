@@ -8,7 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const Index = () => {
   const router = useRouter();
-  const { isLogged, loading } = useGlobalContext();
+  /*   const { isLogged, loading } = useGlobalContext();
 
   useEffect(() => {
     if (!loading && !isLogged) {
@@ -23,7 +23,7 @@ const Index = () => {
 
   if (isLogged) {
     return null;
-  }
+  } */
 
   return (
     <LinearGradient
@@ -73,7 +73,7 @@ const Index = () => {
             PREMIUM AFRICAN MARKETPLACE
           </Text>
 
-          <Text
+          {/* <Text
             style={{
               color: "#D1D5DB",
               fontSize: 14,
@@ -82,7 +82,7 @@ const Index = () => {
             }}
           >
             Bringing Light and Progress Through Authentic African Commerce
-          </Text>
+          </Text> */}
 
           {/* Welcome */}
           <Text

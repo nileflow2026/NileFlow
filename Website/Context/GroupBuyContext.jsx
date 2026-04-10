@@ -15,7 +15,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import axiosClient from "../../axiosClient";
+import axiosClient from "../axiosClient";
 import { useCustomerAuth } from "./CustomerAuthContext";
 
 const GroupBuyContext = createContext(null);
