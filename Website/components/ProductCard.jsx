@@ -40,7 +40,7 @@ const ProductCard = ({
   const categoryName =
     product.categoryName ||
     product.category?.name ||
-    (typeof product.category === "string" ? product.category : null);
+    null;
   const categoryPath = categoryValue
     ? `/categories/${encodeURIComponent(String(categoryValue))}`
     : null;

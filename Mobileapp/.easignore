@@ -1,0 +1,7 @@
+# Common ignores
+
+node_modules
+.expo
+android
+ios
+\*.log

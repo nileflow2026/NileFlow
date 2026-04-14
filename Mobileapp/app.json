@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "NileFlowApp",
-    "slug": "NileFlowApp",
+    "name": "Nile Flow",
+    "slug": "nile-flow",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -11,7 +11,10 @@
     "extra": {
       "API_URL": "process.env.API_BASE_URL",
       "STRIPE_KEY": "process.env.STRIPE_KEY",
-      "router": {}
+      "router": {},
+      "eas": {
+        "projectId": "ca39cda3-b6fc-4a8a-a0ed-9d8a280862a4"
+      }
     },
     "ios": {
       "supportsTablet": true
@@ -24,7 +27,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.nileflowafrica.app"
     },
     "web": {
       "bundler": "metro",
