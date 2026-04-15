@@ -287,7 +287,7 @@ const getProducts = async (req, res) => {
 
     // Category filter
     if (category && category !== "all") {
-      baseFilters.push(Query.equal("categoryId", category));
+      baseFilters.push(Query.contains("categoryId", category));
     }
 
     // Search filter (search in multiple fields)
@@ -430,7 +430,7 @@ const getProductsForMobile = async (req, res) => {
 
     // Category filter (use categoryId for consistency)
     if (category && category !== "all") {
-      queries.push(Query.equal("categoryId", category));
+      queries.push(Query.contains("categoryId", category));
     }
 
     // Search filter
@@ -1224,7 +1224,7 @@ const getProductsByCategory = async (req, res) => {
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_PRODUCT_COLLECTION_ID,
       [
-        Query.equal("categoryId", categoryId),
+        Query.contains("categoryId", categoryId),
         Query.orderDesc("$createdAt"),
         Query.limit(100),
       ],
@@ -1350,7 +1350,7 @@ const getMobileProducts = async (req, res) => {
 
     // If a category is specified, add a filter query
     if (category && category !== "all") {
-      queries.push(Query.equal("categoryId", category));
+      queries.push(Query.contains("categoryId", category));
     }
 
     // ✅ Fetch ALL products regardless of approval status
@@ -1424,7 +1424,7 @@ const getProducts2 = async (req, res) => {
     let queries = [Query.limit(100), Query.orderDesc("$createdAt")];
 
     if (category && category !== "all") {
-      queries.push(Query.equal("categoryId", category));
+      queries.push(Query.contains("categoryId", category));
     }
     if (search) {
       queries.push(Query.search("productName", search));
