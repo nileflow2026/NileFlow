@@ -233,7 +233,7 @@ const CategoryPage = () => {
       // Use a single request and normalize the response into an array
       const url = !subId
         ? `/api/customerprofile/products/category/${categoryId}`
-        : `/api/products/products/subcategory/${subId}`;
+        : `/api/products/subcategory/${subId}`;
 
       const productsResponse = await axiosClient.get(url);
       const resData = productsResponse.data;

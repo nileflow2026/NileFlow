@@ -55,11 +55,7 @@ router.post("/products/flashsale", authenticateToken, addFlashSale);
 router.get("/products/flashsale", authenticateToken, getFlashSales);
 // GET all subcategories under a specific category
 router.get("/categories/:id/subcategories", getSubcategoriesByCategoryId);
-router.get(
-  "/products/subcategory/:id",
-  authenticateToken,
-  getProductsBySubcategoryId
-);
+router.get("/products/subcategory/:id", getProductsBySubcategoryId);
 // POST a new subcategory under a specific category
 router.post("/:id/subcategories", authenticateToken, createSubcategory);
 
@@ -68,7 +64,7 @@ router.get("/products/pending", authenticateToken, getPendingProducts);
 router.get(
   "/products/pending/:productId",
   authenticateToken,
-  getPendingProducts
+  getPendingProducts,
 );
 router.post("/products/approve/:productId", authenticateToken, approveProduct);
 router.post("/products/reject/:productId", authenticateToken, rejectProduct);
@@ -85,7 +81,7 @@ router.get("/products/:productId/stock", async (req, res) => {
     const product = await db.getDocument(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_PRODUCT_COLLECTION_ID,
-      productId
+      productId,
     );
 
     res.json({
