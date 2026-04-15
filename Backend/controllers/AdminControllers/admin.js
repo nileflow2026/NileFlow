@@ -946,14 +946,8 @@ const getProductsBySubcategoryId = async (req, res) => {
     const products = await db.listDocuments(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_PRODUCT_COLLECTION_ID,
-      [Query.equal("subcategoryId", id)], // <-- Fix this line
+      [Query.contains("subcategoryId", id)],
     );
-
-    if (!products.documents.length) {
-      return res
-        .status(404)
-        .json({ message: "No products found in this subcategory" });
-    }
 
     res.json(products.documents);
   } catch (error) {

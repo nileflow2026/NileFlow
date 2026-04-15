@@ -261,6 +261,7 @@ const CategoryPage = () => {
       }
     } catch (error) {
       console.error("❌ Error fetching subcategory products:", error);
+      setProducts([]);
     } finally {
       setLoading(false);
     }
