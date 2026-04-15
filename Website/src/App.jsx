@@ -58,8 +58,7 @@ const ApplicationForm = lazy(() => import("../components/ApplicationForm"));
 
 // Keep essential components synchronous
 import { CartProvider } from "../components/CartContext";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// slick-carousel CSS is deferred in main.jsx — do NOT re-import here
 import { NotificationProvider } from "../Context/NotificationContext";
 import Maintenance from "../components/Maintenance";
 import CustomerAuthProvider, {

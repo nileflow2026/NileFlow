@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import axiosClient from "../api";
 import { Link } from "react-router-dom";
 import { formatPrice } from "../utils/priceFormatter";
@@ -21,7 +21,8 @@ const FeaturedProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [hoveredProduct, setHoveredProduct] = useState(null);
+  // Removed `hoveredProduct` JS state — was causing the entire product list to
+  // re-render on every hover event. Image scale is now driven by CSS group-hover.
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -158,8 +159,6 @@ const FeaturedProducts = () => {
                   <div
                     key={product.$id || index}
                     className="group relative overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2"
-                    onMouseEnter={() => setHoveredProduct(product.$id || index)}
-                    onMouseLeave={() => setHoveredProduct(null)}
                   >
                     {/* Background Glow */}
                     <div
@@ -189,11 +188,7 @@ const FeaturedProducts = () => {
                           <img
                             src={product.image}
                             alt={product.name || product.productName}
-                            className={`w-full h-full object-cover transition-transform duration-700 ${
-                              hoveredProduct === (product.$id || index)
-                                ? "scale-110"
-                                : "scale-100"
-                            }`}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                            loading="lazy" decoding="async" />
                         </Link>
 
@@ -396,4 +391,4 @@ const FeaturedProducts = () => {
   );
 };
 
-export default FeaturedProducts;
+export default memo(FeaturedProducts);

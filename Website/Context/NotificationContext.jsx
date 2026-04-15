@@ -6,6 +6,7 @@ import React, {
   useEffect,
   useState,
   useCallback,
+  useMemo,
 } from "react";
 import { getCustomerNotification } from "../CustomerServices";
 import { client, Config } from "../appwrite";
@@ -232,25 +233,36 @@ export const NotificationProvider = ({ children }) => {
     };
   }, [initializeNotifications, handleNewNotification]);
 
-  const value = {
-    // State
-    notificationCount,
-    notifications,
-    isNotificationsEnabled,
-    pushSubscription,
-    lastNotificationTime,
-
-    // Actions
-    setNotificationCount,
-    enableNotifications,
-    disableNotifications,
-    markAsRead,
-    markAllAsRead,
-    clearAllNotifications,
-
-    // Service
-    notificationService: notificationService.getStatus(),
-  };
+  // Memoize context value — NotificationContext is consumed by Header on every render;
+  // without this, every notification state change triggers a full Header re-render.
+  const value = useMemo(
+    () => ({
+      notificationCount,
+      notifications,
+      isNotificationsEnabled,
+      pushSubscription,
+      lastNotificationTime,
+      setNotificationCount,
+      enableNotifications,
+      disableNotifications,
+      markAsRead,
+      markAllAsRead,
+      clearAllNotifications,
+      notificationService: notificationService.getStatus(),
+    }),
+    [
+      notificationCount,
+      notifications,
+      isNotificationsEnabled,
+      pushSubscription,
+      lastNotificationTime,
+      enableNotifications,
+      disableNotifications,
+      markAsRead,
+      markAllAsRead,
+      clearAllNotifications,
+    ],
+  );
 
   return (
     <NotificationContext.Provider value={value}>

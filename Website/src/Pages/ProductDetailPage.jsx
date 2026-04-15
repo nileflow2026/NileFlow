@@ -173,11 +173,8 @@ const ProductDetailPage = () => {
   }, [id]);
 
   // Fetch reviews separately
-  useEffect(() => {
-    if (product?.$id) {
-      fetchReviews(product.$id).then(setReviews);
-    }
-  }, [product]);
+  // NOTE: Reviews are already fetched inside loadProduct when the product loads.
+  // This second useEffect is removed to prevent a duplicate network request.
 
   const handleAddReview = async (e) => {
     e.preventDefault();

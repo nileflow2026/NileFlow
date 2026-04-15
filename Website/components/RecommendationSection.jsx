@@ -1,5 +1,6 @@
 // components/RecommendationSection.jsx
-import React from "react";
+import React, { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecommendations } from "../hooks/useRecommendations";
 import axiosClient from "../api.js";
 import RecommendationSkeleton from "./RecommendationSkeleton";
@@ -86,6 +87,7 @@ export const RecommendationSection = ({
   category = null,
   context = "homepage",
 }) => {
+  const navigate = useNavigate();
   const { recommendations, loading, metadata } = useRecommendations(userId, {
     limit: 12,
     category,
@@ -93,30 +95,31 @@ export const RecommendationSection = ({
     exploration: true,
   });
 
-  // Track clicks for learning
-  const handleItemClick = async (item, position) => {
-    try {
-      // Send feedback immediately - UPDATED FORMAT
-      await axiosClient.post("/api/recommendations/feedback/clicks", {
-        clicks: [
-          // ✅ Backend expects array of clicks
-          {
-            userId,
-            itemId: item.itemId || item.id, // ✅ Use itemId (from API response)
-            sessionId: metadata?.sessionId,
-            position,
-            timestamp: new Date().toISOString(), // ✅ ISO string format
-          },
-        ],
-      });
-    } catch (error) {
-      console.error("Failed to track click:", error);
-      // Don't block navigation if tracking fails
-    }
+  // useCallback prevents a new function reference on every render,
+  // which would cause every RecommendationCard to re-render unnecessarily
+  const handleItemClick = useCallback(
+    async (item, position) => {
+      try {
+        await axiosClient.post("/api/recommendations/feedback/clicks", {
+          clicks: [
+            {
+              userId,
+              itemId: item.itemId || item.id,
+              sessionId: metadata?.sessionId,
+              position,
+              timestamp: new Date().toISOString(),
+            },
+          ],
+        });
+      } catch (error) {
+        // Don't block navigation if tracking fails
+      }
 
-    // Navigate to product page
-    window.location.href = `/products/${item.itemId || item.id}`;
-  };
+      // Use React Router instead of window.location.href to avoid full page reload
+      navigate(`/products/${item.itemId || item.id}`);
+    },
+    [userId, metadata?.sessionId, navigate],
+  );
 
   if (loading) return <RecommendationSkeleton />;
   if (

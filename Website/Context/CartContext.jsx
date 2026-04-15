@@ -64,7 +64,7 @@ export const CartProvider = ({ children }) => {
   const checkProductStock = async (productId, quantity = 1) => {
     try {
       const response = await axiosClient.get(
-        `/api/admin/products/products/${productId}/stock`
+        `/api/admin/products/products/${productId}/stock`,
       );
       return response.data;
     } catch (error) {
@@ -165,8 +165,8 @@ export const CartProvider = ({ children }) => {
           prevCart.map((item) =>
             item.$id === cartItemId
               ? { ...item, quantity: updated.quantity }
-              : item
-          )
+              : item,
+          ),
         );
         toast.success("Quantity updated");
       }
@@ -231,7 +231,7 @@ export const CartProvider = ({ children }) => {
       updateQuantity,
       fetchCartItems,
     }),
-    [cart]
+    [cart],
   );
 
   return (

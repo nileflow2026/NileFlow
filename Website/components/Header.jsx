@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "./CartContext";
 import {
@@ -46,11 +46,20 @@ const Header = () => {
       africanGradients[Math.floor(Math.random() * africanGradients.length)];
     setHeaderGradient(randomGradient);
 
+    // Throttle scroll handler with requestAnimationFrame to avoid blocking
+    // the main thread on every scroll pixel in low-end devices
+    let rafPending = false;
     const handleScroll = () => {
-      setScrollEffect(window.scrollY > 20);
+      if (!rafPending) {
+        rafPending = true;
+        requestAnimationFrame(() => {
+          setScrollEffect(window.scrollY > 20);
+          rafPending = false;
+        });
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -88,7 +97,9 @@ const Header = () => {
                 src="/images/logo.png"
                 alt="Nile Flow"
                 className="relative h-12 w-12 md:h-14 md:w-14 object-contain drop-shadow-md"
-               loading="lazy" decoding="async" />
+                loading="lazy"
+                decoding="async"
+              />
             </div>
             <div className="hidden lg:flex flex-col">
               <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-amber-300 to-emerald-200 bg-clip-text text-transparent font-serif tracking-wide">
@@ -198,7 +209,9 @@ const Header = () => {
                           src={user.avatarUrl || "/images/logo.png"}
                           alt="Profile"
                           className="relative w-10 h-10 rounded-full border border-amber-300/40 object-cover"
-                         loading="lazy" decoding="async" />
+                          loading="lazy"
+                          decoding="async"
+                        />
                       </div>
                       <FiChevronDown
                         className={`text-amber-100 transition-transform duration-300 ${
@@ -314,7 +327,9 @@ const Header = () => {
                     src={user.avatarUrl || "/images/logo.png"}
                     alt="Profile"
                     className="w-12 h-12 rounded-full border-2 border-amber-400/30"
-                   loading="lazy" decoding="async" />
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <div>
                     <p className="font-bold text-amber-100">{user.username}</p>
                     <p className="text-sm text-amber-100/60">Welcome back!</p>
@@ -400,4 +415,5 @@ const Header = () => {
   );
 };
 
-export default Header;
+// React.memo prevents re-renders when parent context updates don't affect Header props
+export default memo(Header);

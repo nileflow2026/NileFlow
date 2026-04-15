@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useState, useCallback, memo } from "react";
 import { Link } from "react-router-dom";
 import AddToCartButton from "./AddToCartButton";
-import { fetchReviews } from "../CustomerServices";
 import {
   faStar,
   faStarHalfStroke,
@@ -23,6 +22,61 @@ import {
   Sparkles,
 } from "lucide-react";
 
+// Extracted outside ProductCard so it is never recreated on re-renders
+const GRADIENTS = [
+  "from-amber-500/20 via-orange-500/20 to-yellow-500/20",
+  "from-emerald-500/20 via-green-500/20 to-teal-500/20",
+  "from-red-500/20 via-rose-500/20 to-pink-500/20",
+  "from-blue-500/20 via-indigo-500/20 to-purple-500/20",
+  "from-violet-500/20 via-purple-500/20 to-fuchsia-500/20",
+  "from-cyan-500/20 via-blue-500/20 to-sky-500/20",
+];
+
+const getProductGradient = (productId) => {
+  const hash = productId
+    ? productId.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0)
+    : 0;
+  return GRADIENTS[hash % GRADIENTS.length];
+};
+
+// Defined outside ProductCard so it is a stable reference and never recreated
+const StarRating = ({ rating }) => {
+  const stars = [];
+  const roundedRating = Math.round(rating * 2) / 2;
+  for (let i = 1; i <= 5; i++) {
+    if (i <= roundedRating) {
+      stars.push(
+        <FontAwesomeIcon
+          key={i}
+          icon={faStar}
+          className="text-yellow-400 fill-current w-2 h-2 xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 lg:w-4 lg:h-4 xl:w-4.5 xl:h-4.5 2xl:w-5 2xl:h-5"
+        />,
+      );
+    } else if (i - 0.5 === roundedRating) {
+      stars.push(
+        <FontAwesomeIcon
+          key={i}
+          icon={faStarHalfStroke}
+          className="text-yellow-400 w-2 h-2 xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 lg:w-4 lg:h-4 xl:w-4.5 xl:h-4.5 2xl:w-5 2xl:h-5"
+        />,
+      );
+    } else {
+      stars.push(
+        <FontAwesomeIcon
+          key={i}
+          icon={faStarRegular}
+          className="text-gray-600 w-2 h-2 xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 lg:w-4 lg:h-4 xl:w-4.5 xl:h-4.5 2xl:w-5 2xl:h-5"
+        />,
+      );
+    }
+  }
+  return (
+    <div className="flex gap-0.5 xs:gap-1 sm:gap-1 md:gap-1.5 lg:gap-1.5 xl:gap-2">
+      {stars}
+    </div>
+  );
+};
+
 const ProductCard = ({
   product,
   id,
@@ -31,7 +85,6 @@ const ProductCard = ({
   premium = false,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [stockStatus, setStockStatus] = useState("");
   const { toggleFavorite, isFavorite } = useFavorites();
 
   const productId = id || product.$id || product.id;
@@ -43,76 +96,22 @@ const ProductCard = ({
     : null;
   const isWishlisted = isFavorite(productId);
 
-  const handleWishlistClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleFavorite({ ...product, $id: productId, id: productId });
-  };
+  // Derive stock status directly — no useEffect or state needed
+  const stockStatus =
+    product.stock <= 0
+      ? "Out of Stock"
+      : product.stock <= 5
+        ? `Only ${product.stock} left`
+        : "In Stock";
 
-  useEffect(() => {
-    if (product.stock <= 0) {
-      setStockStatus("Out of Stock");
-    } else if (product.stock <= 5) {
-      setStockStatus(`Only ${product.stock} left`);
-    } else {
-      setStockStatus("In Stock");
-    }
-  }, [product.stock]);
-
-  const StarRating = ({ rating }) => {
-    const stars = [];
-    const roundedRating = Math.round(rating * 2) / 2;
-
-    for (let i = 1; i <= 5; i++) {
-      if (i <= roundedRating) {
-        stars.push(
-          <FontAwesomeIcon
-            key={i}
-            icon={faStar}
-            className="text-yellow-400 fill-current w-2 h-2 xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 lg:w-4 lg:h-4 xl:w-4.5 xl:h-4.5 2xl:w-5 2xl:h-5"
-          />,
-        );
-      } else if (i - 0.5 === roundedRating) {
-        stars.push(
-          <FontAwesomeIcon
-            key={i}
-            icon={faStarHalfStroke}
-            className="text-yellow-400 w-2 h-2 xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 lg:w-4 lg:h-4 xl:w-4.5 xl:h-4.5 2xl:w-5 2xl:h-5"
-          />,
-        );
-      } else {
-        stars.push(
-          <FontAwesomeIcon
-            key={i}
-            icon={faStarRegular}
-            className="text-gray-600 w-2 h-2 xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 lg:w-4 lg:h-4 xl:w-4.5 xl:h-4.5 2xl:w-5 2xl:h-5"
-          />,
-        );
-      }
-    }
-
-    return (
-      <div className="flex gap-0.5 xs:gap-1 sm:gap-1 md:gap-1.5 lg:gap-1.5 xl:gap-2">
-        {stars}
-      </div>
-    );
-  };
-
-  const getProductGradient = (productId) => {
-    const gradients = [
-      "from-amber-500/20 via-orange-500/20 to-yellow-500/20",
-      "from-emerald-500/20 via-green-500/20 to-teal-500/20",
-      "from-red-500/20 via-rose-500/20 to-pink-500/20",
-      "from-blue-500/20 via-indigo-500/20 to-purple-500/20",
-      "from-violet-500/20 via-purple-500/20 to-fuchsia-500/20",
-      "from-cyan-500/20 via-blue-500/20 to-sky-500/20",
-    ];
-    // Create a simple hash from product ID for consistent gradient
-    const hash = productId
-      ? productId.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0)
-      : 0;
-    return gradients[hash % gradients.length];
-  };
+  const handleWishlistClick = useCallback(
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleFavorite({ ...product, $id: productId, id: productId });
+    },
+    [product, productId, toggleFavorite],
+  );
 
   const gradientClass = getProductGradient(id);
 
@@ -357,4 +356,6 @@ const ProductCard = ({
   );
 };
 
-export default ProductCard;
+// React.memo prevents re-renders when parent re-renders but props haven't changed.
+// This is critical for product lists with many cards.
+export default memo(ProductCard);

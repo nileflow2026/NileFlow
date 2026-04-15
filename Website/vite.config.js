@@ -3,6 +3,16 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
+// Packages that live exclusively on the server and must NEVER enter the browser bundle.
+// Keeping them here makes the intent explicit and helps Rollup skip them during tree-shaking.
+const SERVER_ONLY_PACKAGES = [
+  "ioredis",   // Redis client – Node.js only
+  "web-push",  // Push-notification server library – Node.js only
+  "crypto",    // Shadowed by a stub that re-exports the Node built-in – not needed in browser
+  // "install" and "npm" are tooling packages with no import in frontend code;
+  // Rollup's tree-shaking already skips them, but listing here is defensive.
+];
+
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const config = {
@@ -34,6 +44,7 @@ export default defineConfig(({ mode }) => {
                   "console.debug",
                   "console.trace",
                 ],
+                passes: 2,       // Extra pass for smaller output
               },
               mangle: true,
             }
@@ -41,6 +52,10 @@ export default defineConfig(({ mode }) => {
 
       // Aggressive code splitting
       rollupOptions: {
+        // Exclude server-only packages from the browser bundle entirely.
+        // Without this, Rollup would attempt to resolve them and either fail
+        // or include large Node.js-only code paths.
+        external: SERVER_ONLY_PACKAGES,
         output: {
           // Manual chunk splitting for better caching - prevent empty chunks
           manualChunks: (id) => {
@@ -104,7 +119,7 @@ export default defineConfig(({ mode }) => {
               return "payment";
             }
 
-            // Monitoring
+            // Monitoring (loaded async in main.jsx — keep isolated)
             if (id.includes("@sentry/react")) {
               return "monitoring";
             }
@@ -115,17 +130,8 @@ export default defineConfig(({ mode }) => {
             }
           },
 
-          // Optimize asset filenames for caching
-          chunkFileNames: (chunkInfo) => {
-            const facadeModuleId = chunkInfo.facadeModuleId
-              ? chunkInfo.facadeModuleId
-                  .split("/")
-                  .pop()
-                  .replace(".jsx", "")
-                  .replace(".js", "")
-              : "chunk";
-            return `assets/js/[name]-[hash].js`;
-          },
+          // Optimize asset filenames for long-term caching
+          chunkFileNames: () => `assets/js/[name]-[hash].js`,
           assetFileNames: (assetInfo) => {
             const extType = assetInfo.name.split(".").pop();
             if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
@@ -139,22 +145,15 @@ export default defineConfig(({ mode }) => {
         },
       },
 
-      // Optimize assets
-      assetsInlineLimit: 4096, // Inline small assets as base64
+      // Inline assets smaller than 8 KB as base64 to save a round-trip request.
+      // Essential for low-bandwidth African markets (fewer HTTP requests = faster load).
+      assetsInlineLimit: 8192,
       cssCodeSplit: true,
       sourcemap: mode === "development", // Only in development
-
-      // Rollup bundle analyzer
-      ...(mode === "analyze" && {
-        rollupOptions: {
-          ...config.build?.rollupOptions,
-          external: [],
-          plugins: [],
-        },
-      }),
     },
 
-    // Optimize dependencies
+    // Pre-bundle critical deps so the browser receives a single optimised file
+    // instead of hundreds of small module requests during dev.
     optimizeDeps: {
       include: [
         "react",
@@ -162,10 +161,15 @@ export default defineConfig(({ mode }) => {
         "react-router-dom",
         "axios",
         "framer-motion",
+        "react-toastify",
+        "lucide-react",
       ],
+      // Exclude server-only packages from Vite's dep-scanning entirely to
+      // prevent "Cannot find module" errors during development startup.
+      exclude: SERVER_ONLY_PACKAGES,
     },
 
-    // Enable gzip compression
+    // Enable CORS in development
     server: {
       cors: true,
     },

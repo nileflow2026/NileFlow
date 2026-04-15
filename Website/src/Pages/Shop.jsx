@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import {
@@ -9,6 +9,7 @@ import {
 } from "../../CustomerServices";
 import ProductCard from "../../components/ProductCard";
 import axiosClient from "../../api";
+import useDebounce from "../../useDebounce";
 import {
   Filter,
   X,
@@ -39,6 +40,12 @@ const Shop = () => {
   const [sortBy, setSortBy] = useState("featured");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRegions, setSelectedRegions] = useState([]);
+
+  // Debounce search to avoid filtering on every keystroke
+  const debouncedSearch = useDebounce(searchQuery, 300);
+
+  // Ratings cache ref — persists across re-renders without causing them
+  const ratingsCache = useRef({});
 
   const africanRegions = [
     { id: "west", name: "West Africa", color: "from-amber-600 to-orange-600" },
@@ -98,72 +105,76 @@ const Shop = () => {
     loadProducts();
   }, [selectedCategory]);
 
+  // Only fetch ratings when user has selected "sort by rating" to avoid N+1 on page load
   useEffect(() => {
-    const fetchAllRatings = async () => {
-      if (products.length === 0) return;
+    if (sortBy !== "rating" || products.length === 0) return;
 
-      const promises = products.map(async (product) => {
-        if (!product.$id) return { productId: product.$id, reviews: [] };
+    const fetchMissingRatings = async () => {
+      // Only fetch for products not yet in cache
+      const uncached = products.filter(
+        (p) => p.$id && !ratingsCache.current[p.$id],
+      );
+      if (uncached.length === 0) {
+        // All already cached — apply from cache
+        setRatings({ ...ratingsCache.current });
+        return;
+      }
 
-        try {
-          const reviews = await fetchReviews(product.$id);
-          return { productId: product.$id, reviews: reviews || [] };
-        } catch (error) {
-          console.error("Error fetching reviews:", error);
-          return { productId: product.$id, reviews: [] };
-        }
-      });
+      const results = await Promise.all(
+        uncached.map(async (product) => {
+          try {
+            const reviews = await fetchReviews(product.$id);
+            return { productId: product.$id, reviews: reviews || [] };
+          } catch {
+            return { productId: product.$id, reviews: [] };
+          }
+        }),
+      );
 
-      const results = await Promise.all(promises);
-
-      const ratingsData = {};
       results.forEach(({ productId, reviews }) => {
-        const totalRatings = reviews.length;
-        const averageRating =
-          totalRatings > 0
-            ? reviews.reduce((sum, review) => sum + (review.rating || 0), 0) /
-              totalRatings
+        const count = reviews.length;
+        const average =
+          count > 0
+            ? reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / count
             : 0;
-        ratingsData[productId] = {
-          count: totalRatings,
-          average: averageRating,
-        };
+        ratingsCache.current[productId] = { count, average };
       });
 
-      setRatings(ratingsData);
+      setRatings({ ...ratingsCache.current });
     };
 
-    fetchAllRatings();
-  }, [products]);
+    fetchMissingRatings();
+  }, [products, sortBy]);
 
-  const filteredProducts = products
-    .filter((product) => {
-      const price = product.price || 0;
-      return price >= priceRange.min && price <= priceRange.max;
-    })
-    .filter((product) => {
-      if (searchQuery === "") return true;
-      const name = product.productName || product.name || "";
-      const desc = product.description || "";
-      return (
-        name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        desc.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "price-low":
-          return (a.price || 0) - (b.price || 0);
-        case "price-high":
-          return (b.price || 0) - (a.price || 0);
-        case "rating":
-          return (
-            (ratings[b.$id]?.average || 0) - (ratings[a.$id]?.average || 0)
-          );
-        default:
-          return 0;
-      }
-    });
+  // Memoized filtering — only recomputes when dependencies change
+  const filteredProducts = useMemo(() => {
+    const query = debouncedSearch.toLowerCase();
+    return products
+      .filter((product) => {
+        const price = product.price || 0;
+        return price >= priceRange.min && price <= priceRange.max;
+      })
+      .filter((product) => {
+        if (!query) return true;
+        const name = (product.productName || product.name || "").toLowerCase();
+        const desc = (product.description || "").toLowerCase();
+        return name.includes(query) || desc.includes(query);
+      })
+      .sort((a, b) => {
+        switch (sortBy) {
+          case "price-low":
+            return (a.price || 0) - (b.price || 0);
+          case "price-high":
+            return (b.price || 0) - (a.price || 0);
+          case "rating":
+            return (
+              (ratings[b.$id]?.average || 0) - (ratings[a.$id]?.average || 0)
+            );
+          default:
+            return 0;
+        }
+      });
+  }, [products, debouncedSearch, priceRange, sortBy, ratings]);
 
   const clearFilters = () => {
     setSelectedCategory("all");

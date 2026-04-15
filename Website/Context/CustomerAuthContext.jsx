@@ -6,6 +6,7 @@ import React, {
   useState,
   useEffect,
   useCallback,
+  useMemo,
 } from "react";
 import {
   getCurrentUser,
@@ -216,21 +217,39 @@ export const CustomerAuthProvider = ({ children }) => {
     }
   }, []);
 
-  const value = {
-    user,
-    isAuthenticated,
-    isLoading,
-    showPickupModal,
-    signUp,
-    signIn,
-    logout,
-    updateUser,
-    setPickupModalVisible,
-    loginWithGoogle,
-    loginWithFacebook,
-    forgotPassword,
-    resetPassword,
-  };
+  // Memoize context value to prevent all consumers re-rendering on unrelated state changes
+  const value = useMemo(
+    () => ({
+      user,
+      isAuthenticated,
+      isLoading,
+      showPickupModal,
+      signUp,
+      signIn,
+      logout,
+      updateUser,
+      setPickupModalVisible,
+      loginWithGoogle,
+      loginWithFacebook,
+      forgotPassword,
+      resetPassword,
+    }),
+    [
+      user,
+      isAuthenticated,
+      isLoading,
+      showPickupModal,
+      signUp,
+      signIn,
+      logout,
+      updateUser,
+      setPickupModalVisible,
+      loginWithGoogle,
+      loginWithFacebook,
+      forgotPassword,
+      resetPassword,
+    ],
+  );
 
   return (
     <CustomerAuthContext.Provider value={value}>
