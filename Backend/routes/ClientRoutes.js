@@ -58,8 +58,8 @@ router.post("/sumbitRating", authenticateToken, submitRating);
 router.post("/updatedAvatar", authenticateToken, updateUserAvatar);
 
 router.get("/categories", getCategories);
-router.get("/categories/:categoryId", getCategoryById);
 router.get("/categories/getcategories", getCategorie);
+router.get("/categories/:categoryId", getCategoryById);
 router.get("/mobile-categories", getMobileCategories);
 router.get("/mobile-products", getProducts2);
 router.get("/products/category/:categoryId", getProductsByCategory);

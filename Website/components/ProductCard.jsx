@@ -37,10 +37,7 @@ const ProductCard = ({
   const productId = id || product.$id || product.id;
   const categoryValue =
     product.categoryId || product.category?.$id || product.category || null;
-  const categoryName =
-    product.categoryName ||
-    product.category?.name ||
-    null;
+  const categoryName = product.categoryName || product.category?.name || null;
   const categoryPath = categoryValue
     ? `/categories/${encodeURIComponent(String(categoryValue))}`
     : null;

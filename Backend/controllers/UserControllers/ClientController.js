@@ -1219,24 +1219,6 @@ const getProductsByCategory = async (req, res) => {
       });
     }
 
-    // Verify category exists
-    try {
-      const categoryDoc = await db.getDocument(
-        env.APPWRITE_DATABASE_ID,
-        env.APPWRITE_CATEGORIES_COLLECTION_ID,
-        categoryId,
-      );
-      console.log(`✅ Category found: ${categoryDoc.name}`);
-    } catch (error) {
-      if (error.code === 404) {
-        return res.status(404).json({
-          success: false,
-          error: "Category not found",
-        });
-      }
-      throw error;
-    }
-
     // ✅ Fetch ALL products by category regardless of approval status
     const products = await db.listDocuments(
       env.APPWRITE_DATABASE_ID,
@@ -1257,13 +1239,6 @@ const getProductsByCategory = async (req, res) => {
     });
   } catch (error) {
     console.error("❌ Failed to fetch products by category:", error);
-
-    if (error.code === 400) {
-      return res.status(400).json({
-        success: false,
-        error: "Invalid category ID format",
-      });
-    }
 
     res.status(500).json({
       success: false,
