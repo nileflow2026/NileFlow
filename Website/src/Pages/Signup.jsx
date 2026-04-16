@@ -220,12 +220,12 @@ const SignUp = () => {
       <div class="bg-gradient-to-r from-emerald-900/80 to-green-900/80 backdrop-blur-sm border border-emerald-700/50 rounded-2xl p-4 shadow-2xl">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-[color:var(--nf-text-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
             </svg>
           </div>
           <div>
-            <p class="font-bold text-white">Account Created!</p>
+            <p class="font-bold text-[color:var(--nf-text-primary)]">Account Created!</p>
             <p class="text-emerald-100 text-sm">Welcome to Nile Flow Premium</p>
           </div>
         </div>
@@ -242,12 +242,12 @@ const SignUp = () => {
       <div class="bg-gradient-to-r from-red-900/80 to-amber-900/80 backdrop-blur-sm border border-red-700/50 rounded-2xl p-4 shadow-2xl">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-full bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-[color:var(--nf-text-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </div>
           <div>
-            <p class="font-bold text-white">Registration Failed</p>
+            <p class="font-bold text-[color:var(--nf-text-primary)]">Registration Failed</p>
             <p class="text-red-100 text-sm">${message}</p>
           </div>
         </div>
@@ -266,12 +266,12 @@ const SignUp = () => {
     <div class="bg-gradient-to-r from-blue-900/80 to-cyan-900/80 backdrop-blur-sm border border-blue-700/50 rounded-2xl p-4 shadow-2xl">
       <div class="flex items-center space-x-3">
         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-6 h-6 text-[color:var(--nf-text-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
           </svg>
         </div>
         <div>
-          <p class="font-bold text-white">Check Your Email</p>
+          <p class="font-bold text-[color:var(--nf-text-primary)]">Check Your Email</p>
           <p class="text-blue-100 text-sm">${message}</p>
         </div>
       </div>
@@ -282,7 +282,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -293,9 +293,9 @@ const SignUp = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-red-500/10 to-amber-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-8xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <UserPlus className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Premium Membership
             </span>
             <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -306,19 +306,19 @@ const SignUp = () => {
               Join Nile Flow
             </span>
             <br />
-            <span className="text-white">Premium African Marketplace</span>
+            <span className="text-[color:var(--nf-text-primary)]">Premium African Marketplace</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Create your premium account to access exclusive African products,
             members-only deals, and cultural experiences.
           </p>
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4">
-              <div className="text-2xl font-bold text-amber-300">500+</div>
-              <div className="text-amber-100/80 text-sm">Premium Products</div>
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4">
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)]">500+</div>
+              <div className="text-[color:var(--nf-text-muted)] text-sm">Premium Products</div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-4">
               <div className="text-2xl font-bold text-emerald-300">100%</div>
@@ -344,17 +344,17 @@ const SignUp = () => {
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Registration Form */}
             <div>
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden">
-                <div className="p-8 border-b border-amber-800/30">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden">
+                <div className="p-8 border-b border-[var(--nf-border-subtle)]">
                   <div className="flex items-center space-x-3 mb-2">
                     <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                      <UserPlus className="w-6 h-6 text-white" />
+                      <UserPlus className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-amber-200">
+                      <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                         Create Account
                       </h2>
-                      <p className="text-amber-100/70">
+                      <p className="text-[color:var(--nf-text-muted)]">
                         Join our premium African marketplace
                       </p>
                     </div>
@@ -365,7 +365,7 @@ const SignUp = () => {
                   <form onSubmit={handleSubmit} className="p-8 space-y-6">
                     {/* Full Name */}
                     <div>
-                      <label className="block text-amber-100 font-medium mb-2">
+                      <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                         <span className="flex items-center space-x-2">
                           <User className="w-4 h-4" />
                           <span>Full Name</span>
@@ -377,7 +377,7 @@ const SignUp = () => {
                           type="text"
                           value={username}
                           onChange={(e) => setUsername(e.target.value)}
-                          className="relative w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors"
+                          className="relative w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors"
                           placeholder="Enter your full name"
                           required
                         />
@@ -386,7 +386,7 @@ const SignUp = () => {
 
                     {/* Phone Number */}
                     <div>
-                      <label className="block text-amber-100 font-medium mb-2">
+                      <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                         <span className="flex items-center space-x-2">
                           <Phone className="w-4 h-4" />
                           <span>Phone Number</span>
@@ -398,7 +398,7 @@ const SignUp = () => {
                           type="tel"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
-                          className="relative w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors"
+                          className="relative w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors"
                           placeholder="+254 700 000 000"
                           required
                         />
@@ -407,7 +407,7 @@ const SignUp = () => {
 
                     {/* Email */}
                     <div>
-                      <label className="block text-amber-100 font-medium mb-2">
+                      <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                         <span className="flex items-center space-x-2">
                           <Mail className="w-4 h-4" />
                           <span>Email Address</span>
@@ -419,7 +419,7 @@ const SignUp = () => {
                           type="email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          className="relative w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors"
+                          className="relative w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors"
                           placeholder="Enter your email address"
                           required
                         />
@@ -428,7 +428,7 @@ const SignUp = () => {
 
                     {/* Password */}
                     <div>
-                      <label className="block text-amber-100 font-medium mb-2">
+                      <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                         <span className="flex items-center space-x-2">
                           <Lock className="w-4 h-4" />
                           <span>Password</span>
@@ -440,14 +440,14 @@ const SignUp = () => {
                           type={showPassword ? "text" : "password"}
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          className="relative w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors pr-12"
+                          className="relative w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors pr-12"
                           placeholder="Create a strong password"
                           required
                         />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-400 hover:text-amber-300 transition-colors"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-400 hover:text-[color:var(--nf-accent)] transition-colors"
                         >
                           {showPassword ? (
                             <EyeOff className="w-5 h-5" />
@@ -456,7 +456,7 @@ const SignUp = () => {
                           )}
                         </button>
                       </div>
-                      <p className="text-amber-100/50 text-xs mt-2">
+                      <p className="text-[color:var(--nf-text-muted)] text-xs mt-2">
                         Use at least 8 characters with letters, numbers, and
                         symbols
                       </p>
@@ -467,24 +467,24 @@ const SignUp = () => {
                       <input
                         type="checkbox"
                         id="terms"
-                        className="mt-1 w-4 h-4 bg-gray-900 border-amber-700 rounded focus:ring-amber-500 focus:ring-2"
+                        className="mt-1 w-4 h-4 bg-[var(--nf-bg-subtle)] border-[var(--nf-border)] rounded focus:ring-amber-500 focus:ring-2"
                         required
                       />
                       <label
                         htmlFor="terms"
-                        className="text-amber-100/70 text-sm"
+                        className="text-[color:var(--nf-text-muted)] text-sm"
                       >
                         I agree to Nile Flow's{" "}
                         <Link
                           to="/terms"
-                          className="text-amber-300 hover:text-amber-200 underline"
+                          className="text-[color:var(--nf-accent)] hover:text-[color:var(--nf-accent)] underline"
                         >
                           Terms of Service
                         </Link>{" "}
                         and{" "}
                         <Link
                           to="/privacy"
-                          className="text-amber-300 hover:text-amber-200 underline"
+                          className="text-[color:var(--nf-accent)] hover:text-[color:var(--nf-accent)] underline"
                         >
                           Privacy Policy
                         </Link>
@@ -511,11 +511,11 @@ const SignUp = () => {
                     </button>
 
                     {/* Sign In Link */}
-                    <p className="text-center text-amber-100/70">
+                    <p className="text-center text-[color:var(--nf-text-muted)]">
                       Already have an account?{" "}
                       <Link
                         to="/signin"
-                        className="text-amber-300 hover:text-amber-200 font-semibold inline-flex items-center space-x-1"
+                        className="text-[color:var(--nf-accent)] hover:text-[color:var(--nf-accent)] font-semibold inline-flex items-center space-x-1"
                       >
                         <span>Sign In</span>
                         <ArrowRight className="w-4 h-4" />
@@ -527,12 +527,12 @@ const SignUp = () => {
                   <div className="p-8 space-y-6">
                     <div className="text-center mb-6">
                       <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center mx-auto mb-4">
-                        <Mail className="w-8 h-8 text-white" />
+                        <Mail className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
                       </div>
-                      <h2 className="text-2xl font-bold text-amber-200">
+                      <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                         Verify Your Email
                       </h2>
-                      <p className="text-amber-100/70 mt-2">
+                      <p className="text-[color:var(--nf-text-muted)] mt-2">
                         Enter the 6-digit code sent to {email}
                       </p>
                     </div>
@@ -542,7 +542,7 @@ const SignUp = () => {
                       <button
                         type="button"
                         onClick={handleBackToSignup}
-                        className="inline-flex items-center space-x-2 text-amber-300 hover:text-amber-200 font-medium transition-colors"
+                        className="inline-flex items-center space-x-2 text-[color:var(--nf-accent)] hover:text-[color:var(--nf-accent)] font-medium transition-colors"
                       >
                         <ArrowLeft className="w-4 h-4" />
                         <span>Back to Signup</span>
@@ -570,7 +570,7 @@ const SignUp = () => {
                                 }
                               }
                             }}
-                            className="w-14 h-14 text-center text-2xl font-bold bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 focus:border-amber-500 focus:outline-none"
+                            className="w-14 h-14 text-center text-2xl font-bold bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] focus:border-amber-500 focus:outline-none"
                             required
                           />
                         ))}
@@ -595,19 +595,19 @@ const SignUp = () => {
                       </button>
 
                       <div className="text-center">
-                        <p className="text-amber-100/70 text-sm">
+                        <p className="text-[color:var(--nf-text-muted)] text-sm">
                           Didn't receive the code?{" "}
                           {canResend ? (
                             <button
                               type="button"
                               onClick={handleResendCode}
-                              className="text-amber-300 hover:text-amber-200 font-semibold"
+                              className="text-[color:var(--nf-accent)] hover:text-[color:var(--nf-accent)] font-semibold"
                               disabled={isSubmitting}
                             >
                               Resend Code
                             </button>
                           ) : (
-                            <span className="text-amber-100/50">
+                            <span className="text-[color:var(--nf-text-muted)]">
                               Resend in {timeLeft}s
                             </span>
                           )}
@@ -621,36 +621,36 @@ const SignUp = () => {
 
             {/* Benefits & Features */}
             <div>
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 h-full">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 h-full">
                 <div className="mb-8">
-                  <h2 className="text-2xl font-bold text-amber-200 mb-2">
+                  <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-2">
                     Premium Benefits
                   </h2>
-                  <p className="text-amber-100/70">
+                  <p className="text-[color:var(--nf-text-muted)]">
                     Unlock exclusive features with your Nile Flow account
                   </p>
                 </div>
 
                 {/* Benefits List */}
                 <div className="space-y-6">
-                  <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl hover:border-amber-500/50 transition-all duration-300">
+                  <div className="flex items-start space-x-4 p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl hover:border-amber-500/50 transition-all duration-300">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center flex-shrink-0">
-                      <Gem className="w-6 h-6 text-white" />
+                      <Gem className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-amber-100 mb-1">
+                      <h3 className="text-lg font-bold text-[color:var(--nf-text-secondary)] mb-1">
                         Exclusive Products
                       </h3>
-                      <p className="text-amber-100/70">
+                      <p className="text-[color:var(--nf-text-muted)]">
                         Access premium African products not available to regular
                         users
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl hover:border-amber-500/50 transition-all duration-300">
+                  <div className="flex items-start space-x-4 p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl hover:border-amber-500/50 transition-all duration-300">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center flex-shrink-0">
-                      <Award className="w-6 h-6 text-white" />
+                      <Award className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-emerald-100 mb-1">
@@ -662,9 +662,9 @@ const SignUp = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl hover:border-amber-500/50 transition-all duration-300">
+                  <div className="flex items-start space-x-4 p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl hover:border-amber-500/50 transition-all duration-300">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center flex-shrink-0">
-                      <Globe className="w-6 h-6 text-white" />
+                      <Globe className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-blue-100 mb-1">
@@ -676,9 +676,9 @@ const SignUp = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl hover:border-amber-500/50 transition-all duration-300">
+                  <div className="flex items-start space-x-4 p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl hover:border-amber-500/50 transition-all duration-300">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center flex-shrink-0">
-                      <Shield className="w-6 h-6 text-white" />
+                      <Shield className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-red-100 mb-1">
@@ -692,21 +692,21 @@ const SignUp = () => {
                 </div>
 
                 {/* Trust Indicators */}
-                <div className="mt-8 pt-8 border-t border-amber-800/30">
-                  <h3 className="text-lg font-bold text-amber-200 mb-4">
+                <div className="mt-8 pt-8 border-t border-[var(--nf-border-subtle)]">
+                  <h3 className="text-lg font-bold text-[color:var(--nf-accent)] mb-4">
                     Why Nile Flow?
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4">
+                    <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4">
                       <Users className="w-6 h-6 text-amber-400 mb-2" />
-                      <h4 className="text-amber-100 font-bold text-sm">
+                      <h4 className="text-[color:var(--nf-text-secondary)] font-bold text-sm">
                         African Community
                       </h4>
-                      <p className="text-amber-100/70 text-xs">
+                      <p className="text-[color:var(--nf-text-muted)] text-xs">
                         Supporting 1000+ artisans
                       </p>
                     </div>
-                    <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4">
+                    <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4">
                       <CheckCircle className="w-6 h-6 text-emerald-400 mb-2" />
                       <h4 className="text-emerald-100 font-bold text-sm">
                         Quality Guarantee
@@ -720,14 +720,14 @@ const SignUp = () => {
 
                 {/* CTA */}
                 <div className="mt-8">
-                  <div className="bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm border border-amber-700/30 rounded-2xl p-6 text-center">
-                    <h3 className="text-lg font-bold text-amber-200 mb-2">
+                  <div className="bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center">
+                    <h3 className="text-lg font-bold text-[color:var(--nf-accent)] mb-2">
                       Ready to Join?
                     </h3>
-                    <p className="text-amber-100/70 text-sm mb-4">
+                    <p className="text-[color:var(--nf-text-muted)] text-sm mb-4">
                       Create your account in less than 2 minutes
                     </p>
-                    <div className="flex items-center justify-center space-x-2 text-amber-300 text-sm">
+                    <div className="flex items-center justify-center space-x-2 text-[color:var(--nf-accent)] text-sm">
                       <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
                       <span>Fast & secure registration</span>
                     </div>
@@ -739,9 +739,9 @@ const SignUp = () => {
 
           {/* Trust Badges */}
           <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 text-center">
-              <div className="text-2xl font-bold text-amber-300 mb-2">100%</div>
-              <div className="text-amber-100/80">Secure Registration</div>
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center">
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)] mb-2">100%</div>
+              <div className="text-[color:var(--nf-text-muted)]">Secure Registration</div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-6 text-center">
               <div className="text-2xl font-bold text-emerald-300 mb-2">

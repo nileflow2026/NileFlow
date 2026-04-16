@@ -20,7 +20,7 @@ export const RecommendationCard = ({
             ? "text-amber-400 fill-current"
             : i < rating
               ? "text-amber-400 fill-current opacity-50"
-              : "text-gray-500"
+              : "text-[color:var(--nf-text-muted)]"
         }`}
       />
     ));
@@ -28,7 +28,7 @@ export const RecommendationCard = ({
 
   return (
     <div
-      className="group relative bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 rounded-2xl overflow-hidden hover:border-amber-500/50 hover:shadow-xl hover:shadow-amber-500/20 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+      className="group relative bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl overflow-hidden hover:border-amber-500/50 hover:shadow-xl hover:shadow-amber-500/20 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
       onClick={onClick}
     >
       {/* Background Glow Effect */}
@@ -73,7 +73,7 @@ export const RecommendationCard = ({
 
         {/* Quick Action Buttons */}
         <div className="absolute bottom-3 left-3 right-3 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-          <button className="bg-white/20 backdrop-blur-md text-white p-2 rounded-full hover:bg-white/30 transition-colors">
+          <button className="bg-white/20 backdrop-blur-md text-[color:var(--nf-text-primary)] p-2 rounded-full hover:bg-white/30 transition-colors">
             <Heart className="w-4 h-4" />
           </button>
           <button className="bg-gradient-to-r from-amber-600 to-amber-700 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-medium hover:from-amber-700 hover:to-amber-800 transition-colors flex items-center gap-2">
@@ -86,7 +86,7 @@ export const RecommendationCard = ({
       {/* Product Details */}
       <div className="p-4 relative z-10">
         {/* Product Name */}
-        <h3 className="text-white font-medium text-sm mb-2 line-clamp-2 group-hover:text-amber-200 transition-colors">
+        <h3 className="text-[color:var(--nf-text-primary)] font-medium text-sm mb-2 line-clamp-2 group-hover:text-[color:var(--nf-accent)] transition-colors">
           {item.name || item.title || "Product Name"}
         </h3>
 
@@ -97,7 +97,7 @@ export const RecommendationCard = ({
               {formatPrice(item.price || 0)}
             </span>
             {item.originalPrice && item.originalPrice > (item.price || 0) && (
-              <span className="text-gray-500 line-through text-sm">
+              <span className="text-[color:var(--nf-text-muted)] line-through text-sm">
                 {formatPrice(item.originalPrice)}
               </span>
             )}
@@ -116,7 +116,7 @@ export const RecommendationCard = ({
             <div className="flex items-center">
               {renderStars(item.rating || 0)}
             </div>
-            <span className="text-gray-400 text-xs">
+            <span className="text-[color:var(--nf-text-muted)] text-xs">
               ({item.reviewCount || item.rating || 0} reviews)
             </span>
           </div>
@@ -124,7 +124,7 @@ export const RecommendationCard = ({
 
         {/* Category/Brand */}
         {(item.brand || item.category) && (
-          <div className="text-gray-500 text-xs mb-2">
+          <div className="text-[color:var(--nf-text-muted)] text-xs mb-2">
             {item.brand && `${item.brand}`}
             {item.brand && item.category && " • "}
             {item.category && `${item.category}`}

@@ -141,12 +141,12 @@ const ReportProblemPage = () => {
           } flex items-center justify-center">
             ${
               type === "error"
-                ? '<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.986-.833-2.756 0L4.232 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>'
-                : '<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
+                ? '<svg class="w-6 h-6 text-[color:var(--nf-text-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.986-.833-2.756 0L4.232 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>'
+                : '<svg class="w-6 h-6 text-[color:var(--nf-text-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
             }
           </div>
           <div>
-            <p class="font-bold text-white">${
+            <p class="font-bold text-[color:var(--nf-text-primary)]">${
               type === "error" ? "Attention Needed" : "Success"
             }</p>
             <p class="${
@@ -164,7 +164,7 @@ const ReportProblemPage = () => {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
         <Header />
         <div className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/20 via-gray-900/20 to-green-900/20"></div>
@@ -172,22 +172,22 @@ const ReportProblemPage = () => {
             <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-emerald-900/30 to-green-900/30 border border-emerald-700/30 mb-6">
               <CheckCircle className="w-12 h-12 text-emerald-400" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-[color:var(--nf-text-primary)] mb-6">
               Report Submitted Successfully!
             </h1>
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+            <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
               Thank you for helping us improve Nile Flow. Our premium support
               team has received your report and will contact you within 1 hour.
             </p>
 
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 mb-8">
+            <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 mb-8">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center p-6 bg-gradient-to-br from-amber-900/20 to-transparent border border-amber-800/30 rounded-2xl">
+                <div className="text-center p-6 bg-gradient-to-br from-amber-900/20 to-transparent border border-[var(--nf-border-subtle)] rounded-2xl">
                   <Clock className="w-8 h-8 text-amber-400 mx-auto mb-3" />
-                  <h3 className="text-lg font-bold text-amber-200">
+                  <h3 className="text-lg font-bold text-[color:var(--nf-accent)]">
                     Response Time
                   </h3>
-                  <p className="text-amber-100/70">Within 1 Hour</p>
+                  <p className="text-[color:var(--nf-text-muted)]">Within 1 Hour</p>
                 </div>
                 <div className="text-center p-6 bg-gradient-to-br from-emerald-900/20 to-transparent border border-emerald-800/30 rounded-2xl">
                   <Shield className="w-8 h-8 text-emerald-400 mx-auto mb-3" />
@@ -214,7 +214,7 @@ const ReportProblemPage = () => {
               </button>
               <button
                 onClick={() => (window.location.href = "/contact")}
-                className="inline-flex items-center justify-center space-x-2 px-8 py-3 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 text-amber-300 rounded-xl hover:border-amber-500/50 transition-all duration-300"
+                className="inline-flex items-center justify-center space-x-2 px-8 py-3 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] text-[color:var(--nf-accent)] rounded-xl hover:border-amber-500/50 transition-all duration-300"
               >
                 <Headphones className="w-5 h-5" />
                 <span>Contact Support</span>
@@ -228,7 +228,7 @@ const ReportProblemPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -239,9 +239,9 @@ const ReportProblemPage = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-amber-500/10 to-yellow-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-8xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-red-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-red-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <AlertTriangle className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Premium Support
             </span>
             <Shield className="w-4 h-4 text-red-400" />
@@ -252,19 +252,19 @@ const ReportProblemPage = () => {
               Report a Problem
             </span>
             <br />
-            <span className="text-white">Premium Issue Resolution</span>
+            <span className="text-[color:var(--nf-text-primary)]">Premium Issue Resolution</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Encountering an issue? Our dedicated African support team is ready
             to help. Provide details below for swift resolution.
           </p>
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4">
-              <div className="text-2xl font-bold text-amber-300">1H</div>
-              <div className="text-amber-100/80 text-sm">Response Time</div>
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4">
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)]">1H</div>
+              <div className="text-[color:var(--nf-text-muted)] text-sm">Response Time</div>
             </div>
             <div className="bg-gradient-to-br from-red-900/20 to-transparent backdrop-blur-sm border border-red-800/30 rounded-2xl p-4">
               <div className="text-2xl font-bold text-red-300">24/7</div>
@@ -285,18 +285,18 @@ const ReportProblemPage = () => {
       {/* Main Content */}
       <main className="pb-20 px-4 sm:px-6 lg:px-8">
         <div className="relative max-w-4xl mx-auto">
-          <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden">
+          <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden">
             {/* Form Header */}
-            <div className="p-8 border-b border-amber-800/30">
+            <div className="p-8 border-b border-[var(--nf-border-subtle)]">
               <div className="flex items-center space-x-4">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                  <AlertTriangle className="w-8 h-8 text-white" />
+                  <AlertTriangle className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-amber-200">
+                  <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                     Describe Your Issue
                   </h2>
-                  <p className="text-amber-100/70">
+                  <p className="text-[color:var(--nf-text-muted)]">
                     Provide detailed information for faster resolution
                   </p>
                 </div>
@@ -305,17 +305,17 @@ const ReportProblemPage = () => {
 
             {/* User Info (if logged in) */}
             {user && (
-              <div className="p-6 border-b border-amber-800/30">
-                <div className="flex items-center space-x-4 p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl">
+              <div className="p-6 border-b border-[var(--nf-border-subtle)]">
+                <div className="flex items-center space-x-4 p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center">
-                    <User className="w-6 h-6 text-white" />
+                    <User className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <div>
-                    <p className="text-amber-100 text-sm">Reporting as</p>
-                    <h3 className="text-lg font-bold text-amber-300">
+                    <p className="text-[color:var(--nf-text-secondary)] text-sm">Reporting as</p>
+                    <h3 className="text-lg font-bold text-[color:var(--nf-accent)]">
                       {user.name}
                     </h3>
-                    <p className="text-amber-100/70 text-sm flex items-center space-x-2">
+                    <p className="text-[color:var(--nf-text-muted)] text-sm flex items-center space-x-2">
                       <Mail className="w-3 h-3" />
                       <span>{user.email}</span>
                     </p>
@@ -328,12 +328,12 @@ const ReportProblemPage = () => {
             <form onSubmit={handleReportProblem} className="p-8 space-y-8">
               {/* Problem Type */}
               <div>
-                <label className="block text-amber-100 font-medium mb-4">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-4">
                   <span className="flex items-center space-x-2">
                     <Bug className="w-5 h-5" />
                     <span>Problem Type</span>
                   </span>
-                  <span className="text-amber-100/70 text-sm mt-1 block">
+                  <span className="text-[color:var(--nf-text-muted)] text-sm mt-1 block">
                     Select the category that best describes your issue
                   </span>
                 </label>
@@ -346,14 +346,14 @@ const ReportProblemPage = () => {
                       className={`group p-4 rounded-xl border backdrop-blur-sm transition-all duration-300 flex flex-col items-center justify-center space-y-2 ${
                         problemType === type.id
                           ? "bg-gradient-to-r from-amber-600/30 to-amber-700/20 border-amber-500/50 shadow-lg shadow-amber-900/30"
-                          : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 hover:border-amber-500/50"
+                          : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] hover:border-amber-500/50"
                       }`}
                     >
                       <div
                         className={`w-10 h-10 rounded-full flex items-center justify-center ${
                           problemType === type.id
                             ? "bg-gradient-to-br from-amber-500 to-yellow-600 text-white"
-                            : "bg-gradient-to-br from-gray-800 to-black border border-amber-800/30 text-amber-400"
+                            : "bg-gradient-to-br from-gray-800 to-black border border-[var(--nf-border-subtle)] text-amber-400"
                         }`}
                       >
                         {type.icon}
@@ -361,8 +361,8 @@ const ReportProblemPage = () => {
                       <span
                         className={`text-sm font-medium ${
                           problemType === type.id
-                            ? "text-amber-300"
-                            : "text-amber-100"
+                            ? "text-[color:var(--nf-accent)]"
+                            : "text-[color:var(--nf-text-secondary)]"
                         }`}
                       >
                         {type.label}
@@ -374,12 +374,12 @@ const ReportProblemPage = () => {
 
               {/* Priority Level */}
               <div>
-                <label className="block text-amber-100 font-medium mb-4">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-4">
                   <span className="flex items-center space-x-2">
                     <Zap className="w-5 h-5" />
                     <span>Priority Level</span>
                   </span>
-                  <span className="text-amber-100/70 text-sm mt-1 block">
+                  <span className="text-[color:var(--nf-text-muted)] text-sm mt-1 block">
                     How urgent is this issue?
                   </span>
                 </label>
@@ -396,7 +396,7 @@ const ReportProblemPage = () => {
                             : level === "medium"
                             ? "bg-gradient-to-r from-amber-600/30 to-amber-700/20 border-amber-500/50 shadow-lg shadow-amber-900/30"
                             : "bg-gradient-to-r from-emerald-600/30 to-emerald-700/20 border-emerald-500/50 shadow-lg shadow-emerald-900/30"
-                          : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 hover:border-amber-500/50"
+                          : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] hover:border-amber-500/50"
                       }`}
                     >
                       <span
@@ -405,9 +405,9 @@ const ReportProblemPage = () => {
                             ? level === "high"
                               ? "text-red-300"
                               : level === "medium"
-                              ? "text-amber-300"
+                              ? "text-[color:var(--nf-accent)]"
                               : "text-emerald-300"
-                            : "text-amber-100"
+                            : "text-[color:var(--nf-text-secondary)]"
                         }`}
                       >
                         {level.charAt(0).toUpperCase() + level.slice(1)}
@@ -419,19 +419,19 @@ const ReportProblemPage = () => {
 
               {/* Problem Details */}
               <div>
-                <label className="block text-amber-100 font-medium mb-4">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-4">
                   <span className="flex items-center space-x-2">
                     <FileText className="w-5 h-5" />
                     <span>Problem Details</span>
                   </span>
-                  <span className="text-amber-100/70 text-sm mt-1 block">
+                  <span className="text-[color:var(--nf-text-muted)] text-sm mt-1 block">
                     Please describe the issue in detail for faster resolution
                   </span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-xl blur opacity-0 hover:opacity-30 transition-opacity duration-300"></div>
                   <textarea
-                    className="relative w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors min-h-[200px] resize-none"
+                    className="relative w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors min-h-[200px] resize-none"
                     placeholder="Describe the issue you're experiencing. Include any error messages, steps to reproduce, and what you were trying to accomplish..."
                     value={problemDetails}
                     onChange={(e) => setProblemDetails(e.target.value)}
@@ -440,12 +440,12 @@ const ReportProblemPage = () => {
                   />
                 </div>
                 <div className="flex items-center justify-between mt-2">
-                  <p className="text-amber-100/50 text-sm">
+                  <p className="text-[color:var(--nf-text-muted)] text-sm">
                     Character count: {problemDetails.length}/2000
                   </p>
                   <div className="flex items-center space-x-2">
                     <Calendar className="w-3 h-3 text-amber-400" />
-                    <span className="text-amber-100/50 text-sm">
+                    <span className="text-[color:var(--nf-text-muted)] text-sm">
                       {new Date().toLocaleDateString("en-US", {
                         weekday: "long",
                         year: "numeric",
@@ -484,10 +484,10 @@ const ReportProblemPage = () => {
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex items-center space-x-4">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center">
-                  <Headphones className="w-8 h-8 text-white" />
+                  <Headphones className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">
+                  <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)]">
                     Need Immediate Assistance?
                   </h3>
                   <p className="text-emerald-100/70">
@@ -506,9 +506,9 @@ const ReportProblemPage = () => {
 
           {/* Trust Badges */}
           <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 text-center">
-              <div className="text-2xl font-bold text-amber-300 mb-2">1H</div>
-              <div className="text-amber-100/80">Response Time</div>
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center">
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)] mb-2">1H</div>
+              <div className="text-[color:var(--nf-text-muted)]">Response Time</div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-6 text-center">
               <div className="text-2xl font-bold text-emerald-300 mb-2">

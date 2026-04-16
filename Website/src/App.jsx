@@ -71,24 +71,26 @@ import { CurrencyProvider } from "../Context/CurrencyProvider";
 import ScrollToTopButton from "../components/ScrollToTopButton.jsx";
 import NotificationToast from "../components/NotificationToast";
 import SeoHead from "./components/SeoHead";
+import { ThemeProvider } from "../Context/ThemeProvider";
 
 // Loading component for lazy routes
 const PageLoader = () => (
-  <div className="fixed inset-0 bg-black/95 backdrop-blur-sm flex items-center justify-center z-[9990]">
+  <div
+    className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-[9990]"
+    style={{ background: "var(--nf-bg-overlay)" }}
+  >
     <div className="flex flex-col items-center space-y-6">
       {/* Main Spinner */}
       <div className="relative">
         <div className="w-16 h-16 border-4 border-amber-900/30 rounded-full"></div>
         <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full absolute top-0 left-0 animate-spin"></div>
-        <div
-          className="w-12 h-12 border-3 border-emerald-500/50 border-t-transparent rounded-full absolute top-2 left-2 animate-spin"
-          style={{ animationDirection: "reverse", animationDuration: "1.5s" }}
-        ></div>
       </div>
 
       {/* Loading Text */}
       <div className="text-center">
-        <p className="text-amber-100 text-lg font-medium mb-2">Loading...</p>
+        <p className="text-[color:var(--nf-text-secondary)] text-lg font-medium mb-2">
+          Loading...
+        </p>
         <div className="flex items-center space-x-1">
           <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div>
           <div
@@ -105,7 +107,9 @@ const PageLoader = () => (
       {/* Nile Flow Branding */}
       <div className="text-center">
         <p className="text-amber-300/70 text-sm font-serif">NILE FLOW AFRICA</p>
-        <p className="text-amber-100/50 text-xs">Premium African E-commerce</p>
+        <p className="text-[color:var(--nf-text-muted)] text-xs">
+          Premium African E-commerce
+        </p>
       </div>
     </div>
   </div>
@@ -141,7 +145,13 @@ const AppContent = () => {
     <>
       <SeoHead />
       <ScrollToTop />
-      <div className="bg-black text-gray-800 font-sans min-h-screen relative">
+      <div
+        className="font-sans min-h-screen relative"
+        style={{
+          background: "var(--nf-bg-primary)",
+          color: "var(--nf-text-primary)",
+        }}
+      >
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/home" element={<Navigate to="/" replace />} />
@@ -218,23 +228,25 @@ const App = () => {
 
   /*  localStorage.clear(); // Clear localStorage on app start */
   return (
-    <Router>
-      <CustomerAuthProvider>
-        <CurrencyProvider>
-          <PremiumProvider>
-            <FavoritesProvider>
-              <NotificationProvider>
-                <CartProvider>
-                  <GroupBuyProvider>
-                    <AppContent />
-                  </GroupBuyProvider>
-                </CartProvider>
-              </NotificationProvider>
-            </FavoritesProvider>
-          </PremiumProvider>
-        </CurrencyProvider>
-      </CustomerAuthProvider>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <CustomerAuthProvider>
+          <CurrencyProvider>
+            <PremiumProvider>
+              <FavoritesProvider>
+                <NotificationProvider>
+                  <CartProvider>
+                    <GroupBuyProvider>
+                      <AppContent />
+                    </GroupBuyProvider>
+                  </CartProvider>
+                </NotificationProvider>
+              </FavoritesProvider>
+            </PremiumProvider>
+          </CurrencyProvider>
+        </CustomerAuthProvider>
+      </Router>
+    </ThemeProvider>
   );
 };
 

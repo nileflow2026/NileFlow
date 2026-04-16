@@ -93,21 +93,21 @@ const CancelOrderPage = () => {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
         <Header />
 
         <div className="min-h-screen flex items-center justify-center px-4 py-20">
           <div className="max-w-md w-full">
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-emerald-800/30 rounded-3xl p-8 text-center">
+            <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-emerald-800/30 rounded-3xl p-8 text-center">
               <div className="w-20 h-20 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle className="w-12 h-12 text-white" />
+                <CheckCircle className="w-12 h-12 text-[color:var(--nf-text-primary)]" />
               </div>
 
               <h2 className="text-3xl font-bold text-emerald-200 mb-4">
                 Request Submitted
               </h2>
 
-              <p className="text-gray-300 mb-6">
+              <p className="text-[color:var(--nf-text-secondary)] mb-6">
                 Your cancellation request has been submitted successfully. Our
                 team will review your request and contact you within 24 hours.
               </p>
@@ -131,7 +131,7 @@ const CancelOrderPage = () => {
 
                 <button
                   onClick={() => navigate("/")}
-                  className="w-full px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-white font-semibold rounded-xl hover:from-gray-800 hover:to-gray-900 transition-all duration-300"
+                  className="w-full px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-[color:var(--nf-text-primary)] font-semibold rounded-xl hover:from-gray-800 hover:to-gray-900 transition-all duration-300"
                 >
                   Back to Home
                 </button>
@@ -146,7 +146,7 @@ const CancelOrderPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -156,7 +156,7 @@ const CancelOrderPage = () => {
         <div className="relative max-w-4xl mx-auto">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center space-x-2 text-amber-400 hover:text-amber-300 mb-6 transition-colors"
+            className="flex items-center space-x-2 text-amber-400 hover:text-[color:var(--nf-accent)] mb-6 transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
             <span>Back</span>
@@ -176,7 +176,7 @@ const CancelOrderPage = () => {
               </span>
             </h1>
 
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+            <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto">
               Submit a cancellation request for your order. Our team will review
               and process it according to our cancellation policy.
             </p>
@@ -189,12 +189,12 @@ const CancelOrderPage = () => {
         <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             {/* Cancellation Form */}
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
+            <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center">
-                  <FileText className="w-6 h-6 text-white" />
+                  <FileText className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
-                <h2 className="text-2xl font-bold text-amber-200">
+                <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                   Cancellation Request
                 </h2>
               </div>
@@ -211,7 +211,7 @@ const CancelOrderPage = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Order ID */}
                 <div>
-                  <label className="block text-amber-200 font-semibold mb-2">
+                  <label className="block text-[color:var(--nf-accent)] font-semibold mb-2">
                     Order ID *
                   </label>
                   <input
@@ -219,23 +219,23 @@ const CancelOrderPage = () => {
                     value={orderId}
                     onChange={(e) => setOrderId(e.target.value)}
                     placeholder="Enter your order ID"
-                    className="w-full px-4 py-3 bg-gradient-to-r from-gray-900/80 to-black/80 border border-amber-700/50 rounded-xl text-amber-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-gradient-to-r from-gray-900/80 to-black/80 border border-amber-700/50 rounded-xl text-[color:var(--nf-text-secondary)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                     required
                   />
-                  <p className="text-gray-400 text-xs mt-1">
+                  <p className="text-[color:var(--nf-text-muted)] text-xs mt-1">
                     Find this in your order confirmation email or orders page
                   </p>
                 </div>
 
                 {/* Cancellation Reason */}
                 <div>
-                  <label className="block text-amber-200 font-semibold mb-2">
+                  <label className="block text-[color:var(--nf-accent)] font-semibold mb-2">
                     Reason for Cancellation *
                   </label>
                   <select
                     value={reason}
                     onChange={(e) => setReason(e.target.value)}
-                    className="w-full px-4 py-3 bg-gradient-to-r from-gray-900/80 to-black/80 border border-amber-700/50 rounded-xl text-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-gradient-to-r from-gray-900/80 to-black/80 border border-amber-700/50 rounded-xl text-[color:var(--nf-text-secondary)] focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                     required
                   >
                     <option value="">Select a reason</option>
@@ -249,7 +249,7 @@ const CancelOrderPage = () => {
 
                 {/* Additional Details */}
                 <div>
-                  <label className="block text-amber-200 font-semibold mb-2">
+                  <label className="block text-[color:var(--nf-accent)] font-semibold mb-2">
                     Additional Details (Optional)
                   </label>
                   <textarea
@@ -257,7 +257,7 @@ const CancelOrderPage = () => {
                     onChange={(e) => setAdditionalDetails(e.target.value)}
                     placeholder="Please provide any additional information..."
                     rows="4"
-                    className="w-full px-4 py-3 bg-gradient-to-r from-gray-900/80 to-black/80 border border-amber-700/50 rounded-xl text-amber-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
+                    className="w-full px-4 py-3 bg-gradient-to-r from-gray-900/80 to-black/80 border border-amber-700/50 rounded-xl text-[color:var(--nf-text-secondary)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
                   />
                 </div>
 
@@ -275,12 +275,12 @@ const CancelOrderPage = () => {
             {/* Cancellation Policy */}
             <div className="space-y-6">
               {/* Policy Card */}
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                    <ShieldCheck className="w-6 h-6 text-white" />
+                    <ShieldCheck className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                   </div>
-                  <h2 className="text-2xl font-bold text-amber-200">
+                  <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                     Cancellation Policy
                   </h2>
                 </div>
@@ -294,7 +294,7 @@ const CancelOrderPage = () => {
                         <h3 className="text-lg font-bold text-emerald-200 mb-2">
                           Eligible for Cancellation
                         </h3>
-                        <ul className="space-y-2 text-gray-300 text-sm">
+                        <ul className="space-y-2 text-[color:var(--nf-text-secondary)] text-sm">
                           <li className="flex items-start space-x-2">
                             <span className="text-emerald-400 mt-1">•</span>
                             <span>
@@ -322,7 +322,7 @@ const CancelOrderPage = () => {
                         <h3 className="text-lg font-bold text-red-200 mb-2">
                           Cannot Be Cancelled
                         </h3>
-                        <ul className="space-y-2 text-gray-300 text-sm">
+                        <ul className="space-y-2 text-[color:var(--nf-text-secondary)] text-sm">
                           <li className="flex items-start space-x-2">
                             <span className="text-red-400 mt-1">•</span>
                             <span>Orders already shipped or in transit</span>
@@ -347,10 +347,10 @@ const CancelOrderPage = () => {
                     <div className="flex items-start space-x-3 mb-3">
                       <DollarSign className="w-5 h-5 text-amber-400 mt-1 flex-shrink-0" />
                       <div>
-                        <h3 className="text-lg font-bold text-amber-200 mb-2">
+                        <h3 className="text-lg font-bold text-[color:var(--nf-accent)] mb-2">
                           Refund Information
                         </h3>
-                        <ul className="space-y-2 text-gray-300 text-sm">
+                        <ul className="space-y-2 text-[color:var(--nf-text-secondary)] text-sm">
                           <li className="flex items-start space-x-2">
                             <span className="text-amber-400 mt-1">•</span>
                             <span>
@@ -385,7 +385,7 @@ const CancelOrderPage = () => {
                 <h3 className="text-lg font-bold text-blue-200 mb-3">
                   ⏱️ Processing Time
                 </h3>
-                <p className="text-gray-300 text-sm">
+                <p className="text-[color:var(--nf-text-secondary)] text-sm">
                   Cancellation requests are typically reviewed within{" "}
                   <strong className="text-blue-200">24 hours</strong>. You'll
                   receive an email confirmation once your request is processed.
@@ -393,19 +393,19 @@ const CancelOrderPage = () => {
               </div>
 
               {/* Contact Support */}
-              <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/20 border border-amber-800/30 rounded-xl p-6">
-                <h3 className="text-lg font-bold text-amber-200 mb-3">
+              <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/20 border border-[var(--nf-border-subtle)] rounded-xl p-6">
+                <h3 className="text-lg font-bold text-[color:var(--nf-accent)] mb-3">
                   Need Help?
                 </h3>
-                <p className="text-gray-300 text-sm mb-3">
+                <p className="text-[color:var(--nf-text-secondary)] text-sm mb-3">
                   For urgent cancellation requests or questions, contact our
                   support team:
                 </p>
                 <div className="space-y-2 text-sm">
-                  <p className="text-amber-100">
+                  <p className="text-[color:var(--nf-text-secondary)]">
                     📧 Email: support@nileflow.com
                   </p>
-                  <p className="text-amber-100">📞 Phone: +254 700 000 000</p>
+                  <p className="text-[color:var(--nf-text-secondary)]">📞 Phone: +254 700 000 000</p>
                 </div>
               </div>
             </div>

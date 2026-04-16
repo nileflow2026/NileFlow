@@ -24,13 +24,20 @@ const ScrollToTopButton = lazy(
 
 // Skeleton components for better perceived performance
 const HeroSkeleton = () => (
-  <div className="w-full h-64 md:h-96 bg-gray-800 rounded-lg animate-pulse"></div>
+  <div
+    className="w-full h-64 md:h-96 rounded-lg animate-pulse"
+    style={{ background: "var(--nf-bg-subtle)" }}
+  ></div>
 );
 
 const ProductsSkeleton = () => (
   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
     {[...Array(8)].map((_, i) => (
-      <div key={i} className="bg-gray-800 rounded-lg h-48 animate-pulse"></div>
+      <div
+        key={i}
+        className="rounded-lg h-48 animate-pulse"
+        style={{ background: "var(--nf-bg-subtle)" }}
+      ></div>
     ))}
   </div>
 );
@@ -42,7 +49,13 @@ const Home = () => {
   useStructuredData(ORGANIZATION_SCHEMA, "organization-schema");
 
   return (
-    <div className="bg-black text-gray-800 font-sans">
+    <div
+      className="font-sans"
+      style={{
+        background: "var(--nf-bg-primary)",
+        color: "var(--nf-text-primary)",
+      }}
+    >
       <Header />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

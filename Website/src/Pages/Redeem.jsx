@@ -196,7 +196,7 @@ const RedeemPage = () => {
             ${type === "success" ? "✓" : type === "error" ? "✕" : "⚡"}
           </div>
           <div>
-            <p class="font-bold text-white">${
+            <p class="font-bold text-[color:var(--nf-text-primary)]">${
               type === "success"
                 ? "Success!"
                 : type === "error"
@@ -208,7 +208,7 @@ const RedeemPage = () => {
                 ? "text-emerald-100"
                 : type === "error"
                 ? "text-red-100"
-                : "text-amber-100"
+                : "text-[color:var(--nf-text-secondary)]"
             } text-sm">${message}</p>
           </div>
         </div>
@@ -241,7 +241,7 @@ const RedeemPage = () => {
 
   if (userLoading || nileMilesLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] flex items-center justify-center">
         <div className="relative">
           <div className="w-20 h-20 border-4 border-amber-900/30 border-t-amber-500 rounded-full animate-spin"></div>
           <div className="absolute inset-0 flex items-center justify-center">
@@ -254,12 +254,12 @@ const RedeemPage = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] flex flex-col items-center justify-center p-4">
         <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-red-900/30 to-amber-900/30 border border-red-700/30 mb-6">
           <Shield className="w-12 h-12 text-red-400" />
         </div>
-        <h2 className="text-3xl font-bold text-white mb-4">Access Required</h2>
-        <p className="text-gray-400 text-center max-w-md mb-8">
+        <h2 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">Access Required</h2>
+        <p className="text-[color:var(--nf-text-muted)] text-center max-w-md mb-8">
           Please log in to access premium rewards and redeem your Nile Miles.
         </p>
         <button
@@ -279,24 +279,24 @@ const RedeemPage = () => {
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-amber-900/10 via-gray-900/10 to-emerald-900/10"></div>
 
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 pt-4 pb-20 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] pt-4 pb-20 px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="relative max-w-8xl mx-auto">
           <div className="flex items-center mb-8">
             <button
               onClick={() => navigate(-1)}
-              className="group w-12 h-12 rounded-2xl bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 flex items-center justify-center text-amber-400 hover:text-amber-300 hover:scale-110 transition-all duration-300"
+              className="group w-12 h-12 rounded-2xl bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] flex items-center justify-center text-amber-400 hover:text-[color:var(--nf-accent)] hover:scale-110 transition-all duration-300"
             >
               <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
             </button>
             <div className="ml-4">
-              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-4 py-2 rounded-full border border-amber-700/30 mb-2">
+              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-4 py-2 rounded-full border border-[var(--nf-border-subtle)] mb-2">
                 <Sparkles className="w-4 h-4 text-amber-400" />
-                <span className="text-amber-200 text-sm font-medium">
+                <span className="text-[color:var(--nf-accent)] text-sm font-medium">
                   Premium Rewards
                 </span>
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-white">
+              <h1 className="text-4xl md:text-5xl font-bold text-[color:var(--nf-text-primary)]">
                 Nile{" "}
                 <span className="bg-gradient-to-r from-amber-300 via-yellow-200 to-emerald-200 bg-clip-text text-transparent">
                   Miles
@@ -307,19 +307,19 @@ const RedeemPage = () => {
 
           {/* Current Miles Display */}
           <div className="mb-12">
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
+            <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
               <div className="text-center mb-8">
-                <p className="text-amber-100/70 text-sm mb-2">
+                <p className="text-[color:var(--nf-text-muted)] text-sm mb-2">
                   Your Current Balance
                 </p>
                 <div className="flex items-baseline justify-center space-x-2 mb-4">
                   <Coins className="w-8 h-8 text-amber-400" />
-                  <span className="text-6xl font-bold text-amber-300">
+                  <span className="text-6xl font-bold text-[color:var(--nf-accent)]">
                     {nileMilesData.currentMiles}
                   </span>
-                  <span className="text-2xl text-amber-100/70">Miles</span>
+                  <span className="text-2xl text-[color:var(--nf-text-muted)]">Miles</span>
                 </div>
-                <p className="text-amber-100/50 text-sm">
+                <p className="text-[color:var(--nf-text-muted)] text-sm">
                   Available to redeem for premium rewards
                 </p>
               </div>
@@ -332,7 +332,7 @@ const RedeemPage = () => {
                   );
                   return (
                     <>
-                      <div className="flex items-center justify-between text-amber-100/70 text-sm mb-2">
+                      <div className="flex items-center justify-between text-[color:var(--nf-text-muted)] text-sm mb-2">
                         <span>
                           {nextReward
                             ? `Next: ${nextReward.name} • ${milesLeft} miles needed`
@@ -340,13 +340,13 @@ const RedeemPage = () => {
                         </span>
                         <span>{percent}%</span>
                       </div>
-                      <div className="w-full h-3 bg-gray-800/50 rounded-full overflow-hidden">
+                      <div className="w-full h-3 bg-[var(--nf-bg-subtle)] rounded-full overflow-hidden">
                         <div
                           className="h-full bg-gradient-to-r from-amber-500 via-yellow-500 to-emerald-500 rounded-full transition-all duration-1000"
                           style={{ width: `${percent}%` }}
                         />
                       </div>
-                      <div className="flex justify-between text-xs text-amber-100/50 mt-2">
+                      <div className="flex justify-between text-xs text-[color:var(--nf-text-muted)] mt-2">
                         <span>0</span>
                         <span>
                           {nextReward
@@ -361,28 +361,28 @@ const RedeemPage = () => {
 
               {/* Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4 text-center">
+                <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4 text-center">
                   <Target className="w-6 h-6 text-blue-400 mx-auto mb-2" />
                   <div className="text-xl font-bold text-blue-300">8</div>
                   <div className="text-blue-100/80 text-sm">
                     Available Rewards
                   </div>
                 </div>
-                <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4 text-center">
+                <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4 text-center">
                   <TrendingUp className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
                   <div className="text-xl font-bold text-emerald-300">
                     {nileMilesData.redeemed?.length || 0}
                   </div>
                   <div className="text-emerald-100/80 text-sm">Redeemed</div>
                 </div>
-                <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4 text-center">
+                <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4 text-center">
                   <Trophy className="w-6 h-6 text-amber-400 mx-auto mb-2" />
-                  <div className="text-xl font-bold text-amber-300">
+                  <div className="text-xl font-bold text-[color:var(--nf-accent)]">
                     {REWARDS.length}
                   </div>
-                  <div className="text-amber-100/80 text-sm">Total Rewards</div>
+                  <div className="text-[color:var(--nf-text-muted)] text-sm">Total Rewards</div>
                 </div>
-                <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4 text-center">
+                <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4 text-center">
                   <Wallet className="w-6 h-6 text-purple-400 mx-auto mb-2" />
                   <div className="text-xl font-bold text-purple-300">∞</div>
                   <div className="text-purple-100/80 text-sm">
@@ -397,16 +397,16 @@ const RedeemPage = () => {
           <div className="mb-12">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-2xl font-bold text-white">
+                <h2 className="text-2xl font-bold text-[color:var(--nf-text-primary)]">
                   Premium Rewards
                 </h2>
-                <p className="text-amber-100/70">
+                <p className="text-[color:var(--nf-text-muted)]">
                   Redeem your miles for exclusive benefits
                 </p>
               </div>
               <div className="flex items-center space-x-2">
                 <Award className="w-6 h-6 text-amber-400" />
-                <span className="text-amber-200 font-medium">Exclusive</span>
+                <span className="text-[color:var(--nf-accent)] font-medium">Exclusive</span>
               </div>
             </div>
 
@@ -431,9 +431,9 @@ const RedeemPage = () => {
 
                     {/* Card */}
                     <div
-                      className={`relative bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-sm border rounded-3xl overflow-hidden transition-all duration-500 h-full ${
+                      className={`relative bg-[var(--nf-card-bg)] backdrop-blur-sm border rounded-3xl overflow-hidden transition-all duration-500 h-full ${
                         canRedeem
-                          ? "border-amber-800/30 group-hover:border-amber-500/50"
+                          ? "border-[var(--nf-border-subtle)] group-hover:border-amber-500/50"
                           : "border-gray-800/50"
                       }`}
                     >
@@ -458,13 +458,13 @@ const RedeemPage = () => {
                           <h3
                             className={`text-xl font-bold mb-2 ${
                               canRedeem
-                                ? "text-white group-hover:text-amber-300"
-                                : "text-gray-500"
+                                ? "text-[color:var(--nf-text-primary)] group-hover:text-[color:var(--nf-accent)]"
+                                : "text-[color:var(--nf-text-muted)]"
                             } transition-colors duration-300`}
                           >
                             {reward.name}
                           </h3>
-                          <p className="text-amber-100/70 text-sm">
+                          <p className="text-[color:var(--nf-text-muted)] text-sm">
                             {reward.description}
                           </p>
                         </div>
@@ -475,12 +475,12 @@ const RedeemPage = () => {
                             <Coins className="w-5 h-5 text-amber-400" />
                             <span
                               className={`text-2xl font-bold ${
-                                canRedeem ? "text-amber-300" : "text-gray-500"
+                                canRedeem ? "text-[color:var(--nf-accent)]" : "text-[color:var(--nf-text-muted)]"
                               }`}
                             >
                               {reward.miles}
                             </span>
-                            <span className="text-amber-100/50">Miles</span>
+                            <span className="text-[color:var(--nf-text-muted)]">Miles</span>
                           </div>
 
                           {canRedeem ? (
@@ -491,9 +491,9 @@ const RedeemPage = () => {
                               </span>
                             </div>
                           ) : (
-                            <div className="flex items-center space-x-1 bg-gradient-to-r from-gray-900/40 to-black/30 backdrop-blur-sm px-3 py-1.5 rounded-full border border-gray-700/30">
-                              <Clock className="w-3 h-3 text-gray-400" />
-                              <span className="text-xs font-bold text-gray-400">
+                            <div className="flex items-center space-x-1 bg-gradient-to-r from-gray-900/40 to-black/30 backdrop-blur-sm px-3 py-1.5 rounded-full border border-[var(--nf-border-subtle)]">
+                              <Clock className="w-3 h-3 text-[color:var(--nf-text-muted)]" />
+                              <span className="text-xs font-bold text-[color:var(--nf-text-muted)]">
                                 Need more
                               </span>
                             </div>
@@ -510,7 +510,7 @@ const RedeemPage = () => {
                           className={`w-full py-3 rounded-xl font-bold transition-all duration-300 flex items-center justify-center space-x-2 ${
                             canRedeem
                               ? "bg-gradient-to-r from-amber-600 to-amber-700 text-white hover:from-amber-700 hover:to-amber-800 hover:scale-105"
-                              : "bg-gradient-to-r from-gray-800 to-black text-gray-400 border border-gray-800/50"
+                              : "bg-gradient-to-r from-gray-800 to-black text-[color:var(--nf-text-muted)] border border-gray-800/50"
                           }`}
                         >
                           <Gift className="w-5 h-5" />
@@ -534,31 +534,31 @@ const RedeemPage = () => {
             <div className="mb-12">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h2 className="text-2xl font-bold text-white">
+                  <h2 className="text-2xl font-bold text-[color:var(--nf-text-primary)]">
                     Redemption History
                   </h2>
-                  <p className="text-amber-100/70">
+                  <p className="text-[color:var(--nf-text-muted)]">
                     Your recent reward redemptions
                   </p>
                 </div>
                 <History className="w-6 h-6 text-amber-400" />
               </div>
 
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-amber-800/30">
-                        <th className="text-left p-4 text-amber-200 font-medium">
+                      <tr className="border-b border-[var(--nf-border-subtle)]">
+                        <th className="text-left p-4 text-[color:var(--nf-accent)] font-medium">
                           Reward
                         </th>
-                        <th className="text-left p-4 text-amber-200 font-medium">
+                        <th className="text-left p-4 text-[color:var(--nf-accent)] font-medium">
                           Miles Used
                         </th>
-                        <th className="text-left p-4 text-amber-200 font-medium">
+                        <th className="text-left p-4 text-[color:var(--nf-accent)] font-medium">
                           Date
                         </th>
-                        <th className="text-left p-4 text-amber-200 font-medium">
+                        <th className="text-left p-4 text-[color:var(--nf-accent)] font-medium">
                           Status
                         </th>
                       </tr>
@@ -579,7 +579,7 @@ const RedeemPage = () => {
                                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600/20 to-amber-700/20 flex items-center justify-center">
                                   <Gift className="w-5 h-5 text-amber-400" />
                                 </div>
-                                <span className="text-white font-medium">
+                                <span className="text-[color:var(--nf-text-primary)] font-medium">
                                   {item.rewardName}
                                 </span>
                               </div>
@@ -587,10 +587,10 @@ const RedeemPage = () => {
                             <td className="p-4">
                               <div className="flex items-center space-x-2">
                                 <Coins className="w-4 h-4 text-amber-400" />
-                                <span className="text-amber-300 font-bold">
+                                <span className="text-[color:var(--nf-accent)] font-bold">
                                   {item.milesUsed}
                                 </span>
-                                <span className="text-amber-100/70">miles</span>
+                                <span className="text-[color:var(--nf-text-muted)]">miles</span>
                               </div>
                             </td>
                             <td className="p-4">
@@ -621,13 +621,13 @@ const RedeemPage = () => {
           {/* No History Message */}
           {(!nileMilesData.redeemed || nileMilesData.redeemed.length === 0) && (
             <div className="text-center py-12">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-amber-900/30 to-yellow-900/30 border border-amber-700/30 mb-6">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-amber-900/30 to-yellow-900/30 border border-[var(--nf-border-subtle)] mb-6">
                 <History className="w-10 h-10 text-amber-400" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-3">
+              <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-3">
                 No Redemption History
               </h3>
-              <p className="text-gray-400 max-w-md mx-auto mb-8">
+              <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-8">
                 You haven't redeemed any rewards yet. Start by earning miles
                 through purchases and activities!
               </p>
@@ -636,25 +636,25 @@ const RedeemPage = () => {
 
           {/* How to Earn Section */}
           <div className="mt-12">
-            <div className="bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
-              <h3 className="text-2xl font-bold text-white mb-6 text-center">
+            <div className="bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
+              <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-6 text-center">
                 How to Earn More Miles
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 text-center">
+                <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center mx-auto mb-4">
-                    <ShoppingBag className="w-6 h-6 text-white" />
+                    <ShoppingBag className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                   </div>
-                  <h4 className="text-lg font-bold text-amber-200 mb-2">
+                  <h4 className="text-lg font-bold text-[color:var(--nf-accent)] mb-2">
                     Make Purchases
                   </h4>
-                  <p className="text-amber-100/70 text-sm">
+                  <p className="text-[color:var(--nf-text-muted)] text-sm">
                     Earn 10 miles for every 1 spent
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 text-center">
+                <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center mx-auto mb-4">
-                    <Star className="w-6 h-6 text-white" />
+                    <Star className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <h4 className="text-lg font-bold text-emerald-200 mb-2">
                     Write Reviews
@@ -663,9 +663,9 @@ const RedeemPage = () => {
                     Get 100 miles per review
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 text-center">
+                <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center mx-auto mb-4">
-                    <Users className="w-6 h-6 text-white" />
+                    <Users className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <h4 className="text-lg font-bold text-blue-200 mb-2">
                     Refer Friends
@@ -683,7 +683,7 @@ const RedeemPage = () => {
       {/* Redeem Modal */}
       {selectedReward && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-          <div className="bg-gradient-to-br from-gray-900 to-black border border-amber-800/50 rounded-3xl max-w-md w-full overflow-hidden">
+          <div className="bg-gradient-to-br from-gray-900 to-black border border-[var(--nf-border)] rounded-3xl max-w-md w-full overflow-hidden">
             <div className="p-8">
               <div className="text-center mb-6">
                 <div
@@ -691,40 +691,40 @@ const RedeemPage = () => {
                 >
                   {selectedReward.icon}
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-2">
+                <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-2">
                   Confirm Redemption
                 </h3>
-                <p className="text-amber-100/70">
+                <p className="text-[color:var(--nf-text-muted)]">
                   Redeem {selectedReward.miles} miles for
                 </p>
               </div>
 
-              <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/30 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 mb-6">
+              <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/30 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 mb-6">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-amber-300 mb-2">
+                  <div className="text-3xl font-bold text-[color:var(--nf-accent)] mb-2">
                     {selectedReward.name}
                   </div>
-                  <p className="text-amber-100/70">
+                  <p className="text-[color:var(--nf-text-muted)]">
                     {selectedReward.description}
                   </p>
                 </div>
               </div>
 
               <div className="space-y-4">
-                <div className="flex items-center justify-between text-amber-100/70">
+                <div className="flex items-center justify-between text-[color:var(--nf-text-muted)]">
                   <span>Current miles:</span>
-                  <span className="text-amber-300 font-bold">
+                  <span className="text-[color:var(--nf-accent)] font-bold">
                     {nileMilesData.currentMiles}
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-amber-100/70">
+                <div className="flex items-center justify-between text-[color:var(--nf-text-muted)]">
                   <span>Cost:</span>
                   <span className="text-red-300 font-bold">
                     -{selectedReward.miles}
                   </span>
                 </div>
-                <div className="border-t border-amber-800/30 pt-4">
-                  <div className="flex items-center justify-between text-white">
+                <div className="border-t border-[var(--nf-border-subtle)] pt-4">
+                  <div className="flex items-center justify-between text-[color:var(--nf-text-primary)]">
                     <span>Remaining miles:</span>
                     <span className="text-emerald-300 font-bold">
                       {nileMilesData.currentMiles - selectedReward.miles}
@@ -736,7 +736,7 @@ const RedeemPage = () => {
               <div className="flex space-x-4 mt-8">
                 <button
                   onClick={() => setSelectedReward(null)}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 text-amber-400 rounded-xl hover:border-amber-500/50 transition-all duration-300"
+                  className="flex-1 px-4 py-3 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] text-amber-400 rounded-xl hover:border-amber-500/50 transition-all duration-300"
                 >
                   Cancel
                 </button>

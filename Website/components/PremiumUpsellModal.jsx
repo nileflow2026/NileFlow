@@ -86,13 +86,13 @@ const PremiumUpsellModal = ({ isOpen, onClose, orderTotal = 0 }) => {
               <h2 className="text-2xl font-bold mb-2">
                 Upgrade to Nile Premium
               </h2>
-              <p className="text-white/90">
+              <p className="text-[color:var(--nf-text-primary)]/90">
                 Save more on this order and every future purchase
               </p>
             </div>
             <button
               onClick={() => onClose(false)}
-              className="text-white/80 hover:text-white"
+              className="text-[color:var(--nf-text-primary)]/80 hover:text-[color:var(--nf-text-primary)]"
             >
               <svg
                 className="w-6 h-6"
@@ -119,18 +119,18 @@ const PremiumUpsellModal = ({ isOpen, onClose, orderTotal = 0 }) => {
             <div className="grid grid-cols-2 gap-4">
               {/* Standard */}
               <div className="border rounded-lg p-4">
-                <h4 className="font-semibold text-gray-600 mb-3">Standard</h4>
+                <h4 className="font-semibold text-[color:var(--nf-text-muted)] mb-3">Standard</h4>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start gap-2">
-                    <span className="text-gray-400">📦</span>
+                    <span className="text-[color:var(--nf-text-muted)]">📦</span>
                     <span>5-7 days delivery</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-gray-400">⭐</span>
+                    <span className="text-[color:var(--nf-text-muted)]">⭐</span>
                     <span>{baseMiles} Nile Miles</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-gray-400">🏷️</span>
+                    <span className="text-[color:var(--nf-text-muted)]">🏷️</span>
                     <span>Regular deals only</span>
                   </li>
                 </ul>
@@ -212,7 +212,7 @@ const PremiumUpsellModal = ({ isOpen, onClose, orderTotal = 0 }) => {
                 className={`flex-1 border-2 rounded-lg p-3 text-sm font-medium transition-colors ${
                   paymentMethod === "mpesa"
                     ? "border-purple-600 bg-purple-50 text-purple-600"
-                    : "border-gray-300 hover:border-gray-400"
+                    : "border-[var(--nf-border)] hover:border-gray-400"
                 }`}
               >
                 M-Pesa
@@ -222,7 +222,7 @@ const PremiumUpsellModal = ({ isOpen, onClose, orderTotal = 0 }) => {
                 className={`flex-1 border-2 rounded-lg p-3 text-sm font-medium transition-colors ${
                   paymentMethod === "paypal"
                     ? "border-purple-600 bg-purple-50 text-purple-600"
-                    : "border-gray-300 hover:border-gray-400"
+                    : "border-[var(--nf-border)] hover:border-gray-400"
                 }`}
               >
                 PayPal
@@ -233,7 +233,7 @@ const PremiumUpsellModal = ({ isOpen, onClose, orderTotal = 0 }) => {
           {/* Phone Number Input (M-Pesa only) */}
           {paymentMethod === "mpesa" && (
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-[color:var(--nf-text-primary)] mb-2">
                 Phone Number <span className="text-red-500">*</span>
               </label>
               <input
@@ -241,9 +241,9 @@ const PremiumUpsellModal = ({ isOpen, onClose, orderTotal = 0 }) => {
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="254712345678"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                className="w-full border border-[var(--nf-border)] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-[color:var(--nf-text-muted)] mt-1">
                 Enter your Safaricom number (e.g., 254712345678)
               </p>
             </div>
@@ -304,7 +304,7 @@ const PremiumUpsellModal = ({ isOpen, onClose, orderTotal = 0 }) => {
           <div className="flex gap-3">
             <button
               onClick={() => onClose(false)}
-              className="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+              className="flex-1 border-2 border-[var(--nf-border)] text-[color:var(--nf-text-primary)] py-3 rounded-lg font-semibold hover:bg-[var(--nf-bg-subtle)] transition-colors"
               disabled={loading || showPaymentPending}
             >
               Maybe Later
@@ -327,7 +327,7 @@ const PremiumUpsellModal = ({ isOpen, onClose, orderTotal = 0 }) => {
           </div>
 
           {/* Fine Print */}
-          <p className="text-xs text-gray-500 text-center mt-4">
+          <p className="text-xs text-[color:var(--nf-text-muted)] text-center mt-4">
             Cancel anytime. Benefits expire at period end. No refunds for
             partial months.
           </p>

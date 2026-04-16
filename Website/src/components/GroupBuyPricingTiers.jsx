@@ -32,10 +32,10 @@ export default function GroupBuyPricingTiers({
   );
 
   return (
-    <div className="bg-slate-800/60 rounded-2xl p-5 border border-slate-700/50">
+    <div className="bg-[var(--nf-card-bg)] rounded-2xl p-5 border border-slate-700/50">
       <div className="flex items-center gap-2 mb-4">
         <Users size={16} className="text-emerald-400" />
-        <span className="text-white font-bold text-sm">
+        <span className="text-[color:var(--nf-text-primary)] font-bold text-sm">
           Group Pricing — more people, lower price
         </span>
       </div>
@@ -71,13 +71,13 @@ export default function GroupBuyPricingTiers({
                 isCurrent
                   ? "bg-emerald-900/50 border-emerald-500/50 ring-1 ring-emerald-500/30"
                   : isActive
-                    ? "bg-slate-700/40 border-slate-600/30"
-                    : "bg-slate-800/30 border-slate-700/20 opacity-70"
+                    ? "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)]"
+                    : "bg-[var(--nf-bg-subtle)] border-[var(--nf-border-subtle)] opacity-70"
               }`}
             >
               <span
                 className={`text-sm font-semibold flex items-center gap-1.5 ${
-                  isCurrent ? "text-emerald-300" : "text-slate-300"
+                  isCurrent ? "text-emerald-300" : "text-[color:var(--nf-text-secondary)]"
                 }`}
               >
                 {isCurrent && (
@@ -88,7 +88,7 @@ export default function GroupBuyPricingTiers({
 
               <span
                 className={`text-right text-sm font-bold ${
-                  isCurrent ? "text-emerald-300" : "text-white"
+                  isCurrent ? "text-emerald-300" : "text-[color:var(--nf-text-primary)]"
                 }`}
               >
                 {fmt(price, currency)}
@@ -109,8 +109,8 @@ export default function GroupBuyPricingTiers({
       </div>
 
       {/* Current group price summary */}
-      <div className="mt-3 pt-3 border-t border-slate-700/50">
-        <p className="text-slate-400 text-xs">
+      <div className="mt-3 pt-3 border-t border-[var(--nf-border-subtle)]/50">
+        <p className="text-[color:var(--nf-text-muted)] text-xs">
           With {currentSize} {currentSize === 1 ? "person" : "people"}, current
           price is{" "}
           <span className="text-emerald-400 font-bold">

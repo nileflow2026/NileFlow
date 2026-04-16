@@ -84,7 +84,7 @@ const OrdersPage = () => {
       case "cancelled":
         return <XCircle className="w-5 h-5 text-red-400" />;
       default:
-        return <Package className="w-5 h-5 text-gray-400" />;
+        return <Package className="w-5 h-5 text-[color:var(--nf-text-muted)]" />;
     }
   };
 
@@ -110,7 +110,7 @@ const OrdersPage = () => {
 
   if (userLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex flex-col">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] flex flex-col">
         <Header />
         <div className="flex-1 flex items-center justify-center">
           <div className="relative">
@@ -126,7 +126,7 @@ const OrdersPage = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
         <Header />
         <div className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-gray-900/20 to-amber-900/20"></div>
@@ -134,10 +134,10 @@ const OrdersPage = () => {
             <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-red-900/30 to-amber-900/30 border border-red-700/30 mb-6">
               <AlertCircle className="w-12 h-12 text-red-400" />
             </div>
-            <h3 className="text-3xl font-bold text-white mb-4">
+            <h3 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">
               Access Required
             </h3>
-            <p className="text-gray-400 max-w-md mx-auto mb-8">
+            <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-8">
               Please log in to view your premium order history and track your
               purchases.
             </p>
@@ -155,7 +155,7 @@ const OrdersPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -166,9 +166,9 @@ const OrdersPage = () => {
 
         <div className="relative max-w-8xl mx-auto">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
               <Package className="w-5 h-5 text-amber-400" />
-              <span className="text-amber-200 font-medium tracking-wide">
+              <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
                 Premium Orders
               </span>
               <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -179,10 +179,10 @@ const OrdersPage = () => {
                 Your Orders
               </span>
               <br />
-              <span className="text-white">Premium Purchase History</span>
+              <span className="text-[color:var(--nf-text-primary)]">Premium Purchase History</span>
             </h1>
 
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+            <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto">
               Track and manage your premium African product purchases with our
               exclusive order tracking system.
             </p>
@@ -190,11 +190,11 @@ const OrdersPage = () => {
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mb-12">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4 text-center">
-              <div className="text-2xl font-bold text-amber-300">
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4 text-center">
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)]">
                 {orders.length}
               </div>
-              <div className="text-amber-100/80 text-sm">Total Orders</div>
+              <div className="text-[color:var(--nf-text-muted)] text-sm">Total Orders</div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-4 text-center">
               <div className="text-2xl font-bold text-emerald-300">
@@ -241,8 +241,8 @@ const OrdersPage = () => {
                     selectedStatus === status
                       ? `bg-gradient-to-r ${getStatusColor(
                           status
-                        )} text-white border-transparent shadow-lg`
-                      : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 text-gray-300 hover:border-amber-500/50"
+                        )} text-[color:var(--nf-text-primary)] border-transparent shadow-lg`
+                      : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                   }`}
                 >
                   {selectedStatus === status && (
@@ -267,10 +267,10 @@ const OrdersPage = () => {
                   <ShoppingBag className="w-10 h-10 text-amber-500 animate-pulse" />
                 </div>
               </div>
-              <h3 className="mt-8 text-2xl font-bold text-amber-200">
+              <h3 className="mt-8 text-2xl font-bold text-[color:var(--nf-accent)]">
                 Loading Your Orders
               </h3>
-              <p className="text-gray-400 mt-2">
+              <p className="text-[color:var(--nf-text-muted)] mt-2">
                 Retrieving your premium purchase history...
               </p>
             </div>
@@ -279,15 +279,15 @@ const OrdersPage = () => {
               {/* Orders Grid */}
               {filteredOrders.length === 0 ? (
                 <div className="text-center py-32">
-                  <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-amber-700/30 mb-6">
+                  <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-[var(--nf-border-subtle)] mb-6">
                     <Package className="w-12 h-12 text-amber-400" />
                   </div>
-                  <h3 className="text-3xl font-bold text-white mb-4">
+                  <h3 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                     {selectedStatus === "all"
                       ? "No Orders Found"
                       : `No ${selectedStatus} Orders`}
                   </h3>
-                  <p className="text-gray-400 max-w-md mx-auto mb-8">
+                  <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-8">
                     {selectedStatus === "all"
                       ? "Your premium orders will appear here. Start your African shopping journey with our exclusive collection."
                       : `You don't have any ${selectedStatus} orders at the moment.`}
@@ -315,9 +315,9 @@ const OrdersPage = () => {
                       ></div>
 
                       {/* Order Card */}
-                      <div className="relative bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30">
+                      <div className="relative bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30">
                         {/* Header */}
-                        <div className="p-6 border-b border-amber-800/30">
+                        <div className="p-6 border-b border-[var(--nf-border-subtle)]">
                           <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center space-x-3">
                               <div
@@ -328,10 +328,10 @@ const OrdersPage = () => {
                                 {getStatusIcon(order.status)}
                               </div>
                               <div>
-                                <h3 className="text-lg font-bold text-white">
+                                <h3 className="text-lg font-bold text-[color:var(--nf-text-primary)]">
                                   Order #{order.$id?.slice(-8)}
                                 </h3>
-                                <p className="text-amber-100/70 text-sm">
+                                <p className="text-[color:var(--nf-text-muted)] text-sm">
                                   {new Date(order.createdAt).toLocaleDateString(
                                     "en-US",
                                     {
@@ -347,9 +347,9 @@ const OrdersPage = () => {
                             <div
                               className={`px-3 py-1.5 rounded-full border backdrop-blur-sm ${getStatusColor(
                                 order.status
-                              ).replace("600", "700")}/30 border-amber-700/30`}
+                              ).replace("600", "700")}/30 border-[var(--nf-border-subtle)]`}
                             >
-                              <span className="text-xs font-bold text-white capitalize">
+                              <span className="text-xs font-bold text-[color:var(--nf-text-primary)] capitalize">
                                 {order.status}
                               </span>
                             </div>
@@ -357,7 +357,7 @@ const OrdersPage = () => {
 
                           {/* Progress Bar */}
                           <div className="mt-4">
-                            <div className="flex items-center justify-between text-xs text-amber-100/70 mb-1">
+                            <div className="flex items-center justify-between text-xs text-[color:var(--nf-text-muted)] mb-1">
                               <span>Order Progress</span>
                               <span>
                                 {order.status === "delivered"
@@ -369,7 +369,7 @@ const OrdersPage = () => {
                                   : "25%"}
                               </span>
                             </div>
-                            <div className="w-full h-2 bg-gray-800/50 rounded-full overflow-hidden">
+                            <div className="w-full h-2 bg-[var(--nf-bg-subtle)] rounded-full overflow-hidden">
                               <div
                                 className={`h-full bg-gradient-to-r ${getStatusColor(
                                   order.status
@@ -395,10 +395,10 @@ const OrdersPage = () => {
                             <div className="flex items-center space-x-2">
                               <CreditCard className="w-4 h-4 text-amber-400" />
                               <div>
-                                <p className="text-xs text-amber-100/70">
+                                <p className="text-xs text-[color:var(--nf-text-muted)]">
                                   Amount
                                 </p>
-                                <p className="text-lg font-bold text-amber-300">
+                                <p className="text-lg font-bold text-[color:var(--nf-accent)]">
                                   {formatPrice(order.amount || 0)}
                                 </p>
                               </div>
@@ -421,14 +421,14 @@ const OrdersPage = () => {
                           {/* Estimated Delivery */}
                           {order.status !== "delivered" &&
                             order.status !== "cancelled" && (
-                              <div className="mb-6 p-4 bg-gradient-to-r from-amber-900/20 to-yellow-900/20 backdrop-blur-sm border border-amber-800/30 rounded-xl">
+                              <div className="mb-6 p-4 bg-gradient-to-r from-amber-900/20 to-yellow-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl">
                                 <div className="flex items-center space-x-2">
                                   <Clock className="w-4 h-4 text-amber-400" />
                                   <div>
-                                    <p className="text-xs text-amber-100/70">
+                                    <p className="text-xs text-[color:var(--nf-text-muted)]">
                                       Estimated Delivery
                                     </p>
-                                    <p className="text-sm font-medium text-amber-300">
+                                    <p className="text-sm font-medium text-[color:var(--nf-accent)]">
                                       {new Date(
                                         Date.now() + 5 * 24 * 60 * 60 * 1000
                                       ).toLocaleDateString()}
@@ -491,19 +491,19 @@ const OrdersPage = () => {
               )}
 
               {/* Order Summary */}
-              <div className="mt-12 bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
-                <h3 className="text-xl font-bold text-amber-200 mb-6">
+              <div className="mt-12 bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
+                <h3 className="text-xl font-bold text-[color:var(--nf-accent)] mb-6">
                   Order Summary
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="p-4 bg-gradient-to-br from-amber-900/20 to-transparent border border-amber-800/30 rounded-2xl">
+                  <div className="p-4 bg-gradient-to-br from-amber-900/20 to-transparent border border-[var(--nf-border-subtle)] rounded-2xl">
                     <div className="flex items-center space-x-3">
                       <Shield className="w-8 h-8 text-amber-400" />
                       <div>
-                        <h4 className="text-amber-100 font-bold">
+                        <h4 className="text-[color:var(--nf-text-secondary)] font-bold">
                           Premium Protection
                         </h4>
-                        <p className="text-amber-100/70 text-sm">
+                        <p className="text-[color:var(--nf-text-muted)] text-sm">
                           All orders are protected
                         </p>
                       </div>

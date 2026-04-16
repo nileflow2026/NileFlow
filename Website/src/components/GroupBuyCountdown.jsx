@@ -80,7 +80,7 @@ export default function GroupBuyCountdown({
 
   return (
     <div className={`space-y-2 ${className}`}>
-      <p className="text-xs text-slate-400 uppercase tracking-widest font-medium">
+      <p className="text-xs text-[color:var(--nf-text-muted)] uppercase tracking-widest font-medium">
         Deal ends in
       </p>
       <div className="flex items-center gap-2">
@@ -107,7 +107,7 @@ function TimeUnit({ value, label, urgent }) {
       <span className="text-2xl font-bold tabular-nums leading-tight">
         {value}
       </span>
-      <span className="text-[10px] text-slate-400 uppercase tracking-wider mt-0.5">
+      <span className="text-[10px] text-[color:var(--nf-text-muted)] uppercase tracking-wider mt-0.5">
         {label}
       </span>
     </div>

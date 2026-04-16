@@ -293,7 +293,7 @@ const CategoryPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <SeoHead
         title={`${categoryDetails?.name || "Category"} Products | Nile Flow Africa`}
         description={`Shop ${categoryDetails?.name || "category"} products with authentic African quality on Nile Flow Africa.`}
@@ -320,19 +320,19 @@ const CategoryPage = () => {
           >
             <Link
               to="/"
-              className="text-sm text-amber-200/80 hover:text-amber-200"
+              className="text-sm text-[color:var(--nf-accent)]/80 hover:text-[color:var(--nf-accent)]"
             >
               Home
             </Link>
             <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 text-amber-500/50" />
             <Link
               to="/categories"
-              className="text-sm text-amber-200/80 hover:text-amber-200"
+              className="text-sm text-[color:var(--nf-accent)]/80 hover:text-[color:var(--nf-accent)]"
             >
               Categories
             </Link>
             <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 text-amber-500/50" />
-            <span className="text-sm sm:text-base text-amber-200 font-medium sm:font-bold truncate">
+            <span className="text-sm sm:text-base text-[color:var(--nf-accent)] font-medium sm:font-bold truncate">
               {categoryDetails?.name || "Loading..."}
             </span>
           </nav>
@@ -340,9 +340,9 @@ const CategoryPage = () => {
           {/* Category Header */}
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6 sm:mb-8 lg:mb-12">
             <div className="mb-6 sm:mb-8 lg:mb-0 w-full lg:w-auto">
-              <div className="inline-flex items-center space-x-1.5 sm:space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl border border-amber-700/30 mb-3 sm:mb-4">
+              <div className="inline-flex items-center space-x-1.5 sm:space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl border border-[var(--nf-border-subtle)] mb-3 sm:mb-4">
                 <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-amber-400" />
-                <span className="text-amber-200 text-xs sm:text-sm font-medium">
+                <span className="text-[color:var(--nf-accent)] text-xs sm:text-sm font-medium">
                   Premium Collection
                 </span>
               </div>
@@ -357,30 +357,30 @@ const CategoryPage = () => {
                 </span>
               </h1>
 
-              <p className="text-gray-300 text-sm sm:text-base lg:text-lg max-w-2xl">
+              <p className="text-[color:var(--nf-text-secondary)] text-sm sm:text-base lg:text-lg max-w-2xl">
                 Discover authentic{" "}
                 {categoryDetails?.name?.toLowerCase() || "African"} products
                 crafted with tradition and premium quality.
-                <span className="block mt-1 sm:mt-2 text-amber-200/70 text-xs sm:text-sm">
+                <span className="block mt-1 sm:mt-2 text-[color:var(--nf-accent)]/70 text-xs sm:text-sm">
                   {products.length} premium products available
                 </span>
               </p>
 
               {/* Category Stats */}
               <div className="flex flex-wrap gap-2 sm:gap-3 lg:gap-4 mt-4 sm:mt-6">
-                <div className="flex items-center space-x-1.5 sm:space-x-2 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border border-amber-800/30">
+                <div className="flex items-center space-x-1.5 sm:space-x-2 bg-[var(--nf-bg-elevated)] backdrop-blur-sm px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border border-[var(--nf-border-subtle)]">
                   <Star className="w-3 h-3 sm:w-4 sm:h-4 text-amber-400" />
-                  <span className="text-amber-100 text-xs sm:text-sm">
+                  <span className="text-[color:var(--nf-text-secondary)] text-xs sm:text-sm">
                     Premium Quality
                   </span>
                 </div>
-                <div className="flex items-center space-x-1.5 sm:space-x-2 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border border-amber-800/30">
+                <div className="flex items-center space-x-1.5 sm:space-x-2 bg-[var(--nf-bg-elevated)] backdrop-blur-sm px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border border-[var(--nf-border-subtle)]">
                   <Shield className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400" />
                   <span className="text-emerald-100 text-xs sm:text-sm">
                     Authentic Origin
                   </span>
                 </div>
-                <div className="flex items-center space-x-1.5 sm:space-x-2 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border border-amber-800/30">
+                <div className="flex items-center space-x-1.5 sm:space-x-2 bg-[var(--nf-bg-elevated)] backdrop-blur-sm px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border border-[var(--nf-border-subtle)]">
                   <Truck className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400" />
                   <span className="text-blue-100 text-xs sm:text-sm">
                     Fast Delivery
@@ -393,12 +393,12 @@ const CategoryPage = () => {
             <div className="flex flex-col sm:flex-row lg:flex-col gap-3 sm:gap-4 w-full sm:w-auto lg:w-auto">
               <button className="flex items-center justify-center space-x-2 px-4 sm:px-5 lg:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm border border-amber-700/40 rounded-lg sm:rounded-xl hover:border-amber-500/60 transition-all duration-300">
                 <Filter className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
-                <span className="text-amber-200 font-medium text-sm sm:text-base">
+                <span className="text-[color:var(--nf-accent)] font-medium text-sm sm:text-base">
                   Filter
                 </span>
               </button>
 
-              <div className="flex items-center bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-lg sm:rounded-xl overflow-hidden">
+              <div className="flex items-center bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-lg sm:rounded-xl overflow-hidden">
                 <button
                   onClick={() => setViewMode("grid")}
                   className={`p-2.5 sm:p-3 ${
@@ -407,7 +407,7 @@ const CategoryPage = () => {
                 >
                   <Grid
                     className={`w-4 h-4 sm:w-5 sm:h-5 ${
-                      viewMode === "grid" ? "text-amber-400" : "text-gray-400"
+                      viewMode === "grid" ? "text-amber-400" : "text-[color:var(--nf-text-muted)]"
                     }`}
                   />
                 </button>
@@ -419,7 +419,7 @@ const CategoryPage = () => {
                 >
                   <List
                     className={`w-4 h-4 sm:w-5 sm:h-5 ${
-                      viewMode === "list" ? "text-amber-400" : "text-gray-400"
+                      viewMode === "list" ? "text-amber-400" : "text-[color:var(--nf-text-muted)]"
                     }`}
                   />
                 </button>
@@ -431,10 +431,10 @@ const CategoryPage = () => {
           {subcategories.length > 0 && (
             <div className="mb-8 sm:mb-10 lg:mb-12">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 gap-2">
-                <h2 className="text-lg sm:text-xl font-bold text-amber-200">
+                <h2 className="text-lg sm:text-xl font-bold text-[color:var(--nf-accent)]">
                   Browse Collections
                 </h2>
-                <div className="text-xs sm:text-sm text-gray-400">
+                <div className="text-xs sm:text-sm text-[color:var(--nf-text-muted)]">
                   {selectedSubcategory
                     ? "Filtered by subcategory"
                     : "All products"}
@@ -449,7 +449,7 @@ const CategoryPage = () => {
                     className={`group relative px-4 sm:px-5 lg:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl border backdrop-blur-sm transition-all duration-300 whitespace-nowrap flex-shrink-0 snap-start ${
                       !selectedSubcategory
                         ? "bg-gradient-to-r from-amber-600 to-amber-700 text-white border-amber-500 shadow-lg shadow-amber-900/30"
-                        : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 text-gray-300 hover:border-amber-500/50"
+                        : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                     }`}
                   >
                     {!selectedSubcategory && (
@@ -470,7 +470,7 @@ const CategoryPage = () => {
                       className={`group relative px-4 sm:px-5 lg:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl border backdrop-blur-sm transition-all duration-300 whitespace-nowrap flex-shrink-0 snap-start flex items-center ${
                         selectedSubcategory === sub.$id
                           ? "bg-gradient-to-r from-amber-600 to-amber-700 text-white border-amber-500 shadow-lg shadow-amber-900/30"
-                          : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 text-gray-300 hover:border-amber-500/50"
+                          : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                       }`}
                     >
                       {selectedSubcategory === sub.$id && (
@@ -479,7 +479,7 @@ const CategoryPage = () => {
                       <span className="relative font-medium text-sm sm:text-base">
                         {sub.name}
                       </span>
-                      <Zap className="relative inline-block w-2.5 h-2.5 sm:w-3 sm:h-3 ml-1.5 sm:ml-2 text-amber-300" />
+                      <Zap className="relative inline-block w-2.5 h-2.5 sm:w-3 sm:h-3 ml-1.5 sm:ml-2 text-[color:var(--nf-accent)]" />
                     </button>
                   ))}
                 </div>
@@ -504,10 +504,10 @@ const CategoryPage = () => {
                   <Gem className="w-10 h-10 text-amber-500 animate-pulse" />
                 </div>
               </div>
-              <h3 className="mt-8 text-2xl font-bold text-amber-200">
+              <h3 className="mt-8 text-2xl font-bold text-[color:var(--nf-accent)]">
                 Loading Premium Products
               </h3>
-              <p className="text-gray-400 mt-2">
+              <p className="text-[color:var(--nf-text-muted)] mt-2">
                 Curating authentic African treasures for you...
               </p>
             </div>
@@ -516,13 +516,13 @@ const CategoryPage = () => {
               {/* Products Grid */}
               {products.length === 0 ? (
                 <div className="text-center py-32">
-                  <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-amber-700/30 mb-6">
+                  <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-[var(--nf-border-subtle)] mb-6">
                     <ShoppingBag className="w-12 h-12 text-amber-400" />
                   </div>
-                  <h3 className="text-3xl font-bold text-white mb-4">
+                  <h3 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                     No Products Found
                   </h3>
-                  <p className="text-gray-400 max-w-md mx-auto mb-8">
+                  <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-8">
                     We're currently updating our collection of premium{" "}
                     {categoryDetails?.name?.toLowerCase() || "African"}{" "}
                     products. Check back soon or explore other categories.
@@ -548,7 +548,7 @@ const CategoryPage = () => {
                       key={product.$id}
                       className={`group relative overflow-hidden rounded-2xl sm:rounded-3xl transition-all duration-500 hover:-translate-y-1 sm:hover:-translate-y-2 ${
                         viewMode === "list"
-                          ? "flex bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 p-3 sm:p-4 lg:p-6"
+                          ? "flex bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] p-3 sm:p-4 lg:p-6"
                           : ""
                       }`}
                     >
@@ -561,7 +561,7 @@ const CategoryPage = () => {
 
                       {/* Product Card */}
                       <div
-                        className={`relative bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-sm border border-amber-800/30 rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30 ${
+                        className={`relative bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30 ${
                           viewMode === "list" ? "flex flex-1" : ""
                         }`}
                       >
@@ -595,7 +595,7 @@ const CategoryPage = () => {
 
                           {/* Quick Actions */}
                           <div className="absolute top-2 sm:top-3 lg:top-4 right-2 sm:right-3 lg:right-4 flex flex-col space-y-1 sm:space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <button className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-700/30 flex items-center justify-center text-amber-400 hover:text-amber-300 hover:scale-110 transition-all">
+                            <button className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm border border-[var(--nf-border-subtle)] flex items-center justify-center text-amber-400 hover:text-[color:var(--nf-accent)] hover:scale-110 transition-all">
                               <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
                             </button>
                           </div>
@@ -611,13 +611,13 @@ const CategoryPage = () => {
                         >
                           <div className="mb-3 sm:mb-4">
                             <Link to={`/products/${product.$id}`}>
-                              <h3 className="text-sm sm:text-base lg:text-xl font-bold text-white group-hover:text-amber-300 transition-colors duration-300 line-clamp-2 leading-tight">
+                              <h3 className="text-sm sm:text-base lg:text-xl font-bold text-[color:var(--nf-text-primary)] group-hover:text-[color:var(--nf-accent)] transition-colors duration-300 line-clamp-2 leading-tight">
                                 {product.productName}
                               </h3>
                             </Link>
 
                             {viewMode === "grid" && (
-                              <p className="text-gray-400 text-xs sm:text-sm mt-1.5 sm:mt-2 line-clamp-2">
+                              <p className="text-[color:var(--nf-text-muted)] text-xs sm:text-sm mt-1.5 sm:mt-2 line-clamp-2">
                                 {product.description ||
                                   "Premium quality African product with authentic craftsmanship."}
                               </p>
@@ -627,19 +627,19 @@ const CategoryPage = () => {
                           {/* Price & Rating */}
                           <div className="flex items-center justify-between mb-4 sm:mb-5 lg:mb-6">
                             <div className="flex flex-col">
-                              <span className="text-lg sm:text-xl lg:text-2xl font-bold text-amber-300">
+                              <span className="text-lg sm:text-xl lg:text-2xl font-bold text-[color:var(--nf-accent)]">
                                 {formatPrice(product.price)}
                               </span>
                               {product.originalPrice && (
-                                <span className="text-gray-500 line-through text-xs sm:text-sm">
+                                <span className="text-[color:var(--nf-text-muted)] line-through text-xs sm:text-sm">
                                   {formatPrice(product.originalPrice)}
                                 </span>
                               )}
                             </div>
 
-                            <div className="flex items-center space-x-1 bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-2 sm:px-2.5 lg:px-3 py-1 sm:py-1.5 rounded-full border border-amber-700/30">
+                            <div className="flex items-center space-x-1 bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-2 sm:px-2.5 lg:px-3 py-1 sm:py-1.5 rounded-full border border-[var(--nf-border-subtle)]">
                               <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-amber-400 fill-current" />
-                              <span className="text-xs font-bold text-amber-200">
+                              <span className="text-xs font-bold text-[color:var(--nf-accent)]">
                                 4.8
                               </span>
                             </div>
@@ -664,7 +664,7 @@ const CategoryPage = () => {
 
                           {/* Features */}
                           {viewMode === "list" && (
-                            <div className="flex flex-wrap gap-2 sm:gap-3 mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-amber-800/30">
+                            <div className="flex flex-wrap gap-2 sm:gap-3 mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-[var(--nf-border-subtle)]">
                               <div className="flex items-center space-x-1.5 sm:space-x-2">
                                 <Shield className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400" />
                                 <span className="text-xs sm:text-sm text-emerald-100">
@@ -679,7 +679,7 @@ const CategoryPage = () => {
                               </div>
                               <div className="flex items-center space-x-1.5 sm:space-x-2">
                                 <Zap className="w-3 h-3 sm:w-4 sm:h-4 text-amber-400" />
-                                <span className="text-xs sm:text-sm text-amber-100">
+                                <span className="text-xs sm:text-sm text-[color:var(--nf-text-secondary)]">
                                   Premium Quality
                                 </span>
                               </div>
@@ -701,18 +701,18 @@ const CategoryPage = () => {
                     type="button"
                     onClick={() => updatePage(currentPage - 1)}
                     disabled={currentPage <= 1}
-                    className="px-4 py-2 rounded-lg border border-amber-700/40 text-amber-200 disabled:opacity-40"
+                    className="px-4 py-2 rounded-lg border border-amber-700/40 text-[color:var(--nf-accent)] disabled:opacity-40"
                   >
                     Previous
                   </button>
-                  <span className="text-sm text-amber-100/80">
+                  <span className="text-sm text-[color:var(--nf-text-muted)]">
                     Page {currentPage} of {totalPages}
                   </span>
                   <button
                     type="button"
                     onClick={() => updatePage(currentPage + 1)}
                     disabled={currentPage >= totalPages}
-                    className="px-4 py-2 rounded-lg border border-amber-700/40 text-amber-200 disabled:opacity-40"
+                    className="px-4 py-2 rounded-lg border border-amber-700/40 text-[color:var(--nf-accent)] disabled:opacity-40"
                   >
                     Next
                   </button>
@@ -744,11 +744,11 @@ const CategoryPage = () => {
 
               {/* Category Stats Footer */}
               <div className="mt-12 sm:mt-14 lg:mt-16 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
-                <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6">
-                  <div className="text-xl sm:text-2xl font-bold text-amber-300 mb-1 sm:mb-2">
+                <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6">
+                  <div className="text-xl sm:text-2xl font-bold text-[color:var(--nf-accent)] mb-1 sm:mb-2">
                     {products.length}
                   </div>
-                  <div className="text-amber-100/80 text-sm sm:text-base">
+                  <div className="text-[color:var(--nf-text-muted)] text-sm sm:text-base">
                     Premium Products
                   </div>
                 </div>

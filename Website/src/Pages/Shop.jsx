@@ -185,7 +185,7 @@ const Shop = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -195,9 +195,9 @@ const Shop = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-red-500/10 to-amber-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-8xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <Crown className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Premium Marketplace
             </span>
             <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -208,10 +208,10 @@ const Shop = () => {
               African Treasures
             </span>
             <br />
-            <span className="text-white">Premium Collection</span>
+            <span className="text-[color:var(--nf-text-primary)]">Premium Collection</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Discover authentic products from across Africa, handpicked for
             quality and cultural significance
           </p>
@@ -220,7 +220,7 @@ const Shop = () => {
           <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto mb-8 sm:mb-10 md:mb-12 px-4 sm:px-0">
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-xl sm:rounded-2xl blur opacity-30"></div>
-              <div className="relative flex bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-sm border border-amber-800/30 rounded-xl sm:rounded-2xl overflow-hidden">
+              <div className="relative flex bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl sm:rounded-2xl overflow-hidden">
                 <div className="pl-3 sm:pl-4 md:pl-5 pr-2 sm:pr-3 flex items-center">
                   <Search className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
                 </div>
@@ -229,7 +229,7 @@ const Shop = () => {
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 px-2 sm:px-3 md:px-4 py-3 sm:py-4 bg-transparent text-amber-100 placeholder-amber-100/50 focus:outline-none text-sm sm:text-base md:text-lg"
+                  className="flex-1 px-2 sm:px-3 md:px-4 py-3 sm:py-4 bg-transparent text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none text-sm sm:text-base md:text-lg"
                 />
                 <button className="px-3 sm:px-4 md:px-6 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold hover:from-amber-700 hover:to-amber-800 transition-all duration-300 text-sm sm:text-base">
                   <span className="hidden xs:hidden sm:inline">Search</span>
@@ -240,9 +240,9 @@ const Shop = () => {
 
             {/* Search suggestions for better UX on mobile */}
             <div className="mt-3 sm:mt-4 text-center">
-              <p className="text-xs sm:text-sm text-amber-100/60">
+              <p className="text-xs sm:text-sm text-[color:var(--nf-text-muted)]">
                 <span className="hidden sm:inline">Try searching for: </span>
-                <span className="text-amber-300 font-medium">
+                <span className="text-[color:var(--nf-accent)] font-medium">
                   Art, Jewelry, Textiles, Spices
                 </span>
               </p>
@@ -254,11 +254,11 @@ const Shop = () => {
             {/* Mobile: Horizontal scroll */}
             <div className="md:hidden">
               <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory">
-                <div className="flex-shrink-0 bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-xl p-4 min-w-[140px] snap-start">
-                  <div className="text-xl sm:text-2xl font-bold text-amber-300">
+                <div className="flex-shrink-0 bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4 min-w-[140px] snap-start">
+                  <div className="text-xl sm:text-2xl font-bold text-[color:var(--nf-accent)]">
                     {products.length}
                   </div>
-                  <div className="text-amber-100/80 text-xs sm:text-sm whitespace-nowrap">
+                  <div className="text-[color:var(--nf-text-muted)] text-xs sm:text-sm whitespace-nowrap">
                     Premium Products
                   </div>
                 </div>
@@ -299,11 +299,11 @@ const Shop = () => {
 
             {/* Tablet and Desktop: Grid layout */}
             <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-xl lg:rounded-2xl p-4 lg:p-6 text-center">
-                <div className="text-2xl lg:text-3xl font-bold text-amber-300">
+              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl lg:rounded-2xl p-4 lg:p-6 text-center">
+                <div className="text-2xl lg:text-3xl font-bold text-[color:var(--nf-accent)]">
                   {products.length}
                 </div>
-                <div className="text-amber-100/80 text-sm lg:text-base">
+                <div className="text-[color:var(--nf-text-muted)] text-sm lg:text-base">
                   Premium Products
                 </div>
               </div>
@@ -353,7 +353,7 @@ const Shop = () => {
                       className={`group relative flex-shrink-0 px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl border backdrop-blur-sm transition-all duration-300 flex items-center space-x-2 snap-start ${
                         selectedCategory === category.id
                           ? "bg-gradient-to-r from-amber-600 to-amber-700 text-white border-amber-500 shadow-lg shadow-amber-900/30"
-                          : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 text-gray-300 hover:border-amber-500/50"
+                          : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                       }`}
                     >
                       {selectedCategory === category.id && (
@@ -376,7 +376,7 @@ const Shop = () => {
 
                 {/* Scroll hint for mobile */}
                 <div className="flex justify-center mt-2">
-                  <div className="text-xs text-amber-100/50">
+                  <div className="text-xs text-[color:var(--nf-text-muted)]">
                     Swipe to see more categories
                   </div>
                 </div>
@@ -391,7 +391,7 @@ const Shop = () => {
                     className={`group relative px-4 lg:px-5 py-2 lg:py-3 rounded-xl border backdrop-blur-sm transition-all duration-300 flex items-center space-x-2 ${
                       selectedCategory === category.id
                         ? "bg-gradient-to-r from-amber-600 to-amber-700 text-white border-amber-500 shadow-lg shadow-amber-900/30"
-                        : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 text-gray-300 hover:border-amber-500/50"
+                        : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                     }`}
                   >
                     {selectedCategory === category.id && (
@@ -419,7 +419,7 @@ const Shop = () => {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="appearance-none w-full sm:w-auto bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 text-amber-200 rounded-lg sm:rounded-xl pl-3 sm:pl-4 pr-8 sm:pr-10 py-2 sm:py-3 focus:outline-none focus:border-amber-500/50 text-sm sm:text-base"
+                    className="appearance-none w-full sm:w-auto bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] text-[color:var(--nf-accent)] rounded-lg sm:rounded-xl pl-3 sm:pl-4 pr-8 sm:pr-10 py-2 sm:py-3 focus:outline-none focus:border-amber-500/50 text-sm sm:text-base"
                   >
                     <option value="featured">Featured</option>
                     <option value="price-low">Price: Low to High</option>
@@ -435,7 +435,7 @@ const Shop = () => {
                   className="flex items-center space-x-2 px-3 sm:px-4 lg:px-5 py-2 sm:py-3 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm border border-amber-700/40 rounded-lg sm:rounded-xl hover:border-amber-500/60 transition-all duration-300 text-sm sm:text-base"
                 >
                   <Filter className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
-                  <span className="text-amber-200 font-medium">
+                  <span className="text-[color:var(--nf-accent)] font-medium">
                     <span className="hidden xs:inline">Filters</span>
                     <span className="xs:hidden">Filter</span>
                   </span>
@@ -446,10 +446,10 @@ const Shop = () => {
               {(selectedCategory !== "all" || searchQuery) && (
                 <button
                   onClick={clearFilters}
-                  className="flex items-center justify-center space-x-2 px-3 sm:px-4 lg:px-5 py-2 sm:py-3 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-lg sm:rounded-xl hover:border-amber-500/50 transition-all duration-300 text-sm sm:text-base"
+                  className="flex items-center justify-center space-x-2 px-3 sm:px-4 lg:px-5 py-2 sm:py-3 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-lg sm:rounded-xl hover:border-amber-500/50 transition-all duration-300 text-sm sm:text-base"
                 >
                   <X className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
-                  <span className="text-amber-200 font-medium">
+                  <span className="text-[color:var(--nf-accent)] font-medium">
                     <span className="hidden sm:inline">Clear Filters</span>
                     <span className="sm:hidden">Clear</span>
                   </span>
@@ -460,11 +460,11 @@ const Shop = () => {
 
           {/* Filter Panel */}
           {filterOpen && (
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 mb-8">
+            <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 mb-8">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-3">
                   <SlidersHorizontal className="w-6 h-6 text-amber-400" />
-                  <h3 className="text-xl font-bold text-amber-200">
+                  <h3 className="text-xl font-bold text-[color:var(--nf-accent)]">
                     Filter Products
                   </h3>
                 </div>
@@ -479,13 +479,13 @@ const Shop = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {/* Price Range */}
                 <div>
-                  <h4 className="text-amber-100 font-medium mb-3">
+                  <h4 className="text-[color:var(--nf-text-secondary)] font-medium mb-3">
                     Price Range
                   </h4>
                   <div className="space-y-4">
                     <div className="flex items-center space-x-4">
                       <div className="flex-1">
-                        <label className="text-sm text-amber-100/70 mb-1 block">
+                        <label className="text-sm text-[color:var(--nf-text-muted)] mb-1 block">
                           Min
                         </label>
                         <input
@@ -497,11 +497,11 @@ const Shop = () => {
                               min: Number(e.target.value) || 0,
                             })
                           }
-                          className="w-full px-4 py-2 bg-gray-900/50 border border-amber-800/30 rounded-lg text-amber-100 focus:outline-none focus:border-amber-500"
+                          className="w-full px-4 py-2 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border-subtle)] rounded-lg text-[color:var(--nf-text-secondary)] focus:outline-none focus:border-amber-500"
                         />
                       </div>
                       <div className="flex-1">
-                        <label className="text-sm text-amber-100/70 mb-1 block">
+                        <label className="text-sm text-[color:var(--nf-text-muted)] mb-1 block">
                           Max
                         </label>
                         <input
@@ -513,14 +513,14 @@ const Shop = () => {
                               max: Number(e.target.value) || 500000,
                             })
                           }
-                          className="w-full px-4 py-2 bg-gray-900/50 border border-amber-800/30 rounded-lg text-amber-100 focus:outline-none focus:border-amber-500"
+                          className="w-full px-4 py-2 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border-subtle)] rounded-lg text-[color:var(--nf-text-secondary)] focus:outline-none focus:border-amber-500"
                         />
                       </div>
                     </div>
                     <div className="pt-2">
-                      <div className="text-sm text-amber-100/70">
+                      <div className="text-sm text-[color:var(--nf-text-muted)]">
                         Range:{" "}
-                        <span className="text-amber-300">
+                        <span className="text-[color:var(--nf-accent)]">
                           {priceRange.min} - {priceRange.max}
                         </span>
                       </div>
@@ -530,7 +530,7 @@ const Shop = () => {
 
                 {/* Regions - Commented out for now */}
                 {/* <div>
-                  <h4 className="text-amber-100 font-medium mb-3 flex items-center space-x-2">
+                  <h4 className="text-[color:var(--nf-text-secondary)] font-medium mb-3 flex items-center space-x-2">
                     <MapPin className="w-4 h-4" />
                     <span>African Regions</span>
                   </h4>
@@ -547,8 +547,8 @@ const Shop = () => {
                         }}
                         className={`w-full px-4 py-2 rounded-lg border backdrop-blur-sm transition-all duration-300 flex items-center justify-between ${
                           selectedRegions.includes(region.id)
-                            ? `bg-gradient-to-r ${region.color} border-transparent text-white`
-                            : "bg-gray-900/50 border-amber-800/30 text-amber-100 hover:border-amber-500/50"
+                            ? `bg-gradient-to-r ${region.color} border-transparent text-[color:var(--nf-text-primary)]`
+                            : "bg-[var(--nf-bg-subtle)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                         }`}
                       >
                         <span>{region.name}</span>
@@ -562,33 +562,33 @@ const Shop = () => {
 
                 {/* Features - Commented out for now */}
                 {/* <div>
-                  <h4 className="text-amber-100 font-medium mb-3">Features</h4>
+                  <h4 className="text-[color:var(--nf-text-secondary)] font-medium mb-3">Features</h4>
                   <div className="space-y-3">
-                    <div className="flex items-center space-x-3 p-3 bg-gray-900/50 border border-amber-800/30 rounded-lg">
+                    <div className="flex items-center space-x-3 p-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border-subtle)] rounded-lg">
                       <Shield className="w-5 h-5 text-emerald-400" />
-                      <span className="text-amber-100">Authentic Origin</span>
+                      <span className="text-[color:var(--nf-text-secondary)]">Authentic Origin</span>
                     </div>
-                    <div className="flex items-center space-x-3 p-3 bg-gray-900/50 border border-amber-800/30 rounded-lg">
+                    <div className="flex items-center space-x-3 p-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border-subtle)] rounded-lg">
                       <Truck className="w-5 h-5 text-blue-400" />
-                      <span className="text-amber-100">Fast Shipping</span>
+                      <span className="text-[color:var(--nf-text-secondary)]">Fast Shipping</span>
                     </div>
-                    <div className="flex items-center space-x-3 p-3 bg-gray-900/50 border border-amber-800/30 rounded-lg">
+                    <div className="flex items-center space-x-3 p-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border-subtle)] rounded-lg">
                       <Gem className="w-5 h-5 text-amber-400" />
-                      <span className="text-amber-100">Premium Quality</span>
+                      <span className="text-[color:var(--nf-text-secondary)]">Premium Quality</span>
                     </div>
                   </div>
                 </div> */}
 
                 {/* Active Filters */}
                 <div>
-                  <h4 className="text-amber-100 font-medium mb-3">
+                  <h4 className="text-[color:var(--nf-text-secondary)] font-medium mb-3">
                     Active Filters
                   </h4>
                   <div className="space-y-2">
                     {selectedCategory !== "all" && (
-                      <div className="px-3 py-2 bg-gradient-to-r from-amber-900/30 to-yellow-900/30 border border-amber-700/30 rounded-lg flex items-center justify-between">
-                        <span className="text-amber-200">Category</span>
-                        <span className="text-amber-300 font-medium">
+                      <div className="px-3 py-2 bg-gradient-to-r from-amber-900/30 to-yellow-900/30 border border-[var(--nf-border-subtle)] rounded-lg flex items-center justify-between">
+                        <span className="text-[color:var(--nf-accent)]">Category</span>
+                        <span className="text-[color:var(--nf-accent)] font-medium">
                           {
                             categories.find((c) => c.id === selectedCategory)
                               ?.name
@@ -627,10 +627,10 @@ const Shop = () => {
                   <Gem className="w-10 h-10 text-amber-500 animate-pulse" />
                 </div>
               </div>
-              <h3 className="mt-8 text-2xl font-bold text-amber-200">
+              <h3 className="mt-8 text-2xl font-bold text-[color:var(--nf-accent)]">
                 Discovering African Treasures
               </h3>
-              <p className="text-gray-400 mt-2">
+              <p className="text-[color:var(--nf-text-muted)] mt-2">
                 Curating premium products for you...
               </p>
             </div>
@@ -638,20 +638,20 @@ const Shop = () => {
             <>
               {/* Results Info */}
               <div className="flex items-center justify-between mb-6">
-                <div className="text-amber-200">
+                <div className="text-[color:var(--nf-accent)]">
                   Showing{" "}
-                  <span className="text-amber-300 font-bold">
+                  <span className="text-[color:var(--nf-accent)] font-bold">
                     {filteredProducts.length}
                   </span>{" "}
                   of{" "}
-                  <span className="text-amber-300 font-bold">
+                  <span className="text-[color:var(--nf-accent)] font-bold">
                     {products.length}
                   </span>{" "}
                   premium products
                 </div>
-                <div className="text-amber-100/70 text-sm">
+                <div className="text-[color:var(--nf-text-muted)] text-sm">
                   Sorted by{" "}
-                  <span className="text-amber-300 font-medium">
+                  <span className="text-[color:var(--nf-accent)] font-medium">
                     {sortBy === "featured"
                       ? "Featured"
                       : sortBy === "price-low"
@@ -709,13 +709,13 @@ const Shop = () => {
             </>
           ) : (
             <div className="text-center py-32">
-              <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-amber-700/30 mb-6">
+              <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-[var(--nf-border-subtle)] mb-6">
                 <TrendingUp className="w-12 h-12 text-amber-400" />
               </div>
-              <h3 className="text-3xl font-bold text-white mb-4">
+              <h3 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                 No Products Found
               </h3>
-              <p className="text-gray-400 max-w-md mx-auto mb-8">
+              <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-8">
                 {searchQuery
                   ? `No products match "${searchQuery}". Try a different search.`
                   : "No products match your current filters. Try adjusting your criteria."}
@@ -735,11 +735,11 @@ const Shop = () => {
             {/* Mobile: Horizontal scroll */}
             <div className="lg:hidden">
               <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory px-4 sm:px-0">
-                <div className="flex-shrink-0 bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center min-w-[160px] snap-start">
-                  <div className="text-xl sm:text-2xl font-bold text-amber-300 mb-1 sm:mb-2">
+                <div className="flex-shrink-0 bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center min-w-[160px] snap-start">
+                  <div className="text-xl sm:text-2xl font-bold text-[color:var(--nf-accent)] mb-1 sm:mb-2">
                     100%
                   </div>
-                  <div className="text-amber-100/80 text-xs sm:text-sm lg:text-base whitespace-nowrap">
+                  <div className="text-[color:var(--nf-text-muted)] text-xs sm:text-sm lg:text-base whitespace-nowrap">
                     Authentic Products
                   </div>
                 </div>
@@ -771,7 +771,7 @@ const Shop = () => {
 
               {/* Scroll hint for mobile */}
               <div className="flex justify-center mt-3">
-                <div className="text-xs text-amber-100/50">
+                <div className="text-xs text-[color:var(--nf-text-muted)]">
                   Swipe to see all features
                 </div>
               </div>
@@ -779,11 +779,11 @@ const Shop = () => {
 
             {/* Desktop: Grid layout */}
             <div className="hidden lg:grid lg:grid-cols-4 gap-6">
-              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 text-center">
-                <div className="text-2xl font-bold text-amber-300 mb-2">
+              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center">
+                <div className="text-2xl font-bold text-[color:var(--nf-accent)] mb-2">
                   100%
                 </div>
-                <div className="text-amber-100/80">Authentic Products</div>
+                <div className="text-[color:var(--nf-text-muted)]">Authentic Products</div>
               </div>
               <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-6 text-center">
                 <div className="text-2xl font-bold text-emerald-300 mb-2">

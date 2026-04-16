@@ -101,7 +101,7 @@ const Hero = () => {
               <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-start p-8 md:p-16">
                 <motion.h1
                   key={`title-${activeSlide}`}
-                  className="text-3xl md:text-5xl font-extrabold text-white mb-4"
+                  className="text-3xl md:text-5xl font-extrabold text-[color:var(--nf-text-primary)] mb-4"
                   variants={fadeUpVariant}
                   initial="hidden"
                   animate="visible"
@@ -111,7 +111,7 @@ const Hero = () => {
                 </motion.h1>
                 <motion.p
                   key={`subtitle-${activeSlide}`}
-                  className="text-lg md:text-2xl text-gray-200 mb-6"
+                  className="text-lg md:text-2xl text-[color:var(--nf-text-secondary)] mb-6"
                   variants={fadeUpVariant}
                   initial="hidden"
                   animate="visible"
@@ -128,12 +128,12 @@ const Hero = () => {
                   transition={{ duration: 0.6, delay: 0.6 }}
                 >
                   <a href={slide.link}>
-                    <button className="bg-[#A35527] text-white px-6 py-3 rounded-full hover:bg-accent transition-colors duration-200">
+                    <button className="bg-[#A35527] text-[color:var(--nf-text-primary)] px-6 py-3 rounded-full hover:bg-accent transition-colors duration-200">
                       SHOP NOW
                     </button>
                   </a>
                   <a href="/products">
-                    <button className="bg-gray-700 text-white px-6 py-3 rounded-md hover:bg-gray-600 transition-colors duration-200">
+                    <button className="bg-[var(--nf-bg-subtle)] text-[color:var(--nf-text-primary)] px-6 py-3 rounded-md hover:bg-[var(--nf-text-muted)] transition-colors duration-200">
                       EXPLORE CATEGORIES
                     </button>
                   </a>

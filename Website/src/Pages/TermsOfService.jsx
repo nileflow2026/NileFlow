@@ -6,7 +6,7 @@ import { FileText, Shield, ArrowLeft, Scale, AlertCircle } from "lucide-react";
 
 const TermsOfService = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Background Elements */}
@@ -19,7 +19,7 @@ const TermsOfService = () => {
           {/* Back Button */}
           <Link
             to="/signup"
-            className="inline-flex items-center space-x-2 text-amber-300 hover:text-amber-200 mb-8 transition-colors"
+            className="inline-flex items-center space-x-2 text-[color:var(--nf-accent)] hover:text-[color:var(--nf-accent)] mb-8 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Sign Up</span>
@@ -28,29 +28,29 @@ const TermsOfService = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 mb-6">
-              <FileText className="w-10 h-10 text-white" />
+              <FileText className="w-10 h-10 text-[color:var(--nf-text-primary)]" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               <span className="bg-gradient-to-r from-amber-300 via-yellow-200 to-emerald-200 bg-clip-text text-transparent">
                 Terms of Service
               </span>
             </h1>
-            <p className="text-amber-100/70 text-lg">
+            <p className="text-[color:var(--nf-text-muted)] text-lg">
               Last Updated: December 21, 2025
             </p>
           </div>
 
           {/* Content */}
-          <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 md:p-12 space-y-8">
+          <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 md:p-12 space-y-8">
             {/* Introduction */}
             <section>
               <div className="flex items-center space-x-3 mb-4">
                 <Scale className="w-6 h-6 text-amber-400" />
-                <h2 className="text-2xl font-bold text-amber-200">
+                <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                   1. Introduction
                 </h2>
               </div>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 Welcome to Nile Flow. By accessing or using our platform, you
                 agree to be bound by these Terms of Service. Please read them
                 carefully. If you do not agree with any part of these terms, you
@@ -62,11 +62,11 @@ const TermsOfService = () => {
             <section>
               <div className="flex items-center space-x-3 mb-4">
                 <Shield className="w-6 h-6 text-amber-400" />
-                <h2 className="text-2xl font-bold text-amber-200">
+                <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                   2. Account Registration
                 </h2>
               </div>
-              <div className="text-amber-100/80 leading-relaxed space-y-3">
+              <div className="text-[color:var(--nf-text-muted)] leading-relaxed space-y-3">
                 <p>
                   To access certain features of Nile Flow, you must register for
                   an account. When you register, you agree to:
@@ -89,11 +89,11 @@ const TermsOfService = () => {
             <section>
               <div className="flex items-center space-x-3 mb-4">
                 <AlertCircle className="w-6 h-6 text-amber-400" />
-                <h2 className="text-2xl font-bold text-amber-200">
+                <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                   3. Use of Services
                 </h2>
               </div>
-              <div className="text-amber-100/80 leading-relaxed space-y-3">
+              <div className="text-[color:var(--nf-text-muted)] leading-relaxed space-y-3">
                 <p>You agree not to:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>Violate any applicable laws or regulations</li>
@@ -111,10 +111,10 @@ const TermsOfService = () => {
 
             {/* Product Listings & Purchases */}
             <section>
-              <h2 className="text-2xl font-bold text-amber-200 mb-4">
+              <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-4">
                 4. Product Listings & Purchases
               </h2>
-              <div className="text-amber-100/80 leading-relaxed space-y-3">
+              <div className="text-[color:var(--nf-text-muted)] leading-relaxed space-y-3">
                 <p>
                   All product descriptions, prices, and availability are subject
                   to change without notice. We reserve the right to:
@@ -130,10 +130,10 @@ const TermsOfService = () => {
 
             {/* Nile Miles Program */}
             <section>
-              <h2 className="text-2xl font-bold text-amber-200 mb-4">
+              <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-4">
                 5. Nile Miles Loyalty Program
               </h2>
-              <div className="text-amber-100/80 leading-relaxed space-y-3">
+              <div className="text-[color:var(--nf-text-muted)] leading-relaxed space-y-3">
                 <p>
                   The Nile Miles loyalty program is subject to the following
                   terms:
@@ -152,10 +152,10 @@ const TermsOfService = () => {
 
             {/* Payment & Pricing */}
             <section>
-              <h2 className="text-2xl font-bold text-amber-200 mb-4">
+              <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-4">
                 6. Payment & Pricing
               </h2>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 All prices are listed in the currency displayed at checkout.
                 Payment must be made in full before order processing. We accept
                 various payment methods including credit cards, debit cards, and
@@ -166,10 +166,10 @@ const TermsOfService = () => {
 
             {/* Shipping & Delivery */}
             <section>
-              <h2 className="text-2xl font-bold text-amber-200 mb-4">
+              <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-4">
                 7. Shipping & Delivery
               </h2>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 Shipping times are estimates and may vary. We are not
                 responsible for delays caused by shipping carriers or customs.
                 Risk of loss transfers to you upon delivery. Please inspect your
@@ -179,10 +179,10 @@ const TermsOfService = () => {
 
             {/* Returns & Refunds */}
             <section>
-              <h2 className="text-2xl font-bold text-amber-200 mb-4">
+              <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-4">
                 8. Returns & Refunds
               </h2>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 Our return policy allows returns within 30 days of delivery for
                 most items. Products must be unused and in original packaging.
                 Certain items may not be eligible for return. Refunds will be
@@ -193,10 +193,10 @@ const TermsOfService = () => {
 
             {/* Intellectual Property */}
             <section>
-              <h2 className="text-2xl font-bold text-amber-200 mb-4">
+              <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-4">
                 9. Intellectual Property
               </h2>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 All content on Nile Flow, including text, graphics, logos,
                 images, and software, is the property of Nile Flow or its
                 content suppliers and is protected by international copyright
@@ -207,10 +207,10 @@ const TermsOfService = () => {
 
             {/* Limitation of Liability */}
             <section>
-              <h2 className="text-2xl font-bold text-amber-200 mb-4">
+              <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-4">
                 10. Limitation of Liability
               </h2>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 Nile Flow shall not be liable for any indirect, incidental,
                 special, or consequential damages arising from your use of our
                 services. Our total liability shall not exceed the amount you
@@ -220,10 +220,10 @@ const TermsOfService = () => {
 
             {/* Termination */}
             <section>
-              <h2 className="text-2xl font-bold text-amber-200 mb-4">
+              <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-4">
                 11. Termination
               </h2>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 We reserve the right to suspend or terminate your account at any
                 time for violations of these terms, fraudulent activity, or any
                 other reason at our sole discretion. Upon termination, your
@@ -233,10 +233,10 @@ const TermsOfService = () => {
 
             {/* Changes to Terms */}
             <section>
-              <h2 className="text-2xl font-bold text-amber-200 mb-4">
+              <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-4">
                 12. Changes to Terms
               </h2>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 We may update these Terms of Service from time to time. We will
                 notify you of any material changes by posting the new terms on
                 this page and updating the "Last Updated" date. Your continued
@@ -247,15 +247,15 @@ const TermsOfService = () => {
 
             {/* Contact Information */}
             <section>
-              <h2 className="text-2xl font-bold text-amber-200 mb-4">
+              <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-4">
                 13. Contact Us
               </h2>
-              <div className="text-amber-100/80 leading-relaxed space-y-2">
+              <div className="text-[color:var(--nf-text-muted)] leading-relaxed space-y-2">
                 <p>
                   If you have any questions about these Terms of Service, please
                   contact us:
                 </p>
-                <div className="bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4 mt-4">
+                <div className="bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4 mt-4">
                   <p>Email: legal@nileflowafrica.com</p>
                   <p>Phone: +254 XXX XXX XXX</p>
                   <p>Address: Kilimani, Nairobi, Kenya</p>

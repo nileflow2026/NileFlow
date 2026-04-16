@@ -86,8 +86,8 @@ const NotificationToast = () => {
         };
       default:
         return {
-          bg: "from-gray-900/90 to-gray-800/90",
-          border: "border-gray-500/50",
+          bg: "var(--nf-card-bg)",
+          border: "border-[var(--nf-border-subtle)]",
           glow: "shadow-gray-900/30",
         };
     }
@@ -168,11 +168,11 @@ const NotificationToast = () => {
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h4 className="font-semibold text-white text-sm leading-tight">
+                    <h4 className="font-semibold text-[color:var(--nf-text-primary)] text-sm leading-tight">
                       {notification.message || "New Notification"}
                     </h4>
                     {notification.description && (
-                      <p className="text-white/80 text-xs mt-1 leading-relaxed">
+                      <p className="text-[color:var(--nf-text-primary)]/80 text-xs mt-1 leading-relaxed">
                         {notification.description}
                       </p>
                     )}
@@ -185,21 +185,21 @@ const NotificationToast = () => {
                       className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
                       title="Mark as read"
                     >
-                      <Check className="w-3 h-3 text-white" />
+                      <Check className="w-3 h-3 text-[color:var(--nf-text-primary)]" />
                     </button>
                     <button
                       onClick={() => dismissToast(toast.id)}
                       className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
                       title="Dismiss"
                     >
-                      <X className="w-3 h-3 text-white" />
+                      <X className="w-3 h-3 text-[color:var(--nf-text-primary)]" />
                     </button>
                   </div>
                 </div>
 
                 {/* Metadata */}
                 <div className="flex items-center justify-between mt-2">
-                  <span className="text-white/60 text-xs">
+                  <span className="text-[color:var(--nf-text-primary)]/60 text-xs">
                     {new Date(
                       notification.timestamp || notification.$createdAt,
                     ).toLocaleTimeString([], {

@@ -104,9 +104,9 @@ const ReturnPolicyPage = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-8xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <Shield className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Premium Assurance
             </span>
             <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -117,10 +117,10 @@ const ReturnPolicyPage = () => {
               Return Policy
             </span>
             <br />
-            <span className="text-white">Premium African Standards</span>
+            <span className="text-[color:var(--nf-text-primary)]">Premium African Standards</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             We stand behind every authentic African product we sell. Our premium
             return policy ensures your complete satisfaction and peace of mind.
           </p>
@@ -130,15 +130,15 @@ const ReturnPolicyPage = () => {
             {benefits.map((benefit, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4 text-center"
+                className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4 text-center"
               >
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 mb-3">
                   {benefit.icon}
                 </div>
-                <div className="font-bold text-amber-300 mb-1">
+                <div className="font-bold text-[color:var(--nf-accent)] mb-1">
                   {benefit.title}
                 </div>
-                <div className="text-amber-100/80 text-sm">
+                <div className="text-[color:var(--nf-text-muted)] text-sm">
                   {benefit.description}
                 </div>
               </div>
@@ -155,7 +155,7 @@ const ReturnPolicyPage = () => {
             {policySections.map((section, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden"
+                className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden"
               >
                 {/* Section Header */}
                 <div className={`bg-gradient-to-r ${section.color} p-6`}>
@@ -163,7 +163,7 @@ const ReturnPolicyPage = () => {
                     <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
                       {section.icon}
                     </div>
-                    <h2 className="text-2xl font-bold text-white">
+                    <h2 className="text-2xl font-bold text-[color:var(--nf-text-primary)]">
                       {section.title}
                     </h2>
                   </div>
@@ -178,12 +178,12 @@ const ReturnPolicyPage = () => {
                           key={stepIndex}
                           className="flex items-start space-x-3"
                         >
-                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-amber-900/30 to-yellow-900/30 border border-amber-700/30 flex items-center justify-center">
-                            <span className="text-amber-300 font-bold">
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-amber-900/30 to-yellow-900/30 border border-[var(--nf-border-subtle)] flex items-center justify-center">
+                            <span className="text-[color:var(--nf-accent)] font-bold">
                               {stepIndex + 1}
                             </span>
                           </div>
-                          <p className="text-gray-300 leading-relaxed">
+                          <p className="text-[color:var(--nf-text-secondary)] leading-relaxed">
                             {step}
                           </p>
                         </li>
@@ -197,9 +197,9 @@ const ReturnPolicyPage = () => {
                           className="flex items-start space-x-3"
                         >
                           <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center mt-1">
-                            <Leaf className="w-3 h-3 text-white" />
+                            <Leaf className="w-3 h-3 text-[color:var(--nf-text-primary)]" />
                           </div>
-                          <p className="text-gray-300 leading-relaxed">
+                          <p className="text-[color:var(--nf-text-secondary)] leading-relaxed">
                             {item}
                           </p>
                         </li>
@@ -208,8 +208,8 @@ const ReturnPolicyPage = () => {
                   )}
 
                   {section.note && (
-                    <div className="mt-6 p-4 bg-gradient-to-r from-amber-900/20 to-yellow-900/20 backdrop-blur-sm border border-amber-700/30 rounded-xl">
-                      <p className="text-amber-200 text-center font-medium">
+                    <div className="mt-6 p-4 bg-gradient-to-r from-amber-900/20 to-yellow-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl">
+                      <p className="text-[color:var(--nf-accent)] text-center font-medium">
                         {section.note}
                       </p>
                     </div>
@@ -221,25 +221,25 @@ const ReturnPolicyPage = () => {
 
           {/* Additional Information */}
           <div className="mb-16">
-            <div className="bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
+            <div className="bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
               <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                    <Award className="w-8 h-8 text-white" />
+                    <Award className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white">
+                    <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)]">
                       Premium African Quality Guarantee
                     </h3>
-                    <p className="text-amber-100/70">
+                    <p className="text-[color:var(--nf-text-muted)]">
                       Every product meets our stringent quality standards
                     </p>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-amber-300">98%</div>
-                    <div className="text-amber-100/80 text-sm">
+                    <div className="text-2xl font-bold text-[color:var(--nf-accent)]">98%</div>
+                    <div className="text-[color:var(--nf-text-muted)] text-sm">
                       Satisfaction Rate
                     </div>
                   </div>
@@ -258,7 +258,7 @@ const ReturnPolicyPage = () => {
 
           {/* FAQ Section */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-amber-200 mb-8 text-center">
+            <h2 className="text-3xl font-bold text-[color:var(--nf-accent)] mb-8 text-center">
               Frequently Asked Questions
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -282,15 +282,15 @@ const ReturnPolicyPage = () => {
               ].map((faq, index) => (
                 <div
                   key={index}
-                  className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6"
+                  className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6"
                 >
-                  <h4 className="text-lg font-bold text-white mb-3 flex items-center space-x-2">
+                  <h4 className="text-lg font-bold text-[color:var(--nf-text-primary)] mb-3 flex items-center space-x-2">
                     <span className="w-6 h-6 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center text-white text-sm">
                       Q
                     </span>
                     <span>{faq.q}</span>
                   </h4>
-                  <p className="text-gray-300 pl-8">{faq.a}</p>
+                  <p className="text-[color:var(--nf-text-secondary)] pl-8">{faq.a}</p>
                 </div>
               ))}
             </div>
@@ -298,11 +298,11 @@ const ReturnPolicyPage = () => {
 
           {/* CTA Section */}
           <div className="text-center">
-            <div className="inline-block bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 max-w-2xl">
-              <h3 className="text-2xl font-bold text-white mb-4">
+            <div className="inline-block bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 max-w-2xl">
+              <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                 Need Help With a Return?
               </h3>
-              <p className="text-gray-300 mb-6">
+              <p className="text-[color:var(--nf-text-secondary)] mb-6">
                 Our premium customer support team is here to assist you 24/7
                 with any return or exchange inquiries.
               </p>
@@ -320,11 +320,11 @@ const ReturnPolicyPage = () => {
 
           {/* Trust Badges */}
           <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 text-center">
-              <div className="text-2xl font-bold text-amber-300 mb-2">
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center">
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)] mb-2">
                 30 Days
               </div>
-              <div className="text-amber-100/80">Return Window</div>
+              <div className="text-[color:var(--nf-text-muted)]">Return Window</div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-6 text-center">
               <div className="text-2xl font-bold text-emerald-300 mb-2">

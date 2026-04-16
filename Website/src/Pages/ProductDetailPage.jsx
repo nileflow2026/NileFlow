@@ -85,14 +85,14 @@ const StarRating = ({
                 className={`absolute inset-0 rounded-full ${
                   isFilled
                     ? "bg-gradient-to-br from-yellow-400 to-amber-500"
-                    : "bg-gray-800/50 border border-amber-800/30"
+                    : "bg-[var(--nf-bg-subtle)] border border-[var(--nf-border-subtle)]"
                 }`}
               ></div>
 
               {/* Star Icon */}
               <svg
                 className={`relative ${sizes[size]} ${
-                  isFilled ? "text-yellow-300 fill-current" : "text-gray-600"
+                  isFilled ? "text-yellow-300 fill-current" : "text-[color:var(--nf-text-muted)]"
                 }`}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
@@ -385,7 +385,7 @@ const ProductDetailPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
         <SeoHead
           title="Loading Product | Nile Flow Africa"
           description="Loading product details on Nile Flow Africa."
@@ -400,10 +400,10 @@ const ProductDetailPage = () => {
               <Gem className="w-10 h-10 text-amber-500 animate-pulse" />
             </div>
           </div>
-          <h3 className="mt-8 text-2xl font-bold text-amber-200">
+          <h3 className="mt-8 text-2xl font-bold text-[color:var(--nf-accent)]">
             Loading Premium Product
           </h3>
-          <p className="text-gray-400 mt-2">
+          <p className="text-[color:var(--nf-text-muted)] mt-2">
             Discovering authentic African treasure...
           </p>
         </div>
@@ -414,7 +414,7 @@ const ProductDetailPage = () => {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
         <SeoHead
           title="Product Not Found | Nile Flow Africa"
           description="The requested product could not be found on Nile Flow Africa."
@@ -424,13 +424,13 @@ const ProductDetailPage = () => {
         />
         <Header />
         <div className="flex flex-col items-center justify-center pt-32 pb-20">
-          <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-[var(--nf-border-subtle)] mb-6">
             <Package className="w-12 h-12 text-amber-400" />
           </div>
-          <h3 className="text-3xl font-bold text-white mb-4">
+          <h3 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">
             Product Not Found
           </h3>
-          <p className="text-gray-400 max-w-md mx-auto mb-8">
+          <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-8">
             The authentic African product you're looking for doesn't exist or an
             error occurred.
           </p>
@@ -796,7 +796,7 @@ const ProductDetailPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <SeoHead
         title={productTitle}
         description={productDescription}
@@ -812,20 +812,20 @@ const ProductDetailPage = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-amber-900/10 via-gray-900/10 to-emerald-900/10"></div>
         <div className="relative max-w-8xl mx-auto">
           <nav
-            className="mb-6 flex items-center gap-2 text-sm text-amber-100/80"
+            className="mb-6 flex items-center gap-2 text-sm text-[color:var(--nf-text-muted)]"
             aria-label="Breadcrumb"
           >
-            <Link to="/" className="hover:text-amber-200">
+            <Link to="/" className="hover:text-[color:var(--nf-accent)]">
               Home
             </Link>
             <ChevronRight className="w-4 h-4 text-amber-500/50" />
-            <Link to="/categories" className="hover:text-amber-200">
+            <Link to="/categories" className="hover:text-[color:var(--nf-accent)]">
               Categories
             </Link>
             <ChevronRight className="w-4 h-4 text-amber-500/50" />
             <Link
               to={categoryPath}
-              className="hover:text-amber-200 truncate max-w-[180px]"
+              className="hover:text-[color:var(--nf-accent)] truncate max-w-[180px]"
             >
               {categoryName}
             </Link>
@@ -835,7 +835,7 @@ const ProductDetailPage = () => {
             {/* Product Images */}
             <div className="space-y-6">
               {/* Main Image */}
-              <div className="relative bg-gradient-to-br from-gray-900 to-black rounded-3xl overflow-hidden border border-amber-800/30">
+              <div className="relative bg-gradient-to-br from-gray-900 to-black rounded-3xl overflow-hidden border border-[var(--nf-border-subtle)]">
                 <div className="relative h-96 md:h-[500px] flex items-center justify-center">
                   {activeImage && (
                     <img
@@ -854,13 +854,13 @@ const ProductDetailPage = () => {
                     <>
                       <button
                         onClick={() => handleImageNavigation("prev")}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 border border-amber-700/30"
+                        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 border border-[var(--nf-border-subtle)]"
                       >
                         <ChevronLeft className="w-6 h-6" />
                       </button>
                       <button
                         onClick={() => handleImageNavigation("next")}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 border border-amber-700/30"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 border border-[var(--nf-border-subtle)]"
                       >
                         <ChevronRight className="w-6 h-6" />
                       </button>
@@ -887,7 +887,7 @@ const ProductDetailPage = () => {
                     className={`absolute top-4 right-4 w-12 h-12 rounded-full backdrop-blur-sm border flex items-center justify-center transition-all duration-300 ${
                       wishlisted
                         ? "bg-gradient-to-r from-red-600 to-pink-600 border-red-500/50 text-white"
-                        : "bg-gradient-to-r from-gray-900/80 to-black/80 border-amber-700/30 text-amber-400 hover:text-amber-300 hover:border-amber-500/50"
+                        : "bg-gradient-to-r from-gray-900/80 to-black/80 border-[var(--nf-border-subtle)] text-amber-400 hover:text-[color:var(--nf-accent)] hover:border-amber-500/50"
                     } hover:scale-110`}
                   >
                     <Heart
@@ -910,7 +910,7 @@ const ProductDetailPage = () => {
                       className={`flex-shrink-0 w-20 h-20 rounded-xl border-2 overflow-hidden transition-all duration-300 ${
                         activeImage === img
                           ? "border-amber-500 scale-105"
-                          : "border-amber-800/30 hover:border-amber-500/50"
+                          : "border-[var(--nf-border-subtle)] hover:border-amber-500/50"
                       }`}
                     >
                       <img
@@ -930,20 +930,20 @@ const ProductDetailPage = () => {
             {/* Product Info */}
             <div className="space-y-8">
               <div>
-                <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-4 py-2 rounded-xl border border-amber-700/30 mb-4">
+                <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-4 py-2 rounded-xl border border-[var(--nf-border-subtle)] mb-4">
                   <Sparkles className="w-4 h-4 text-amber-400" />
-                  <span className="text-amber-200 text-sm font-medium">
+                  <span className="text-[color:var(--nf-accent)] text-sm font-medium">
                     Premium Collection
                   </span>
                 </div>
 
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                   {product.productName}
                 </h1>
 
                 <div className="flex items-center space-x-4 mb-6">
                   <StarRating rating={averageRating} size="lg" />
-                  <span className="text-gray-300">
+                  <span className="text-[color:var(--nf-text-secondary)]">
                     {averageRating.toFixed(1)} ({reviews.length} reviews)
                   </span>
                 </div>
@@ -962,14 +962,14 @@ const ProductDetailPage = () => {
                 <div className="mb-4">
                   <Link
                     to={categoryPath}
-                    className="inline-flex items-center gap-2 text-sm text-amber-300 hover:text-amber-200"
+                    className="inline-flex items-center gap-2 text-sm text-[color:var(--nf-accent)] hover:text-[color:var(--nf-accent)]"
                   >
                     <span>View more in {categoryName}</span>
                     <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>
 
-                <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                <p className="text-[color:var(--nf-text-secondary)] text-lg leading-relaxed mb-6">
                   {getDisplayedDescription()}
                 </p>
                 {product?.description && product.description.length > 200 && (
@@ -977,7 +977,7 @@ const ProductDetailPage = () => {
                     onClick={() =>
                       setIsDescriptionExpanded(!isDescriptionExpanded)
                     }
-                    className="text-amber-400 hover:text-amber-300 font-semibold transition-colors duration-200 mb-6"
+                    className="text-amber-400 hover:text-[color:var(--nf-accent)] font-semibold transition-colors duration-200 mb-6"
                   >
                     {isDescriptionExpanded ? "See Less" : "See More"}
                   </button>
@@ -985,13 +985,13 @@ const ProductDetailPage = () => {
               </div>
 
               {/* Price Section */}
-              <div className="bg-gradient-to-br from-amber-900/20 to-yellow-900/20 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6">
+              <div className="bg-gradient-to-br from-amber-900/20 to-yellow-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6">
                 <div className="flex items-baseline gap-4 mb-4">
-                  <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-amber-300">
+                  <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-[color:var(--nf-accent)]">
                     {formatPrice(product.price)}
                   </span>
                   {product.originalPrice && (
-                    <span className="text-gray-400 line-through text-lg sm:text-xl md:text-2xl">
+                    <span className="text-[color:var(--nf-text-muted)] line-through text-lg sm:text-xl md:text-2xl">
                       {formatPrice(product.originalPrice)}
                     </span>
                   )}
@@ -1009,26 +1009,26 @@ const ProductDetailPage = () => {
 
               {/* Quantity Selector */}
               <div className="space-y-4">
-                <label className="text-amber-200 font-medium">Quantity</label>
+                <label className="text-[color:var(--nf-accent)] font-medium">Quantity</label>
                 <div className="flex items-center space-x-4">
-                  <div className="flex items-center bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl overflow-hidden">
+                  <div className="flex items-center bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl overflow-hidden">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="px-4 py-3 text-amber-400 hover:text-amber-300 hover:bg-amber-900/20 transition-colors"
+                      className="px-4 py-3 text-amber-400 hover:text-[color:var(--nf-accent)] hover:bg-amber-900/20 transition-colors"
                     >
                       -
                     </button>
-                    <span className="px-6 py-3 text-white font-bold text-lg">
+                    <span className="px-6 py-3 text-[color:var(--nf-text-primary)] font-bold text-lg">
                       {quantity}
                     </span>
                     <button
                       onClick={() => setQuantity(quantity + 1)}
-                      className="px-4 py-3 text-amber-400 hover:text-amber-300 hover:bg-amber-900/20 transition-colors"
+                      className="px-4 py-3 text-amber-400 hover:text-[color:var(--nf-accent)] hover:bg-amber-900/20 transition-colors"
                     >
                       +
                     </button>
                   </div>
-                  <div className="text-amber-100/70 text-sm">
+                  <div className="text-[color:var(--nf-text-muted)] text-sm">
                     {product.stock || "Limited"} items available
                   </div>
                 </div>
@@ -1072,19 +1072,19 @@ const ProductDetailPage = () => {
           <div className="mb-12">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h2 className="text-3xl font-bold text-white mb-2">
+                <h2 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-2">
                   Customer Reviews
                 </h2>
-                <p className="text-gray-300">
+                <p className="text-[color:var(--nf-text-secondary)]">
                   Authentic feedback from our African community
                 </p>
               </div>
               <div className="flex items-center space-x-2">
-                <div className="text-center bg-gradient-to-br from-amber-900/20 to-yellow-900/20 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4">
-                  <div className="text-3xl font-bold text-amber-300">
+                <div className="text-center bg-gradient-to-br from-amber-900/20 to-yellow-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4">
+                  <div className="text-3xl font-bold text-[color:var(--nf-accent)]">
                     {averageRating.toFixed(1)}
                   </div>
-                  <div className="text-amber-100/80 text-sm">
+                  <div className="text-[color:var(--nf-text-muted)] text-sm">
                     Average Rating
                   </div>
                 </div>
@@ -1097,7 +1097,7 @@ const ProductDetailPage = () => {
                 {reviews.slice(0, visibleReviewsCount).map((review, index) => (
                   <div
                     key={index}
-                    className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 group hover:border-amber-500/50 transition-all duration-300"
+                    className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 group hover:border-amber-500/50 transition-all duration-300"
                   >
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center space-x-4">
@@ -1105,31 +1105,31 @@ const ProductDetailPage = () => {
                           <img
                             src={review.avatar || "/placeholder-avatar.png"}
                             alt={review.userName}
-                            className="w-12 h-12 rounded-full border-2 border-amber-800/30"
+                            className="w-12 h-12 rounded-full border-2 border-[var(--nf-border-subtle)]"
                             loading="lazy"
                             decoding="async"
                           />
                           <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                            <CheckCircle className="w-3 h-3 text-white" />
+                            <CheckCircle className="w-3 h-3 text-[color:var(--nf-text-primary)]" />
                           </div>
                         </div>
                         <div>
-                          <h4 className="font-bold text-white">
+                          <h4 className="font-bold text-[color:var(--nf-text-primary)]">
                             {review.userName}
                           </h4>
-                          <p className="text-gray-400 text-sm">
+                          <p className="text-[color:var(--nf-text-muted)] text-sm">
                             Verified Purchase
                           </p>
                         </div>
                       </div>
                       <div className="text-right">
                         <StarRating rating={review.rating} size="sm" />
-                        <p className="text-gray-400 text-sm mt-1">
+                        <p className="text-[color:var(--nf-text-muted)] text-sm mt-1">
                           {formatDate(review.createdAt)}
                         </p>
                       </div>
                     </div>
-                    <p className="text-gray-300 leading-relaxed">
+                    <p className="text-[color:var(--nf-text-secondary)] leading-relaxed">
                       {review.text}
                     </p>
                     {(() => {
@@ -1164,7 +1164,7 @@ const ProductDetailPage = () => {
                               key={idx}
                               src={src}
                               alt={`Review ${idx + 1}`}
-                              className="w-32 h-32 rounded-lg object-cover border border-amber-800/30"
+                              className="w-32 h-32 rounded-lg object-cover border border-[var(--nf-border-subtle)]"
                               loading="lazy"
                               decoding="async"
                             />
@@ -1172,8 +1172,8 @@ const ProductDetailPage = () => {
                         </div>
                       );
                     })()}
-                    <div className="flex items-center justify-between mt-6 pt-6 border-t border-amber-800/30">
-                      <button className="flex items-center space-x-2 text-amber-400 hover:text-amber-300 transition-colors">
+                    <div className="flex items-center justify-between mt-6 pt-6 border-t border-[var(--nf-border-subtle)]">
+                      <button className="flex items-center space-x-2 text-amber-400 hover:text-[color:var(--nf-accent)] transition-colors">
                         <ThumbsUp className="w-5 h-5" />
                         <span className="text-sm">Helpful</span>
                       </button>
@@ -1181,7 +1181,7 @@ const ProductDetailPage = () => {
                         onClick={() =>
                           setReplyingTo(replyingTo === index ? null : index)
                         }
-                        className="flex items-center space-x-2 text-amber-400 hover:text-amber-300 transition-colors"
+                        className="flex items-center space-x-2 text-amber-400 hover:text-[color:var(--nf-accent)] transition-colors"
                       >
                         <MessageSquare className="w-5 h-5" />
                         <span className="text-sm">Reply</span>
@@ -1190,12 +1190,12 @@ const ProductDetailPage = () => {
 
                     {/* Reply Form */}
                     {replyingTo === index && (
-                      <div className="mt-6 pt-6 border-t border-amber-800/30">
+                      <div className="mt-6 pt-6 border-t border-[var(--nf-border-subtle)]">
                         <div className="space-y-4">
                           <textarea
                             value={replyText}
                             onChange={(e) => setReplyText(e.target.value)}
-                            className="w-full h-24 px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors resize-none"
+                            className="w-full h-24 px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors resize-none"
                             placeholder="Write your reply..."
                           />
                           <div className="flex justify-end space-x-3">
@@ -1204,7 +1204,7 @@ const ProductDetailPage = () => {
                                 setReplyingTo(null);
                                 setReplyText("");
                               }}
-                              className="px-4 py-2 text-amber-400 hover:text-amber-300 transition-colors"
+                              className="px-4 py-2 text-amber-400 hover:text-[color:var(--nf-accent)] transition-colors"
                             >
                               Cancel
                             </button>
@@ -1231,13 +1231,13 @@ const ProductDetailPage = () => {
               </div>
             ) : (
               <div className="text-center py-12">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-amber-700/30 mb-6">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-[var(--nf-border-subtle)] mb-6">
                   <MessageSquare className="w-10 h-10 text-amber-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-3">
+                <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-3">
                   No Reviews Yet
                 </h3>
-                <p className="text-gray-400 max-w-md mx-auto">
+                <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto">
                   Be the first to share your experience with this premium
                   African product!
                 </p>
@@ -1251,7 +1251,7 @@ const ProductDetailPage = () => {
                   onClick={() => setVisibleReviewsCount(reviews.length)}
                   className="px-6 py-3 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm border border-amber-700/40 rounded-xl hover:border-amber-500/60 transition-all duration-300 flex items-center space-x-2"
                 >
-                  <span className="text-amber-200 font-medium">
+                  <span className="text-[color:var(--nf-accent)] font-medium">
                     Show All Reviews ({reviews.length - visibleReviewsCount}{" "}
                     more)
                   </span>
@@ -1262,7 +1262,7 @@ const ProductDetailPage = () => {
               {visibleReviewsCount > 3 && (
                 <button
                   onClick={() => setVisibleReviewsCount(3)}
-                  className="px-6 py-3 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl hover:border-amber-500/50 transition-all duration-300 text-amber-200 font-medium"
+                  className="px-6 py-3 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl hover:border-amber-500/50 transition-all duration-300 text-[color:var(--nf-accent)] font-medium"
                 >
                   Show Less
                 </button>
@@ -1271,16 +1271,16 @@ const ProductDetailPage = () => {
           </div>
 
           {/* Add Review Form */}
-          <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
+          <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
             <div className="flex items-center space-x-3 mb-6">
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                <MessageSquare className="w-6 h-6 text-white" />
+                <MessageSquare className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-amber-200">
+                <h3 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                   Share Your Experience
                 </h3>
-                <p className="text-amber-100/70">
+                <p className="text-[color:var(--nf-text-muted)]">
                   Rate the product, write a review, or do both!
                 </p>
               </div>
@@ -1288,7 +1288,7 @@ const ProductDetailPage = () => {
 
             <form onSubmit={handleAddReview} className="space-y-6">
               <div>
-                <label className="block text-amber-100 font-medium mb-3">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-3">
                   Your Rating (Optional)
                 </label>
                 <StarRating
@@ -1300,7 +1300,7 @@ const ProductDetailPage = () => {
               </div>
 
               <div>
-                <label className="block text-amber-100 font-medium mb-3">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-3">
                   Your Review (Optional)
                 </label>
                 <div className="relative">
@@ -1308,27 +1308,27 @@ const ProductDetailPage = () => {
                   <textarea
                     value={reviewText}
                     onChange={(e) => setReviewText(e.target.value)}
-                    className="relative w-full h-40 px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors resize-none"
+                    className="relative w-full h-40 px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors resize-none"
                     placeholder="Share your authentic experience with this African product..."
                   ></textarea>
                 </div>
               </div>
 
               <div>
-                <label className="block text-amber-100 font-medium mb-3">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-3">
                   Add Photos (Optional)
                 </label>
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-xl blur opacity-0 hover:opacity-30 transition-opacity duration-300"></div>
-                  <div className="relative flex items-center space-x-4 p-4 bg-gray-900/50 border border-amber-800/50 rounded-xl">
-                    <div className="w-20 h-20 rounded-lg border-2 border-dashed border-amber-800/30 flex items-center justify-center cursor-pointer hover:border-amber-500/50 transition-colors">
+                  <div className="relative flex items-center space-x-4 p-4 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl">
+                    <div className="w-20 h-20 rounded-lg border-2 border-dashed border-[var(--nf-border-subtle)] flex items-center justify-center cursor-pointer hover:border-amber-500/50 transition-colors">
                       <Camera className="w-8 h-8 text-amber-400" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-amber-100">
+                      <p className="text-[color:var(--nf-text-secondary)]">
                         Upload photos of your product
                       </p>
-                      <p className="text-amber-100/70 text-sm">
+                      <p className="text-[color:var(--nf-text-muted)] text-sm">
                         Support JPG, PNG up to 5MB
                       </p>
                     </div>
@@ -1356,7 +1356,7 @@ const ProductDetailPage = () => {
                   </div>
                 </div>
                 {selectedImages && selectedImages.length > 0 && (
-                  <div className="mt-3 text-amber-300 text-sm">
+                  <div className="mt-3 text-[color:var(--nf-accent)] text-sm">
                     <div className="flex items-center space-x-2">
                       <CheckCircle className="w-4 h-4" />
                       <span>Selected: {selectedImages.length} image(s)</span>
@@ -1365,9 +1365,9 @@ const ProductDetailPage = () => {
                       {selectedImages.map((f, i) => (
                         <div
                           key={i}
-                          className="flex items-center gap-2 bg-gray-900/40 border border-amber-800/40 rounded-lg px-2 py-1"
+                          className="flex items-center gap-2 bg-[var(--nf-card-bg)] border border-[var(--nf-border-subtle)] rounded-lg px-2 py-1"
                         >
-                          <span className="text-amber-200/80 text-xs">
+                          <span className="text-[color:var(--nf-accent)]/80 text-xs">
                             {f.name}
                           </span>
                           <button

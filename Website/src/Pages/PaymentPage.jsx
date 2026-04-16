@@ -151,7 +151,7 @@ const PaymentPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex flex-col">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] flex flex-col">
         <Header />
         <div className="flex-1 flex flex-col items-center justify-center">
           <div className="relative">
@@ -160,10 +160,10 @@ const PaymentPage = () => {
               <Shield className="w-10 h-10 text-amber-500 animate-pulse" />
             </div>
           </div>
-          <h3 className="mt-8 text-2xl font-bold text-amber-200">
+          <h3 className="mt-8 text-2xl font-bold text-[color:var(--nf-accent)]">
             Loading Payment Options
           </h3>
-          <p className="text-gray-400 mt-2">
+          <p className="text-[color:var(--nf-text-muted)] mt-2">
             Securing your payment preferences...
           </p>
         </div>
@@ -173,7 +173,7 @@ const PaymentPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -187,18 +187,18 @@ const PaymentPage = () => {
           {/* Back Button */}
           <button
             onClick={() => navigate(-1)}
-            className="group flex items-center space-x-2 text-amber-300 hover:text-amber-200 transition-colors mb-8"
+            className="group flex items-center space-x-2 text-[color:var(--nf-accent)] hover:text-[color:var(--nf-accent)] transition-colors mb-8"
           >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-700/30 flex items-center justify-center group-hover:border-amber-500/50 transition-all">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm border border-[var(--nf-border-subtle)] flex items-center justify-center group-hover:border-amber-500/50 transition-all">
               <ArrowLeft className="w-5 h-5" />
             </div>
             <span className="font-medium">Back to Checkout</span>
           </button>
 
           <div className="text-center mb-8">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
               <Lock className="w-5 h-5 text-amber-400" />
-              <span className="text-amber-200 font-medium tracking-wide">
+              <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
                 Secure Payment
               </span>
               <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -209,27 +209,27 @@ const PaymentPage = () => {
                 Payment Method
               </span>
               <br />
-              <span className="text-white">Premium Security</span>
+              <span className="text-[color:var(--nf-text-primary)]">Premium Security</span>
             </h1>
 
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+            <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
               Choose your preferred payment method. All transactions are
               encrypted with 256-bit security.
             </p>
 
             {/* User Info */}
             {user && (
-              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-800/30 mb-8">
+              <div className="inline-flex items-center space-x-2 bg-[var(--nf-bg-elevated)] backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-8">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                  <span className="text-white font-bold">
+                  <span className="text-[color:var(--nf-text-primary)] font-bold">
                     {user.name?.charAt(0) || user.username?.charAt(0) || "U"}
                   </span>
                 </div>
                 <div className="text-left">
-                  <p className="text-amber-100 text-sm">
+                  <p className="text-[color:var(--nf-text-secondary)] text-sm">
                     Payment preference for
                   </p>
-                  <p className="text-amber-300 font-bold">
+                  <p className="text-[color:var(--nf-accent)] font-bold">
                     {user.username || user.email}
                   </p>
                 </div>
@@ -260,10 +260,10 @@ const PaymentPage = () => {
                   {confirmationMessage.includes("successfully") ? (
                     <>
                       <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center">
-                        <Check className="w-6 h-6 text-white" />
+                        <Check className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                       </div>
                       <div>
-                        <p className="font-bold text-white text-lg">
+                        <p className="font-bold text-[color:var(--nf-text-primary)] text-lg">
                           Payment Method Saved
                         </p>
                         <p className="text-emerald-100">
@@ -274,14 +274,14 @@ const PaymentPage = () => {
                   ) : (
                     <>
                       <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                        <Shield className="w-6 h-6 text-white" />
+                        <Shield className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                       </div>
                       <div>
-                        <p className="font-bold text-white text-lg">
+                        <p className="font-bold text-[color:var(--nf-text-primary)] text-lg">
                           {confirmationMessage}
                         </p>
                         {saving && (
-                          <p className="text-amber-100 text-sm flex items-center justify-center space-x-2">
+                          <p className="text-[color:var(--nf-text-secondary)] text-sm flex items-center justify-center space-x-2">
                             <Loader2 className="w-4 h-4 animate-spin" />
                             <span>Saving your preference...</span>
                           </p>
@@ -296,9 +296,9 @@ const PaymentPage = () => {
 
           {/* Security Badges */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4 text-center">
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4 text-center">
               <Shield className="w-8 h-8 text-amber-400 mx-auto mb-2" />
-              <div className="text-sm text-amber-100">256-bit Encryption</div>
+              <div className="text-sm text-[color:var(--nf-text-secondary)]">256-bit Encryption</div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-4 text-center">
               <Lock className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
@@ -338,19 +338,19 @@ const PaymentPage = () => {
 
                   {/* Card */}
                   <div
-                    className={`relative bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-sm border rounded-3xl overflow-hidden transition-all duration-500 ${
+                    className={`relative bg-[var(--nf-card-bg)] backdrop-blur-sm border rounded-3xl overflow-hidden transition-all duration-500 ${
                       isSelected
                         ? `border-transparent shadow-2xl shadow-${
                             option.color.split("-")[1]
                           }-900/30`
-                        : "border-amber-800/30 hover:border-amber-500/50"
+                        : "border-[var(--nf-border-subtle)] hover:border-amber-500/50"
                     }`}
                   >
                     {/* Badge */}
                     {option.badge && (
                       <div className="absolute top-4 right-4 z-10">
                         <div
-                          className={`bg-gradient-to-r ${option.color} text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg`}
+                          className={`bg-gradient-to-r ${option.color} text-[color:var(--nf-text-primary)] text-xs font-bold px-3 py-1.5 rounded-full shadow-lg`}
                         >
                           {option.badge}
                         </div>
@@ -361,28 +361,28 @@ const PaymentPage = () => {
                     {isSelected && (
                       <div className="absolute top-4 left-4 z-10">
                         <div className="w-10 h-10 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 flex items-center justify-center shadow-lg">
-                          <Check className="w-5 h-5 text-white" />
+                          <Check className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                         </div>
                       </div>
                     )}
 
                     {/* Card Header */}
-                    <div className="p-6 border-b border-amber-800/30">
+                    <div className="p-6 border-b border-[var(--nf-border-subtle)]">
                       <div className="flex items-center space-x-4">
                         <div
                           className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${option.color} flex items-center justify-center`}
                         >
-                          <div className="text-white">{option.icon}</div>
+                          <div className="text-[color:var(--nf-text-primary)]">{option.icon}</div>
                         </div>
                         <div className="flex-1">
                           <h3
                             className={`text-xl font-bold ${
-                              isSelected ? "text-amber-300" : "text-white"
+                              isSelected ? "text-[color:var(--nf-accent)]" : "text-[color:var(--nf-text-primary)]"
                             }`}
                           >
                             {option.name}
                           </h3>
-                          <p className="text-gray-400 text-sm mt-1">
+                          <p className="text-[color:var(--nf-text-muted)] text-sm mt-1">
                             {option.description}
                           </p>
                         </div>
@@ -391,7 +391,7 @@ const PaymentPage = () => {
 
                     {/* Features */}
                     <div className="p-6">
-                      <h4 className="text-amber-100 font-medium mb-3">
+                      <h4 className="text-[color:var(--nf-text-secondary)] font-medium mb-3">
                         Features
                       </h4>
                       <ul className="space-y-2">
@@ -401,7 +401,7 @@ const PaymentPage = () => {
                             className="flex items-center space-x-2 text-sm"
                           >
                             <div className="w-2 h-2 rounded-full bg-gradient-to-r from-amber-500 to-emerald-500"></div>
-                            <span className="text-gray-300">{feature}</span>
+                            <span className="text-[color:var(--nf-text-secondary)]">{feature}</span>
                           </li>
                         ))}
                       </ul>
@@ -412,8 +412,8 @@ const PaymentPage = () => {
                       <div
                         className={`p-3 rounded-xl text-center ${
                           isSelected
-                            ? `bg-gradient-to-r ${option.color} text-white`
-                            : "bg-gradient-to-r from-gray-900/50 to-black/50 border border-amber-800/30 text-amber-300"
+                            ? `bg-gradient-to-r ${option.color} text-[color:var(--nf-text-primary)]`
+                            : "bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] text-[color:var(--nf-accent)]"
                         }`}
                       >
                         <div className="flex items-center justify-center space-x-2">
@@ -438,17 +438,17 @@ const PaymentPage = () => {
           </div>
 
           {/* Payment Assurance */}
-          <div className="mt-12 bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
+          <div className="mt-12 bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
               <div className="flex items-center space-x-4">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                  <Shield className="w-8 h-8 text-white" />
+                  <Shield className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">
+                  <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)]">
                     100% Payment Protection
                   </h3>
-                  <p className="text-amber-100/70">
+                  <p className="text-[color:var(--nf-text-muted)]">
                     Your transaction is secured with bank-level encryption
                   </p>
                 </div>
@@ -464,7 +464,7 @@ const PaymentPage = () => {
                 </div>
                 <div className="text-center">
                   <Star className="w-8 h-8 text-amber-400 mx-auto mb-2" />
-                  <div className="text-sm text-amber-100">5-Star Service</div>
+                  <div className="text-sm text-[color:var(--nf-text-secondary)]">5-Star Service</div>
                 </div>
               </div>
             </div>
@@ -479,7 +479,7 @@ const PaymentPage = () => {
               <span>Continue to Checkout</span>
               <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </button>
-            <p className="text-gray-400 mt-4 text-sm">
+            <p className="text-[color:var(--nf-text-muted)] mt-4 text-sm">
               By continuing, you agree to our secure payment terms
             </p>
           </div>

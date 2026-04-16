@@ -103,17 +103,17 @@ const Careers = () => {
 
   if (loading)
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex flex-col justify-center items-center">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] flex flex-col justify-center items-center">
         <div className="relative">
           <div className="w-20 h-20 border-4 border-amber-900/30 border-t-amber-500 rounded-full animate-spin"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <Rocket className="w-10 h-10 text-amber-500 animate-pulse" />
           </div>
         </div>
-        <h3 className="mt-6 text-xl font-bold text-amber-200">
+        <h3 className="mt-6 text-xl font-bold text-[color:var(--nf-accent)]">
           Discovering Opportunities
         </h3>
-        <p className="text-gray-400 mt-2">
+        <p className="text-[color:var(--nf-text-muted)] mt-2">
           Loading exciting career paths at Nile Flow...
         </p>
       </div>
@@ -121,15 +121,15 @@ const Careers = () => {
 
   if (error)
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex flex-col justify-center items-center">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] flex flex-col justify-center items-center">
         <div className="bg-gradient-to-br from-red-900/30 to-amber-900/30 border border-red-700/30 rounded-2xl p-8 max-w-md text-center">
           <div className="w-16 h-16 rounded-full bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-center mx-auto mb-4">
-            <Heart className="w-8 h-8 text-white" />
+            <Heart className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
           </div>
-          <h3 className="text-2xl font-bold text-white mb-3">
+          <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-3">
             Connection Error
           </h3>
-          <p className="text-gray-300 mb-6">
+          <p className="text-[color:var(--nf-text-secondary)] mb-6">
             Unable to load career opportunities. Please try again.
           </p>
           <button
@@ -143,7 +143,7 @@ const Careers = () => {
     );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
       {/* Hero Section */}
       <section className="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -152,9 +152,9 @@ const Careers = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-8xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <Rocket className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Career Opportunities
             </span>
             <Star className="w-4 h-4 text-yellow-400" />
@@ -165,10 +165,10 @@ const Careers = () => {
               Build Africa's Future
             </span>
             <br />
-            <span className="text-white">With Nile Flow</span>
+            <span className="text-[color:var(--nf-text-primary)]">With Nile Flow</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-3xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-3xl mx-auto mb-10">
             Join a movement that's redefining African e-commerce. Work with
             passionate innovators to create premium experiences that celebrate
             African culture and craftsmanship.
@@ -178,7 +178,7 @@ const Careers = () => {
           <div className="max-w-2xl mx-auto mb-12">
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-2xl blur opacity-30"></div>
-              <div className="relative flex bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-sm border border-amber-800/30 rounded-2xl overflow-hidden">
+              <div className="relative flex bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl overflow-hidden">
                 <div className="pl-5 pr-3 flex items-center">
                   <Search className="w-5 h-5 text-amber-400" />
                 </div>
@@ -187,7 +187,7 @@ const Careers = () => {
                   placeholder="Search roles (e.g., Frontend Developer, Marketing Manager)..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="flex-1 px-4 py-4 bg-transparent text-amber-100 placeholder-amber-100/50 focus:outline-none text-lg"
+                  className="flex-1 px-4 py-4 bg-transparent text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none text-lg"
                 />
               </div>
             </div>
@@ -195,11 +195,11 @@ const Careers = () => {
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4">
-              <div className="text-2xl font-bold text-amber-300">
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4">
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)]">
                 {jobListings.length}
               </div>
-              <div className="text-amber-100/80 text-sm">Open Positions</div>
+              <div className="text-[color:var(--nf-text-muted)] text-sm">Open Positions</div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-4">
               <div className="text-2xl font-bold text-emerald-300">100%</div>
@@ -221,28 +221,28 @@ const Careers = () => {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="relative max-w-8xl mx-auto">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
               <Heart className="w-5 h-5 text-amber-400" />
-              <span className="text-amber-200 font-medium tracking-wide">
+              <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
                 Why Join Us
               </span>
               <Trophy className="w-4 h-4 text-yellow-400" />
             </div>
 
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-[color:var(--nf-text-primary)] mb-6">
               Build More Than a Career
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6">
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 flex items-center justify-center mb-4">
-                <Globe className="w-6 h-6 text-white" />
+                <Globe className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">
+              <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)] mb-3">
                 African Impact
               </h3>
-              <p className="text-gray-300">
+              <p className="text-[color:var(--nf-text-secondary)]">
                 Shape the future of e-commerce across Africa with products that
                 celebrate cultural heritage.
               </p>
@@ -250,12 +250,12 @@ const Careers = () => {
 
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-6">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-emerald-500 to-green-500 flex items-center justify-center mb-4">
-                <TrendingUp className="w-6 h-6 text-white" />
+                <TrendingUp className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">
+              <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)] mb-3">
                 Rapid Growth
               </h3>
-              <p className="text-gray-300">
+              <p className="text-[color:var(--nf-text-secondary)]">
                 Fast-track your career in a dynamic startup environment with
                 direct impact on key decisions.
               </p>
@@ -263,12 +263,12 @@ const Careers = () => {
 
             <div className="bg-gradient-to-br from-blue-900/20 to-transparent backdrop-blur-sm border border-blue-800/30 rounded-2xl p-6">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center mb-4">
-                <BookOpen className="w-6 h-6 text-white" />
+                <BookOpen className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">
+              <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)] mb-3">
                 Continuous Learning
               </h3>
-              <p className="text-gray-300">
+              <p className="text-[color:var(--nf-text-secondary)]">
                 Access premium training, mentorship programs, and conference
                 opportunities.
               </p>
@@ -276,10 +276,10 @@ const Careers = () => {
 
             <div className="bg-gradient-to-br from-purple-900/20 to-transparent backdrop-blur-sm border border-purple-800/30 rounded-2xl p-6">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-violet-500 flex items-center justify-center mb-4">
-                <Users className="w-6 h-6 text-white" />
+                <Users className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">Elite Team</h3>
-              <p className="text-gray-300">
+              <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)] mb-3">Elite Team</h3>
+              <p className="text-[color:var(--nf-text-secondary)]">
                 Work with Africa's brightest minds passionate about technology
                 and cultural preservation.
               </p>
@@ -292,10 +292,10 @@ const Careers = () => {
       <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-900/20 to-black/20">
         <div className="relative max-w-8xl mx-auto">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-white mb-4">
+            <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-4">
               Browse by Department
             </h3>
-            <p className="text-gray-300">
+            <p className="text-[color:var(--nf-text-secondary)]">
               Find your perfect role in our growing team
             </p>
           </div>
@@ -307,8 +307,8 @@ const Careers = () => {
                 onClick={() => setActiveFilter(dept.id)}
                 className={`group relative p-4 rounded-2xl border backdrop-blur-sm transition-all duration-300 ${
                   activeFilter === dept.id
-                    ? `bg-gradient-to-r ${dept.color} border-transparent text-white shadow-lg`
-                    : "bg-gradient-to-br from-gray-900/50 to-black/50 border-amber-800/30 text-gray-300 hover:border-amber-500/50"
+                    ? `bg-gradient-to-r ${dept.color} border-transparent text-[color:var(--nf-text-primary)] shadow-lg`
+                    : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                 }`}
               >
                 {activeFilter === dept.id && (
@@ -324,13 +324,13 @@ const Careers = () => {
                     className={`w-10 h-10 rounded-lg ${
                       activeFilter === dept.id
                         ? "bg-white/20"
-                        : "bg-gradient-to-br from-gray-900 to-black border border-amber-700/30"
+                        : "bg-gradient-to-br from-gray-900 to-black border border-[var(--nf-border-subtle)]"
                     } flex items-center justify-center mx-auto`}
                   >
                     <span
                       className={
                         activeFilter === dept.id
-                          ? "text-white"
+                          ? "text-[color:var(--nf-text-primary)]"
                           : "text-amber-400"
                       }
                     >
@@ -350,22 +350,22 @@ const Careers = () => {
         <div className="relative max-w-8xl mx-auto">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-3xl font-bold text-white mb-2">
+              <h2 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-2">
                 Open Positions
               </h2>
-              <p className="text-gray-300">
+              <p className="text-[color:var(--nf-text-secondary)]">
                 Showing{" "}
-                <span className="text-amber-300 font-bold">
+                <span className="text-[color:var(--nf-accent)] font-bold">
                   {filteredJobs.length}
                 </span>{" "}
                 of{" "}
-                <span className="text-amber-300 font-bold">
+                <span className="text-[color:var(--nf-accent)] font-bold">
                   {jobListings.length}
                 </span>{" "}
                 opportunities
               </p>
             </div>
-            <div className="text-amber-200">
+            <div className="text-[color:var(--nf-accent)]">
               <Clock className="w-5 h-5 inline mr-2" />
               Updated daily
             </div>
@@ -373,13 +373,13 @@ const Careers = () => {
 
           {filteredJobs.length === 0 ? (
             <div className="text-center py-20">
-              <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-amber-700/30 mb-6">
+              <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-[var(--nf-border-subtle)] mb-6">
                 <Search className="w-12 h-12 text-amber-400" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                 No Matching Positions
               </h3>
-              <p className="text-gray-400 max-w-md mx-auto mb-8">
+              <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-8">
                 {searchTerm
                   ? `No positions match "${searchTerm}". Try a different search term or browse all departments.`
                   : "No positions available in this department currently. Check back soon!"}
@@ -412,7 +412,7 @@ const Careers = () => {
                   ></div>
 
                   {/* Job Card */}
-                  <div className="relative bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30">
+                  <div className="relative bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30">
                     {job.image && (
                       <div className="relative h-48 overflow-hidden">
                         <img
@@ -429,7 +429,7 @@ const Careers = () => {
                               departments.find(
                                 (d) => d.id === job.department?.toLowerCase()
                               )?.color || "from-amber-600 to-yellow-600"
-                            } text-white text-sm font-bold rounded-full shadow-lg`}
+                            } text-[color:var(--nf-text-primary)] text-sm font-bold rounded-full shadow-lg`}
                           >
                             {job.department || "General"}
                           </div>
@@ -440,11 +440,11 @@ const Careers = () => {
                     <div className="p-6">
                       <div className="flex items-start justify-between mb-4">
                         <div>
-                          <h3 className="text-xl font-bold text-white group-hover:text-amber-300 transition-colors duration-300 mb-2">
+                          <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)] group-hover:text-[color:var(--nf-accent)] transition-colors duration-300 mb-2">
                             {job.title}
                           </h3>
                           <div className="flex items-center space-x-4 text-sm">
-                            <span className="text-amber-200 flex items-center">
+                            <span className="text-[color:var(--nf-accent)] flex items-center">
                               <MapPin className="w-4 h-4 mr-1" />
                               {job.location || "Remote"}
                             </span>
@@ -462,7 +462,7 @@ const Careers = () => {
                         </div>
                       </div>
 
-                      <p className="text-gray-300 mb-6 line-clamp-2">
+                      <p className="text-[color:var(--nf-text-secondary)] mb-6 line-clamp-2">
                         {job.description}
                       </p>
 
@@ -471,7 +471,7 @@ const Careers = () => {
                           onClick={() =>
                             setSelectedJob(selectedJob === index ? null : index)
                           }
-                          className="text-amber-400 hover:text-amber-300 transition-colors duration-300 flex items-center space-x-2"
+                          className="text-amber-400 hover:text-[color:var(--nf-accent)] transition-colors duration-300 flex items-center space-x-2"
                         >
                           <span>
                             {selectedJob === index
@@ -496,11 +496,11 @@ const Careers = () => {
 
                       {/* Job Details Expandable */}
                       {selectedJob === index && (
-                        <div className="mt-6 pt-6 border-t border-amber-800/30 space-y-6 animate-fadeIn">
+                        <div className="mt-6 pt-6 border-t border-[var(--nf-border-subtle)] space-y-6 animate-fadeIn">
                           {/* Responsibilities */}
                           {job.responsibilities && (
                             <div>
-                              <h4 className="text-lg font-bold text-white mb-3 flex items-center">
+                              <h4 className="text-lg font-bold text-[color:var(--nf-text-primary)] mb-3 flex items-center">
                                 <Target className="w-5 h-5 text-amber-400 mr-2" />
                                 Responsibilities
                               </h4>
@@ -512,7 +512,7 @@ const Careers = () => {
                                       className="flex items-start space-x-2"
                                     >
                                       <div className="w-2 h-2 rounded-full bg-gradient-to-r from-amber-500 to-emerald-500 mt-2"></div>
-                                      <span className="text-gray-300">
+                                      <span className="text-[color:var(--nf-text-secondary)]">
                                         {responsibility}
                                       </span>
                                     </li>
@@ -525,7 +525,7 @@ const Careers = () => {
                           {/* Requirements */}
                           {job.requirements && (
                             <div>
-                              <h4 className="text-lg font-bold text-white mb-3 flex items-center">
+                              <h4 className="text-lg font-bold text-[color:var(--nf-text-primary)] mb-3 flex items-center">
                                 <Shield className="w-5 h-5 text-blue-400 mr-2" />
                                 Requirements
                               </h4>
@@ -537,7 +537,7 @@ const Careers = () => {
                                       className="flex items-start space-x-2"
                                     >
                                       <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 mt-2"></div>
-                                      <span className="text-gray-300">
+                                      <span className="text-[color:var(--nf-text-secondary)]">
                                         {requirement}
                                       </span>
                                     </li>
@@ -550,40 +550,40 @@ const Careers = () => {
                           {/* Growth Path */}
                           {job.growthPath && (
                             <div>
-                              <h4 className="text-lg font-bold text-white mb-3 flex items-center">
+                              <h4 className="text-lg font-bold text-[color:var(--nf-text-primary)] mb-3 flex items-center">
                                 <TrendingUp className="w-5 h-5 text-emerald-400 mr-2" />
                                 Growth Path
                               </h4>
-                              <p className="text-gray-300">{job.growthPath}</p>
+                              <p className="text-[color:var(--nf-text-secondary)]">{job.growthPath}</p>
                             </div>
                           )}
 
                           {/* Perks */}
                           <div>
-                            <h4 className="text-lg font-bold text-white mb-3 flex items-center">
+                            <h4 className="text-lg font-bold text-[color:var(--nf-text-primary)] mb-3 flex items-center">
                               <Sparkles className="w-5 h-5 text-purple-400 mr-2" />
                               Perks & Benefits
                             </h4>
                             <div className="grid grid-cols-2 gap-3">
-                              <div className="flex items-center space-x-2 p-3 bg-gradient-to-r from-gray-900/50 to-black/50 rounded-xl border border-amber-800/30">
+                              <div className="flex items-center space-x-2 p-3 bg-[var(--nf-bg-elevated)] rounded-xl border border-[var(--nf-border-subtle)]">
                                 <Coffee className="w-4 h-4 text-amber-400" />
-                                <span className="text-amber-100 text-sm">
+                                <span className="text-[color:var(--nf-text-secondary)] text-sm">
                                   Flexible Hours
                                 </span>
                               </div>
-                              <div className="flex items-center space-x-2 p-3 bg-gradient-to-r from-gray-900/50 to-black/50 rounded-xl border border-amber-800/30">
+                              <div className="flex items-center space-x-2 p-3 bg-[var(--nf-bg-elevated)] rounded-xl border border-[var(--nf-border-subtle)]">
                                 <Award className="w-4 h-4 text-emerald-400" />
                                 <span className="text-emerald-100 text-sm">
                                   Learning Budget
                                 </span>
                               </div>
-                              <div className="flex items-center space-x-2 p-3 bg-gradient-to-r from-gray-900/50 to-black/50 rounded-xl border border-amber-800/30">
+                              <div className="flex items-center space-x-2 p-3 bg-[var(--nf-bg-elevated)] rounded-xl border border-[var(--nf-border-subtle)]">
                                 <Heart className="w-4 h-4 text-red-400" />
                                 <span className="text-red-100 text-sm">
                                   Health Benefits
                                 </span>
                               </div>
-                              <div className="flex items-center space-x-2 p-3 bg-gradient-to-r from-gray-900/50 to-black/50 rounded-xl border border-amber-800/30">
+                              <div className="flex items-center space-x-2 p-3 bg-[var(--nf-bg-elevated)] rounded-xl border border-[var(--nf-border-subtle)]">
                                 <Globe className="w-4 h-4 text-blue-400" />
                                 <span className="text-blue-100 text-sm">
                                   Remote Work
@@ -605,15 +605,15 @@ const Careers = () => {
       {/* Call to Action */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="relative max-w-4xl mx-auto">
-          <div className="bg-gradient-to-r from-amber-900/20 via-emerald-900/20 to-blue-900/20 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 md:p-12 text-center">
+          <div className="bg-gradient-to-r from-amber-900/20 via-emerald-900/20 to-blue-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 md:p-12 text-center">
             <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-600 to-yellow-600 flex items-center justify-center mx-auto mb-6">
-              <Users className="w-10 h-10 text-white" />
+              <Users className="w-10 h-10 text-[color:var(--nf-text-primary)]" />
             </div>
 
-            <h2 className="text-3xl font-bold text-white mb-4">
+            <h2 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">
               Don't See Your Perfect Role?
             </h2>
-            <p className="text-gray-300 max-w-2xl mx-auto mb-8">
+            <p className="text-[color:var(--nf-text-secondary)] max-w-2xl mx-auto mb-8">
               Nile Flow is constantly evolving, and we value unique
               perspectives. If you're passionate about African e-commerce and
               have skills to contribute, pitch us your dream role.

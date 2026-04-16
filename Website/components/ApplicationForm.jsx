@@ -79,33 +79,33 @@ export default function ApplicationForm() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
           <div>
-            <label className="block text-gray-700 font-medium">Full Name</label>
+            <label className="block text-[color:var(--nf-text-primary)] font-medium">Full Name</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-400"
+              className="w-full px-4 py-2 border border-[var(--nf-border)] rounded-lg focus:ring focus:ring-blue-400"
             />
           </div>
 
           {/* Email */}
           <div>
-            <label className="block text-gray-700 font-medium">Email</label>
+            <label className="block text-[color:var(--nf-text-primary)] font-medium">Email</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-400"
+              className="w-full px-4 py-2 border border-[var(--nf-border)] rounded-lg focus:ring focus:ring-blue-400"
             />
           </div>
 
           {/* Phone */}
           <div>
-            <label className="block text-gray-700 font-medium">
+            <label className="block text-[color:var(--nf-text-primary)] font-medium">
               Phone Number
             </label>
             <input
@@ -114,13 +114,13 @@ export default function ApplicationForm() {
               value={formData.phone}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-400"
+              className="w-full px-4 py-2 border border-[var(--nf-border)] rounded-lg focus:ring focus:ring-blue-400"
             />
           </div>
 
           {/* Role */}
           <div>
-            <label className="block text-gray-700 font-medium">
+            <label className="block text-[color:var(--nf-text-primary)] font-medium">
               Role Applying For
             </label>
             <select
@@ -128,7 +128,7 @@ export default function ApplicationForm() {
               value={formData.role}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-400"
+              className="w-full px-4 py-2 border border-[var(--nf-border)] rounded-lg focus:ring focus:ring-blue-400"
             >
               <option value="">Select a role</option>
               <option value="Marketing Associate">Marketing Associate</option>
@@ -143,7 +143,7 @@ export default function ApplicationForm() {
 
           {/* Motivation */}
           <div>
-            <label className="block text-gray-700 font-medium">
+            <label className="block text-[color:var(--nf-text-primary)] font-medium">
               Why do you want to join Nile Flow?
             </label>
             <textarea
@@ -152,13 +152,13 @@ export default function ApplicationForm() {
               onChange={handleChange}
               required
               rows="4"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-400"
+              className="w-full px-4 py-2 border border-[var(--nf-border)] rounded-lg focus:ring focus:ring-blue-400"
             ></textarea>
           </div>
 
           {/* CV Upload */}
           <div>
-            <label className="block text-gray-700 font-medium">
+            <label className="block text-[color:var(--nf-text-primary)] font-medium">
               Upload CV (optional)
             </label>
             <input
@@ -166,7 +166,7 @@ export default function ApplicationForm() {
               name="cv"
               accept=".pdf,.doc,.docx"
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-400"
+              className="w-full px-4 py-2 border border-[var(--nf-border)] rounded-lg focus:ring focus:ring-blue-400"
             />
           </div>
 

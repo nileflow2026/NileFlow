@@ -45,7 +45,7 @@ const ForgotPassword = () => {
 
   if (emailSent) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
         <Header />
 
         <div className="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8">
@@ -57,7 +57,7 @@ const ForgotPassword = () => {
             {/* Success Icon */}
             <div className="mb-8">
               <div className="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center mx-auto">
-                <CheckCircle className="w-12 h-12 text-white" />
+                <CheckCircle className="w-12 h-12 text-[color:var(--nf-text-primary)]" />
               </div>
             </div>
 
@@ -68,17 +68,17 @@ const ForgotPassword = () => {
               </span>
             </h1>
 
-            <p className="text-gray-300 text-lg mb-8 max-w-md mx-auto">
+            <p className="text-[color:var(--nf-text-secondary)] text-lg mb-8 max-w-md mx-auto">
               We've sent a password reset link to{" "}
-              <span className="font-semibold text-amber-300">{email}</span>
+              <span className="font-semibold text-[color:var(--nf-accent)]">{email}</span>
             </p>
 
             {/* Email Card */}
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 mb-8">
+            <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 mb-8">
               <div className="space-y-6">
                 <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-emerald-900/20 to-green-900/20 backdrop-blur-sm border border-emerald-800/30 rounded-2xl">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-6 h-6 text-white" />
+                    <Mail className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <div className="text-left">
                     <h3 className="text-lg font-bold text-emerald-100 mb-1">
@@ -91,15 +91,15 @@ const ForgotPassword = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-amber-900/20 to-yellow-900/20 backdrop-blur-sm border border-amber-800/30 rounded-2xl">
+                <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-amber-900/20 to-yellow-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-6 h-6 text-white" />
+                    <Clock className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <div className="text-left">
-                    <h3 className="text-lg font-bold text-amber-100 mb-1">
+                    <h3 className="text-lg font-bold text-[color:var(--nf-text-secondary)] mb-1">
                       Link Expires Soon
                     </h3>
-                    <p className="text-amber-100/70 text-sm">
+                    <p className="text-[color:var(--nf-text-muted)] text-sm">
                       Use the reset link within 1 hour for security
                     </p>
                   </div>
@@ -107,7 +107,7 @@ const ForgotPassword = () => {
 
                 <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-blue-900/20 to-indigo-900/20 backdrop-blur-sm border border-blue-800/30 rounded-2xl">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center flex-shrink-0">
-                    <Shield className="w-6 h-6 text-white" />
+                    <Shield className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <div className="text-left">
                     <h3 className="text-lg font-bold text-blue-100 mb-1">
@@ -133,7 +133,7 @@ const ForgotPassword = () => {
 
               <Link
                 to="/signin"
-                className="group inline-flex items-center space-x-2 text-amber-400 hover:text-amber-300 font-medium transition-colors"
+                className="group inline-flex items-center space-x-2 text-amber-400 hover:text-[color:var(--nf-accent)] font-medium transition-colors"
               >
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                 <span>Back to Sign In</span>
@@ -148,7 +148,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -159,9 +159,9 @@ const ForgotPassword = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-red-500/10 to-amber-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <Lock className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Password Recovery
             </span>
             <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -172,10 +172,10 @@ const ForgotPassword = () => {
               Forgot Your Password?
             </span>
             <br />
-            <span className="text-white">No Worries, We've Got You</span>
+            <span className="text-[color:var(--nf-text-primary)]">No Worries, We've Got You</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Enter your email address and we'll send you a secure link to reset
             your password.
           </p>
@@ -185,17 +185,17 @@ const ForgotPassword = () => {
       {/* Main Content */}
       <main className="pb-20 px-4 sm:px-6 lg:px-8">
         <div className="relative max-w-2xl mx-auto">
-          <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden">
-            <div className="p-8 border-b border-amber-800/30">
+          <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden">
+            <div className="p-8 border-b border-[var(--nf-border-subtle)]">
               <div className="flex items-center space-x-3 mb-2">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                  <Lock className="w-6 h-6 text-white" />
+                  <Lock className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-amber-200">
+                  <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                     Reset Password
                   </h2>
-                  <p className="text-amber-100/70">
+                  <p className="text-[color:var(--nf-text-muted)]">
                     We'll email you reset instructions
                   </p>
                 </div>
@@ -205,7 +205,7 @@ const ForgotPassword = () => {
             <form onSubmit={handleSubmit} className="p-8 space-y-6">
               {/* Email Field */}
               <div>
-                <label className="block text-amber-100 font-medium mb-2">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                   <span className="flex items-center space-x-2">
                     <Mail className="w-4 h-4" />
                     <span>Email Address</span>
@@ -217,7 +217,7 @@ const ForgotPassword = () => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="relative w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors pl-12"
+                    className="relative w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors pl-12"
                     placeholder="Enter your email address"
                     required
                   />
@@ -225,7 +225,7 @@ const ForgotPassword = () => {
                     <Mail className="w-5 h-5 text-amber-500" />
                   </div>
                 </div>
-                <p className="text-amber-100/60 text-sm mt-2">
+                <p className="text-[color:var(--nf-text-muted)] text-sm mt-2">
                   Enter the email associated with your Nile Flow account
                 </p>
               </div>
@@ -263,7 +263,7 @@ const ForgotPassword = () => {
               <div className="text-center pt-4">
                 <Link
                   to="/signin"
-                  className="group inline-flex items-center space-x-2 text-amber-400 hover:text-amber-300 font-medium transition-colors"
+                  className="group inline-flex items-center space-x-2 text-amber-400 hover:text-[color:var(--nf-accent)] font-medium transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                   <span>Back to Sign In</span>
@@ -272,7 +272,7 @@ const ForgotPassword = () => {
             </form>
 
             {/* Security Notice */}
-            <div className="p-8 border-t border-amber-800/30">
+            <div className="p-8 border-t border-[var(--nf-border-subtle)]">
               <div className="bg-gradient-to-r from-blue-900/20 to-indigo-900/20 backdrop-blur-sm border border-blue-800/30 rounded-xl p-4">
                 <div className="flex items-center space-x-3">
                   <Shield className="w-6 h-6 text-blue-400 flex-shrink-0" />

@@ -214,7 +214,7 @@ const ProfilePage = () => {
       case "Gold":
         return <Award className="w-6 h-6 text-yellow-300" />;
       case "Silver":
-        return <Award className="w-6 h-6 text-gray-300" />;
+        return <Award className="w-6 h-6 text-[color:var(--nf-text-secondary)]" />;
       case "Bronze":
         return <Award className="w-6 h-6 text-amber-600" />;
       default:
@@ -224,7 +224,7 @@ const ProfilePage = () => {
 
   if (userLoading || ordersLoading || nileMilesLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex flex-col">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] flex flex-col">
         <Header />
         <div className="flex-1 flex items-center justify-center">
           <div className="relative">
@@ -240,15 +240,15 @@ const ProfilePage = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex flex-col">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] flex flex-col">
         <Header />
         <div className="flex-1 flex flex-col items-center justify-center p-8">
           <div className="bg-gradient-to-br from-red-900/30 to-amber-900/30 backdrop-blur-sm border border-red-700/30 rounded-3xl p-8 max-w-md text-center">
             <Shield className="w-16 h-16 text-red-400 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-white mb-4">
+            <h2 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">
               Access Required
             </h2>
-            <p className="text-gray-300 mb-6">
+            <p className="text-[color:var(--nf-text-secondary)] mb-6">
               Please log in to access your premium profile dashboard
             </p>
             <Link
@@ -275,7 +275,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
       {/* Hero Section */}
       <div className="relative pt-24 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -299,7 +299,7 @@ const ProfilePage = () => {
                     htmlFor="profile-upload"
                     className="absolute bottom-2 right-2 w-10 h-10 bg-gradient-to-r from-amber-600 to-amber-700 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
                   >
-                    <Camera className="w-5 h-5 text-white" />
+                    <Camera className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                     <input
                       id="profile-upload"
                       type="file"
@@ -313,15 +313,15 @@ const ProfilePage = () => {
 
               <div>
                 <div className="flex items-center space-x-3 mb-2">
-                  <h1 className="text-4xl md:text-5xl font-bold text-white">
+                  <h1 className="text-4xl md:text-5xl font-bold text-[color:var(--nf-text-primary)]">
                     {demoUser.name}
                   </h1>
                   <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white text-xs font-bold px-3 py-1 rounded-full">
                     PREMIUM
                   </div>
                 </div>
-                <p className="text-gray-300 text-lg">{demoUser.email}</p>
-                <p className="text-amber-100/70 text-sm mt-1">
+                <p className="text-[color:var(--nf-text-secondary)] text-lg">{demoUser.email}</p>
+                <p className="text-[color:var(--nf-text-muted)] text-sm mt-1">
                   Member since 2023
                 </p>
               </div>
@@ -329,11 +329,11 @@ const ProfilePage = () => {
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-4">
-              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4 text-center">
-                <div className="text-2xl font-bold text-amber-300">
+              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4 text-center">
+                <div className="text-2xl font-bold text-[color:var(--nf-accent)]">
                   {orders.length}
                 </div>
-                <div className="text-amber-100/80 text-sm">Orders</div>
+                <div className="text-[color:var(--nf-text-muted)] text-sm">Orders</div>
               </div>
               <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-4 text-center">
                 <div className="text-2xl font-bold text-emerald-300">
@@ -368,7 +368,7 @@ const ProfilePage = () => {
                 className={`px-6 py-3 rounded-xl border backdrop-blur-sm transition-all duration-300 capitalize flex items-center gap-2 ${
                   activeTab === tab
                     ? "bg-gradient-to-r from-amber-600 to-amber-700 text-white border-amber-500 shadow-lg shadow-amber-900/30"
-                    : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 text-gray-300 hover:border-amber-500/50"
+                    : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                 }`}
               >
                 {tab === "premium" && <Crown className="w-4 h-4" />}
@@ -388,17 +388,17 @@ const ProfilePage = () => {
           {/* Wishlist Tab Content */}
           {activeTab === "wishlist" && (
             <div className="space-y-8">
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
                 <div className="flex items-center justify-between mb-8">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-red-600 to-pink-600 flex items-center justify-center shadow-xl">
-                      <Heart className="w-7 h-7 text-white" />
+                      <Heart className="w-7 h-7 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
-                      <h2 className="text-3xl font-bold text-white">
+                      <h2 className="text-3xl font-bold text-[color:var(--nf-text-primary)]">
                         My Wishlist
                       </h2>
-                      <p className="text-gray-400">
+                      <p className="text-[color:var(--nf-text-muted)]">
                         {favorites.length}{" "}
                         {favorites.length === 1 ? "item" : "items"} saved
                       </p>
@@ -421,10 +421,10 @@ const ProfilePage = () => {
                     <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-red-600/20 to-pink-600/20 backdrop-blur-sm border border-red-500/30 flex items-center justify-center mx-auto mb-6">
                       <Heart className="w-12 h-12 text-red-400" />
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-3">
+                    <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-3">
                       Your Wishlist is Empty
                     </h3>
-                    <p className="text-gray-400 mb-8 max-w-md mx-auto">
+                    <p className="text-[color:var(--nf-text-muted)] mb-8 max-w-md mx-auto">
                       Save your favorite items by clicking the heart icon on any
                       product
                     </p>
@@ -447,18 +447,18 @@ const ProfilePage = () => {
               {/* Left Column */}
               <div className="lg:col-span-2 space-y-8">
                 {/* Nile Miles Card */}
-                <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden">
-                  <div className="p-6 border-b border-amber-800/30">
+                <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden">
+                  <div className="p-6 border-b border-[var(--nf-border-subtle)]">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
                         <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                          <TrendingUp className="w-6 h-6 text-white" />
+                          <TrendingUp className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                         </div>
                         <div>
-                          <h2 className="text-2xl font-bold text-amber-200">
+                          <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                             Nile Miles
                           </h2>
-                          <p className="text-amber-100/70">
+                          <p className="text-[color:var(--nf-text-muted)]">
                             Premium Loyalty Program
                           </p>
                         </div>
@@ -470,7 +470,7 @@ const ProfilePage = () => {
                           )} px-4 py-2 rounded-full`}
                         >
                           {getTierIcon(nileMilesData.tier)}
-                          <span className="text-white font-bold">
+                          <span className="text-[color:var(--nf-text-primary)] font-bold">
                             {nileMilesData.tier} Tier
                           </span>
                         </div>
@@ -480,13 +480,13 @@ const ProfilePage = () => {
 
                   <div className="p-6">
                     <div className="grid grid-cols-3 gap-4 mb-6">
-                      <div className="bg-gradient-to-br from-amber-900/30 to-yellow-900/20 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4 text-center">
-                        <div className="text-3xl font-bold text-amber-300">
+                      <div className="bg-gradient-to-br from-amber-900/30 to-yellow-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4 text-center">
+                        <div className="text-3xl font-bold text-[color:var(--nf-accent)]">
                           {nileMilesLoading
                             ? "..."
                             : nileMilesData.currentMiles}
                         </div>
-                        <div className="text-amber-100/80 text-sm">
+                        <div className="text-[color:var(--nf-text-muted)] text-sm">
                           Current Miles
                         </div>
                       </div>
@@ -511,7 +511,7 @@ const ProfilePage = () => {
                     </div>
 
                     <div className="mb-6">
-                      <div className="flex items-center justify-between text-amber-100 mb-2">
+                      <div className="flex items-center justify-between text-[color:var(--nf-text-secondary)] mb-2">
                         <span>Progress to Gold Tier</span>
                         <span>
                           {((nileMilesData.currentMiles / 1000) * 100).toFixed(
@@ -520,7 +520,7 @@ const ProfilePage = () => {
                           %
                         </span>
                       </div>
-                      <div className="w-full h-3 bg-gray-800/50 rounded-full overflow-hidden">
+                      <div className="w-full h-3 bg-[var(--nf-bg-subtle)] rounded-full overflow-hidden">
                         <div
                           className="h-full bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full transition-all duration-1000"
                           style={{
@@ -545,16 +545,16 @@ const ProfilePage = () => {
                 </div>
 
                 {/* Profile Image Update */}
-                <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6">
+                <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6">
                   <div className="flex items-center space-x-3 mb-6">
                     <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-                      <Edit2 className="w-6 h-6 text-white" />
+                      <Edit2 className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-amber-200">
+                      <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                         Update Profile
                       </h2>
-                      <p className="text-amber-100/70">
+                      <p className="text-[color:var(--nf-text-muted)]">
                         Upload new profile image
                       </p>
                     </div>
@@ -570,7 +570,7 @@ const ProfilePage = () => {
                          loading="lazy" decoding="async" />
                         {previewImage && (
                           <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-full flex items-center justify-center">
-                            <CheckCircle className="w-4 h-4 text-white" />
+                            <CheckCircle className="w-4 h-4 text-[color:var(--nf-text-primary)]" />
                           </div>
                         )}
                       </div>
@@ -581,7 +581,7 @@ const ProfilePage = () => {
                           id="file-input"
                           accept="image/*"
                           onChange={handleImageChange}
-                          className="block w-full text-sm text-gray-300
+                          className="block w-full text-sm text-[color:var(--nf-text-secondary)]
                         file:mr-4 file:py-3 file:px-6
                         file:rounded-xl file:border-0
                         file:text-sm file:font-bold
@@ -589,7 +589,7 @@ const ProfilePage = () => {
                         file:text-white hover:file:from-amber-700 hover:file:to-amber-800
                         hover:file:cursor-pointer"
                         />
-                        <p className="text-amber-100/70 text-sm mt-2">
+                        <p className="text-[color:var(--nf-text-muted)] text-sm mt-2">
                           Upload a new profile picture (JPG, PNG, max 5MB)
                         </p>
                       </div>
@@ -601,7 +601,7 @@ const ProfilePage = () => {
                       className={`w-full px-6 py-3 rounded-xl font-bold transition-all duration-300 flex items-center justify-center space-x-2 ${
                         profileImage && !isUploading
                           ? "bg-gradient-to-r from-amber-600 to-amber-700 text-white hover:from-amber-700 hover:to-amber-800 hover:scale-[1.02]"
-                          : "bg-gradient-to-r from-gray-800/50 to-black/50 text-gray-400 border border-amber-800/30 cursor-not-allowed"
+                          : "bg-gradient-to-r from-gray-800/50 to-black/50 text-[color:var(--nf-text-muted)] border border-[var(--nf-border-subtle)] cursor-not-allowed"
                       }`}
                     >
                       {isUploading ? (
@@ -620,23 +620,23 @@ const ProfilePage = () => {
                 </div>
 
                 {/* Order History */}
-                <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden">
-                  <div className="p-6 border-b border-amber-800/30">
+                <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden">
+                  <div className="p-6 border-b border-[var(--nf-border-subtle)]">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
                         <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-600 to-purple-700 flex items-center justify-center">
-                          <History className="w-6 h-6 text-white" />
+                          <History className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                         </div>
                         <div>
-                          <h2 className="text-2xl font-bold text-amber-200">
+                          <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                             Order History
                           </h2>
-                          <p className="text-amber-100/70">
+                          <p className="text-[color:var(--nf-text-muted)]">
                             Recent premium orders
                           </p>
                         </div>
                       </div>
-                      <div className="text-amber-100/70">
+                      <div className="text-[color:var(--nf-text-muted)]">
                         {orders.length} orders
                       </div>
                     </div>
@@ -654,7 +654,7 @@ const ProfilePage = () => {
                               <div className="flex items-center space-x-3 mb-2">
                                 <div className="flex items-center space-x-2">
                                   <Package className="w-4 h-4 text-amber-400" />
-                                  <span className="text-amber-100 font-mono text-sm">
+                                  <span className="text-[color:var(--nf-text-secondary)] font-mono text-sm">
                                     #{order.$id.slice(-8)}
                                   </span>
                                 </div>
@@ -664,13 +664,13 @@ const ProfilePage = () => {
                                       ? "bg-emerald-900/30 text-emerald-300 border border-emerald-700/30"
                                       : order.status === "Shipped"
                                       ? "bg-blue-900/30 text-blue-300 border border-blue-700/30"
-                                      : "bg-amber-900/30 text-amber-300 border border-amber-700/30"
+                                      : "bg-amber-900/30 text-[color:var(--nf-accent)] border border-[var(--nf-border-subtle)]"
                                   }`}
                                 >
                                   {order.status}
                                 </span>
                               </div>
-                              <p className="text-gray-400 text-sm">
+                              <p className="text-[color:var(--nf-text-muted)] text-sm">
                                 {new Date(order.createdAt).toLocaleDateString(
                                   "en-US",
                                   {
@@ -684,7 +684,7 @@ const ProfilePage = () => {
                             </div>
 
                             <div className="text-right">
-                              <div className="text-2xl font-bold text-amber-300 mb-1">
+                              <div className="text-2xl font-bold text-[color:var(--nf-accent)] mb-1">
                                 {order.amount?.toFixed(2)} {order.currency}
                               </div>
                               <div className="flex items-center justify-end space-x-2">
@@ -700,10 +700,10 @@ const ProfilePage = () => {
                     ) : (
                       <div className="p-12 text-center">
                         <ShoppingBag className="w-16 h-16 text-amber-400/30 mx-auto mb-4" />
-                        <h3 className="text-xl font-bold text-white mb-2">
+                        <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)] mb-2">
                           No Orders Yet
                         </h3>
-                        <p className="text-gray-400 mb-6">
+                        <p className="text-[color:var(--nf-text-muted)] mb-6">
                           Start your premium African shopping journey
                         </p>
                         <Link
@@ -722,27 +722,27 @@ const ProfilePage = () => {
               {/* Right Column */}
               <div className="space-y-8">
                 {/* Profile Info Card */}
-                <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6">
-                  <h2 className="text-2xl font-bold text-amber-200 mb-6">
+                <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6">
+                  <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-6">
                     Profile Information
                   </h2>
 
                   <div className="space-y-6">
-                    <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl">
+                    <div className="flex items-start space-x-4 p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center flex-shrink-0">
-                        <User className="w-6 h-6 text-white" />
+                        <User className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-amber-100 font-bold mb-1">
+                        <h3 className="text-[color:var(--nf-text-secondary)] font-bold mb-1">
                           Full Name
                         </h3>
-                        <p className="text-amber-100/70">{demoUser.name}</p>
+                        <p className="text-[color:var(--nf-text-muted)]">{demoUser.name}</p>
                       </div>
                     </div>
 
-                    <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl">
+                    <div className="flex items-start space-x-4 p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center flex-shrink-0">
-                        <Mail className="w-6 h-6 text-white" />
+                        <Mail className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                       </div>
                       <div className="flex-1">
                         <h3 className="text-emerald-100 font-bold mb-1">
@@ -752,9 +752,9 @@ const ProfilePage = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl">
+                    <div className="flex items-start space-x-4 p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center flex-shrink-0">
-                        <Phone className="w-6 h-6 text-white" />
+                        <Phone className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                       </div>
                       <div className="flex-1">
                         <h3 className="text-blue-100 font-bold mb-1">
@@ -764,9 +764,9 @@ const ProfilePage = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl">
+                    <div className="flex items-start space-x-4 p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center flex-shrink-0">
-                        <MapPin className="w-6 h-6 text-white" />
+                        <MapPin className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                       </div>
                       <div className="flex-1">
                         <h3 className="text-red-100 font-bold mb-1">
@@ -777,8 +777,8 @@ const ProfilePage = () => {
                     </div>
                   </div>
 
-                  <div className="mt-8 pt-6 border-t border-amber-800/30">
-                    <button className="w-full px-4 py-3 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl text-amber-300 hover:border-amber-500/50 hover:bg-amber-900/20 transition-all duration-300 flex items-center justify-center space-x-2">
+                  <div className="mt-8 pt-6 border-t border-[var(--nf-border-subtle)]">
+                    <button className="w-full px-4 py-3 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl text-[color:var(--nf-accent)] hover:border-amber-500/50 hover:bg-amber-900/20 transition-all duration-300 flex items-center justify-center space-x-2">
                       <Settings className="w-5 h-5" />
                       <span>Edit Profile Information</span>
                     </button>
@@ -786,21 +786,21 @@ const ProfilePage = () => {
                 </div>
 
                 {/* Quick Actions */}
-                <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6">
-                  <h2 className="text-2xl font-bold text-amber-200 mb-6">
+                <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6">
+                  <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-6">
                     Quick Actions
                   </h2>
 
                   <div className="space-y-4">
                     <Link
                       to="/profile?tab=wishlist"
-                      className="w-full p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl hover:border-amber-500/50 hover:bg-amber-900/20 transition-all duration-300 flex items-center justify-between"
+                      className="w-full p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl hover:border-amber-500/50 hover:bg-amber-900/20 transition-all duration-300 flex items-center justify-between"
                     >
                       <div className="flex items-center space-x-3">
                         <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                          <Heart className="w-5 h-5 text-white" />
+                          <Heart className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                         </div>
-                        <span className="text-amber-100 font-medium">
+                        <span className="text-[color:var(--nf-text-secondary)] font-medium">
                           Wishlist
                         </span>
                       </div>
@@ -809,11 +809,11 @@ const ProfilePage = () => {
 
                     <Link
                       to="/addresses"
-                      className="w-full p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl hover:border-amber-500/50 hover:bg-amber-900/20 transition-all duration-300 flex items-center justify-between"
+                      className="w-full p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl hover:border-amber-500/50 hover:bg-amber-900/20 transition-all duration-300 flex items-center justify-between"
                     >
                       <div className="flex items-center space-x-3">
                         <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-                          <CreditCard className="w-5 h-5 text-white" />
+                          <CreditCard className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                         </div>
                         <span className="text-blue-100 font-medium">
                           Payment Methods
@@ -824,11 +824,11 @@ const ProfilePage = () => {
 
                     <Link
                       to="/help-center"
-                      className="w-full p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl hover:border-amber-500/50 hover:bg-amber-900/20 transition-all duration-300 flex items-center justify-between"
+                      className="w-full p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl hover:border-amber-500/50 hover:bg-amber-900/20 transition-all duration-300 flex items-center justify-between"
                     >
                       <div className="flex items-center space-x-3">
                         <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center">
-                          <Shield className="w-5 h-5 text-white" />
+                          <Shield className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                         </div>
                         <span className="text-emerald-100 font-medium">
                           Security
@@ -839,11 +839,11 @@ const ProfilePage = () => {
 
                     <Link
                       to="/profile?tab=settings"
-                      className="w-full p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl hover:border-amber-500/50 hover:bg-amber-900/20 transition-all duration-300 flex items-center justify-between"
+                      className="w-full p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl hover:border-amber-500/50 hover:bg-amber-900/20 transition-all duration-300 flex items-center justify-between"
                     >
                       <div className="flex items-center space-x-3">
                         <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-600 to-purple-700 flex items-center justify-center">
-                          <Settings className="w-5 h-5 text-white" />
+                          <Settings className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                         </div>
                         <span className="text-purple-100 font-medium">
                           Account Settings

@@ -7,21 +7,21 @@ const DebugPanel = ({ metadata }) => {
   if (!metadata) return null;
 
   return (
-    <div className="mt-8 bg-gray-900/60 backdrop-blur-sm border border-amber-800/30 rounded-lg overflow-hidden">
+    <div className="mt-8 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-lg overflow-hidden">
       {/* Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-800/40 transition-colors"
+        className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-[var(--nf-bg-subtle)] transition-colors"
       >
         <div className="flex items-center space-x-2">
           <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
-          <span className="text-amber-200 font-medium">Debug Info</span>
-          <span className="text-xs text-amber-300/60 bg-amber-900/20 px-2 py-1 rounded">
+          <span className="text-[color:var(--nf-accent)] font-medium">Debug Info</span>
+          <span className="text-xs text-[color:var(--nf-accent)]/60 bg-amber-900/20 px-2 py-1 rounded">
             DEV MODE
           </span>
         </div>
         <svg
-          className={`w-5 h-5 text-amber-300 transition-transform ${
+          className={`w-5 h-5 text-[color:var(--nf-accent)] transition-transform ${
             isExpanded ? "rotate-180" : ""
           }`}
           fill="none"
@@ -42,12 +42,12 @@ const DebugPanel = ({ metadata }) => {
         <div className="px-4 pb-4 space-y-3 text-sm">
           {/* Session Info */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-gray-800/40 rounded p-3">
-              <div className="text-amber-300 font-medium mb-2">Session</div>
-              <div className="space-y-1 text-gray-300">
+            <div className="bg-[var(--nf-bg-subtle)] rounded p-3">
+              <div className="text-[color:var(--nf-accent)] font-medium mb-2">Session</div>
+              <div className="space-y-1 text-[color:var(--nf-text-secondary)]">
                 <div>
                   ID:{" "}
-                  <span className="text-amber-200 font-mono text-xs">
+                  <span className="text-[color:var(--nf-accent)] font-mono text-xs">
                     {metadata.sessionId || "N/A"}
                   </span>
                 </div>
@@ -66,9 +66,9 @@ const DebugPanel = ({ metadata }) => {
               </div>
             </div>
 
-            <div className="bg-gray-800/40 rounded p-3">
-              <div className="text-amber-300 font-medium mb-2">Performance</div>
-              <div className="space-y-1 text-gray-300">
+            <div className="bg-[var(--nf-bg-subtle)] rounded p-3">
+              <div className="text-[color:var(--nf-accent)] font-medium mb-2">Performance</div>
+              <div className="space-y-1 text-[color:var(--nf-text-secondary)]">
                 <div>
                   Response:{" "}
                   <span className="text-green-300">
@@ -146,7 +146,7 @@ const DebugPanel = ({ metadata }) => {
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-amber-200">Popular</div>
+                <div className="text-[color:var(--nf-accent)]">Popular</div>
                 <div className="text-amber-400 font-medium">
                   {metadata.popularity || "0%"}
                 </div>
@@ -174,11 +174,11 @@ const DebugPanel = ({ metadata }) => {
           )}
 
           {/* Raw Metadata */}
-          <details className="bg-gray-800/20 rounded p-3">
-            <summary className="text-gray-400 cursor-pointer hover:text-gray-300 text-xs">
+          <details className="bg-[var(--nf-bg-subtle)] rounded p-3">
+            <summary className="text-[color:var(--nf-text-muted)] cursor-pointer hover:text-[color:var(--nf-text-secondary)] text-xs">
               Raw Metadata (Click to expand)
             </summary>
-            <pre className="mt-2 text-xs text-gray-400 bg-black/40 rounded p-2 overflow-x-auto">
+            <pre className="mt-2 text-xs text-[color:var(--nf-text-muted)] bg-black/40 rounded p-2 overflow-x-auto">
               {JSON.stringify(metadata, null, 2)}
             </pre>
           </details>

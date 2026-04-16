@@ -1,6 +1,239 @@
 @import "tailwindcss";
 
-/* Critical performance optimizations */
+/* ============================================================
+   NILE FLOW DESIGN SYSTEM — SEMANTIC TOKEN DEFINITIONS
+   ============================================================
+   HOW TO USE:
+     - Always reference a token, never a raw color.
+     - Light theme is the default (:root).
+     - Dark theme overrides via [data-theme="dark"].
+     - To add a future theme, add a [data-theme="savannah"] block.
+
+   TOKEN NAMING CONVENTION:
+     --nf-<layer>-<role>[-state]
+     e.g. --nf-bg-primary  --nf-text-muted  --nf-accent-hover
+   ============================================================ */
+
+:root,
+[data-theme="light"] {
+  /* ── Backgrounds ────────────────────────────────────────── */
+  --nf-bg-primary: #ffffff; /* main page background          */
+  --nf-bg-secondary: #f8f5f0; /* secondary surfaces, sidebars  */
+  --nf-bg-elevated: #ffffff; /* cards, modals, dropdowns      */
+  --nf-bg-subtle: #f2ede6; /* input fields, table rows      */
+  --nf-bg-overlay: rgba(0, 0, 0, 0.45); /* modal backdrops            */
+
+  /* ── Text ───────────────────────────────────────────────── */
+  --nf-text-primary: #1a1109; /* headings, key labels          */
+  --nf-text-secondary: #4a3728; /* body copy                     */
+  --nf-text-muted: #7d6555; /* placeholders, captions        */
+  --nf-text-inverse: #ffffff; /* text on dark surfaces         */
+  --nf-text-on-accent: #ffffff; /* text on accent-colored buttons */
+
+  /* ── Borders ────────────────────────────────────────────── */
+  --nf-border: #ddd4c8; /* default borders               */
+  --nf-border-strong: #b8a898; /* focused inputs, active cards  */
+  --nf-border-subtle: rgba(180, 162, 143, 0.35); /* very faint dividers  */
+
+  /* ── Accent — Nile Flow amber/gold brand ───────────────── */
+  --nf-accent: #b45309; /* primary CTA, links            */
+  --nf-accent-light: #d97706; /* hover state                   */
+  --nf-accent-muted: #fde68a; /* badges, highlights (light)    */
+  --nf-accent-surface: #fef3c7; /* accent-tinted card bg         */
+
+  /* ── Emerald — secondary brand colour ──────────────────── */
+  --nf-emerald: #065f46;
+  --nf-emerald-light: #059669;
+  --nf-emerald-surface: #d1fae5;
+
+  /* ── Semantic states ────────────────────────────────────── */
+  --nf-success: #15803d;
+  --nf-success-surface: #dcfce7;
+  --nf-warning: #b45309;
+  --nf-warning-surface: #fef3c7;
+  --nf-error: #dc2626;
+  --nf-error-surface: #fee2e2;
+  --nf-info: #1d4ed8;
+  --nf-info-surface: #dbeafe;
+
+  /* ── Header ─────────────────────────────────────────────── */
+  --nf-header-bg: rgba(255, 255, 255, 0.95);
+  --nf-header-border: rgba(180, 83, 9, 0.15);
+  --nf-header-text: #1a1109;
+  --nf-header-text-muted: #7d6555;
+
+  /* ── Navigation ─────────────────────────────────────────── */
+  --nf-nav-link: #4a3728;
+  --nf-nav-link-hover: #b45309;
+  --nf-nav-link-active: #b45309;
+
+  /* ── Cards ───────────────────────────────────────────────── */
+  --nf-card-bg: #ffffff;
+  --nf-card-border: rgba(180, 162, 143, 0.3);
+  --nf-card-shadow: 0 2px 12px rgba(26, 17, 9, 0.08);
+  --nf-card-hover-border: rgba(180, 83, 9, 0.4);
+  --nf-card-hover-shadow: 0 8px 32px rgba(180, 83, 9, 0.15);
+
+  /* ── Buttons ─────────────────────────────────────────────── */
+  --nf-btn-primary-bg: #b45309;
+  --nf-btn-primary-text: #ffffff;
+  --nf-btn-primary-hover: #92400e;
+  --nf-btn-secondary-bg: #f2ede6;
+  --nf-btn-secondary-text: #4a3728;
+  --nf-btn-secondary-hover: #e8e0d6;
+  --nf-btn-ghost-hover: rgba(180, 83, 9, 0.08);
+
+  /* ── Inputs ──────────────────────────────────────────────── */
+  --nf-input-bg: #ffffff;
+  --nf-input-border: #ddd4c8;
+  --nf-input-border-focus: #b45309;
+  --nf-input-text: #1a1109;
+  --nf-input-placeholder: #7d6555;
+
+  /* ── Footer ──────────────────────────────────────────────── */
+  --nf-footer-bg: #1a1109;
+  --nf-footer-text: #e8ddd3;
+  --nf-footer-muted: rgba(232, 221, 211, 0.6);
+
+  /* ── Scrollbar ───────────────────────────────────────────── */
+  --nf-scrollbar-thumb: #b8a898;
+  --nf-scrollbar-track: #f2ede6;
+
+  /* ── Transition ──────────────────────────────────────────── */
+  --nf-theme-transition:
+    background-color 200ms ease, color 200ms ease, border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+[data-theme="dark"] {
+  /* ── Backgrounds ────────────────────────────────────────── */
+  --nf-bg-primary: #0a0a0a;
+  --nf-bg-secondary: #111111;
+  --nf-bg-elevated: #1a1a1a;
+  --nf-bg-subtle: #222222;
+  --nf-bg-overlay: rgba(0, 0, 0, 0.7);
+
+  /* ── Text ───────────────────────────────────────────────── */
+  --nf-text-primary: #f5f0e8;
+  --nf-text-secondary: #d4c4b0;
+  --nf-text-muted: #8a7a6a;
+  --nf-text-inverse: #0a0a0a;
+  --nf-text-on-accent: #ffffff;
+
+  /* ── Borders ────────────────────────────────────────────── */
+  --nf-border: rgba(180, 83, 9, 0.25);
+  --nf-border-strong: rgba(180, 83, 9, 0.55);
+  --nf-border-subtle: rgba(180, 83, 9, 0.12);
+
+  /* ── Accent ─────────────────────────────────────────────── */
+  --nf-accent: #d97706;
+  --nf-accent-light: #f59e0b;
+  --nf-accent-muted: rgba(217, 119, 6, 0.25);
+  --nf-accent-surface: rgba(217, 119, 6, 0.12);
+
+  /* ── Emerald ─────────────────────────────────────────────── */
+  --nf-emerald: #34d399;
+  --nf-emerald-light: #6ee7b7;
+  --nf-emerald-surface: rgba(52, 211, 153, 0.12);
+
+  /* ── Semantic states ────────────────────────────────────── */
+  --nf-success: #34d399;
+  --nf-success-surface: rgba(52, 211, 153, 0.15);
+  --nf-warning: #f59e0b;
+  --nf-warning-surface: rgba(245, 158, 11, 0.15);
+  --nf-error: #f87171;
+  --nf-error-surface: rgba(248, 113, 113, 0.15);
+  --nf-info: #60a5fa;
+  --nf-info-surface: rgba(96, 165, 250, 0.15);
+
+  /* ── Header ─────────────────────────────────────────────── */
+  --nf-header-bg: rgba(10, 10, 10, 0.92);
+  --nf-header-border: rgba(180, 83, 9, 0.2);
+  --nf-header-text: #f5f0e8;
+  --nf-header-text-muted: #8a7a6a;
+
+  /* ── Navigation ─────────────────────────────────────────── */
+  --nf-nav-link: #d4c4b0;
+  --nf-nav-link-hover: #f5f0e8;
+  --nf-nav-link-active: #d97706;
+
+  /* ── Cards ───────────────────────────────────────────────── */
+  --nf-card-bg: rgba(26, 26, 26, 0.9);
+  --nf-card-border: rgba(180, 83, 9, 0.2);
+  --nf-card-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --nf-card-hover-border: rgba(217, 119, 6, 0.55);
+  --nf-card-hover-shadow: 0 8px 32px rgba(180, 83, 9, 0.25);
+
+  /* ── Buttons ─────────────────────────────────────────────── */
+  --nf-btn-primary-bg: #d97706;
+  --nf-btn-primary-text: #0a0a0a;
+  --nf-btn-primary-hover: #b45309;
+  --nf-btn-secondary-bg: rgba(255, 255, 255, 0.07);
+  --nf-btn-secondary-text: #d4c4b0;
+  --nf-btn-secondary-hover: rgba(255, 255, 255, 0.12);
+  --nf-btn-ghost-hover: rgba(217, 119, 6, 0.12);
+
+  /* ── Inputs ──────────────────────────────────────────────── */
+  --nf-input-bg: rgba(255, 255, 255, 0.05);
+  --nf-input-border: rgba(180, 83, 9, 0.3);
+  --nf-input-border-focus: #d97706;
+  --nf-input-text: #f5f0e8;
+  --nf-input-placeholder: #8a7a6a;
+
+  /* ── Footer ──────────────────────────────────────────────── */
+  --nf-footer-bg: #000000;
+  --nf-footer-text: #d4c4b0;
+  --nf-footer-muted: rgba(212, 196, 176, 0.55);
+
+  /* ── Scrollbar ───────────────────────────────────────────── */
+  --nf-scrollbar-thumb: rgba(180, 83, 9, 0.45);
+  --nf-scrollbar-track: #111111;
+}
+
+/* ── Apply tokens to base elements ───────────────────────────────────────── */
+html {
+  background-color: var(--nf-bg-primary);
+  color: var(--nf-text-primary);
+  transition: var(--nf-theme-transition);
+}
+
+body {
+  background-color: var(--nf-bg-primary);
+  color: var(--nf-text-primary);
+}
+
+/* Smooth theme switch on all elements except animations */
+*,
+*::before,
+*::after {
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+/* But never transition transforms / opacity (breaks animations) */
+[class*="animate-"],
+[class*="transition-transform"],
+.loading-spinner {
+  transition: none !important;
+}
+
+/* ── Scrollbar theming ────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--nf-scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--nf-scrollbar-thumb);
+  border-radius: 3px;
+}
+
+/* ── Critical performance optimizations */
 html,
 body {
   overflow-x: hidden;

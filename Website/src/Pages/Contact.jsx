@@ -65,7 +65,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -76,9 +76,9 @@ const Contact = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-red-500/10 to-amber-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-8xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <MessageSquare className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Get in Touch
             </span>
             <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -89,10 +89,10 @@ const Contact = () => {
               Contact Us
             </span>
             <br />
-            <span className="text-white">Premium Support</span>
+            <span className="text-[color:var(--nf-text-primary)]">Premium Support</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Have questions about premium African products? Our dedicated team is
             here to help you with personalized support.
           </p>
@@ -101,9 +101,9 @@ const Contact = () => {
           <div className="max-w-3xl mx-auto">
             {/* Mobile: Horizontal Scroll, Desktop: Grid */}
             <div className="flex overflow-x-auto gap-4 pb-2 sm:pb-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible scrollbar-thin scrollbar-thumb-amber-600 scrollbar-track-amber-900/20">
-              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4 flex-shrink-0 min-w-[200px] md:min-w-0">
-                <div className="text-2xl font-bold text-amber-300">24/7</div>
-                <div className="text-amber-100/80 text-sm">Support</div>
+              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4 flex-shrink-0 min-w-[200px] md:min-w-0">
+                <div className="text-2xl font-bold text-[color:var(--nf-accent)]">24/7</div>
+                <div className="text-[color:var(--nf-text-muted)] text-sm">Support</div>
               </div>
               <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-4 flex-shrink-0 min-w-[200px] md:min-w-0">
                 <div className="text-2xl font-bold text-emerald-300">1H</div>
@@ -128,17 +128,17 @@ const Contact = () => {
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Contact Form */}
             <div className={`${submitted ? "order-last" : ""}`}>
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden">
-                <div className="p-8 border-b border-amber-800/30">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden">
+                <div className="p-8 border-b border-[var(--nf-border-subtle)]">
                   <div className="flex items-center space-x-3 mb-2">
                     <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                      <Send className="w-6 h-6 text-white" />
+                      <Send className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-amber-200">
+                      <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                         Send us a message
                       </h2>
-                      <p className="text-amber-100/70">
+                      <p className="text-[color:var(--nf-text-muted)]">
                         We'll respond within 1 hour
                       </p>
                     </div>
@@ -150,10 +150,10 @@ const Contact = () => {
                     <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-emerald-900/30 to-green-900/30 border border-emerald-700/30 mb-6">
                       <CheckCircle className="w-10 h-10 text-emerald-400" />
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-3">
+                    <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-3">
                       Message Sent Successfully!
                     </h3>
-                    <p className="text-gray-300 mb-6">
+                    <p className="text-[color:var(--nf-text-secondary)] mb-6">
                       Thank you for contacting Nile Flow. Our premium support
                       team will respond to you within 1 hour.
                     </p>
@@ -168,7 +168,7 @@ const Contact = () => {
                 ) : (
                   <form onSubmit={handleSubmit} className="p-8 space-y-6">
                     <div>
-                      <label className="block text-amber-100 font-medium mb-2">
+                      <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                         <span className="flex items-center space-x-2">
                           <Users className="w-4 h-4" />
                           <span>Full Name</span>
@@ -180,7 +180,7 @@ const Contact = () => {
                           type="text"
                           value={username}
                           onChange={(e) => setName(e.target.value)}
-                          className="relative w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors"
+                          className="relative w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors"
                           placeholder="Enter your full name"
                           required
                         />
@@ -188,7 +188,7 @@ const Contact = () => {
                     </div>
 
                     <div>
-                      <label className="block text-amber-100 font-medium mb-2">
+                      <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                         <span className="flex items-center space-x-2">
                           <Mail className="w-4 h-4" />
                           <span>Email Address</span>
@@ -200,7 +200,7 @@ const Contact = () => {
                           type="email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          className="relative w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors"
+                          className="relative w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors"
                           placeholder="Enter your email address"
                           required
                         />
@@ -208,7 +208,7 @@ const Contact = () => {
                     </div>
 
                     <div>
-                      <label className="block text-amber-100 font-medium mb-2">
+                      <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                         <span className="flex items-center space-x-2">
                           <MessageSquare className="w-4 h-4" />
                           <span>Your Message</span>
@@ -219,7 +219,7 @@ const Contact = () => {
                         <textarea
                           value={message}
                           onChange={(e) => setMessage(e.target.value)}
-                          className="relative w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors min-h-[150px] resize-none"
+                          className="relative w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors min-h-[150px] resize-none"
                           placeholder="Tell us about your inquiry or feedback..."
                           rows="5"
                           required
@@ -271,38 +271,38 @@ const Contact = () => {
 
             {/* Contact Details */}
             <div>
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 h-full">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 h-full">
                 <div className="mb-8">
-                  <h2 className="text-2xl font-bold text-amber-200 mb-2">
+                  <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-2">
                     Our Contact Details
                   </h2>
-                  <p className="text-amber-100/70">
+                  <p className="text-[color:var(--nf-text-muted)]">
                     Premium African eCommerce support
                   </p>
                 </div>
 
                 {/* Contact Items */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 sm:gap-6">
-                  <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl hover:border-amber-500/50 transition-all duration-300">
+                  <div className="flex items-start space-x-4 p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl hover:border-amber-500/50 transition-all duration-300">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-6 h-6 text-white" />
+                      <MapPin className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-amber-100 mb-1">
+                      <h3 className="text-lg font-bold text-[color:var(--nf-text-secondary)] mb-1">
                         Our Location
                       </h3>
-                      <p className="text-amber-100/70">
+                      <p className="text-[color:var(--nf-text-muted)]">
                         Nile Flow Kilimani, Nairobi, Kenya
                       </p>
-                      <p className="text-amber-100/50 text-sm mt-1">
+                      <p className="text-[color:var(--nf-text-muted)] text-sm mt-1">
                         Visit our premium showroom
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl hover:border-amber-500/50 transition-all duration-300">
+                  <div className="flex items-start space-x-4 p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl hover:border-amber-500/50 transition-all duration-300">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center flex-shrink-0">
-                      <Phone className="w-6 h-6 text-white" />
+                      <Phone className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-emerald-100 mb-1">
@@ -315,9 +315,9 @@ const Contact = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl hover:border-amber-500/50 transition-all duration-300">
+                  <div className="flex items-start space-x-4 p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl hover:border-amber-500/50 transition-all duration-300">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center flex-shrink-0">
-                      <Mail className="w-6 h-6 text-white" />
+                      <Mail className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-blue-100 mb-1">
@@ -332,9 +332,9 @@ const Contact = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl hover:border-amber-500/50 transition-all duration-300">
+                  <div className="flex items-start space-x-4 p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl hover:border-amber-500/50 transition-all duration-300">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center flex-shrink-0">
-                      <Clock className="w-6 h-6 text-white" />
+                      <Clock className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-red-100 mb-1">
@@ -352,11 +352,11 @@ const Contact = () => {
 
                 {/* CTA */}
                 <div className="mt-8">
-                  <div className="bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm border border-amber-700/30 rounded-2xl p-6 text-center">
-                    <h3 className="text-lg font-bold text-amber-200 mb-2">
+                  <div className="bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center">
+                    <h3 className="text-lg font-bold text-[color:var(--nf-accent)] mb-2">
                       Need Immediate Help?
                     </h3>
-                    <p className="text-amber-100/70 text-sm mb-4">
+                    <p className="text-[color:var(--nf-text-muted)] text-sm mb-4">
                       Our premium support team is always ready to assist you.
                     </p>
                     <a
@@ -376,11 +376,11 @@ const Contact = () => {
           <div className="mt-16">
             {/* Mobile: Horizontal Scroll, Desktop: Grid */}
             <div className="flex overflow-x-auto gap-6 pb-4 lg:grid lg:grid-cols-4 lg:overflow-visible scrollbar-thin scrollbar-thumb-amber-600 scrollbar-track-amber-900/20">
-              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 text-center flex-shrink-0 min-w-[280px] lg:min-w-0">
-                <div className="text-2xl font-bold text-amber-300 mb-2">
+              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center flex-shrink-0 min-w-[280px] lg:min-w-0">
+                <div className="text-2xl font-bold text-[color:var(--nf-accent)] mb-2">
                   24/7
                 </div>
-                <div className="text-amber-100/80">Premium Support</div>
+                <div className="text-[color:var(--nf-text-muted)]">Premium Support</div>
               </div>
               <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-6 text-center flex-shrink-0 min-w-[280px] lg:min-w-0">
                 <div className="text-2xl font-bold text-emerald-300 mb-2">

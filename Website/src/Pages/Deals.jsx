@@ -141,7 +141,7 @@ const Deals = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
         <Header />
         <div className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-gray-900/20 to-amber-900/20"></div>
@@ -149,10 +149,10 @@ const Deals = () => {
             <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-red-900/30 to-amber-900/30 border border-red-700/30 mb-6">
               <AlertCircle className="w-12 h-12 text-red-400" />
             </div>
-            <h3 className="text-3xl font-bold text-white mb-4">
+            <h3 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">
               Unable to Load Deals
             </h3>
-            <p className="text-gray-400 max-w-md mx-auto mb-8">{error}</p>
+            <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-8">{error}</p>
             <button
               onClick={() => window.location.reload()}
               className="inline-flex items-center space-x-2 px-8 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold rounded-xl hover:from-amber-700 hover:to-amber-800 transition-all duration-300"
@@ -168,7 +168,7 @@ const Deals = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -186,22 +186,22 @@ const Deals = () => {
               Limited Time Offer
             </span>
             <div className="flex items-center space-x-2 ml-4">
-              <div className="bg-gradient-to-br from-gray-900 to-black border border-amber-800/30 rounded-xl px-3 py-1">
-                <span className="text-white font-bold text-lg">
+              <div className="bg-gradient-to-br from-gray-900 to-black border border-[var(--nf-border-subtle)] rounded-xl px-3 py-1">
+                <span className="text-[color:var(--nf-text-primary)] font-bold text-lg">
                   {String(timeLeft.hours).padStart(2, "0")}
                 </span>
                 <span className="text-amber-400 text-xs ml-1">H</span>
               </div>
               <span className="text-amber-400">:</span>
-              <div className="bg-gradient-to-br from-gray-900 to-black border border-amber-800/30 rounded-xl px-3 py-1">
-                <span className="text-white font-bold text-lg">
+              <div className="bg-gradient-to-br from-gray-900 to-black border border-[var(--nf-border-subtle)] rounded-xl px-3 py-1">
+                <span className="text-[color:var(--nf-text-primary)] font-bold text-lg">
                   {String(timeLeft.minutes).padStart(2, "0")}
                 </span>
                 <span className="text-amber-400 text-xs ml-1">M</span>
               </div>
               <span className="text-amber-400">:</span>
-              <div className="bg-gradient-to-br from-gray-900 to-black border border-amber-800/30 rounded-xl px-3 py-1">
-                <span className="text-white font-bold text-lg">
+              <div className="bg-gradient-to-br from-gray-900 to-black border border-[var(--nf-border-subtle)] rounded-xl px-3 py-1">
+                <span className="text-[color:var(--nf-text-primary)] font-bold text-lg">
                   {String(timeLeft.seconds).padStart(2, "0")}
                 </span>
                 <span className="text-amber-400 text-xs ml-1">S</span>
@@ -214,10 +214,10 @@ const Deals = () => {
               Exclusive Deals
             </span>
             <br />
-            <span className="text-white">Premium African Products</span>
+            <span className="text-[color:var(--nf-text-primary)]">Premium African Products</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Limited-time offers on authentic African treasures. Don't miss out
             on these exclusive savings!
           </p>
@@ -244,9 +244,9 @@ const Deals = () => {
                 </div>
                 <div className="text-yellow-100/80 text-sm">Time Left</div>
               </div>
-              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4 flex-shrink-0 min-w-[200px] md:min-w-0">
-                <div className="text-2xl font-bold text-amber-300">100%</div>
-                <div className="text-amber-100/80 text-sm">Authentic</div>
+              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4 flex-shrink-0 min-w-[200px] md:min-w-0">
+                <div className="text-2xl font-bold text-[color:var(--nf-accent)]">100%</div>
+                <div className="text-[color:var(--nf-text-muted)] text-sm">Authentic</div>
               </div>
             </div>
           </div>
@@ -258,19 +258,19 @@ const Deals = () => {
         <div className="relative max-w-8xl mx-auto">
           {/* Deals Banner */}
           <div className="mb-12">
-            <div className="bg-gradient-to-r from-red-900/20 via-orange-900/20 to-yellow-900/20 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6">
+            <div className="bg-gradient-to-r from-red-900/20 via-orange-900/20 to-yellow-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6">
               <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-600 to-orange-600 flex items-center justify-center">
-                    <Flame className="w-8 h-8 text-white" />
+                    <Flame className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white">
+                    <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)]">
                       {analytics.isFlashSaleActive
                         ? "Flash Sale Active"
                         : "Deals Available"}
                     </h3>
-                    <p className="text-gray-300">
+                    <p className="text-[color:var(--nf-text-secondary)]">
                       {analytics.endingSoon > 0
                         ? `${analytics.endingSoon} deals ending soon!`
                         : "Limited stock available at discounted prices"}
@@ -279,10 +279,10 @@ const Deals = () => {
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-amber-300">
+                    <div className="text-3xl font-bold text-[color:var(--nf-accent)]">
                       {analytics.maxDiscount}%
                     </div>
-                    <div className="text-amber-100/80 text-sm">
+                    <div className="text-[color:var(--nf-text-muted)] text-sm">
                       Max Discount
                     </div>
                   </div>
@@ -306,10 +306,10 @@ const Deals = () => {
                   <Zap className="w-10 h-10 text-red-500 animate-pulse" />
                 </div>
               </div>
-              <h3 className="mt-8 text-2xl font-bold text-amber-200">
+              <h3 className="mt-8 text-2xl font-bold text-[color:var(--nf-accent)]">
                 Loading Hot Deals
               </h3>
-              <p className="text-gray-400 mt-2">
+              <p className="text-[color:var(--nf-text-muted)] mt-2">
                 Preparing exclusive African product discounts...
               </p>
             </div>
@@ -336,7 +336,7 @@ const Deals = () => {
                       className={`px-5 py-2.5 font-bold rounded-xl transition-all duration-300 flex-shrink-0 whitespace-nowrap ${
                         selectedFilter === category
                           ? "bg-gradient-to-r from-red-600 to-red-700 text-white border border-red-500 shadow-lg shadow-red-900/30"
-                          : "bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 text-gray-300 hover:border-amber-500/50 hover:text-white"
+                          : "bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50 hover:text-white"
                       }`}
                     >
                       {category}
@@ -378,10 +378,10 @@ const Deals = () => {
 
                         {/* Time Badge */}
                         <div className="absolute top-4 right-4 z-10">
-                          <div className="bg-gradient-to-r from-amber-900/80 to-yellow-900/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-amber-700/30">
+                          <div className="bg-gradient-to-r from-amber-900/80 to-yellow-900/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-[var(--nf-border-subtle)]">
                             <div className="flex items-center space-x-1">
-                              <Clock className="w-3 h-3 text-amber-300" />
-                              <span className="text-xs font-bold text-amber-200">
+                              <Clock className="w-3 h-3 text-[color:var(--nf-accent)]" />
+                              <span className="text-xs font-bold text-[color:var(--nf-accent)]">
                                 {product.timeLeft
                                   ? `${product.timeLeft.hours}H ${product.timeLeft.minutes}M`
                                   : `${timeLeft.hours}H ${timeLeft.minutes}M`}
@@ -417,10 +417,10 @@ const Deals = () => {
                   <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-red-900/30 to-amber-900/30 border border-red-700/30 mb-6">
                     <Tag className="w-10 h-10 text-red-400" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-3">
+                  <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-3">
                     No Products in {selectedFilter}
                   </h3>
-                  <p className="text-gray-400 max-w-md mx-auto mb-6">
+                  <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-6">
                     There are currently no products available in this category.
                     Try selecting a different filter.
                   </p>
@@ -442,10 +442,10 @@ const Deals = () => {
               <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-red-900/30 to-amber-900/30 border border-red-700/30 mb-6">
                 <Tag className="w-12 h-12 text-red-400" />
               </div>
-              <h3 className="text-3xl font-bold text-white mb-4">
+              <h3 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                 No Active Deals
               </h3>
-              <p className="text-gray-400 max-w-md mx-auto mb-8">
+              <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-8">
                 Our current deals have ended. Check back soon for new exclusive
                 offers on premium African products.
               </p>
@@ -462,7 +462,7 @@ const Deals = () => {
             <div className="flex overflow-x-auto gap-6 pb-4 lg:grid lg:grid-cols-4 lg:overflow-visible scrollbar-thin scrollbar-thumb-red-600 scrollbar-track-red-900/20">
               <div className="bg-gradient-to-br from-red-900/20 to-transparent backdrop-blur-sm border border-red-800/30 rounded-2xl p-6 text-center flex-shrink-0 min-w-[280px] lg:min-w-0">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-red-500 to-red-600 mb-4">
-                  <Shield className="w-6 h-6 text-white" />
+                  <Shield className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div className="text-xl font-bold text-red-300 mb-2">
                   Best Price
@@ -474,7 +474,7 @@ const Deals = () => {
 
               <div className="bg-gradient-to-br from-orange-900/20 to-transparent backdrop-blur-sm border border-orange-800/30 rounded-2xl p-6 text-center flex-shrink-0 min-w-[280px] lg:min-w-0">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 mb-4">
-                  <Truck className="w-6 h-6 text-white" />
+                  <Truck className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div className="text-xl font-bold text-orange-300 mb-2">
                   Fast Delivery
@@ -486,7 +486,7 @@ const Deals = () => {
 
               <div className="bg-gradient-to-br from-yellow-900/20 to-transparent backdrop-blur-sm border border-yellow-800/30 rounded-2xl p-6 text-center flex-shrink-0 min-w-[280px] lg:min-w-0">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-600 mb-4">
-                  <Gem className="w-6 h-6 text-white" />
+                  <Gem className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div className="text-xl font-bold text-yellow-300 mb-2">
                   Premium Quality
@@ -496,14 +496,14 @@ const Deals = () => {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 text-center flex-shrink-0 min-w-[280px] lg:min-w-0">
+              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center flex-shrink-0 min-w-[280px] lg:min-w-0">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 mb-4">
-                  <Star className="w-6 h-6 text-white" />
+                  <Star className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
-                <div className="text-xl font-bold text-amber-300 mb-2">
+                <div className="text-xl font-bold text-[color:var(--nf-accent)] mb-2">
                   5-Star Support
                 </div>
-                <div className="text-amber-100/80 text-sm">
+                <div className="text-[color:var(--nf-text-muted)] text-sm">
                   24/7 customer service
                 </div>
               </div>

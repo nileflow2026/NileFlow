@@ -172,7 +172,7 @@ const HelpCenterPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -183,9 +183,9 @@ const HelpCenterPage = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-red-500/10 to-amber-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-8xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <HelpCircle className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Premium Support Center
             </span>
             <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -196,19 +196,19 @@ const HelpCenterPage = () => {
               Help Center
             </span>
             <br />
-            <span className="text-white">Premium Assistance</span>
+            <span className="text-[color:var(--nf-text-primary)]">Premium Assistance</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Get instant help with premium African products, orders, shipping,
             and more. Our dedicated team is here 24/7.
           </p>
 
           {/* Stats */}
           <div className="flex overflow-x-auto gap-4 pb-2 sm:pb-0 md:grid md:grid-cols-4 md:gap-4 md:overflow-visible max-w-3xl mx-auto scrollbar-thin scrollbar-thumb-amber-600 scrollbar-track-amber-900/30">
-            <div className="flex-shrink-0 min-w-[140px] md:min-w-0 bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4">
-              <div className="text-2xl font-bold text-amber-300">24/7</div>
-              <div className="text-amber-100/80 text-sm">Premium Support</div>
+            <div className="flex-shrink-0 min-w-[140px] md:min-w-0 bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4">
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)]">24/7</div>
+              <div className="text-[color:var(--nf-text-muted)] text-sm">Premium Support</div>
             </div>
             <div className="flex-shrink-0 min-w-[140px] md:min-w-0 bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-4">
               <div className="text-2xl font-bold text-emerald-300">1H</div>
@@ -233,10 +233,10 @@ const HelpCenterPage = () => {
           <div className="mb-16">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h2 className="text-3xl font-bold text-amber-200">
+                <h2 className="text-3xl font-bold text-[color:var(--nf-accent)]">
                   Frequently Asked Questions
                 </h2>
-                <p className="text-amber-100/70">
+                <p className="text-[color:var(--nf-text-muted)]">
                   Quick answers to common questions
                 </p>
               </div>
@@ -250,7 +250,7 @@ const HelpCenterPage = () => {
               {faqCategories.map((category, index) => (
                 <div
                   key={index}
-                  className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden group hover:border-amber-500/50 transition-all duration-300"
+                  className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden group hover:border-amber-500/50 transition-all duration-300"
                 >
                   <div
                     className={`bg-gradient-to-r ${category.color} p-3 sm:p-4 md:p-5 lg:p-6`}
@@ -262,10 +262,10 @@ const HelpCenterPage = () => {
                         </div>
                       </div>
                       <div className="min-w-0 flex-1">
-                        <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white truncate">
+                        <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-[color:var(--nf-text-primary)] truncate">
                           {category.title}
                         </h3>
-                        <p className="text-white/80 text-xs sm:text-sm">
+                        <p className="text-[color:var(--nf-text-primary)]/80 text-xs sm:text-sm">
                           {category.questions.length} questions
                         </p>
                       </div>
@@ -280,15 +280,15 @@ const HelpCenterPage = () => {
                       ).map((item, idx) => (
                         <div
                           key={idx}
-                          className="border-b border-amber-800/30 pb-4 last:border-0 last:pb-0"
+                          className="border-b border-[var(--nf-border-subtle)] pb-4 last:border-0 last:pb-0"
                         >
                           <div className="flex items-start space-x-2 sm:space-x-3 mb-1 sm:mb-2">
-                            <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-r from-amber-900/30 to-yellow-900/30 border border-amber-700/30 flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
+                            <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-r from-amber-900/30 to-yellow-900/30 border border-[var(--nf-border-subtle)] flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
                               <span className="text-xs text-amber-400 font-bold">
                                 Q
                               </span>
                             </div>
-                            <h4 className="text-sm sm:text-base text-amber-100 font-semibold flex-1 leading-tight">
+                            <h4 className="text-sm sm:text-base text-[color:var(--nf-text-secondary)] font-semibold flex-1 leading-tight">
                               {item.q}
                             </h4>
                           </div>
@@ -298,7 +298,7 @@ const HelpCenterPage = () => {
                                 A
                               </span>
                             </div>
-                            <p className="text-xs sm:text-sm text-amber-100/70 flex-1 leading-relaxed">
+                            <p className="text-xs sm:text-sm text-[color:var(--nf-text-muted)] flex-1 leading-relaxed">
                               {item.a}
                             </p>
                           </div>
@@ -309,7 +309,7 @@ const HelpCenterPage = () => {
                     {category.questions.length > 2 && (
                       <button
                         onClick={() => toggleCategory(index)}
-                        className="w-full mt-3 sm:mt-4 md:mt-6 px-3 sm:px-4 py-2 sm:py-3 bg-gradient-to-r from-gray-900/50 to-black/50 border border-amber-800/30 rounded-lg sm:rounded-xl text-xs sm:text-sm text-amber-300 hover:text-amber-200 hover:border-amber-500/50 transition-all duration-300 flex items-center justify-center space-x-1 sm:space-x-2"
+                        className="w-full mt-3 sm:mt-4 md:mt-6 px-3 sm:px-4 py-2 sm:py-3 bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] rounded-lg sm:rounded-xl text-xs sm:text-sm text-[color:var(--nf-accent)] hover:text-[color:var(--nf-accent)] hover:border-amber-500/50 transition-all duration-300 flex items-center justify-center space-x-1 sm:space-x-2"
                       >
                         <span className="font-medium">
                           {expandedCategories[index]
@@ -332,10 +332,10 @@ const HelpCenterPage = () => {
           {/* Contact Methods */}
           <div className="mb-16">
             <div className="text-center mb-10">
-              <h2 className="text-3xl font-bold text-amber-200 mb-3">
+              <h2 className="text-3xl font-bold text-[color:var(--nf-accent)] mb-3">
                 Premium Contact Methods
               </h2>
-              <p className="text-amber-100/70 max-w-2xl mx-auto">
+              <p className="text-[color:var(--nf-text-muted)] max-w-2xl mx-auto">
                 Choose your preferred way to contact our premium support team
               </p>
             </div>
@@ -353,22 +353,22 @@ const HelpCenterPage = () => {
                     )}/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
                   ></div>
 
-                  <div className="relative bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 text-center transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30">
+                  <div className="relative bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 text-center transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30">
                     <div
                       className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r ${method.color} mb-6`}
                     >
                       {method.icon}
                     </div>
 
-                    <h3 className="text-xl font-bold text-white mb-2">
+                    <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)] mb-2">
                       {method.title}
                     </h3>
-                    <p className="text-amber-100/70 text-sm mb-4">
+                    <p className="text-[color:var(--nf-text-muted)] text-sm mb-4">
                       {method.description}
                     </p>
 
-                    <div className="bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4 mb-6">
-                      <p className="text-amber-200 font-medium">
+                    <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4 mb-6">
+                      <p className="text-[color:var(--nf-accent)] font-medium">
                         {method.details}
                       </p>
                     </div>
@@ -377,7 +377,7 @@ const HelpCenterPage = () => {
                       onClick={() =>
                         handleContactAction(method.action, method.details)
                       }
-                      className={`w-full px-6 py-3 bg-gradient-to-r ${method.color} text-white font-bold rounded-xl hover:opacity-90 transition-all duration-300 transform hover:scale-105`}
+                      className={`w-full px-6 py-3 bg-gradient-to-r ${method.color} text-[color:var(--nf-text-primary)] font-bold rounded-xl hover:opacity-90 transition-all duration-300 transform hover:scale-105`}
                     >
                       {method.action}
                     </button>
@@ -389,10 +389,10 @@ const HelpCenterPage = () => {
 
           {/* Additional Resources */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6">
+            <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-                  <Package className="w-5 h-5 text-white" />
+                  <Package className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div>
                   <h4 className="text-lg font-bold text-blue-100">
@@ -415,12 +415,12 @@ const HelpCenterPage = () => {
       {/* Email Modal */}
       {isEmailModalOpen && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-gradient-to-b from-gray-900 to-black border border-amber-800/30 rounded-3xl p-8 max-w-md w-full mx-4">
+          <div className="bg-gradient-to-b from-gray-900 to-black border border-[var(--nf-border-subtle)] rounded-3xl p-8 max-w-md w-full mx-4">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-amber-200">Send Email</h3>
+              <h3 className="text-2xl font-bold text-[color:var(--nf-accent)]">Send Email</h3>
               <button
                 onClick={() => setIsEmailModalOpen(false)}
-                className="text-amber-400 hover:text-amber-300 transition-colors"
+                className="text-amber-400 hover:text-[color:var(--nf-accent)] transition-colors"
               >
                 <span className="sr-only">Close</span>✕
               </button>
@@ -430,7 +430,7 @@ const HelpCenterPage = () => {
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-amber-200 text-sm font-medium mb-2"
+                  className="block text-[color:var(--nf-accent)] text-sm font-medium mb-2"
                 >
                   Your Name
                 </label>
@@ -442,7 +442,7 @@ const HelpCenterPage = () => {
                   onChange={(e) =>
                     setEmailForm((prev) => ({ ...prev, name: e.target.value }))
                   }
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-amber-800/30 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500/50"
+                  className="w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border-subtle)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500/50"
                   placeholder="Enter your name"
                 />
               </div>
@@ -450,7 +450,7 @@ const HelpCenterPage = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-amber-200 text-sm font-medium mb-2"
+                  className="block text-[color:var(--nf-accent)] text-sm font-medium mb-2"
                 >
                   Your Email
                 </label>
@@ -462,7 +462,7 @@ const HelpCenterPage = () => {
                   onChange={(e) =>
                     setEmailForm((prev) => ({ ...prev, email: e.target.value }))
                   }
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-amber-800/30 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500/50"
+                  className="w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border-subtle)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500/50"
                   placeholder="Enter your email"
                 />
               </div>
@@ -470,7 +470,7 @@ const HelpCenterPage = () => {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-amber-200 text-sm font-medium mb-2"
+                  className="block text-[color:var(--nf-accent)] text-sm font-medium mb-2"
                 >
                   Message
                 </label>
@@ -485,7 +485,7 @@ const HelpCenterPage = () => {
                       message: e.target.value,
                     }))
                   }
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-amber-800/30 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500/50 resize-none"
+                  className="w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border-subtle)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500/50 resize-none"
                   placeholder="How can we help you?"
                 ></textarea>
               </div>
@@ -494,7 +494,7 @@ const HelpCenterPage = () => {
                 <button
                   type="button"
                   onClick={() => setIsEmailModalOpen(false)}
-                  className="flex-1 px-6 py-3 bg-gray-900/50 border border-amber-800/30 rounded-xl text-amber-300 hover:text-amber-200 hover:border-amber-500/50 transition-all duration-300"
+                  className="flex-1 px-6 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border-subtle)] rounded-xl text-[color:var(--nf-accent)] hover:text-[color:var(--nf-accent)] hover:border-amber-500/50 transition-all duration-300"
                 >
                   Cancel
                 </button>

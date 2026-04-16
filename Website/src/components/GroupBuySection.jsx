@@ -44,13 +44,13 @@ function AvatarCluster({ participants = [], max = 5 }) {
       {shown.map((uid, i) => (
         <div
           key={uid}
-          className={`w-7 h-7 rounded-full border-2 border-slate-800 flex items-center justify-center text-white text-[10px] font-bold -ml-2 first:ml-0 ${colors[i % colors.length]}`}
+          className={`w-7 h-7 rounded-full border-2 border-[var(--nf-border)] flex items-center justify-center text-[color:var(--nf-text-primary)] text-[10px] font-bold -ml-2 first:ml-0 ${colors[i % colors.length]}`}
         >
           {uid.slice(0, 2).toUpperCase()}
         </div>
       ))}
       {extra > 0 && (
-        <div className="w-7 h-7 rounded-full border-2 border-slate-800 bg-slate-600 flex items-center justify-center text-white text-[10px] font-bold -ml-2">
+        <div className="w-7 h-7 rounded-full border-2 border-[var(--nf-border)] bg-[var(--nf-bg-subtle)] flex items-center justify-center text-[color:var(--nf-text-primary)] text-[10px] font-bold -ml-2">
           +{extra}
         </div>
       )}
@@ -76,12 +76,12 @@ function ActiveGroupCard({ group, onJoin, joining }) {
   const isFull = status === "completed" || remainingSlots === 0;
 
   return (
-    <div className="flex items-center justify-between bg-slate-800/80 rounded-xl p-4 border border-slate-700/50 hover:border-emerald-500/40 transition-colors">
+    <div className="flex items-center justify-between bg-[var(--nf-card-bg)] rounded-xl p-4 border border-[var(--nf-border-subtle)] hover:border-emerald-500/40 transition-colors">
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-3 flex-wrap">
           <AvatarCluster participants={participants} />
           <span className="text-slate-300 text-sm">
-            <span className="text-white font-semibold">
+            <span className="text-[color:var(--nf-text-primary)] font-semibold">
               {participants.length}
             </span>
             /{maxParticipants} joined
@@ -114,7 +114,7 @@ function ActiveGroupCard({ group, onJoin, joining }) {
       <div className="flex items-center gap-2 ml-3 shrink-0">
         <button
           onClick={() => navigate(`/group/${$id}`)}
-          className="text-slate-400 hover:text-white text-xs underline underline-offset-2"
+          className="text-[color:var(--nf-text-muted)] hover:text-[color:var(--nf-text-primary)] text-xs underline underline-offset-2"
         >
           View
         </button>
@@ -123,8 +123,8 @@ function ActiveGroupCard({ group, onJoin, joining }) {
           disabled={isFull || joining}
           className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
             isFull
-              ? "bg-slate-600 text-slate-400 cursor-not-allowed"
-              : "bg-emerald-600 hover:bg-emerald-500 text-white"
+              ? "bg-[var(--nf-bg-subtle)] text-[color:var(--nf-text-muted)] cursor-not-allowed"
+              : "bg-emerald-600 hover:bg-emerald-500 text-[color:var(--nf-text-primary)]"
           }`}
         >
           {joining ? "Joining…" : isFull ? "Full" : "Join"}
@@ -178,19 +178,19 @@ export default function GroupBuySection({ product }) {
   );
 
   return (
-    <div className="bg-slate-900/95 border border-slate-700/50 rounded-2xl overflow-hidden">
+    <div className="bg-[var(--nf-card-bg)] border border-[var(--nf-border-subtle)] rounded-2xl overflow-hidden">
       {/* Section header */}
       <button
         onClick={handleExpand}
-        className="w-full flex items-center justify-between px-5 py-4 hover:bg-slate-800/40 transition-colors"
+        className="w-full flex items-center justify-between px-5 py-4 hover:bg-[var(--nf-bg-subtle)] transition-colors"
       >
         <div className="flex items-center gap-3">
           <div className="bg-emerald-600/20 p-2 rounded-lg">
             <Users size={18} className="text-emerald-400" />
           </div>
           <div className="text-left">
-            <p className="text-white font-bold text-sm">Group Buy & Save</p>
-            <p className="text-slate-400 text-xs">
+            <p className="text-[color:var(--nf-text-primary)] font-bold text-sm">Group Buy & Save</p>
+            <p className="text-[color:var(--nf-text-muted)] text-xs">
               {activeGroups.length > 0
                 ? `${activeGroups.length} active group${activeGroups.length > 1 ? "s" : ""} you can join`
                 : "Start a group — the more, the cheaper"}
@@ -204,9 +204,9 @@ export default function GroupBuySection({ product }) {
             </span>
           )}
           {expanded ? (
-            <ChevronUp size={16} className="text-slate-400" />
+            <ChevronUp size={16} className="text-[color:var(--nf-text-muted)]" />
           ) : (
-            <ChevronDown size={16} className="text-slate-400" />
+            <ChevronDown size={16} className="text-[color:var(--nf-text-muted)]" />
           )}
         </div>
       </button>
@@ -242,7 +242,7 @@ export default function GroupBuySection({ product }) {
           <div className="flex gap-3 pt-1">
             <button
               onClick={() => setShowModal(true)}
-              className="flex-1 flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-[color:var(--nf-text-primary)] font-bold py-3 rounded-xl transition-colors"
             >
               <Plus size={16} />
               Start a Group
@@ -250,7 +250,7 @@ export default function GroupBuySection({ product }) {
             {activeGroups.length > 0 && (
               <Link
                 to={`/group/${activeGroups[0].$id}`}
-                className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 text-white px-4 py-3 rounded-xl transition-colors text-sm font-semibold"
+                className="flex items-center gap-2 bg-[var(--nf-bg-elevated)] hover:bg-[var(--nf-bg-subtle)] text-[color:var(--nf-text-primary)] px-4 py-3 rounded-xl transition-colors text-sm font-semibold"
               >
                 <Share2 size={14} />
                 Share
@@ -259,7 +259,7 @@ export default function GroupBuySection({ product }) {
           </div>
 
           {/* Social proof nudge */}
-          <div className="flex items-center gap-2 text-slate-400 text-xs">
+          <div className="flex items-center gap-2 text-[color:var(--nf-text-muted)] text-xs">
             <Zap size={12} className="text-amber-400 shrink-0" />
             <span>
               Share with friends — each new member drops the price for the whole

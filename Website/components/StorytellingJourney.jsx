@@ -52,10 +52,10 @@ const StorytellingJourney = ({
     <section className="bg-gradient-to-b from-amber-50 to-white py-16">
       {/* Category Intro */}
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-extrabold text-gray-900 animate-fadeInDown">
+        <h2 className="text-4xl font-extrabold text-[color:var(--nf-text-primary)] animate-fadeInDown">
           {title}
         </h2>
-        <p className="max-w-2xl mx-auto text-lg text-gray-700 mt-4 animate-fadeInUp">
+        <p className="max-w-2xl mx-auto text-lg text-[color:var(--nf-text-primary)] mt-4 animate-fadeInUp">
           {description}
         </p>
       </div>
@@ -70,7 +70,7 @@ const StorytellingJourney = ({
             nileMilesLoading={nileMilesLoading}
           />
         </div>
-        <p className="text-sm text-gray-500 mt-2">
+        <p className="text-sm text-[color:var(--nf-text-muted)] mt-2">
           Explorer Level: {userMiles} miles
         </p>
       </div>
@@ -92,7 +92,7 @@ const StorytellingJourney = ({
                loading="lazy" decoding="async" />
               <div className="p-4">
                 <h3 className="font-bold text-lg mb-2">{item.name}</h3>
-                <p className="text-sm text-gray-600 italic">{item.lore}</p>
+                <p className="text-sm text-[color:var(--nf-text-muted)] italic">{item.lore}</p>
 
                 {isUnlocked ? (
                   <button
@@ -105,7 +105,7 @@ const StorytellingJourney = ({
                   </button>
                 ) : (
                   <button
-                    className="mt-4 px-4 py-2 bg-gray-400 text-white rounded-full cursor-not-allowed"
+                    className="mt-4 px-4 py-2 bg-[var(--nf-bg-subtle)] text-[color:var(--nf-text-primary)] rounded-full cursor-not-allowed"
                     disabled
                   >
                     🔒 Unlocks at {item.requiredMiles} miles
@@ -135,14 +135,14 @@ const StorytellingJourney = ({
                loading="lazy" decoding="async" />
               <div className="p-4">
                 <h3 className="font-bold text-lg mb-2">{item.name}</h3>
-                <p className="text-sm text-gray-600 italic">{item.lore}</p>
+                <p className="text-sm text-[color:var(--nf-text-muted)] italic">{item.lore}</p>
                 {isUnlocked ? (
                   <button className="mt-4 px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700">
                     ✅ Unlocked
                   </button>
                 ) : (
                   <button
-                    className="mt-4 px-4 py-2 bg-gray-400 text-white rounded-full cursor-not-allowed"
+                    className="mt-4 px-4 py-2 bg-[var(--nf-bg-subtle)] text-[color:var(--nf-text-primary)] rounded-full cursor-not-allowed"
                     disabled
                   >
                     🔒 Unlocks at {item.requiredMiles} miles

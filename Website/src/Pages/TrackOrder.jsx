@@ -411,22 +411,22 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
         );
       default:
         return (
-          <div className="flex items-center space-x-2 bg-gradient-to-r from-gray-900/30 to-gray-800/30 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-700/30">
+          <div className="flex items-center space-x-2 bg-gradient-to-r from-gray-900/30 to-gray-800/30 backdrop-blur-sm px-4 py-2 rounded-full border border-[var(--nf-border-subtle)]">
             <div className="w-2 h-2 rounded-full bg-gray-500"></div>
-            <span className="text-sm text-gray-300">Offline</span>
+            <span className="text-sm text-[color:var(--nf-text-secondary)]">Offline</span>
           </div>
         );
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 p-4 sm:p-6">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] p-4 sm:p-6">
       {/* Header */}
       <div className="relative max-w-6xl mx-auto">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-4">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-4">
             <Package className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Real-Time Tracking
             </span>
             <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -438,7 +438,7 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
             </span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto">
             Live location updates with real-time WebSocket tracking
           </p>
         </div>
@@ -447,10 +447,10 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
         {isLoading && (
           <div className="flex flex-col items-center justify-center py-20">
             <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-amber-400 mb-6"></div>
-            <h3 className="text-xl font-semibold text-white mb-2">
+            <h3 className="text-xl font-semibold text-[color:var(--nf-text-primary)] mb-2">
               Loading Order Information
             </h3>
-            <p className="text-gray-400 text-center max-w-md">
+            <p className="text-[color:var(--nf-text-muted)] text-center max-w-md">
               We're fetching your order details and tracking information...
             </p>
           </div>
@@ -461,10 +461,10 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
           <div className="flex flex-col items-center justify-center py-20">
             <div className="bg-gradient-to-br from-red-900/40 to-orange-900/40 backdrop-blur-sm border border-red-700/30 rounded-3xl p-8 max-w-md w-full text-center">
               <User className="w-16 h-16 text-red-400 mx-auto mb-6" />
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                 Please Sign In
               </h3>
-              <p className="text-gray-300 mb-6">
+              <p className="text-[color:var(--nf-text-secondary)] mb-6">
                 You need to be signed in to track your orders. Please sign in to
                 continue.
               </p>
@@ -477,7 +477,7 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
                 </Link>
                 <Link
                   to="/signup"
-                  className="block w-full px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-white font-semibold rounded-xl hover:from-gray-600 hover:to-gray-700 transition-all duration-300 border border-gray-600"
+                  className="block w-full px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-[color:var(--nf-text-primary)] font-semibold rounded-xl hover:from-gray-600 hover:to-gray-700 transition-all duration-300 border border-[var(--nf-border)]"
                 >
                   Create Account
                 </Link>
@@ -489,12 +489,12 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
         {/* No Orders State (404 or no data) */}
         {(hasNoOrders || (error && !isUnauthorized)) && !isLoading && (
           <div className="flex flex-col items-center justify-center py-20">
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 max-w-md w-full text-center">
+            <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 max-w-md w-full text-center">
               <Package className="w-16 h-16 text-amber-400 mx-auto mb-6" />
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                 No Orders to Track
               </h3>
-              <p className="text-gray-300 mb-6">
+              <p className="text-[color:var(--nf-text-secondary)] mb-6">
                 {error ||
                   "You don't have any orders to track yet. Make an order to start tracking your delivery!"}
               </p>
@@ -507,7 +507,7 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
                 </Link>
                 <Link
                   to="/orders"
-                  className="block w-full px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-white font-semibold rounded-xl hover:from-gray-600 hover:to-gray-700 transition-all duration-300 border border-gray-600"
+                  className="block w-full px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-[color:var(--nf-text-primary)] font-semibold rounded-xl hover:from-gray-600 hover:to-gray-700 transition-all duration-300 border border-[var(--nf-border)]"
                 >
                   View All Orders
                 </Link>
@@ -521,20 +521,20 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
           <div className="grid lg:grid-cols-3 gap-6">
             {/* Order Status Card */}
             <div className="lg:col-span-2">
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6 mb-6">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6 mb-6">
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h2 className="text-2xl font-bold text-white">
+                    <h2 className="text-2xl font-bold text-[color:var(--nf-text-primary)]">
                       Order #{orderId}
                     </h2>
-                    <p className="text-amber-100/70">
+                    <p className="text-[color:var(--nf-text-muted)]">
                       Premium African Products
                     </p>
                   </div>
                   <div
                     className={`bg-gradient-to-r ${getStatusColor(
                       realTimeStatus || orderStatus
-                    )} text-white px-4 py-2 rounded-full font-bold`}
+                    )} text-[color:var(--nf-text-primary)] px-4 py-2 rounded-full font-bold`}
                   >
                     {realTimeStatus || orderStatus || "Tracking..."}
                   </div>
@@ -565,13 +565,13 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
                             className={`relative z-10 w-16 h-16 rounded-2xl flex items-center justify-center ${
                               index <= currentStep
                                 ? "bg-gradient-to-br from-amber-600 to-amber-700"
-                                : "bg-gradient-to-br from-gray-800 to-black border border-amber-800/30"
+                                : "bg-gradient-to-br from-gray-800 to-black border border-[var(--nf-border-subtle)]"
                             }`}
                           >
                             <div
                               className={`${
                                 index <= currentStep
-                                  ? "text-white"
+                                  ? "text-[color:var(--nf-text-primary)]"
                                   : "text-amber-400"
                               }`}
                             >
@@ -579,7 +579,7 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
                             </div>
                             {index < currentStep && (
                               <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-gradient-to-r from-emerald-600 to-green-600 flex items-center justify-center">
-                                <CheckCircle className="w-3 h-3 text-white" />
+                                <CheckCircle className="w-3 h-3 text-[color:var(--nf-text-primary)]" />
                               </div>
                             )}
                           </div>
@@ -588,15 +588,15 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
                               <h3
                                 className={`text-xl font-bold ${
                                   index <= currentStep
-                                    ? "text-white"
-                                    : "text-gray-400"
+                                    ? "text-[color:var(--nf-text-primary)]"
+                                    : "text-[color:var(--nf-text-muted)]"
                                 }`}
                               >
                                 {step.status}
                               </h3>
                               <div className="flex items-center space-x-2">
                                 <Clock className="w-4 h-4 text-amber-400" />
-                                <span className="text-sm text-amber-100/70">
+                                <span className="text-sm text-[color:var(--nf-text-muted)]">
                                   {step.time}
                                 </span>
                               </div>
@@ -604,16 +604,16 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
                             <p
                               className={`mt-1 ${
                                 index <= currentStep
-                                  ? "text-gray-300"
-                                  : "text-gray-500"
+                                  ? "text-[color:var(--nf-text-secondary)]"
+                                  : "text-[color:var(--nf-text-muted)]"
                               }`}
                             >
                               {step.description}
                             </p>
                             {index === currentStep && (
-                              <div className="inline-flex items-center space-x-2 mt-3 bg-gradient-to-r from-amber-900/30 to-yellow-900/30 backdrop-blur-sm px-3 py-1.5 rounded-full border border-amber-700/30">
+                              <div className="inline-flex items-center space-x-2 mt-3 bg-gradient-to-r from-amber-900/30 to-yellow-900/30 backdrop-blur-sm px-3 py-1.5 rounded-full border border-[var(--nf-border-subtle)]">
                                 <RefreshCw className="w-3 h-3 text-amber-400 animate-spin" />
-                                <span className="text-xs text-amber-200">
+                                <span className="text-xs text-[color:var(--nf-accent)]">
                                   {isLiveTrackingActive
                                     ? "Live tracking"
                                     : "In progress"}
@@ -629,14 +629,14 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
               </div>
 
               {/* Live Tracking Map - Enhanced with real-time status */}
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center space-x-3">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-                      <Navigation className="w-6 h-6 text-white" />
+                      <Navigation className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-white">
+                      <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)]">
                         Live Tracking
                       </h3>
                       <p className="text-blue-100/70">
@@ -648,14 +648,14 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
                 </div>
 
                 {/* Map Visualization - Same as your original */}
-                <div className="relative h-48 bg-gradient-to-br from-gray-900 to-black border border-amber-800/30 rounded-xl overflow-hidden mb-6">
+                <div className="relative h-48 bg-gradient-to-br from-gray-900 to-black border border-[var(--nf-border-subtle)] rounded-xl overflow-hidden mb-6">
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-cyan-900/20"></div>
 
                   <div className="absolute left-1/4 top-1/2 w-1/2 h-1 bg-gradient-to-r from-transparent via-amber-500 to-emerald-500"></div>
 
                   <div className="absolute left-1/4 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 flex items-center justify-center shadow-lg">
-                      <Truck className="w-4 h-4 text-white" />
+                      <Truck className="w-4 h-4 text-[color:var(--nf-text-primary)]" />
                       {isLiveTrackingActive && (
                         <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-green-500 animate-ping"></div>
                       )}
@@ -669,7 +669,7 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
 
                   <div className="absolute right-1/4 top-1/2 transform translate-x-1/2 -translate-y-1/2">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-r from-emerald-600 to-green-600 flex items-center justify-center shadow-lg">
-                      <Home className="w-5 h-5 text-white" />
+                      <Home className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
                       <span className="text-xs text-white bg-black/50 px-2 py-1 rounded-full">
@@ -682,48 +682,48 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4">
+                  <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4">
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                        <Clock className="w-5 h-5 text-white" />
+                        <Clock className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                       </div>
                       <div>
-                        <p className="text-sm text-amber-100/70">
+                        <p className="text-sm text-[color:var(--nf-text-muted)]">
                           Estimated Delivery
                         </p>
-                        <p className="text-lg font-bold text-white">
+                        <p className="text-lg font-bold text-[color:var(--nf-text-primary)]">
                           {estimatedDelivery}
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4">
+                  <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4">
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-                        <MapPin className="w-5 h-5 text-white" />
+                        <MapPin className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                       </div>
                       <div>
                         <p className="text-sm text-blue-100/70">
                           Current Location
                         </p>
-                        <p className="text-lg font-bold text-white truncate">
+                        <p className="text-lg font-bold text-[color:var(--nf-text-primary)] truncate">
                           {liveLocation}
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4">
+                  <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4">
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center">
-                        <Calendar className="w-5 h-5 text-white" />
+                        <Calendar className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                       </div>
                       <div>
                         <p className="text-sm text-emerald-100/70">
                           {lastLocationUpdate ? "Last Update" : "Order Date"}
                         </p>
-                        <p className="text-lg font-bold text-white">
+                        <p className="text-lg font-bold text-[color:var(--nf-text-primary)]">
                           {lastLocationUpdate
                             ? lastLocationUpdate.toLocaleTimeString()
                             : orderTime}
@@ -738,13 +738,13 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
             {/* Sidebar - Same as your original but with live tracking status */}
             <div className="space-y-6">
               {/* Driver Info */}
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-purple-700 flex items-center justify-center">
-                    <User className="w-6 h-6 text-white" />
+                    <User className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white">
+                    <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)]">
                       Your Driver
                     </h3>
                     <p className="text-purple-100/70">
@@ -756,37 +756,37 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-3 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl">
-                    <span className="text-gray-300">Name</span>
-                    <span className="text-white font-bold">
+                  <div className="flex items-center justify-between p-3 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl">
+                    <span className="text-[color:var(--nf-text-secondary)]">Name</span>
+                    <span className="text-[color:var(--nf-text-primary)] font-bold">
                       {driverInfo.name}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between p-3 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl">
-                    <span className="text-gray-300">Contact</span>
+                  <div className="flex items-center justify-between p-3 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl">
+                    <span className="text-[color:var(--nf-text-secondary)]">Contact</span>
                     {driverInfo.phone !== "N/A" ? (
                       <a
                         href={`tel:${driverInfo.phone}`}
-                        className="text-amber-300 font-bold hover:text-amber-200"
+                        className="text-[color:var(--nf-accent)] font-bold hover:text-[color:var(--nf-accent)]"
                       >
                         {driverInfo.phone}
                       </a>
                     ) : (
-                      <span className="text-gray-400">{driverInfo.phone}</span>
+                      <span className="text-[color:var(--nf-text-muted)]">{driverInfo.phone}</span>
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between p-3 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl">
-                    <span className="text-gray-300">Vehicle</span>
+                  <div className="flex items-center justify-between p-3 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl">
+                    <span className="text-[color:var(--nf-text-secondary)]">Vehicle</span>
                     <span className="text-emerald-300 font-bold">
                       {driverInfo.vehicle}
                     </span>
                   </div>
 
                   {driverInfo.rating && (
-                    <div className="flex items-center justify-between p-3 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl">
-                      <span className="text-gray-300">Rating</span>
+                    <div className="flex items-center justify-between p-3 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl">
+                      <span className="text-[color:var(--nf-text-secondary)]">Rating</span>
                       <div className="flex items-center space-x-2">
                         <span className="text-yellow-400 font-bold">
                           {driverInfo.rating}
@@ -806,7 +806,7 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
                     <span>Call Driver</span>
                   </button>
                 ) : (
-                  <div className="w-full mt-6 px-4 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-gray-300 font-bold rounded-xl flex items-center justify-center space-x-2 cursor-not-allowed">
+                  <div className="w-full mt-6 px-4 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-[color:var(--nf-text-secondary)] font-bold rounded-xl flex items-center justify-center space-x-2 cursor-not-allowed">
                     <Phone className="w-5 h-5" />
                     <span>Driver Not Assigned</span>
                   </div>
@@ -815,13 +815,13 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
 
               {/* Rest of your sidebar components remain the same */}
               {/* Order Summary */}
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center">
-                    <CreditCard className="w-6 h-6 text-white" />
+                    <CreditCard className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white">
+                    <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)]">
                       Order Summary
                     </h3>
                     <p className="text-emerald-100/70">Premium package</p>
@@ -830,15 +830,15 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
 
                 <div className="space-y-3">
                   <div className="flex justify-between">
-                    <span className="text-gray-300">
+                    <span className="text-[color:var(--nf-text-secondary)]">
                       Items ({orderData?.items?.length || 0})
                     </span>
-                    <span className="text-white font-bold">
+                    <span className="text-[color:var(--nf-text-primary)] font-bold">
                       {orderData?.subtotal || orderData?.amount || "0.00"}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-300">Shipping</span>
+                    <span className="text-[color:var(--nf-text-secondary)]">Shipping</span>
                     <span className="text-emerald-300 font-bold">
                       {orderData?.shippingFee > 0
                         ? orderData.shippingFee
@@ -847,18 +847,18 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
                   </div>
                   {orderData?.premiumDiscountAmount > 0 && (
                     <div className="flex justify-between">
-                      <span className="text-gray-300">Premium Discount</span>
+                      <span className="text-[color:var(--nf-text-secondary)]">Premium Discount</span>
                       <span className="text-emerald-300 font-bold">
                         -{orderData.premiumDiscountAmount}
                       </span>
                     </div>
                   )}
-                  <div className="border-t border-amber-800/30 pt-3 mt-3">
+                  <div className="border-t border-[var(--nf-border-subtle)] pt-3 mt-3">
                     <div className="flex justify-between">
-                      <span className="text-lg text-white font-bold">
+                      <span className="text-lg text-[color:var(--nf-text-primary)] font-bold">
                         Total
                       </span>
-                      <span className="text-2xl text-amber-300 font-bold">
+                      <span className="text-2xl text-[color:var(--nf-accent)] font-bold">
                         {orderData?.amount || "0.00"}
                       </span>
                     </div>
@@ -867,26 +867,26 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
               </div>
 
               {/* Support Card */}
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6">
                 <div className="flex items-center space-x-3 mb-4">
                   <Shield className="w-8 h-8 text-amber-400" />
-                  <h3 className="text-lg font-bold text-white">
+                  <h3 className="text-lg font-bold text-[color:var(--nf-text-primary)]">
                     Premium Support
                   </h3>
                 </div>
 
-                <p className="text-gray-300 text-sm mb-6">
+                <p className="text-[color:var(--nf-text-secondary)] text-sm mb-6">
                   Our premium support team is available 24/7 to assist with your
                   order.
                 </p>
 
                 <div className="space-y-3">
-                  <button className="w-full px-4 py-3 bg-gradient-to-r from-gray-800 to-black border border-amber-800/30 text-amber-300 rounded-xl hover:border-amber-500/50 transition-all duration-300 flex items-center justify-between">
+                  <button className="w-full px-4 py-3 bg-gradient-to-r from-gray-800 to-black border border-[var(--nf-border-subtle)] text-[color:var(--nf-accent)] rounded-xl hover:border-amber-500/50 transition-all duration-300 flex items-center justify-between">
                     <span>Get Help</span>
                     <ArrowRight className="w-5 h-5" />
                   </button>
 
-                  <button className="w-full px-4 py-3 bg-gradient-to-r from-amber-900/30 to-yellow-900/30 backdrop-blur-sm border border-amber-700/30 text-amber-200 rounded-xl hover:border-amber-500/50 transition-all duration-300 flex items-center justify-between">
+                  <button className="w-full px-4 py-3 bg-gradient-to-r from-amber-900/30 to-yellow-900/30 backdrop-blur-sm border border-[var(--nf-border-subtle)] text-[color:var(--nf-accent)] rounded-xl hover:border-amber-500/50 transition-all duration-300 flex items-center justify-between">
                     <span>Update Delivery</span>
                     <Bell className="w-5 h-5" />
                   </button>
@@ -896,7 +896,7 @@ const TrackOrder = ({ orderId, estimatedDelivery, orderTime, userId }) => {
               {/* Trust Badge - Enhanced with live tracking badge */}
               <div className="bg-gradient-to-br from-emerald-900/20 to-green-900/20 backdrop-blur-sm border border-emerald-800/30 rounded-3xl p-6 text-center">
                 <Award className="w-12 h-12 text-emerald-400 mx-auto mb-4" />
-                <h4 className="text-lg font-bold text-white mb-2">
+                <h4 className="text-lg font-bold text-[color:var(--nf-text-primary)] mb-2">
                   {isLiveTrackingActive
                     ? "Live Tracking Active"
                     : "Premium Guarantee"}

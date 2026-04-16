@@ -94,8 +94,9 @@
           -apple-system,
           BlinkMacSystemFont,
           sans-serif;
-        background: #000000;
-        color: #ffffff;
+        /* Use token so FOUC script + CSS variables control the color */
+        background: var(--nf-bg-primary, #ffffff);
+        color: var(--nf-text-primary, #1a1109);
         overflow-x: hidden;
         direction: ltr;
         font-display: swap;
@@ -189,6 +190,28 @@
     </script>
   </head>
   <body>
+    <!--
+      ANTI-FOUC: Set data-theme BEFORE any CSS or JS renders.
+      This runs synchronously so the browser paints the correct theme
+      on the very first frame, eliminating Flash Of Unstyled Content.
+      Do NOT defer or async this script.
+    -->
+    <script>
+      (function () {
+        var STORAGE_KEY = "nf_theme";
+        var ATTR = "data-theme";
+        var preferred;
+        try {
+          preferred = localStorage.getItem(STORAGE_KEY);
+        } catch (e) {}
+        if (preferred !== "light" && preferred !== "dark") {
+          preferred = window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+        document.documentElement.setAttribute(ATTR, preferred);
+      })();
+    </script>
     <!-- Critical loading indicator -->
     <div id="initial-loader" class="loading-spinner"></div>
 

@@ -73,7 +73,7 @@ const AllFeaturedProductsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
         <Header />
         <div className="flex flex-col justify-center items-center h-screen">
           <div className="relative">
@@ -82,10 +82,10 @@ const AllFeaturedProductsPage = () => {
               <Gem className="w-10 h-10 text-amber-500 animate-pulse" />
             </div>
           </div>
-          <h3 className="mt-8 text-2xl font-bold text-amber-200">
+          <h3 className="mt-8 text-2xl font-bold text-[color:var(--nf-accent)]">
             Loading Premium Collection
           </h3>
-          <p className="text-gray-400 mt-2">
+          <p className="text-[color:var(--nf-text-muted)] mt-2">
             Curating exclusive African treasures...
           </p>
         </div>
@@ -96,7 +96,7 @@ const AllFeaturedProductsPage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
         <Header />
         <div className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-gray-900/20 to-amber-900/20"></div>
@@ -104,10 +104,10 @@ const AllFeaturedProductsPage = () => {
             <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-red-900/30 to-amber-900/30 border border-red-700/30 mb-6">
               <Zap className="w-12 h-12 text-red-400" />
             </div>
-            <h3 className="text-3xl font-bold text-white mb-4">
+            <h3 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">
               Unable to Load Products
             </h3>
-            <p className="text-gray-400 max-w-md mx-auto mb-8">{error}</p>
+            <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-8">{error}</p>
             <button
               onClick={() => window.location.reload()}
               className="inline-flex items-center space-x-2 px-8 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold rounded-xl hover:from-amber-700 hover:to-amber-800 transition-all duration-300"
@@ -123,7 +123,7 @@ const AllFeaturedProductsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -134,9 +134,9 @@ const AllFeaturedProductsPage = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-red-500/10 to-amber-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-8xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <Crown className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Premium Collection
             </span>
             <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -147,21 +147,21 @@ const AllFeaturedProductsPage = () => {
               Featured Excellence
             </span>
             <br />
-            <span className="text-white">All Premium Products</span>
+            <span className="text-[color:var(--nf-text-primary)]">All Premium Products</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Discover our complete collection of handpicked African treasures,
             each selected for exceptional quality and cultural significance.
           </p>
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4">
-              <div className="text-2xl font-bold text-amber-300">
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4">
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)]">
                 {products.length}
               </div>
-              <div className="text-amber-100/80 text-sm">Premium Products</div>
+              <div className="text-[color:var(--nf-text-muted)] text-sm">Premium Products</div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-4">
               <div className="text-2xl font-bold text-emerald-300">54</div>
@@ -186,11 +186,11 @@ const AllFeaturedProductsPage = () => {
         <div className="relative max-w-8xl mx-auto">
           {/* Filters & Controls */}
           <div className="mb-8">
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6">
+            <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 {/* Categories */}
                 <div className="flex-1">
-                  <h3 className="text-lg font-bold text-amber-200 mb-3">
+                  <h3 className="text-lg font-bold text-[color:var(--nf-accent)] mb-3">
                     Filter by Category
                   </h3>
                   <div className="flex flex-wrap gap-2">
@@ -201,7 +201,7 @@ const AllFeaturedProductsPage = () => {
                         className={`group relative px-4 py-2 rounded-xl border backdrop-blur-sm transition-all duration-300 flex items-center space-x-2 ${
                           selectedCategories.includes(category.id)
                             ? "bg-gradient-to-r from-amber-600 to-amber-700 text-white border-amber-500 shadow-lg shadow-amber-900/30"
-                            : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 text-gray-300 hover:border-amber-500/50"
+                            : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                         }`}
                       >
                         <span className="text-lg">{category.icon}</span>
@@ -216,7 +216,7 @@ const AllFeaturedProductsPage = () => {
 
                 {/* View & Sort Controls */}
                 <div className="flex items-center space-x-4">
-                  <div className="flex items-center bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl overflow-hidden">
+                  <div className="flex items-center bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl overflow-hidden">
                     <button
                       onClick={() => setViewMode("grid")}
                       className={`p-3 ${
@@ -227,7 +227,7 @@ const AllFeaturedProductsPage = () => {
                         className={`w-5 h-5 ${
                           viewMode === "grid"
                             ? "text-amber-400"
-                            : "text-gray-400"
+                            : "text-[color:var(--nf-text-muted)]"
                         }`}
                       />
                     </button>
@@ -241,7 +241,7 @@ const AllFeaturedProductsPage = () => {
                         className={`w-5 h-5 ${
                           viewMode === "list"
                             ? "text-amber-400"
-                            : "text-gray-400"
+                            : "text-[color:var(--nf-text-muted)]"
                         }`}
                       />
                     </button>
@@ -250,7 +250,7 @@ const AllFeaturedProductsPage = () => {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="appearance-none bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 text-amber-200 rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:border-amber-500/50"
+                    className="appearance-none bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] text-[color:var(--nf-accent)] rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:border-amber-500/50"
                   >
                     <option value="featured">Featured First</option>
                     <option value="newest">Newest First</option>
@@ -266,14 +266,14 @@ const AllFeaturedProductsPage = () => {
           {/* Products Count */}
           <div className="mb-6">
             <div className="flex items-center justify-between">
-              <div className="text-amber-200">
+              <div className="text-[color:var(--nf-accent)]">
                 Showing{" "}
-                <span className="text-amber-300 font-bold">
+                <span className="text-[color:var(--nf-accent)] font-bold">
                   {filteredProducts.length}
                 </span>{" "}
                 premium products
                 {selectedCategories.length > 0 && (
-                  <span className="text-amber-100/70 ml-2">
+                  <span className="text-[color:var(--nf-text-muted)] ml-2">
                     in {selectedCategories.length} categor
                     {selectedCategories.length === 1 ? "y" : "ies"}
                   </span>
@@ -283,7 +283,7 @@ const AllFeaturedProductsPage = () => {
                 onClick={() => setSelectedCategories([])}
                 className={`flex items-center space-x-2 px-4 py-2 rounded-xl border backdrop-blur-sm transition-all duration-300 ${
                   selectedCategories.length > 0
-                    ? "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 text-amber-200 hover:border-amber-500/50"
+                    ? "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-accent)] hover:border-amber-500/50"
                     : "opacity-0 pointer-events-none"
                 }`}
               >
@@ -328,13 +328,13 @@ const AllFeaturedProductsPage = () => {
             </div>
           ) : (
             <div className="text-center py-32">
-              <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-amber-700/30 mb-6">
+              <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-[var(--nf-border-subtle)] mb-6">
                 <ShoppingBag className="w-12 h-12 text-amber-400" />
               </div>
-              <h3 className="text-3xl font-bold text-white mb-4">
+              <h3 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                 No Products Found
               </h3>
-              <p className="text-gray-400 max-w-md mx-auto mb-8">
+              <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-8">
                 No products match your selected categories. Try adjusting your
                 filters to see more premium African products.
               </p>
@@ -350,22 +350,22 @@ const AllFeaturedProductsPage = () => {
 
           {/* Collection Stats */}
           <div className="mt-16">
-            <div className="bg-gradient-to-r from-amber-900/20 via-emerald-900/20 to-blue-900/20 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
+            <div className="bg-gradient-to-r from-amber-900/20 via-emerald-900/20 to-blue-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="text-center">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center mx-auto mb-4">
-                    <Award className="w-8 h-8 text-white" />
+                    <Award className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
                   </div>
-                  <h4 className="text-xl font-bold text-amber-200 mb-2">
+                  <h4 className="text-xl font-bold text-[color:var(--nf-accent)] mb-2">
                     Premium Quality
                   </h4>
-                  <p className="text-amber-100/70">
+                  <p className="text-[color:var(--nf-text-muted)]">
                     Every product is handpicked for exceptional craftsmanship
                   </p>
                 </div>
                 <div className="text-center">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center mx-auto mb-4">
-                    <Shield className="w-8 h-8 text-white" />
+                    <Shield className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <h4 className="text-xl font-bold text-emerald-200 mb-2">
                     Authentic Origin
@@ -376,7 +376,7 @@ const AllFeaturedProductsPage = () => {
                 </div>
                 <div className="text-center">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center mx-auto mb-4">
-                    <Heart className="w-8 h-8 text-white" />
+                    <Heart className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <h4 className="text-xl font-bold text-blue-200 mb-2">
                     Customer Love

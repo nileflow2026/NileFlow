@@ -101,7 +101,7 @@ const Maintenance = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-black to-amber-900/30 flex flex-col items-center justify-center text-white relative overflow-hidden">
+    <div className="min-h-screen w-full bg-[var(--nf-bg-primary)] flex flex-col items-center justify-center text-[color:var(--nf-text-primary)] relative overflow-hidden">
 
       <div className="absolute inset-0 opacity-10 pointer-events-none">
         <div
@@ -174,9 +174,9 @@ const Maintenance = () => {
             </div>
           </div>
 
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-4">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-4">
             <Sparkles className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Premium African Marketplace
             </span>
             <Star className="w-4 h-4 text-yellow-400" />
@@ -189,26 +189,26 @@ const Maintenance = () => {
           </span>
         </h1>
 
-        <p className="text-2xl md:text-3xl text-gray-300 font-light mb-10 max-w-2xl mx-auto">
+        <p className="text-2xl md:text-3xl text-[color:var(--nf-text-secondary)] font-light mb-10 max-w-2xl mx-auto">
           Premium African eCommerce Experience
         </p>
 
 
-        <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-8 py-4 rounded-2xl border border-amber-700/30 mb-6">
+        <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-8 py-4 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
           <Target className="w-6 h-6 text-amber-400 animate-pulse" />
-          <span className="text-3xl font-bold text-amber-300">COMING SOON</span>
+          <span className="text-3xl font-bold text-[color:var(--nf-accent)]">COMING SOON</span>
           <Compass className="w-6 h-6 text-amber-400 animate-pulse" />
         </div>
 
 
         <div className="mb-12">
-          <div className="bg-gradient-to-br from-amber-900/20 to-black/40 backdrop-blur-sm border border-amber-700/30 rounded-3xl p-8">
+          <div className="bg-gradient-to-br from-amber-900/20 to-black/40 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
             <div className="flex flex-col items-center mb-4">
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-6 h-6 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center">
                   <span className="text-xs">🚀</span>
                 </div>
-                <h3 className="text-2xl font-bold text-amber-200">
+                <h3 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                   Launching In
                 </h3>
                 <div className="w-6 h-6 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center">
@@ -217,40 +217,40 @@ const Maintenance = () => {
               </div>
 
               <div className="text-center mb-4">
-                <p className="text-amber-100/80 text-lg">January 20, 2026</p>
+                <p className="text-[color:var(--nf-text-muted)] text-lg">January 20, 2026</p>
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-2xl">
                 <div className="flex flex-col items-center p-4 bg-gradient-to-br from-amber-900/30 to-transparent backdrop-blur-sm border border-amber-700/20 rounded-2xl">
-                  <div className="text-5xl md:text-6xl font-bold text-amber-300 mb-1">
+                  <div className="text-5xl md:text-6xl font-bold text-[color:var(--nf-accent)] mb-1">
                     {timeLeft.days.toString().padStart(2, "0")}
                   </div>
-                  <div className="text-amber-100/70 text-sm">Days</div>
+                  <div className="text-[color:var(--nf-text-muted)] text-sm">Days</div>
                 </div>
                 <div className="flex flex-col items-center p-4 bg-gradient-to-br from-amber-900/30 to-transparent backdrop-blur-sm border border-amber-700/20 rounded-2xl">
-                  <div className="text-5xl md:text-6xl font-bold text-amber-300 mb-1">
+                  <div className="text-5xl md:text-6xl font-bold text-[color:var(--nf-accent)] mb-1">
                     {timeLeft.hours.toString().padStart(2, "0")}
                   </div>
-                  <div className="text-amber-100/70 text-sm">Hours</div>
+                  <div className="text-[color:var(--nf-text-muted)] text-sm">Hours</div>
                 </div>
                 <div className="flex flex-col items-center p-4 bg-gradient-to-br from-amber-900/30 to-transparent backdrop-blur-sm border border-amber-700/20 rounded-2xl">
-                  <div className="text-5xl md:text-6xl font-bold text-amber-300 mb-1">
+                  <div className="text-5xl md:text-6xl font-bold text-[color:var(--nf-accent)] mb-1">
                     {timeLeft.minutes.toString().padStart(2, "0")}
                   </div>
-                  <div className="text-amber-100/70 text-sm">Minutes</div>
+                  <div className="text-[color:var(--nf-text-muted)] text-sm">Minutes</div>
                 </div>
                 <div className="flex flex-col items-center p-4 bg-gradient-to-br from-amber-900/30 to-transparent backdrop-blur-sm border border-amber-700/20 rounded-2xl">
-                  <div className="text-5xl md:text-6xl font-bold text-amber-300 mb-1">
+                  <div className="text-5xl md:text-6xl font-bold text-[color:var(--nf-accent)] mb-1">
                     {timeLeft.seconds.toString().padStart(2, "0")}
                   </div>
-                  <div className="text-amber-100/70 text-sm">Seconds</div>
+                  <div className="text-[color:var(--nf-text-muted)] text-sm">Seconds</div>
                 </div>
               </div>
             </div>
 
 
             <div className="mt-6">
-              <div className="flex justify-between text-sm text-amber-100/70 mb-2">
+              <div className="flex justify-between text-sm text-[color:var(--nf-text-muted)] mb-2">
                 <span>Launch Progress</span>
                 <span>{Math.floor(((365 - timeLeft.days) / 365) * 100)}%</span>
               </div>
@@ -269,8 +269,8 @@ const Maintenance = () => {
         </div>
 
 
-        <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 mb-12">
-          <p className="text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
+        <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 mb-12">
+          <p className="text-xl text-[color:var(--nf-text-secondary)] leading-relaxed max-w-2xl mx-auto">
             A premium marketplace born from African heritage, community, and
             innovation. Experience authentic products with value rooted in
             tradition, crafted exclusively for our people.
@@ -279,7 +279,7 @@ const Maintenance = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
             <div className="flex flex-col items-center p-4">
               <Globe className="w-8 h-8 text-amber-400 mb-2" />
-              <span className="text-amber-200 text-sm">African Heritage</span>
+              <span className="text-[color:var(--nf-accent)] text-sm">African Heritage</span>
             </div>
             <div className="flex flex-col items-center p-4">
               <Shield className="w-8 h-8 text-emerald-400 mb-2" />
@@ -296,15 +296,15 @@ const Maintenance = () => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
+        <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
           <div className="flex items-center justify-center space-x-3 mb-6">
             <Bell className="w-8 h-8 text-amber-400" />
-            <h2 className="text-3xl font-bold text-amber-200">
+            <h2 className="text-3xl font-bold text-[color:var(--nf-accent)]">
               Join Our Waitlist
             </h2>
           </div>
 
-          <p className="text-gray-300 mb-8 max-w-md mx-auto">
+          <p className="text-[color:var(--nf-text-secondary)] mb-8 max-w-md mx-auto">
             Be the first to experience premium African eCommerce. We'll notify
             you as soon as we launch!
           </p>
@@ -313,7 +313,7 @@ const Maintenance = () => {
             <div className="bg-gradient-to-r from-emerald-900/30 to-green-900/20 border border-emerald-700/50 rounded-2xl p-6">
               <div className="flex items-center justify-center space-x-3">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-white" />
+                  <Mail className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div>
                   <p className="text-xl font-bold text-emerald-100">
@@ -332,7 +332,7 @@ const Maintenance = () => {
             >
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-2xl blur opacity-30"></div>
-                <div className="relative flex flex-col sm:flex-row gap-3 bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-sm border border-amber-800/30 rounded-2xl overflow-hidden">
+                <div className="relative flex flex-col sm:flex-row gap-3 bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl overflow-hidden">
                   <div className="flex-1">
                     <div className="flex items-center px-4">
                       {contact.includes("@") ? (
@@ -346,7 +346,7 @@ const Maintenance = () => {
                         placeholder="Enter your email or WhatsApp number"
                         value={contact}
                         onChange={(e) => setContact(e.target.value)}
-                        className="w-full py-4 bg-transparent text-amber-100 placeholder-amber-100/50 focus:outline-none text-lg"
+                        className="w-full py-4 bg-transparent text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none text-lg"
                       />
                     </div>
                   </div>
@@ -371,7 +371,7 @@ const Maintenance = () => {
               </div>
 
               <div className="text-center">
-                <p className="text-gray-400 text-sm">
+                <p className="text-[color:var(--nf-text-muted)] text-sm">
                   We respect your privacy. No spam, ever.
                 </p>
               </div>
@@ -380,9 +380,9 @@ const Maintenance = () => {
 
 
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4 text-center">
-              <div className="text-2xl font-bold text-amber-300">500+</div>
-              <div className="text-amber-100/80 text-sm">Early Signups</div>
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4 text-center">
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)]">500+</div>
+              <div className="text-[color:var(--nf-text-muted)] text-sm">Early Signups</div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-4 text-center">
               <div className="text-2xl font-bold text-emerald-300">54</div>
@@ -403,7 +403,7 @@ const Maintenance = () => {
 
 
         <div className="mt-8 text-center">
-          <p className="text-gray-400">
+          <p className="text-[color:var(--nf-text-muted)]">
             Crafted with <Heart className="inline w-4 h-4 text-red-400" /> for
             Africa
           </p>
@@ -547,7 +547,7 @@ const Maintenance = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-black to-amber-900/30 flex flex-col items-center justify-center text-white relative overflow-hidden">
+    <div className="min-h-screen w-full bg-[var(--nf-bg-primary)] flex flex-col items-center justify-center text-[color:var(--nf-text-primary)] relative overflow-hidden">
       {/* Cultural Pattern Layer */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
         <div
@@ -621,9 +621,9 @@ const Maintenance = () => {
             </div>
           </div>
 
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-4">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-4">
             <Sparkles className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Premium African Marketplace
             </span>
             <Star className="w-4 h-4 text-yellow-400" />
@@ -636,26 +636,26 @@ const Maintenance = () => {
           </span>
         </h1>
 
-        <p className="text-2xl md:text-3xl text-gray-300 font-light mb-10 max-w-2xl mx-auto">
+        <p className="text-2xl md:text-3xl text-[color:var(--nf-text-secondary)] font-light mb-10 max-w-2xl mx-auto">
           Premium African eCommerce Experience
         </p>
 
         {/* Coming Soon Badge */}
-        <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-8 py-4 rounded-2xl border border-amber-700/30 mb-6">
+        <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-8 py-4 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
           <Target className="w-6 h-6 text-amber-400 animate-pulse" />
-          <span className="text-3xl font-bold text-amber-300">COMING SOON</span>
+          <span className="text-3xl font-bold text-[color:var(--nf-accent)]">COMING SOON</span>
           <Compass className="w-6 h-6 text-amber-400 animate-pulse" />
         </div>
 
         {/* Countdown Timer - DEBUGGED VERSION */}
         <div className="mb-12">
-          <div className="bg-gradient-to-br from-amber-900/20 to-black/40 backdrop-blur-sm border border-amber-700/30 rounded-3xl p-8">
+          <div className="bg-gradient-to-br from-amber-900/20 to-black/40 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
             <div className="flex flex-col items-center mb-4">
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-6 h-6 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center">
                   <span className="text-xs">🚀</span>
                 </div>
-                <h3 className="text-2xl font-bold text-amber-200">
+                <h3 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                   Launching In
                 </h3>
                 <div className="w-6 h-6 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center">
@@ -664,52 +664,52 @@ const Maintenance = () => {
               </div>
 
               <div className="text-center mb-4">
-                <p className="text-amber-100/80 text-lg">January 20, 2026</p>
+                <p className="text-[color:var(--nf-text-muted)] text-lg">January 20, 2026</p>
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-2xl">
                 <div className="flex flex-col items-center p-4 bg-gradient-to-br from-amber-900/30 to-transparent backdrop-blur-sm border border-amber-700/20 rounded-2xl">
                   <div
-                    className="text-5xl md:text-6xl font-bold text-amber-300 mb-1"
+                    className="text-5xl md:text-6xl font-bold text-[color:var(--nf-accent)] mb-1"
                     style={{ fontFamily: "monospace" }}
                   >
                     {String(timeLeft.days).padStart(2, "0")}
                   </div>
-                  <div className="text-amber-100/70 text-sm">Days</div>
+                  <div className="text-[color:var(--nf-text-muted)] text-sm">Days</div>
                 </div>
                 <div className="flex flex-col items-center p-4 bg-gradient-to-br from-amber-900/30 to-transparent backdrop-blur-sm border border-amber-700/20 rounded-2xl">
                   <div
-                    className="text-5xl md:text-6xl font-bold text-amber-300 mb-1"
+                    className="text-5xl md:text-6xl font-bold text-[color:var(--nf-accent)] mb-1"
                     style={{ fontFamily: "monospace" }}
                   >
                     {String(timeLeft.hours).padStart(2, "0")}
                   </div>
-                  <div className="text-amber-100/70 text-sm">Hours</div>
+                  <div className="text-[color:var(--nf-text-muted)] text-sm">Hours</div>
                 </div>
                 <div className="flex flex-col items-center p-4 bg-gradient-to-br from-amber-900/30 to-transparent backdrop-blur-sm border border-amber-700/20 rounded-2xl">
                   <div
-                    className="text-5xl md:text-6xl font-bold text-amber-300 mb-1"
+                    className="text-5xl md:text-6xl font-bold text-[color:var(--nf-accent)] mb-1"
                     style={{ fontFamily: "monospace" }}
                   >
                     {String(timeLeft.minutes).padStart(2, "0")}
                   </div>
-                  <div className="text-amber-100/70 text-sm">Minutes</div>
+                  <div className="text-[color:var(--nf-text-muted)] text-sm">Minutes</div>
                 </div>
                 <div className="flex flex-col items-center p-4 bg-gradient-to-br from-amber-900/30 to-transparent backdrop-blur-sm border border-amber-700/20 rounded-2xl">
                   <div
-                    className="text-5xl md:text-6xl font-bold text-amber-300 mb-1"
+                    className="text-5xl md:text-6xl font-bold text-[color:var(--nf-accent)] mb-1"
                     style={{ fontFamily: "monospace" }}
                   >
                     {String(timeLeft.seconds).padStart(2, "0")}
                   </div>
-                  <div className="text-amber-100/70 text-sm">Seconds</div>
+                  <div className="text-[color:var(--nf-text-muted)] text-sm">Seconds</div>
                 </div>
               </div>
             </div>
 
             {/* Progress bar */}
             <div className="mt-6">
-              <div className="flex justify-between text-sm text-amber-100/70 mb-2">
+              <div className="flex justify-between text-sm text-[color:var(--nf-text-muted)] mb-2">
                 <span>Launch Progress</span>
                 <span>
                   {timeLeft.days > 0
@@ -735,8 +735,8 @@ const Maintenance = () => {
         </div>
 
         {/* Description */}
-        <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 mb-12">
-          <p className="text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
+        <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 mb-12">
+          <p className="text-xl text-[color:var(--nf-text-secondary)] leading-relaxed max-w-2xl mx-auto">
             A premium marketplace born from African heritage, community, and
             innovation. Experience authentic products with value rooted in
             tradition, crafted exclusively for our people.
@@ -746,7 +746,7 @@ const Maintenance = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
             <div className="flex flex-col items-center p-4">
               <Globe className="w-8 h-8 text-amber-400 mb-2" />
-              <span className="text-amber-200 text-sm">African Heritage</span>
+              <span className="text-[color:var(--nf-accent)] text-sm">African Heritage</span>
             </div>
             <div className="flex flex-col items-center p-4">
               <Shield className="w-8 h-8 text-emerald-400 mb-2" />
@@ -764,15 +764,15 @@ const Maintenance = () => {
         </div>
 
         {/* Waitlist Form */}
-        <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
+        <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
           <div className="flex items-center justify-center space-x-3 mb-6">
             <Bell className="w-8 h-8 text-amber-400" />
-            <h2 className="text-3xl font-bold text-amber-200">
+            <h2 className="text-3xl font-bold text-[color:var(--nf-accent)]">
               Join Our Waitlist
             </h2>
           </div>
 
-          <p className="text-gray-300 mb-8 max-w-md mx-auto">
+          <p className="text-[color:var(--nf-text-secondary)] mb-8 max-w-md mx-auto">
             Be the first to experience premium African eCommerce. We'll notify
             you as soon as we launch!
           </p>
@@ -781,7 +781,7 @@ const Maintenance = () => {
             <div className="bg-gradient-to-r from-emerald-900/30 to-green-900/20 border border-emerald-700/50 rounded-2xl p-6">
               <div className="flex items-center justify-center space-x-3">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-white" />
+                  <Mail className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div>
                   <p className="text-xl font-bold text-emerald-100">
@@ -800,7 +800,7 @@ const Maintenance = () => {
             >
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-2xl blur opacity-30"></div>
-                <div className="relative flex flex-col sm:flex-row gap-3 bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-sm border border-amber-800/30 rounded-2xl overflow-hidden">
+                <div className="relative flex flex-col sm:flex-row gap-3 bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl overflow-hidden">
                   <div className="flex-1">
                     <div className="flex items-center px-4">
                       {contact.includes("@") ? (
@@ -814,7 +814,7 @@ const Maintenance = () => {
                         placeholder="Enter your email or WhatsApp number"
                         value={contact}
                         onChange={(e) => setContact(e.target.value)}
-                        className="w-full py-4 bg-transparent text-amber-100 placeholder-amber-100/50 focus:outline-none text-lg"
+                        className="w-full py-4 bg-transparent text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none text-lg"
                       />
                     </div>
                   </div>
@@ -839,7 +839,7 @@ const Maintenance = () => {
               </div>
 
               <div className="text-center">
-                <p className="text-gray-400 text-sm">
+                <p className="text-[color:var(--nf-text-muted)] text-sm">
                   We respect your privacy. No spam, ever.
                 </p>
               </div>
@@ -848,9 +848,9 @@ const Maintenance = () => {
 
           {/* Stats */}
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4 text-center">
-              <div className="text-2xl font-bold text-amber-300">500+</div>
-              <div className="text-amber-100/80 text-sm">Early Signups</div>
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4 text-center">
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)]">500+</div>
+              <div className="text-[color:var(--nf-text-muted)] text-sm">Early Signups</div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-4 text-center">
               <div className="text-2xl font-bold text-emerald-300">54</div>
@@ -871,7 +871,7 @@ const Maintenance = () => {
 
         {/* Footer Note */}
         <div className="mt-8 text-center">
-          <p className="text-gray-400">
+          <p className="text-[color:var(--nf-text-muted)]">
             Crafted with <Heart className="inline w-4 h-4 text-red-400" /> for
             Africa
           </p>

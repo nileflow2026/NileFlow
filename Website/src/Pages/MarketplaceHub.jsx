@@ -306,7 +306,7 @@ const MarketplaceHub = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       {/* Hero Section */}
       <section className="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 via-purple-900/20 to-emerald-900/20"></div>
@@ -315,9 +315,9 @@ const MarketplaceHub = () => {
 
         <div className="relative max-w-8xl mx-auto">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-purple-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-purple-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
               <Megaphone className="w-5 h-5 text-amber-400" />
-              <span className="text-amber-200 font-medium tracking-wide">
+              <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
                 Marketplace Hub
               </span>
               <TrendingUp className="w-4 h-4 text-purple-400" />
@@ -328,10 +328,10 @@ const MarketplaceHub = () => {
                 Amplify Your Reach
               </span>
               <br />
-              <span className="text-white">Vendor & Influencer Platform</span>
+              <span className="text-[color:var(--nf-text-primary)]">Vendor & Influencer Platform</span>
             </h1>
 
-            <p className="text-gray-300 text-lg max-w-3xl mx-auto mb-10">
+            <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-3xl mx-auto mb-10">
               Connect brands with Africa's most authentic voices. Showcase
               products, collaborate with influencers, and reach millions of
               engaged customers across the continent.
@@ -339,9 +339,9 @@ const MarketplaceHub = () => {
 
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mb-12">
-              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4">
-                <div className="text-2xl font-bold text-amber-300">500+</div>
-                <div className="text-amber-100/80 text-sm">Active Vendors</div>
+              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4">
+                <div className="text-2xl font-bold text-[color:var(--nf-accent)]">500+</div>
+                <div className="text-[color:var(--nf-text-muted)] text-sm">Active Vendors</div>
               </div>
               <div className="bg-gradient-to-br from-purple-900/20 to-transparent backdrop-blur-sm border border-purple-800/30 rounded-2xl p-4">
                 <div className="text-2xl font-bold text-purple-300">2,500+</div>
@@ -362,7 +362,7 @@ const MarketplaceHub = () => {
           <div className="max-w-4xl mx-auto mb-12">
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-purple-500 rounded-2xl blur opacity-30"></div>
-              <div className="relative flex bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-sm border border-amber-800/30 rounded-2xl overflow-hidden">
+              <div className="relative flex bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl overflow-hidden">
                 <div className="pl-5 pr-3 flex items-center">
                   <Search className="w-5 h-5 text-amber-400" />
                 </div>
@@ -371,7 +371,7 @@ const MarketplaceHub = () => {
                   placeholder="Search vendors, influencers, or products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 px-4 py-4 bg-transparent text-amber-100 placeholder-amber-100/50 focus:outline-none text-lg"
+                  className="flex-1 px-4 py-4 bg-transparent text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none text-lg"
                 />
                 <button className="px-6 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold hover:from-amber-700 hover:to-amber-800 transition-all duration-300">
                   Search
@@ -381,26 +381,26 @@ const MarketplaceHub = () => {
           </div>
 
           {/* Quick Stats Banner */}
-          <div className="bg-gradient-to-r from-amber-900/20 via-purple-900/20 to-emerald-900/20 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 mb-8">
+          <div className="bg-gradient-to-r from-amber-900/20 via-purple-900/20 to-emerald-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 mb-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center">
-                  <Rocket className="w-6 h-6 text-white" />
+                  <Rocket className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white">
+                  <h3 className="text-lg font-bold text-[color:var(--nf-text-primary)]">
                     Boost Your Sales Today
                   </h3>
-                  <p className="text-gray-300">Featured placements available</p>
+                  <p className="text-[color:var(--nf-text-secondary)]">Featured placements available</p>
                 </div>
               </div>
 
               <div className="flex items-center space-x-6">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-amber-300">
+                  <div className="text-2xl font-bold text-[color:var(--nf-accent)]">
                     24-48h
                   </div>
-                  <div className="text-amber-100/80 text-sm">Setup Time</div>
+                  <div className="text-[color:var(--nf-text-muted)] text-sm">Setup Time</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-purple-300">
@@ -436,7 +436,7 @@ const MarketplaceHub = () => {
                     className={`group relative px-5 py-3 rounded-xl border backdrop-blur-sm transition-all duration-300 flex items-center space-x-2 ${
                       selectedCategory === category.id
                         ? "bg-gradient-to-r from-amber-600 to-amber-700 text-white border-amber-500 shadow-lg shadow-amber-900/30"
-                        : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 text-gray-300 hover:border-amber-500/50"
+                        : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                     }`}
                   >
                     {selectedCategory === category.id && (
@@ -460,7 +460,7 @@ const MarketplaceHub = () => {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="appearance-none bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 text-amber-200 rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:border-amber-500/50"
+                  className="appearance-none bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] text-[color:var(--nf-accent)] rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:border-amber-500/50"
                 >
                   <option value="trending">Trending</option>
                   <option value="rating">Highest Rated</option>
@@ -489,7 +489,7 @@ const MarketplaceHub = () => {
                 ></div>
 
                 {/* Ad Card */}
-                <div className="relative bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30">
+                <div className="relative bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30">
                   {/* Featured Badge */}
                   {ad.featured && (
                     <div className="absolute top-4 left-4 z-10">
@@ -521,8 +521,8 @@ const MarketplaceHub = () => {
 
                     {/* Type Badge */}
                     <div className="absolute bottom-4 left-4 z-10">
-                      <div className="px-3 py-1.5 bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-700/30 rounded-full">
-                        <span className="text-amber-200 text-sm font-medium flex items-center space-x-1">
+                      <div className="px-3 py-1.5 bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-full">
+                        <span className="text-[color:var(--nf-accent)] text-sm font-medium flex items-center space-x-1">
                           {ad.type === "vendor" ? (
                             <>
                               <ShoppingBag className="w-3 h-3" />
@@ -543,30 +543,30 @@ const MarketplaceHub = () => {
                   <div className="p-6">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
-                        <h3 className="text-xl font-bold text-white group-hover:text-amber-300 transition-colors duration-300 mb-2">
+                        <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)] group-hover:text-[color:var(--nf-accent)] transition-colors duration-300 mb-2">
                           {ad.title}
                         </h3>
                         <div className="flex items-center space-x-3">
                           <div className="flex items-center space-x-2">
                             <div className="flex items-center">
                               <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                              <span className="text-white ml-1">
+                              <span className="text-[color:var(--nf-text-primary)] ml-1">
                                 {ad.rating}
                               </span>
                             </div>
                             {ad.reviews && (
-                              <span className="text-gray-400 text-sm">
+                              <span className="text-[color:var(--nf-text-muted)] text-sm">
                                 ({ad.reviews} reviews)
                               </span>
                             )}
                             {ad.followers && (
-                              <span className="text-gray-400 text-sm">
+                              <span className="text-[color:var(--nf-text-muted)] text-sm">
                                 • {ad.followers} followers
                               </span>
                             )}
                           </div>
                           {ad.platform && (
-                            <span className="px-2 py-1 bg-gradient-to-r from-gray-900/50 to-black/50 border border-amber-800/30 rounded-lg text-amber-100 text-xs">
+                            <span className="px-2 py-1 bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] rounded-lg text-[color:var(--nf-text-secondary)] text-xs">
                               {ad.platform}
                             </span>
                           )}
@@ -574,21 +574,21 @@ const MarketplaceHub = () => {
                       </div>
                     </div>
 
-                    <p className="text-gray-300 mb-6 line-clamp-2">
+                    <p className="text-[color:var(--nf-text-secondary)] mb-6 line-clamp-2">
                       {ad.description}
                     </p>
 
                     {/* Stats */}
                     <div className="grid grid-cols-3 gap-4 mb-6">
-                      <div className="text-center p-3 bg-gradient-to-br from-gray-900/50 to-black/50 border border-amber-800/30 rounded-xl">
-                        <div className="text-lg font-bold text-amber-300">
+                      <div className="text-center p-3 bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] rounded-xl">
+                        <div className="text-lg font-bold text-[color:var(--nf-accent)]">
                           {ad.engagementRate}
                         </div>
-                        <div className="text-amber-100/80 text-xs">
+                        <div className="text-[color:var(--nf-text-muted)] text-xs">
                           Engagement Rate
                         </div>
                       </div>
-                      <div className="text-center p-3 bg-gradient-to-br from-gray-900/50 to-black/50 border border-amber-800/30 rounded-xl">
+                      <div className="text-center p-3 bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] rounded-xl">
                         <div className="text-lg font-bold text-emerald-300">
                           {ad.reach}
                         </div>
@@ -596,7 +596,7 @@ const MarketplaceHub = () => {
                           Monthly Reach
                         </div>
                       </div>
-                      <div className="text-center p-3 bg-gradient-to-br from-gray-900/50 to-black/50 border border-amber-800/30 rounded-xl">
+                      <div className="text-center p-3 bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] rounded-xl">
                         <div className="text-lg font-bold text-purple-300">
                           {ad.price}
                         </div>
@@ -611,7 +611,7 @@ const MarketplaceHub = () => {
                       {ad.tags.map((tag, index) => (
                         <span
                           key={index}
-                          className="px-3 py-1 bg-gradient-to-r from-gray-900/50 to-black/50 border border-amber-800/30 rounded-lg text-amber-100 text-xs"
+                          className="px-3 py-1 bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] rounded-lg text-[color:var(--nf-text-secondary)] text-xs"
                         >
                           {tag}
                         </span>
@@ -638,12 +638,12 @@ const MarketplaceHub = () => {
 
           {/* How It Works */}
           <div className="mb-12">
-            <div className="bg-gradient-to-r from-amber-900/20 via-purple-900/20 to-emerald-900/20 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-8">
+            <div className="bg-gradient-to-r from-amber-900/20 via-purple-900/20 to-emerald-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-8">
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-white mb-4">
+                <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                   How It Works
                 </h3>
-                <p className="text-gray-300">
+                <p className="text-[color:var(--nf-text-secondary)]">
                   Three simple steps to amplify your brand
                 </p>
               </div>
@@ -651,24 +651,24 @@ const MarketplaceHub = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center mx-auto mb-4">
-                    <div className="text-white text-2xl font-bold">1</div>
+                    <div className="text-[color:var(--nf-text-primary)] text-2xl font-bold">1</div>
                   </div>
-                  <h4 className="text-xl font-bold text-white mb-3">
+                  <h4 className="text-xl font-bold text-[color:var(--nf-text-primary)] mb-3">
                     Create Your Ad
                   </h4>
-                  <p className="text-gray-300">
+                  <p className="text-[color:var(--nf-text-secondary)]">
                     Upload your product details, images, and set your budget.
                   </p>
                 </div>
 
                 <div className="text-center">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center mx-auto mb-4">
-                    <div className="text-white text-2xl font-bold">2</div>
+                    <div className="text-[color:var(--nf-text-primary)] text-2xl font-bold">2</div>
                   </div>
-                  <h4 className="text-xl font-bold text-white mb-3">
+                  <h4 className="text-xl font-bold text-[color:var(--nf-text-primary)] mb-3">
                     Match With Creators
                   </h4>
-                  <p className="text-gray-300">
+                  <p className="text-[color:var(--nf-text-secondary)]">
                     Our AI matches you with perfect influencers for your target
                     audience.
                   </p>
@@ -676,12 +676,12 @@ const MarketplaceHub = () => {
 
                 <div className="text-center">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 flex items-center justify-center mx-auto mb-4">
-                    <div className="text-white text-2xl font-bold">3</div>
+                    <div className="text-[color:var(--nf-text-primary)] text-2xl font-bold">3</div>
                   </div>
-                  <h4 className="text-xl font-bold text-white mb-3">
+                  <h4 className="text-xl font-bold text-[color:var(--nf-text-primary)] mb-3">
                     Track & Optimize
                   </h4>
-                  <p className="text-gray-300">
+                  <p className="text-[color:var(--nf-text-secondary)]">
                     Monitor performance in real-time and optimize your
                     campaigns.
                   </p>
@@ -694,16 +694,16 @@ const MarketplaceHub = () => {
           <div className="mb-12">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="text-2xl font-bold text-white mb-2">
+                <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-2">
                   Trending Creators
                 </h3>
-                <p className="text-gray-300">
+                <p className="text-[color:var(--nf-text-secondary)]">
                   Top performing influencers this month
                 </p>
               </div>
               <Link
                 to="/influencers"
-                className="text-amber-400 hover:text-amber-300 transition-colors"
+                className="text-amber-400 hover:text-[color:var(--nf-accent)] transition-colors"
               >
                 View All →
               </Link>
@@ -713,7 +713,7 @@ const MarketplaceHub = () => {
               {trendingCreators.map((creator, index) => (
                 <div
                   key={index}
-                  className="group relative p-4 bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl hover:border-amber-500/50 transition-all duration-300"
+                  className="group relative p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl hover:border-amber-500/50 transition-all duration-300"
                 >
                   <div className="flex items-center space-x-3 mb-4">
                     <div className="relative">
@@ -725,8 +725,8 @@ const MarketplaceHub = () => {
                       )}
                     </div>
                     <div>
-                      <h4 className="font-bold text-white">{creator.name}</h4>
-                      <p className="text-gray-400 text-sm">
+                      <h4 className="font-bold text-[color:var(--nf-text-primary)]">{creator.name}</h4>
+                      <p className="text-[color:var(--nf-text-muted)] text-sm">
                         {creator.category}
                       </p>
                     </div>
@@ -734,12 +734,12 @@ const MarketplaceHub = () => {
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="text-lg font-bold text-amber-300">
+                      <div className="text-lg font-bold text-[color:var(--nf-accent)]">
                         {creator.followers}
                       </div>
-                      <div className="text-amber-100/80 text-xs">Followers</div>
+                      <div className="text-[color:var(--nf-text-muted)] text-xs">Followers</div>
                     </div>
-                    <button className="px-3 py-1.5 bg-gradient-to-r from-gray-900/50 to-black/50 border border-amber-800/30 rounded-lg text-amber-200 text-sm hover:border-amber-500/50 transition-colors">
+                    <button className="px-3 py-1.5 bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] rounded-lg text-[color:var(--nf-accent)] text-sm hover:border-amber-500/50 transition-colors">
                       View Profile
                     </button>
                   </div>
@@ -750,15 +750,15 @@ const MarketplaceHub = () => {
 
           {/* Call to Action */}
           <div className="text-center">
-            <div className="bg-gradient-to-r from-amber-900/20 to-purple-900/20 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 md:p-12">
+            <div className="bg-gradient-to-r from-amber-900/20 to-purple-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 md:p-12">
               <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-600 to-purple-600 flex items-center justify-center mx-auto mb-6">
-                <Rocket className="w-10 h-10 text-white" />
+                <Rocket className="w-10 h-10 text-[color:var(--nf-text-primary)]" />
               </div>
 
-              <h2 className="text-3xl font-bold text-white mb-4">
+              <h2 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                 Ready to Amplify Your Brand?
               </h2>
-              <p className="text-gray-300 max-w-2xl mx-auto mb-8">
+              <p className="text-[color:var(--nf-text-secondary)] max-w-2xl mx-auto mb-8">
                 Join hundreds of successful vendors and influencers who are
                 growing their businesses through Nile Mart's premium advertising
                 platform.
@@ -773,7 +773,7 @@ const MarketplaceHub = () => {
                 </button>
               </div>
 
-              <p className="text-gray-400 text-sm mt-6">
+              <p className="text-[color:var(--nf-text-muted)] text-sm mt-6">
                 No setup fees • 24/7 support • Performance-based pricing
               </p>
             </div>

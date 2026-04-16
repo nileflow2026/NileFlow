@@ -43,7 +43,7 @@ const COLORS = [
 function Avatar({ uid, idx }) {
   return (
     <div
-      className={`w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-bold border-2 border-slate-900 -ml-2 first:ml-0 ${COLORS[idx % COLORS.length]}`}
+      className={`w-9 h-9 rounded-full flex items-center justify-center text-[color:var(--nf-text-primary)] text-xs font-bold border-2 border-slate-900 -ml-2 first:ml-0 ${COLORS[idx % COLORS.length]}`}
     >
       {uid.slice(0, 2).toUpperCase()}
     </div>
@@ -51,7 +51,7 @@ function Avatar({ uid, idx }) {
 }
 function EmptySlot() {
   return (
-    <div className="w-9 h-9 rounded-full border-2 border-dashed border-slate-600 bg-slate-800 flex items-center justify-center -ml-2 text-slate-500 text-sm">
+    <div className="w-9 h-9 rounded-full border-2 border-dashed border-[var(--nf-border)] bg-[var(--nf-bg-elevated)] flex items-center justify-center -ml-2 text-[color:var(--nf-text-muted)] text-sm">
       +
     </div>
   );
@@ -91,17 +91,19 @@ function ShareSheet({ shareData, groupId }) {
     },
     {
       label: "Twitter / X",
-      color: "bg-slate-700 hover:bg-slate-600",
+      color: "bg-[var(--nf-bg-elevated)] hover:bg-slate-600",
       emoji: "🐦",
       href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMessages.twitter || shareLink)}`,
     },
   ];
 
   return (
-    <div className="bg-slate-800/60 rounded-2xl p-5 border border-slate-700/50 space-y-4">
+    <div className="bg-[var(--nf-card-bg)] rounded-2xl p-5 border border-[var(--nf-border-subtle)] space-y-4">
       <div className="flex items-center gap-2">
         <Share2 size={16} className="text-emerald-400" />
-        <span className="text-white font-bold text-sm">Share & Save</span>
+        <span className="text-[color:var(--nf-text-primary)] font-bold text-sm">
+          Share & Save
+        </span>
         {savingsPercent && savingsPercent !== "0%" && (
           <span className="ml-auto text-emerald-400 text-xs bg-emerald-900/40 px-2 py-0.5 rounded-full font-bold">
             Friends save {savingsPercent} too
@@ -117,7 +119,7 @@ function ShareSheet({ shareData, groupId }) {
             href={p.href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center justify-center gap-2 ${p.color} text-white text-sm font-semibold py-2.5 rounded-xl transition-colors`}
+            className={`flex items-center justify-center gap-2 ${p.color} text-[color:var(--nf-text-primary)] text-sm font-semibold py-2.5 rounded-xl transition-colors`}
           >
             <span>{p.emoji}</span>
             {p.label}
@@ -127,12 +129,12 @@ function ShareSheet({ shareData, groupId }) {
 
       {/* Copy link */}
       <div className="flex items-center gap-2">
-        <div className="flex-1 bg-slate-900 border border-slate-600 rounded-xl px-3 py-2 text-slate-400 text-xs truncate">
+        <div className="flex-1 bg-slate-900 border border-[var(--nf-border)] rounded-xl px-3 py-2 text-[color:var(--nf-text-muted)] text-xs truncate">
           {shareLink}
         </div>
         <button
           onClick={copy}
-          className="shrink-0 bg-slate-700 hover:bg-slate-600 text-white px-3 py-2 rounded-xl text-sm transition-colors flex items-center gap-1.5"
+          className="shrink-0 bg-[var(--nf-bg-elevated)] hover:bg-slate-600 text-[color:var(--nf-text-primary)] px-3 py-2 rounded-xl text-sm transition-colors flex items-center gap-1.5"
         >
           {copied ? (
             <Check size={14} className="text-emerald-400" />
@@ -219,7 +221,7 @@ export default function GroupBuyPage() {
   // ── Render states ─────────────────────────────────────────────────────────
   if (initializing) {
     return (
-      <div className="min-h-screen bg-slate-950 flex flex-col">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] flex flex-col">
         <Header />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center space-y-3">
@@ -227,7 +229,9 @@ export default function GroupBuyPage() {
               size={32}
               className="text-emerald-400 animate-spin mx-auto"
             />
-            <p className="text-slate-400 text-sm">Loading group deal…</p>
+            <p className="text-sm" style={{ color: "var(--nf-text-muted)" }}>
+              Loading group deal…
+            </p>
           </div>
         </div>
       </div>
@@ -236,15 +240,18 @@ export default function GroupBuyPage() {
 
   if (!group) {
     return (
-      <div className="min-h-screen bg-slate-950 flex flex-col">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] flex flex-col">
         <Header />
         <div className="flex-1 flex items-center justify-center px-4">
           <div className="text-center space-y-4">
             <div className="text-6xl">🔍</div>
-            <h1 className="text-white font-bold text-xl">
+            <h1
+              className="font-bold text-xl"
+              style={{ color: "var(--nf-text-primary)" }}
+            >
               Group Deal Not Found
             </h1>
-            <p className="text-slate-400 text-sm">
+            <p className="text-sm" style={{ color: "var(--nf-text-muted)" }}>
               This deal may have been cancelled or expired.
             </p>
             <Link
@@ -288,7 +295,7 @@ export default function GroupBuyPage() {
     : [];
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
@@ -296,7 +303,8 @@ export default function GroupBuyPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors text-sm"
+            className="flex items-center gap-1.5 transition-colors text-sm"
+            style={{ color: "var(--nf-text-muted)" }}
           >
             <ArrowLeft size={16} />
             Back
@@ -330,22 +338,22 @@ export default function GroupBuyPage() {
         )}
 
         {/* Product card */}
-        <div className="bg-slate-800/80 rounded-2xl p-5 border border-slate-700/50">
+        <div className="bg-[var(--nf-card-bg)] rounded-2xl p-5 border border-[var(--nf-border-subtle)]">
           <div className="flex gap-4">
             {productImage ? (
               <img
                 src={productImage}
                 alt={productName || "Product"}
-                className="w-24 h-24 rounded-xl object-cover bg-slate-700 shrink-0"
+                className="w-24 h-24 rounded-xl object-cover bg-[var(--nf-bg-elevated)] shrink-0"
               />
             ) : (
-              <div className="w-24 h-24 rounded-xl bg-slate-700 flex items-center justify-center text-5xl shrink-0">
+              <div className="w-24 h-24 rounded-xl bg-[var(--nf-bg-elevated)] flex items-center justify-center text-5xl shrink-0">
                 🛍️
               </div>
             )}
             <div className="flex-1 min-w-0">
               {productName && (
-                <h1 className="text-white font-bold text-lg leading-tight line-clamp-2">
+                <h1 className="text-[color:var(--nf-text-primary)] font-bold text-lg leading-tight line-clamp-2">
                   {productName}
                 </h1>
               )}
@@ -354,7 +362,7 @@ export default function GroupBuyPage() {
                   ${Number(currentPrice).toFixed(2)}
                 </span>
                 {basePrice && Number(currentPrice) < Number(basePrice) && (
-                  <span className="text-slate-500 line-through text-base">
+                  <span className="text-[color:var(--nf-text-muted)] line-through text-base">
                     ${Number(basePrice).toFixed(2)}
                   </span>
                 )}
@@ -379,13 +387,15 @@ export default function GroupBuyPage() {
         )}
 
         {/* Participants */}
-        <div className="bg-slate-800/60 rounded-2xl p-5 border border-slate-700/50 space-y-4">
+        <div className="bg-[var(--nf-card-bg)] rounded-2xl p-5 border border-[var(--nf-border-subtle)] space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Users size={16} className="text-emerald-400" />
-              <span className="text-white font-bold text-sm">Who's in</span>
+              <span className="text-[color:var(--nf-text-primary)] font-bold text-sm">
+                Who's in
+              </span>
             </div>
-            <span className="text-slate-400 text-sm">
+            <span className="text-[color:var(--nf-text-muted)] text-sm">
               {participants.length} / {maxParticipants}
             </span>
           </div>
@@ -401,7 +411,7 @@ export default function GroupBuyPage() {
                   (_, i) => <EmptySlot key={`e${i}`} />,
                 )}
             </div>
-            <span className="text-slate-400 text-xs">
+            <span className="text-[color:var(--nf-text-muted)] text-xs">
               {remainingSlots > 0
                 ? `${remainingSlots} more needed`
                 : "Group complete!"}
@@ -409,7 +419,7 @@ export default function GroupBuyPage() {
           </div>
 
           {/* Progress bar */}
-          <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+          <div className="h-2 bg-[var(--nf-bg-elevated)] rounded-full overflow-hidden">
             <div
               className="h-full bg-emerald-500 rounded-full transition-all duration-700"
               style={{ width: `${Math.min(100, pct)}%` }}
@@ -460,7 +470,7 @@ export default function GroupBuyPage() {
                 <button
                   onClick={handleLeave}
                   disabled={leaving}
-                  className="w-full bg-slate-700 hover:bg-slate-600 text-slate-300 font-semibold py-3 rounded-xl transition-colors text-sm flex items-center justify-center gap-2"
+                  className="w-full bg-[var(--nf-bg-elevated)] hover:bg-slate-600 text-[color:var(--nf-text-secondary)] font-semibold py-3 rounded-xl transition-colors text-sm flex items-center justify-center gap-2"
                 >
                   {leaving ? (
                     <Loader size={14} className="animate-spin" />
@@ -474,7 +484,7 @@ export default function GroupBuyPage() {
                 disabled={joining || isFull}
                 className={`w-full font-bold py-4 rounded-xl transition-colors flex items-center justify-center gap-2 text-base ${
                   joining || isFull
-                    ? "bg-slate-600 cursor-not-allowed text-slate-400"
+                    ? "bg-slate-600 cursor-not-allowed text-[color:var(--nf-text-muted)]"
                     : "bg-emerald-600 hover:bg-emerald-500 text-white"
                 }`}
               >

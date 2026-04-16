@@ -77,23 +77,23 @@ const SubscriptionSuccess = () => {
   }, [isPremium, status, navigate]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex flex-col">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] flex flex-col">
       <Header />
 
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="max-w-2xl w-full">
           {/* Checking Status */}
           {status === "checking" && (
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-purple-800/30 rounded-3xl p-12 text-center shadow-2xl">
+            <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-purple-800/30 rounded-3xl p-12 text-center shadow-2xl">
               <div className="w-24 h-24 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center mx-auto mb-6 shadow-xl shadow-purple-900/50">
-                <Loader className="w-12 h-12 text-white animate-spin" />
+                <Loader className="w-12 h-12 text-[color:var(--nf-text-primary)] animate-spin" />
               </div>
 
               <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-300 via-pink-300 to-blue-300 bg-clip-text text-transparent mb-4">
                 Processing Your Payment
               </h1>
 
-              <p className="text-amber-100/80 text-lg mb-6">
+              <p className="text-[color:var(--nf-text-muted)] text-lg mb-6">
                 Please wait while we confirm your premium subscription...
               </p>
 
@@ -112,7 +112,7 @@ const SubscriptionSuccess = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-center space-x-2 text-amber-100/60 text-sm">
+              <div className="flex items-center justify-center space-x-2 text-[color:var(--nf-text-muted)] text-sm">
                 <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
                 <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse delay-75"></div>
                 <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse delay-150"></div>
@@ -122,16 +122,16 @@ const SubscriptionSuccess = () => {
 
           {/* Success Status */}
           {status === "success" && (
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-emerald-800/30 rounded-3xl p-12 text-center shadow-2xl animate-fade-in">
+            <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-emerald-800/30 rounded-3xl p-12 text-center shadow-2xl animate-fade-in">
               <div className="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-600 to-green-600 flex items-center justify-center mx-auto mb-6 shadow-xl shadow-emerald-900/50">
-                <CheckCircle className="w-12 h-12 text-white" />
+                <CheckCircle className="w-12 h-12 text-[color:var(--nf-text-primary)]" />
               </div>
 
               <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-emerald-300 via-green-300 to-emerald-300 bg-clip-text text-transparent mb-4">
                 Welcome to Premium! 🎉
               </h1>
 
-              <p className="text-amber-100/80 text-lg mb-6">
+              <p className="text-[color:var(--nf-text-muted)] text-lg mb-6">
                 Your payment was successful and your premium subscription is now
                 active.
               </p>
@@ -168,7 +168,7 @@ const SubscriptionSuccess = () => {
                 Go to Your Dashboard
               </button>
 
-              <p className="text-amber-100/60 text-sm mt-4">
+              <p className="text-[color:var(--nf-text-muted)] text-sm mt-4">
                 Redirecting automatically in 3 seconds...
               </p>
             </div>
@@ -176,16 +176,16 @@ const SubscriptionSuccess = () => {
 
           {/* Failed Status */}
           {status === "failed" && (
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-red-800/30 rounded-3xl p-12 text-center shadow-2xl">
+            <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-red-800/30 rounded-3xl p-12 text-center shadow-2xl">
               <div className="w-24 h-24 rounded-full bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center mx-auto mb-6 shadow-xl shadow-red-900/50">
-                <XCircle className="w-12 h-12 text-white" />
+                <XCircle className="w-12 h-12 text-[color:var(--nf-text-primary)]" />
               </div>
 
               <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-red-300 via-red-300 to-red-300 bg-clip-text text-transparent mb-4">
                 Payment Verification Failed
               </h1>
 
-              <p className="text-amber-100/80 text-lg mb-6">
+              <p className="text-[color:var(--nf-text-muted)] text-lg mb-6">
                 We couldn't verify your payment. This might be due to:
               </p>
 
@@ -216,7 +216,7 @@ const SubscriptionSuccess = () => {
 
                 <button
                   onClick={() => navigate("/help-center")}
-                  className="px-8 py-4 bg-gradient-to-r from-gray-800 to-gray-900 text-white font-bold rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 border border-amber-800/30"
+                  className="px-8 py-4 bg-gradient-to-r from-gray-800 to-gray-900 text-[color:var(--nf-text-primary)] font-bold rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 border border-[var(--nf-border-subtle)]"
                 >
                   Contact Support
                 </button>

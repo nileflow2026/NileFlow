@@ -55,7 +55,7 @@ const ArtisanProfile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
         <Header />
         <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-8xl mx-auto flex justify-center">
@@ -68,7 +68,7 @@ const ArtisanProfile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -83,13 +83,13 @@ const ArtisanProfile = () => {
               <img
                 src={artisan.photo}
                 alt={artisan.name}
-                className="relative w-32 h-32 rounded-full border-4 border-gray-900 object-cover"
+                className="relative w-32 h-32 rounded-full border-4 border-[var(--nf-border)] object-cover"
                loading="lazy" decoding="async" />
             </div>
 
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-3 mb-4">
-                <h1 className="text-4xl md:text-5xl font-bold text-white">
+                <h1 className="text-4xl md:text-5xl font-bold text-[color:var(--nf-text-primary)]">
                   {artisan.name}
                 </h1>
                 {artisan.isVerified && (
@@ -103,7 +103,7 @@ const ArtisanProfile = () => {
               <div className="flex flex-wrap items-center gap-4 mb-6">
                 <div className="flex items-center space-x-2">
                   <MapPin className="w-5 h-5 text-amber-400" />
-                  <span className="text-amber-200">
+                  <span className="text-[color:var(--nf-accent)]">
                     {artisan.village}, {artisan.country}
                   </span>
                 </div>
@@ -121,14 +121,14 @@ const ArtisanProfile = () => {
                 </div>
               </div>
 
-              <p className="text-gray-300 max-w-3xl">{artisan.bio}</p>
+              <p className="text-[color:var(--nf-text-secondary)] max-w-3xl">{artisan.bio}</p>
             </div>
 
             <div className="flex items-center space-x-3">
               <button className="px-6 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold rounded-xl hover:from-amber-700 hover:to-amber-800 transition-all duration-300">
                 Follow
               </button>
-              <button className="px-6 py-3 border-2 border-amber-500/50 text-amber-300 font-bold rounded-xl hover:bg-amber-500/10 transition-all duration-300">
+              <button className="px-6 py-3 border-2 border-amber-500/50 text-[color:var(--nf-accent)] font-bold rounded-xl hover:bg-amber-500/10 transition-all duration-300">
                 Contact
               </button>
             </div>
@@ -136,11 +136,11 @@ const ArtisanProfile = () => {
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 text-center">
-              <div className="text-3xl font-bold text-amber-300 mb-2">
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center">
+              <div className="text-3xl font-bold text-[color:var(--nf-accent)] mb-2">
                 {products.length}
               </div>
-              <div className="text-amber-100/80">Products</div>
+              <div className="text-[color:var(--nf-text-muted)]">Products</div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-6 text-center">
               <div className="text-3xl font-bold text-emerald-300 mb-2">
@@ -177,7 +177,7 @@ const ArtisanProfile = () => {
                   className={`px-6 py-3 rounded-xl whitespace-nowrap transition-all duration-300 ${
                     activeSection === section
                       ? "bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-lg"
-                      : "bg-gradient-to-r from-gray-900/50 to-black/50 border border-amber-800/30 text-gray-300 hover:text-white"
+                      : "bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:text-white"
                   }`}
                 >
                   {section.charAt(0).toUpperCase() + section.slice(1)}
@@ -192,22 +192,22 @@ const ArtisanProfile = () => {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Story */}
                 <div className="lg:col-span-2">
-                  <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-8">
-                    <h2 className="text-2xl font-bold text-white mb-6">
+                  <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-8">
+                    <h2 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-6">
                       Their Story
                     </h2>
-                    <p className="text-gray-300 leading-relaxed mb-6">
+                    <p className="text-[color:var(--nf-text-secondary)] leading-relaxed mb-6">
                       {artisan.story}
                     </p>
 
                     <div className="grid grid-cols-2 gap-6 mt-8">
                       <div className="flex items-center space-x-3">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-900/30 to-yellow-900/30 border border-amber-700/30 flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-900/30 to-yellow-900/30 border border-[var(--nf-border-subtle)] flex items-center justify-center">
                           <Palette className="w-6 h-6 text-amber-400" />
                         </div>
                         <div>
-                          <div className="text-amber-100 text-sm">Craft</div>
-                          <div className="text-white font-bold">
+                          <div className="text-[color:var(--nf-text-secondary)] text-sm">Craft</div>
+                          <div className="text-[color:var(--nf-text-primary)] font-bold">
                             {artisan.craftType}
                           </div>
                         </div>
@@ -221,7 +221,7 @@ const ArtisanProfile = () => {
                           <div className="text-emerald-100 text-sm">
                             Ethnic Group
                           </div>
-                          <div className="text-white font-bold">
+                          <div className="text-[color:var(--nf-text-primary)] font-bold">
                             {artisan.ethnicGroup}
                           </div>
                         </div>
@@ -233,7 +233,7 @@ const ArtisanProfile = () => {
                 {/* Cultural Heritage */}
                 <div className="space-y-6">
                   <div className="bg-gradient-to-br from-blue-900/20 to-indigo-900/20 backdrop-blur-sm border border-blue-800/30 rounded-2xl p-6">
-                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                    <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)] mb-4 flex items-center gap-2">
                       <Compass className="w-5 h-5 text-blue-400" />
                       Cultural Heritage
                     </h3>
@@ -261,7 +261,7 @@ const ArtisanProfile = () => {
 
                   {/* Workshop Info */}
                   <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 backdrop-blur-sm border border-purple-800/30 rounded-2xl p-6">
-                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                    <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)] mb-4 flex items-center gap-2">
                       <Sparkles className="w-5 h-5 text-purple-400" />
                       Workshop
                     </h3>
@@ -290,20 +290,20 @@ const ArtisanProfile = () => {
               </div>
 
               {/* Skills & Techniques */}
-              <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-8">
-                <h2 className="text-2xl font-bold text-white mb-6">
+              <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-8">
+                <h2 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-6">
                   Skills & Techniques
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {artisan.skills?.map((skill, index) => (
                     <div
                       key={index}
-                      className="bg-gradient-to-br from-amber-900/20 to-yellow-900/20 border border-amber-700/30 rounded-xl p-4 text-center"
+                      className="bg-gradient-to-br from-amber-900/20 to-yellow-900/20 border border-[var(--nf-border-subtle)] rounded-xl p-4 text-center"
                     >
-                      <div className="text-amber-300 font-bold mb-2">
+                      <div className="text-[color:var(--nf-accent)] font-bold mb-2">
                         {skill.name}
                       </div>
-                      <div className="text-amber-100 text-sm">
+                      <div className="text-[color:var(--nf-text-secondary)] text-sm">
                         {skill.years} years
                       </div>
                     </div>
@@ -317,10 +317,10 @@ const ArtisanProfile = () => {
           {activeSection === "collection" && (
             <div>
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-white mb-4">
+                <h2 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                   Artisan's Collection
                 </h2>
-                <p className="text-gray-400">
+                <p className="text-[color:var(--nf-text-muted)]">
                   Handcrafted products made with traditional techniques and
                   modern design.
                 </p>
@@ -339,13 +339,13 @@ const ArtisanProfile = () => {
                 </div>
               ) : (
                 <div className="text-center py-12">
-                  <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-amber-700/30 flex items-center justify-center mx-auto mb-6">
+                  <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-[var(--nf-border-subtle)] flex items-center justify-center mx-auto mb-6">
                     <Sparkles className="w-12 h-12 text-amber-400" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">
+                  <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)] mb-2">
                     No Products Available
                   </h3>
-                  <p className="text-gray-400">
+                  <p className="text-[color:var(--nf-text-muted)]">
                     New products from this artisan are coming soon.
                   </p>
                 </div>
@@ -381,35 +381,35 @@ const ArtisanProfile = () => {
                   </p>
                 </div>
 
-                <div className="bg-gradient-to-br from-amber-900/20 to-yellow-900/20 border border-amber-800/30 rounded-2xl p-8">
-                  <div className="text-5xl font-bold text-amber-300 mb-4">
+                <div className="bg-gradient-to-br from-amber-900/20 to-yellow-900/20 border border-[var(--nf-border-subtle)] rounded-2xl p-8">
+                  <div className="text-5xl font-bold text-[color:var(--nf-accent)] mb-4">
                     {artisan.communityProjects}
                   </div>
-                  <div className="text-amber-100 text-lg mb-2">
+                  <div className="text-[color:var(--nf-text-secondary)] text-lg mb-2">
                     Community Projects
                   </div>
-                  <p className="text-amber-100/70 text-sm">
+                  <p className="text-[color:var(--nf-text-muted)] text-sm">
                     Funded through artisan earnings
                   </p>
                 </div>
               </div>
 
               {/* Impact Stories */}
-              <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-8">
-                <h2 className="text-2xl font-bold text-white mb-6">
+              <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-8">
+                <h2 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-6">
                   Impact Stories
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {artisan.impactStories?.map((story, index) => (
                     <div
                       key={index}
-                      className="bg-gradient-to-br from-gray-900/30 to-black/30 border border-amber-700/30 rounded-xl p-6"
+                      className="bg-gradient-to-br from-gray-900/30 to-black/30 border border-[var(--nf-border-subtle)] rounded-xl p-6"
                     >
-                      <div className="text-amber-300 font-bold mb-2">
+                      <div className="text-[color:var(--nf-accent)] font-bold mb-2">
                         {story.title}
                       </div>
-                      <p className="text-gray-300 mb-4">{story.description}</p>
-                      <div className="text-amber-100/70 text-sm">
+                      <p className="text-[color:var(--nf-text-secondary)] mb-4">{story.description}</p>
+                      <div className="text-[color:var(--nf-text-muted)] text-sm">
                         {story.year}
                       </div>
                     </div>

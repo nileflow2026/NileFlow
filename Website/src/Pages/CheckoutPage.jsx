@@ -930,17 +930,17 @@ const CheckoutPage = () => {
 
   if (loading && !cart.length) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] flex flex-col items-center justify-center">
         <div className="relative">
           <div className="w-20 h-20 border-4 border-amber-900/30 border-t-amber-500 rounded-full animate-spin"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <Package className="w-10 h-10 text-amber-500 animate-pulse" />
           </div>
         </div>
-        <h3 className="mt-6 text-2xl font-bold text-amber-200">
+        <h3 className="mt-6 text-2xl font-bold text-[color:var(--nf-accent)]">
           Loading Checkout
         </h3>
-        <p className="text-gray-400 mt-2">
+        <p className="text-[color:var(--nf-text-muted)] mt-2">
           Preparing your premium African treasures...
         </p>
       </div>
@@ -948,7 +948,7 @@ const CheckoutPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 8px;
@@ -970,7 +970,7 @@ const CheckoutPage = () => {
       {/* Payment Processing Overlay */}
       {processingPayment && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center p-4">
-          <div className="bg-gradient-to-br from-gray-900/90 to-black/90 border border-amber-800/50 rounded-3xl p-8 max-w-md w-full">
+          <div className="bg-[var(--nf-card-bg)] border border-[var(--nf-border)] rounded-3xl p-8 max-w-md w-full">
             <div className="text-center mb-6">
               <div className="relative inline-block mb-4">
                 <div className="w-24 h-24 border-4 border-amber-900/30 border-t-amber-500 rounded-full animate-spin"></div>
@@ -979,21 +979,21 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
-              <h2 className="text-2xl font-bold text-amber-200 mb-2">
+              <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-2">
                 Processing Payment
               </h2>
-              <p className="text-gray-300 mb-4">
+              <p className="text-[color:var(--nf-text-secondary)] mb-4">
                 Please complete your payment in the Stripe window
               </p>
 
-              <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/20 border border-amber-800/30 rounded-xl p-4 mb-4">
+              <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/20 border border-[var(--nf-border-subtle)] rounded-xl p-4 mb-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-amber-100">Time remaining:</span>
-                  <span className="text-amber-300 font-bold">
+                  <span className="text-[color:var(--nf-text-secondary)]">Time remaining:</span>
+                  <span className="text-[color:var(--nf-accent)] font-bold">
                     {paymentTimeout}s
                   </span>
                 </div>
-                <div className="w-full bg-gray-800 rounded-full h-2">
+                <div className="w-full bg-[var(--nf-bg-subtle)] rounded-full h-2">
                   <div
                     className="bg-gradient-to-r from-amber-500 to-amber-600 h-2 rounded-full transition-all duration-1000"
                     style={{ width: `${(paymentTimeout / 30) * 100}%` }}
@@ -1001,7 +1001,7 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
-              <p className="text-gray-400 text-sm mb-6">
+              <p className="text-[color:var(--nf-text-muted)] text-sm mb-6">
                 If the payment window doesn't appear, check your pop-up blocker.
               </p>
 
@@ -1016,7 +1016,7 @@ const CheckoutPage = () => {
 
               <button
                 onClick={() => window.location.reload()}
-                className="mt-4 text-amber-400 hover:text-amber-300 text-sm flex items-center justify-center space-x-1 w-full"
+                className="mt-4 text-amber-400 hover:text-[color:var(--nf-accent)] text-sm flex items-center justify-center space-x-1 w-full"
               >
                 <RefreshCcw className="w-4 h-4" />
                 <span>Refresh Page</span>
@@ -1033,9 +1033,9 @@ const CheckoutPage = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-red-500/10 to-amber-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-8xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <Lock className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Secure Checkout
             </span>
             <Shield className="w-4 h-4 text-emerald-400" />
@@ -1046,10 +1046,10 @@ const CheckoutPage = () => {
               Finalize Order
             </span>
             <br />
-            <span className="text-white">Premium African Treasures</span>
+            <span className="text-[color:var(--nf-text-primary)]">Premium African Treasures</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Complete your purchase securely. Your authentic African products are
             just a step away.
           </p>
@@ -1063,24 +1063,24 @@ const CheckoutPage = () => {
             {/* Left Column - Order Summary & Nile Miles */}
             <div className="lg:col-span-2 space-y-8">
               {/* Order Summary */}
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden">
-                <div className="p-8 border-b border-amber-800/30">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden">
+                <div className="p-8 border-b border-[var(--nf-border-subtle)]">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center space-x-3">
                       <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                        <ShoppingBag className="w-6 h-6 text-white" />
+                        <ShoppingBag className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-bold text-amber-200">
+                        <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                           Order Summary
                         </h2>
-                        <p className="text-amber-100/70">
+                        <p className="text-[color:var(--nf-text-muted)]">
                           {cart.length} premium items
                         </p>
                       </div>
                     </div>
-                    <div className="bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-4 py-2 rounded-xl border border-amber-700/30">
-                      <span className="text-amber-200 font-bold">Secure</span>
+                    <div className="bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-4 py-2 rounded-xl border border-[var(--nf-border-subtle)]">
+                      <span className="text-[color:var(--nf-accent)] font-bold">Secure</span>
                     </div>
                   </div>
 
@@ -1089,7 +1089,7 @@ const CheckoutPage = () => {
                     {cart.map((item) => (
                       <div
                         key={item.id}
-                        className="flex items-center space-x-4 p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl"
+                        className="flex items-center space-x-4 p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl"
                       >
                         <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
                           <img
@@ -1100,18 +1100,18 @@ const CheckoutPage = () => {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-bold text-amber-100 truncate">
+                          <h3 className="font-bold text-[color:var(--nf-text-secondary)] truncate">
                             {item.productName}
                           </h3>
-                          <p className="text-amber-100/70 text-sm">
+                          <p className="text-[color:var(--nf-text-muted)] text-sm">
                             Qty: {item.quantity}
                           </p>
                         </div>
                         <div className="text-right">
-                          <p className="text-xl font-bold text-amber-300">
+                          <p className="text-xl font-bold text-[color:var(--nf-accent)]">
                             {formatPrice(item.price * item.quantity)}
                           </p>
-                          <p className="text-amber-100/50 text-sm">
+                          <p className="text-[color:var(--nf-text-muted)] text-sm">
                             {formatPrice(item.price)} each
                           </p>
                         </div>
@@ -1121,15 +1121,15 @@ const CheckoutPage = () => {
 
                   {/* Price Breakdown */}
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between py-3 border-b border-amber-800/30">
-                      <span className="text-amber-100">Subtotal</span>
-                      <span className="text-amber-300 font-bold text-lg">
+                    <div className="flex items-center justify-between py-3 border-b border-[var(--nf-border-subtle)]">
+                      <span className="text-[color:var(--nf-text-secondary)]">Subtotal</span>
+                      <span className="text-[color:var(--nf-accent)] font-bold text-lg">
                         {formattedSubtotal}
                       </span>
                     </div>
-                    <div className="flex items-center justify-between py-3 border-b border-amber-800/30">
+                    <div className="flex items-center justify-between py-3 border-b border-[var(--nf-border-subtle)]">
                       <div className="flex items-center space-x-2">
-                        <span className="text-amber-100">Shipping</span>
+                        <span className="text-[color:var(--nf-text-secondary)]">Shipping</span>
                         {isPremium && (
                           <div className="flex items-center space-x-1 px-2 py-1 bg-gradient-to-r from-purple-900/40 to-blue-900/40 rounded-lg border border-purple-500/30">
                             <Crown className="w-3 h-3 text-purple-300" />
@@ -1139,7 +1139,7 @@ const CheckoutPage = () => {
                           </div>
                         )}
                       </div>
-                      <span className="text-amber-300 font-bold text-lg">
+                      <span className="text-[color:var(--nf-accent)] font-bold text-lg">
                         {shipping === 0 ? "FREE" : formattedShipping}
                       </span>
                     </div>
@@ -1148,7 +1148,7 @@ const CheckoutPage = () => {
                     {isPremium &&
                       premiumDiscountInfo &&
                       premiumDiscountInfo.discountAmount > 0 && (
-                        <div className="flex items-center justify-between py-3 border-b border-amber-800/30 bg-gradient-to-r from-purple-900/10 to-blue-900/10 -mx-4 px-4 rounded-lg">
+                        <div className="flex items-center justify-between py-3 border-b border-[var(--nf-border-subtle)] bg-gradient-to-r from-purple-900/10 to-blue-900/10 -mx-4 px-4 rounded-lg">
                           <div className="flex items-center space-x-2">
                             <Sparkles className="w-4 h-4 text-purple-400 animate-pulse" />
                             <span className="text-purple-200 font-medium">
@@ -1164,7 +1164,7 @@ const CheckoutPage = () => {
 
                     {/* Premium Discount Threshold Message */}
                     {isPremium && subtotal < 500 && (
-                      <div className="py-3 border-b border-amber-800/30">
+                      <div className="py-3 border-b border-[var(--nf-border-subtle)]">
                         <div className="flex items-center space-x-2 text-purple-200/70 text-sm">
                           <Crown className="w-4 h-4 text-purple-400" />
                           <span>
@@ -1175,7 +1175,7 @@ const CheckoutPage = () => {
                       </div>
                     )}
                     {isPremium && subtotal >= 500 && subtotal < 1000 && (
-                      <div className="py-3 border-b border-amber-800/30">
+                      <div className="py-3 border-b border-[var(--nf-border-subtle)]">
                         <div className="flex items-center space-x-2 text-purple-200/70 text-sm">
                           <Crown className="w-4 h-4 text-purple-400" />
                           <span>
@@ -1187,7 +1187,7 @@ const CheckoutPage = () => {
                     )}
 
                     {redeemedReward && (
-                      <div className="flex items-center justify-between py-3 border-b border-amber-800/30">
+                      <div className="flex items-center justify-between py-3 border-b border-[var(--nf-border-subtle)]">
                         <span className="text-emerald-100 flex items-center space-x-2">
                           <Gift className="w-4 h-4" />
                           <span>Reward: {redeemedReward.rewardName}</span>
@@ -1199,31 +1199,31 @@ const CheckoutPage = () => {
                     )}
 
                     <div className="flex items-center justify-between py-4 border-t border-amber-500/30">
-                      <span className="text-amber-100 text-xl">Total</span>
-                      <span className="text-amber-300 font-bold text-3xl">
+                      <span className="text-[color:var(--nf-text-secondary)] text-xl">Total</span>
+                      <span className="text-[color:var(--nf-accent)] font-bold text-3xl">
                         {formatPrice(total)}
                       </span>
                     </div>
 
                     {/* Nile Miles Preview */}
                     {isPremium && milesInfo && milesInfo.actualMiles > 0 && (
-                      <div className="mt-4 p-4 bg-gradient-to-r from-amber-900/20 to-orange-900/20 backdrop-blur-sm border border-amber-700/30 rounded-xl">
+                      <div className="mt-4 p-4 bg-gradient-to-r from-amber-900/20 to-orange-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-2">
                             <Award className="w-5 h-5 text-amber-400" />
-                            <span className="text-amber-200 font-medium">
+                            <span className="text-[color:var(--nf-accent)] font-medium">
                               You'll earn
                             </span>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <span className="text-2xl font-bold text-amber-300">
+                            <span className="text-2xl font-bold text-[color:var(--nf-accent)]">
                               {Math.round(milesInfo.actualMiles)}
                             </span>
-                            <span className="text-amber-200">Nile Miles</span>
+                            <span className="text-[color:var(--nf-accent)]">Nile Miles</span>
                             {isPremium && milesInfo.multiplier > 1 && (
                               <div className="flex items-center space-x-1 px-2 py-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg">
-                                <Zap className="w-3 h-3 text-white" />
-                                <span className="text-xs text-white font-bold">
+                                <Zap className="w-3 h-3 text-[color:var(--nf-text-primary)]" />
+                                <span className="text-xs text-[color:var(--nf-text-primary)] font-bold">
                                   2x
                                 </span>
                               </div>
@@ -1231,7 +1231,7 @@ const CheckoutPage = () => {
                           </div>
                         </div>
                         {isPremium && milesInfo.multiplier > 1 && (
-                          <p className="text-amber-100/70 text-sm mt-2">
+                          <p className="text-[color:var(--nf-text-muted)] text-sm mt-2">
                             Base: {Math.round(milesInfo.baseMiles)} miles •
                             Bonus: {Math.round(milesInfo.bonus)} miles
                           </p>
@@ -1242,11 +1242,11 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center space-x-3">
                     <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center">
-                      <Gift className="w-6 h-6 text-white" />
+                      <Gift className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
                       <h2 className="text-2xl font-bold text-emerald-200">
@@ -1272,7 +1272,7 @@ const CheckoutPage = () => {
                     formFocused ? "opacity-75" : "opacity-25"
                   } transition-opacity duration-300`}
                 ></div>
-                <div className="relative flex bg-gray-900/50 rounded-2xl overflow-hidden border border-amber-800/30">
+                <div className="relative flex bg-[var(--nf-bg-subtle)] rounded-2xl overflow-hidden border border-[var(--nf-border-subtle)]">
                   <div className="pl-5 pr-3 flex items-center">
                     <Award className="w-5 h-5 text-emerald-400" />
                   </div>
@@ -1281,11 +1281,11 @@ const CheckoutPage = () => {
                     onChange={(e) => setAppliedCode(e.target.value)}
                     onFocus={() => setFormFocused(true)}
                     onBlur={() => setFormFocused(false)}
-                    className="flex-1 px-4 py-4 bg-transparent text-amber-100 focus:outline-none"
+                    className="flex-1 px-4 py-4 bg-transparent text-[color:var(--nf-text-secondary)] focus:outline-none"
                   >
                     <option
                       value=""
-                      className="bg-gray-900 text-amber-100"
+                      className="bg-gray-900 text-[color:var(--nf-text-secondary)]"
                       disabled
                     >
                       Select a reward
@@ -1296,7 +1296,7 @@ const CheckoutPage = () => {
                         <option
                           key={r.rewardName}
                           value={r.rewardName}
-                          className="bg-gray-900 text-amber-100"
+                          className="bg-gray-900 text-[color:var(--nf-text-secondary)]"
                         >
                           {r.rewardName}
                         </option>
@@ -1347,7 +1347,7 @@ const CheckoutPage = () => {
 
               {nileMilesData?.redeemed && (
                 <div className="mt-6">
-                  <h3 className="text-lg font-bold text-amber-200 mb-3">
+                  <h3 className="text-lg font-bold text-[color:var(--nf-accent)] mb-3">
                     🎁 Your Available Rewards
                   </h3>
                   <div className="space-y-2">
@@ -1392,7 +1392,7 @@ const CheckoutPage = () => {
                             className={`w-full transition-all duration-300 text-left ${
                               isApplied
                                 ? "bg-gradient-to-r from-emerald-900/60 to-green-900/50 border-2 border-emerald-500 shadow-lg shadow-emerald-500/30"
-                                : "bg-gradient-to-r from-gray-900/50 to-black/50 border border-amber-800/30 hover:border-emerald-600/50 hover:shadow-lg hover:shadow-emerald-600/20"
+                                : "bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] hover:border-emerald-600/50 hover:shadow-lg hover:shadow-emerald-600/20"
                             } rounded-xl p-3`}
                           >
                             <div className="flex items-center justify-between">
@@ -1409,7 +1409,7 @@ const CheckoutPage = () => {
                                     className={`text-sm font-semibold ${
                                       isApplied
                                         ? "text-emerald-200"
-                                        : "text-amber-100"
+                                        : "text-[color:var(--nf-text-secondary)]"
                                     } truncate`}
                                   >
                                     {reward.rewardName}
@@ -1418,7 +1418,7 @@ const CheckoutPage = () => {
                                     className={`text-xs ${
                                       isApplied
                                         ? "text-emerald-300"
-                                        : "text-amber-100/60"
+                                        : "text-[color:var(--nf-text-muted)]"
                                     }`}
                                   >
                                     Redeemed{" "}
@@ -1436,7 +1436,7 @@ const CheckoutPage = () => {
                   </div>
                   {nileMilesData.redeemed.filter((r) => !r.used).length ===
                     0 && (
-                    <p className="text-center text-amber-100/60 text-sm py-4">
+                    <p className="text-center text-[color:var(--nf-text-muted)] text-sm py-4">
                       No rewards available. Redeem miles to unlock rewards!
                     </p>
                   )}
@@ -1446,12 +1446,12 @@ const CheckoutPage = () => {
 
             {/* Right Column - Payment Information */}
             <div className="lg:col-span-1">
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden sticky top-8">
-                <div className="p-8 border-b border-amber-800/30">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden sticky top-8">
+                <div className="p-8 border-b border-[var(--nf-border-subtle)]">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center space-x-3">
                       <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-                        <CreditCard className="w-6 h-6 text-white" />
+                        <CreditCard className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                       </div>
                       <div>
                         <h2 className="text-2xl font-bold text-blue-200">
@@ -1513,17 +1513,17 @@ const CheckoutPage = () => {
                               htmlFor={method.value}
                               className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all duration-300 ${
                                 method.comingSoon
-                                  ? "bg-gradient-to-r from-gray-800/50 to-gray-900/50 border-gray-700/30 text-gray-500 opacity-60 cursor-not-allowed"
+                                  ? "bg-gradient-to-r from-gray-800/50 to-gray-900/50 border-[var(--nf-border-subtle)] text-[color:var(--nf-text-muted)] opacity-60 cursor-not-allowed"
                                   : selectedPayment === method.value
-                                    ? `bg-gradient-to-r ${method.color} border-transparent text-white shadow-lg`
-                                    : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 text-amber-100 hover:border-amber-500/50"
+                                    ? `bg-gradient-to-r ${method.color} border-transparent text-[color:var(--nf-text-primary)] shadow-lg`
+                                    : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                               }`}
                             >
                               <div className="flex items-center space-x-3">
                                 <div
                                   className={`w-10 h-10 rounded-lg flex items-center justify-center ${
                                     method.comingSoon
-                                      ? "bg-gray-700/50"
+                                      ? "bg-[var(--nf-bg-subtle)]"
                                       : selectedPayment === method.value
                                         ? "bg-white/20"
                                         : "bg-gradient-to-br from-gray-800 to-black"
@@ -1536,7 +1536,7 @@ const CheckoutPage = () => {
                                     {method.label}
                                   </span>
                                   {method.comingSoon && (
-                                    <span className="text-xs text-gray-400 font-normal">
+                                    <span className="text-xs text-[color:var(--nf-text-muted)] font-normal">
                                       Coming Soon
                                     </span>
                                   )}
@@ -1546,7 +1546,7 @@ const CheckoutPage = () => {
                                 <CheckCircle className="w-5 h-5" />
                               )}
                               {method.comingSoon && (
-                                <div className="bg-gray-600/50 text-gray-400 text-xs px-2 py-1 rounded-full">
+                                <div className="bg-gray-600/50 text-[color:var(--nf-text-muted)] text-xs px-2 py-1 rounded-full">
                                   Soon
                                 </div>
                               )}
@@ -1568,26 +1568,26 @@ const CheckoutPage = () => {
                   ) : (
                     <div>
                       <div className="mb-6">
-                        <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/30 backdrop-blur-sm border border-amber-700/30 rounded-xl p-4">
-                          <p className="text-amber-100 mb-2">
+                        <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/30 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4">
+                          <p className="text-[color:var(--nf-text-secondary)] mb-2">
                             Your selected payment method:
                           </p>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-3">
                               <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
                                 {selectedPayment === "cashOnDelivery" ? (
-                                  <Wallet className="w-5 h-5 text-white" />
+                                  <Wallet className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                                 ) : selectedPayment === "card" ? (
-                                  <CreditCard className="w-5 h-5 text-white" />
+                                  <CreditCard className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                                 ) : selectedPayment === "mpesa" ? (
-                                  <Smartphone className="w-5 h-5 text-white" />
+                                  <Smartphone className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                                 ) : selectedPayment === "paypal" ? (
-                                  <Wallet className="w-5 h-5 text-white" />
+                                  <Wallet className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                                 ) : (
-                                  <Smartphone className="w-5 h-5 text-white" />
+                                  <Smartphone className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                                 )}
                               </div>
-                              <span className="font-bold text-amber-300 capitalize">
+                              <span className="font-bold text-[color:var(--nf-accent)] capitalize">
                                 {selectedPayment === "cashOnDelivery"
                                   ? "Cash on Delivery"
                                   : selectedPayment === "card"
@@ -1601,7 +1601,7 @@ const CheckoutPage = () => {
                             </div>
                             <button
                               onClick={() => setShowPaymentForm(true)}
-                              className="text-sm text-amber-400 hover:text-amber-300 transition-colors"
+                              className="text-sm text-amber-400 hover:text-[color:var(--nf-accent)] transition-colors"
                             >
                               Change
                             </button>
@@ -1612,7 +1612,7 @@ const CheckoutPage = () => {
                       {/* M-Pesa Phone Number Input */}
                       {selectedPayment === "mpesa" && (
                         <div className="mb-6">
-                          <label className="block text-amber-200 font-semibold mb-3">
+                          <label className="block text-[color:var(--nf-accent)] font-semibold mb-3">
                             M-Pesa Phone Number
                           </label>
                           <div className="relative">
@@ -1626,10 +1626,10 @@ const CheckoutPage = () => {
                                 setMpesaPhoneNumber(e.target.value)
                               }
                               placeholder="e.g., 0712345678 or 254712345678"
-                              className="w-full pl-12 pr-4 py-3 bg-gradient-to-r from-gray-900/80 to-black/80 border border-emerald-700/50 rounded-xl text-amber-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                              className="w-full pl-12 pr-4 py-3 bg-gradient-to-r from-gray-900/80 to-black/80 border border-emerald-700/50 rounded-xl text-[color:var(--nf-text-secondary)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                             />
                           </div>
-                          <p className="mt-2 text-xs text-gray-400">
+                          <p className="mt-2 text-xs text-[color:var(--nf-text-muted)]">
                             Enter your M-Pesa registered phone number. You'll
                             receive an STK push prompt to complete the payment.
                           </p>
@@ -1675,7 +1675,7 @@ const CheckoutPage = () => {
                 </div>
 
                 {/* Trust Badges */}
-                <div className="p-6 bg-gradient-to-r from-gray-900/50 to-black/50 border-t border-amber-800/30">
+                <div className="p-6 bg-[var(--nf-bg-elevated)] border-t border-[var(--nf-border-subtle)]">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="text-center">
                       <Lock className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
@@ -1728,7 +1728,7 @@ const CheckoutPage = () => {
       {/* M-Pesa Processing Modal */}
       {showMpesaModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center p-4">
-          <div className="bg-gradient-to-br from-gray-900/90 to-black/90 border border-emerald-800/50 rounded-3xl p-8 max-w-md w-full">
+          <div className="bg-[var(--nf-card-bg)] border border-emerald-800/50 rounded-3xl p-8 max-w-md w-full">
             <div className="text-center mb-6">
               <div className="relative inline-block mb-4">
                 <div className="w-24 h-24 border-4 border-emerald-900/30 border-t-emerald-500 rounded-full animate-spin"></div>
@@ -1740,7 +1740,7 @@ const CheckoutPage = () => {
               <h2 className="text-2xl font-bold text-emerald-200 mb-2">
                 Complete M-Pesa Payment
               </h2>
-              <p className="text-gray-300 mb-4">
+              <p className="text-[color:var(--nf-text-secondary)] mb-4">
                 Check your phone for the M-Pesa payment prompt
               </p>
 
@@ -1751,7 +1751,7 @@ const CheckoutPage = () => {
                     {mpesaPhoneNumber}
                   </span>
                 </div>
-                <p className="text-gray-300 text-sm">
+                <p className="text-[color:var(--nf-text-secondary)] text-sm">
                   Enter your M-Pesa PIN on your phone to confirm payment
                 </p>
               </div>
@@ -1759,27 +1759,27 @@ const CheckoutPage = () => {
               <div className="space-y-2 mb-6">
                 <div className="flex items-center space-x-2 text-left">
                   <div className="w-6 h-6 rounded-full bg-emerald-600 flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-xs font-bold">1</span>
+                    <span className="text-[color:var(--nf-text-primary)] text-xs font-bold">1</span>
                   </div>
-                  <p className="text-gray-300 text-sm">
+                  <p className="text-[color:var(--nf-text-secondary)] text-sm">
                     Check your phone for M-Pesa prompt
                   </p>
                 </div>
                 <div className="flex items-center space-x-2 text-left">
                   <div className="w-6 h-6 rounded-full bg-emerald-600 flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-xs font-bold">2</span>
+                    <span className="text-[color:var(--nf-text-primary)] text-xs font-bold">2</span>
                   </div>
-                  <p className="text-gray-300 text-sm">Enter your M-Pesa PIN</p>
+                  <p className="text-[color:var(--nf-text-secondary)] text-sm">Enter your M-Pesa PIN</p>
                 </div>
                 <div className="flex items-center space-x-2 text-left">
                   <div className="w-6 h-6 rounded-full bg-emerald-600 flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-xs font-bold">3</span>
+                    <span className="text-[color:var(--nf-text-primary)] text-xs font-bold">3</span>
                   </div>
-                  <p className="text-gray-300 text-sm">Wait for confirmation</p>
+                  <p className="text-[color:var(--nf-text-secondary)] text-sm">Wait for confirmation</p>
                 </div>
               </div>
 
-              <p className="text-gray-400 text-sm mb-6">
+              <p className="text-[color:var(--nf-text-muted)] text-sm mb-6">
                 {mpesaProcessing
                   ? "Processing your payment..."
                   : "Waiting for payment confirmation..."}
@@ -1791,7 +1791,7 @@ const CheckoutPage = () => {
                   setMpesaProcessing(false);
                 }}
                 disabled={loading}
-                className="group w-full px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-bold rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 flex items-center justify-center space-x-2"
+                className="group w-full px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-[color:var(--nf-text-primary)] font-bold rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 flex items-center justify-center space-x-2"
               >
                 <X className="w-5 h-5" />
                 <span>Cancel & Go Back</span>
@@ -1804,41 +1804,41 @@ const CheckoutPage = () => {
       {/* Cash on Delivery Confirmation Modal */}
       {showCodConfirmation && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center p-4">
-          <div className="bg-gradient-to-br from-gray-900/90 to-black/90 border border-amber-800/50 rounded-3xl p-8 max-w-md w-full">
+          <div className="bg-[var(--nf-card-bg)] border border-[var(--nf-border)] rounded-3xl p-8 max-w-md w-full">
             <div className="text-center mb-6">
               <div className="relative inline-block mb-4">
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-green-600 to-emerald-700 flex items-center justify-center">
-                  <CheckCircle className="w-16 h-16 text-white" />
+                  <CheckCircle className="w-16 h-16 text-[color:var(--nf-text-primary)]" />
                 </div>
               </div>
 
-              <h2 className="text-2xl font-bold text-amber-200 mb-2">
+              <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-2">
                 Confirm Your Order
               </h2>
-              <p className="text-gray-300 mb-4">
+              <p className="text-[color:var(--nf-text-secondary)] mb-4">
                 Review your Cash on Delivery order before placing it
               </p>
 
-              <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/20 border border-amber-800/30 rounded-xl p-4 mb-4">
+              <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/20 border border-[var(--nf-border-subtle)] rounded-xl p-4 mb-4">
                 <div className="flex items-center justify-center space-x-2 mb-2">
                   <Package className="w-5 h-5 text-amber-400" />
-                  <span className="text-amber-100 font-semibold">
+                  <span className="text-[color:var(--nf-text-secondary)] font-semibold">
                     Total: {formatPrice(total)}
                   </span>
                 </div>
-                <p className="text-gray-300 text-sm">
+                <p className="text-[color:var(--nf-text-secondary)] text-sm">
                   Pay when your order is delivered
                 </p>
               </div>
 
-              <div className="bg-gradient-to-r from-gray-900/50 to-black/50 border border-amber-800/30 rounded-xl p-4 mb-6">
+              <div className="bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] rounded-xl p-4 mb-6">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-amber-100">Placing order in:</span>
-                  <span className="text-amber-300 font-bold text-2xl">
+                  <span className="text-[color:var(--nf-text-secondary)]">Placing order in:</span>
+                  <span className="text-[color:var(--nf-accent)] font-bold text-2xl">
                     {codCountdown}s
                   </span>
                 </div>
-                <div className="w-full bg-gray-800 rounded-full h-2">
+                <div className="w-full bg-[var(--nf-bg-subtle)] rounded-full h-2">
                   <div
                     className="bg-gradient-to-r from-amber-500 to-amber-600 h-2 rounded-full transition-all duration-1000"
                     style={{ width: `${(codCountdown / 10) * 100}%` }}
@@ -1876,7 +1876,7 @@ const CheckoutPage = () => {
                 </button>
               </div>
 
-              <p className="text-gray-400 text-xs">
+              <p className="text-[color:var(--nf-text-muted)] text-xs">
                 Order will be placed automatically in {codCountdown} seconds
               </p>
             </div>

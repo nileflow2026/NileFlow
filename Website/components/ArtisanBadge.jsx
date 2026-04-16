@@ -6,17 +6,25 @@ const ArtisanBadge = ({ artisan, compact = false }) => {
         <img
           src={artisan.photo}
           alt={artisan.name}
-          className="relative w-8 h-8 rounded-full border-2 border-gray-900 object-cover"
-         loading="lazy" decoding="async" />
+          className="relative w-8 h-8 rounded-full border-2 border-[var(--nf-border)] object-cover"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
       <div>
-        <div className="text-xs text-amber-100/70">Handmade by</div>
-        <div className="text-sm font-medium text-amber-300">{artisan.name}</div>
+        <div className="text-xs text-[color:var(--nf-text-muted)]">
+          Handmade by
+        </div>
+        <div className="text-sm font-medium text-[color:var(--nf-accent)]">
+          {artisan.name}
+        </div>
       </div>
       {!compact && (
         <div className="flex items-center space-x-1 text-xs">
           <MapPin className="w-3 h-3 text-amber-400" />
-          <span className="text-amber-100/70">{artisan.country}</span>
+          <span className="text-[color:var(--nf-text-muted)]">
+            {artisan.country}
+          </span>
         </div>
       )}
     </div>

@@ -143,7 +143,7 @@ const NotificationsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -154,9 +154,9 @@ const NotificationsPage = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-red-500/10 to-amber-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-8xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <Bell className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Premium Alerts
             </span>
             <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -167,21 +167,21 @@ const NotificationsPage = () => {
               Notifications
             </span>
             <br />
-            <span className="text-white">Stay Updated</span>
+            <span className="text-[color:var(--nf-text-primary)]">Stay Updated</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Get real-time updates on your orders, exclusive deals, and premium
             African product launches
           </p>
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4">
-              <div className="text-2xl font-bold text-amber-300">
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4">
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)]">
                 {notifications.length}
               </div>
-              <div className="text-amber-100/80 text-sm">Total Alerts</div>
+              <div className="text-[color:var(--nf-text-muted)] text-sm">Total Alerts</div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-4">
               <div className="text-2xl font-bold text-emerald-300">
@@ -205,7 +205,7 @@ const NotificationsPage = () => {
       <main className="pb-20 px-4 sm:px-6 lg:px-8">
         <div className="relative max-w-8xl mx-auto">
           {/* Controls Bar */}
-          <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6 mb-8">
+          <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6 mb-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="flex flex-wrap gap-4">
                 <button
@@ -213,7 +213,7 @@ const NotificationsPage = () => {
                   className={`px-5 py-3 rounded-xl border backdrop-blur-sm transition-all duration-300 ${
                     filter === "all"
                       ? "bg-gradient-to-r from-amber-600 to-amber-700 text-white border-amber-500 shadow-lg shadow-amber-900/30"
-                      : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 text-gray-300 hover:border-amber-500/50"
+                      : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                   }`}
                 >
                   All Notifications
@@ -223,7 +223,7 @@ const NotificationsPage = () => {
                   className={`px-5 py-3 rounded-xl border backdrop-blur-sm transition-all duration-300 flex items-center space-x-2 ${
                     filter === "unread"
                       ? "bg-gradient-to-r from-emerald-600 to-emerald-700 text-white border-emerald-500 shadow-lg shadow-emerald-900/30"
-                      : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 text-gray-300 hover:border-amber-500/50"
+                      : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                   }`}
                 >
                   <Eye className="w-4 h-4" />
@@ -234,7 +234,7 @@ const NotificationsPage = () => {
                   className={`px-5 py-3 rounded-xl border backdrop-blur-sm transition-all duration-300 flex items-center space-x-2 ${
                     filter === "important"
                       ? "bg-gradient-to-r from-red-600 to-red-700 text-white border-red-500 shadow-lg shadow-red-900/30"
-                      : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 text-gray-300 hover:border-amber-500/50"
+                      : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                   }`}
                 >
                   <Award className="w-4 h-4" />
@@ -248,7 +248,7 @@ const NotificationsPage = () => {
                   className="flex items-center space-x-2 px-4 py-3 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm border border-amber-700/40 rounded-xl hover:border-amber-500/60 transition-all duration-300"
                 >
                   <Settings className="w-5 h-5 text-amber-400" />
-                  <span className="text-amber-200 font-medium">Settings</span>
+                  <span className="text-[color:var(--nf-accent)] font-medium">Settings</span>
                 </button>
 
                 <button
@@ -263,11 +263,11 @@ const NotificationsPage = () => {
 
             {/* Settings Panel */}
             {showSettings && (
-              <div className="mt-6 pt-6 border-t border-amber-800/30">
+              <div className="mt-6 pt-6 border-t border-[var(--nf-border-subtle)]">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4">
+                  <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4">
                     <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-amber-200 font-bold">
+                      <h4 className="text-[color:var(--nf-accent)] font-bold">
                         Notification Sound
                       </h4>
                       <button
@@ -283,13 +283,13 @@ const NotificationsPage = () => {
                         )}
                       </button>
                     </div>
-                    <p className="text-amber-100/70 text-sm">
+                    <p className="text-[color:var(--nf-text-muted)] text-sm">
                       {muteSound ? "Sounds are muted" : "Sounds are enabled"}
                     </p>
                   </div>
 
-                  <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4">
-                    <h4 className="text-amber-200 font-bold mb-4">Filter By</h4>
+                  <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4">
+                    <h4 className="text-[color:var(--nf-accent)] font-bold mb-4">Filter By</h4>
                     <div className="space-y-2">
                       {[
                         "All",
@@ -300,7 +300,7 @@ const NotificationsPage = () => {
                       ].map((type) => (
                         <div key={type} className="flex items-center space-x-3">
                           <div className="w-2 h-2 rounded-full bg-gradient-to-r from-amber-500 to-emerald-500"></div>
-                          <span className="text-amber-100/70 text-sm">
+                          <span className="text-[color:var(--nf-text-muted)] text-sm">
                             {type}
                           </span>
                         </div>
@@ -308,8 +308,8 @@ const NotificationsPage = () => {
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4">
-                    <h4 className="text-amber-200 font-bold mb-4">
+                  <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4">
+                    <h4 className="text-[color:var(--nf-accent)] font-bold mb-4">
                       Quick Actions
                     </h4>
                     <div className="space-y-3">
@@ -336,10 +336,10 @@ const NotificationsPage = () => {
                   <Bell className="w-10 h-10 text-amber-500 animate-pulse" />
                 </div>
               </div>
-              <h3 className="mt-8 text-2xl font-bold text-amber-200">
+              <h3 className="mt-8 text-2xl font-bold text-[color:var(--nf-accent)]">
                 Loading Notifications
               </h3>
-              <p className="text-gray-400 mt-2">
+              <p className="text-[color:var(--nf-text-muted)] mt-2">
                 Fetching your premium alerts...
               </p>
             </div>
@@ -356,7 +356,7 @@ const NotificationsPage = () => {
                         notification.priority,
                       )} backdrop-blur-sm border rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.02] ${
                         notification.read
-                          ? "border-amber-800/30"
+                          ? "border-[var(--nf-border-subtle)]"
                           : "border-amber-500/50 shadow-lg shadow-amber-900/30"
                       }`}
                     >
@@ -367,7 +367,7 @@ const NotificationsPage = () => {
                           <div
                             className={`w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 ${
                               notification.read
-                                ? "bg-gradient-to-br from-gray-900 to-black border border-amber-800/30"
+                                ? "bg-gradient-to-br from-gray-900 to-black border border-[var(--nf-border-subtle)]"
                                 : "bg-gradient-to-br from-amber-600 to-amber-700"
                             }`}
                           >
@@ -384,20 +384,20 @@ const NotificationsPage = () => {
                                 <h3
                                   className={`text-lg font-bold ${
                                     notification.read
-                                      ? "text-gray-300"
-                                      : "text-white"
+                                      ? "text-[color:var(--nf-text-secondary)]"
+                                      : "text-[color:var(--nf-text-primary)]"
                                   }`}
                                 >
                                   {notification.message}
                                 </h3>
-                                <p className="text-gray-400 mt-2 text-sm">
+                                <p className="text-[color:var(--nf-text-muted)] mt-2 text-sm">
                                   {notification.description ||
                                     "Premium African marketplace update"}
                                 </p>
                               </div>
 
                               <div className="flex flex-col items-end space-y-3">
-                                <div className="flex items-center space-x-2 text-amber-100/70 text-sm">
+                                <div className="flex items-center space-x-2 text-[color:var(--nf-text-muted)] text-sm">
                                   <Clock className="w-4 h-4" />
                                   <span>
                                     {new Date(
@@ -413,8 +413,8 @@ const NotificationsPage = () => {
                                 </div>
 
                                 {!notification.read && (
-                                  <div className="flex items-center space-x-1 bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-3 py-1.5 rounded-full border border-amber-700/30">
-                                    <span className="text-xs font-bold text-amber-200">
+                                  <div className="flex items-center space-x-1 bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-3 py-1.5 rounded-full border border-[var(--nf-border-subtle)]">
+                                    <span className="text-xs font-bold text-[color:var(--nf-accent)]">
                                       NEW
                                     </span>
                                   </div>
@@ -455,7 +455,7 @@ const NotificationsPage = () => {
                         <div
                           className={`w-3 h-3 rounded-full ${
                             notification.read
-                              ? "bg-gray-600"
+                              ? "bg-[var(--nf-text-muted)]"
                               : "bg-gradient-to-r from-amber-500 to-emerald-500 animate-pulse"
                           }`}
                         ></div>
@@ -464,7 +464,7 @@ const NotificationsPage = () => {
                       {/* Hover Actions */}
                       <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="flex items-center space-x-2">
-                          <button className="w-10 h-10 rounded-full bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-700/30 flex items-center justify-center text-amber-400 hover:text-amber-300 hover:scale-110 transition-all">
+                          <button className="w-10 h-10 rounded-full bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm border border-[var(--nf-border-subtle)] flex items-center justify-center text-amber-400 hover:text-[color:var(--nf-accent)] hover:scale-110 transition-all">
                             <Eye className="w-5 h-5" />
                           </button>
                         </div>
@@ -473,13 +473,13 @@ const NotificationsPage = () => {
                   ))
                 ) : (
                   <div className="text-center py-32">
-                    <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-amber-700/30 mb-6">
+                    <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-[var(--nf-border-subtle)] mb-6">
                       <Bell className="w-12 h-12 text-amber-400" />
                     </div>
-                    <h3 className="text-3xl font-bold text-white mb-4">
+                    <h3 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                       No Notifications
                     </h3>
-                    <p className="text-gray-400 max-w-md mx-auto mb-8">
+                    <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-8">
                       {filter === "all"
                         ? "You're all caught up! Check back later for updates on your orders and exclusive African product deals."
                         : `No ${filter} notifications at the moment.`}
@@ -500,21 +500,21 @@ const NotificationsPage = () => {
               <div className="mt-16">
                 {/* Mobile: Horizontal Scroll, Desktop: Grid */}
                 <div className="flex overflow-x-auto gap-6 pb-4 lg:grid lg:grid-cols-4 lg:overflow-visible scrollbar-thin scrollbar-thumb-amber-600 scrollbar-track-amber-900/20">
-                  <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 text-center flex-shrink-0 min-w-[280px] lg:min-w-0">
+                  <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center flex-shrink-0 min-w-[280px] lg:min-w-0">
                     <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 mb-4">
-                      <Shield className="w-6 h-6 text-white" />
+                      <Shield className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
-                    <div className="text-xl font-bold text-amber-300 mb-2">
+                    <div className="text-xl font-bold text-[color:var(--nf-accent)] mb-2">
                       Secure Alerts
                     </div>
-                    <div className="text-amber-100/80 text-sm">
+                    <div className="text-[color:var(--nf-text-muted)] text-sm">
                       Encrypted notifications
                     </div>
                   </div>
 
                   <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-6 text-center flex-shrink-0 min-w-[280px] lg:min-w-0">
                     <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 mb-4">
-                      <Globe className="w-6 h-6 text-white" />
+                      <Globe className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div className="text-xl font-bold text-emerald-300 mb-2">
                       Real-time Updates
@@ -526,7 +526,7 @@ const NotificationsPage = () => {
 
                   <div className="bg-gradient-to-br from-blue-900/20 to-transparent backdrop-blur-sm border border-blue-800/30 rounded-2xl p-6 text-center flex-shrink-0 min-w-[280px] lg:min-w-0">
                     <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 mb-4">
-                      <Star className="w-6 h-6 text-white" />
+                      <Star className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div className="text-xl font-bold text-blue-300 mb-2">
                       Priority Support
@@ -538,7 +538,7 @@ const NotificationsPage = () => {
 
                   <div className="bg-gradient-to-br from-red-900/20 to-transparent backdrop-blur-sm border border-red-800/30 rounded-2xl p-6 text-center flex-shrink-0 min-w-[280px] lg:min-w-0">
                     <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-red-500 to-red-600 mb-4">
-                      <Zap className="w-6 h-6 text-white" />
+                      <Zap className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div className="text-xl font-bold text-red-300 mb-2">
                       Instant Delivery

@@ -67,13 +67,13 @@ const TrackOrderPage = () => {
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 p-4 sm:p-6">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] p-4 sm:p-6">
         <div className="relative max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
               <Package className="w-5 h-5 text-amber-400" />
-              <span className="text-amber-200 font-medium tracking-wide">
+              <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
                 Order Tracking
               </span>
               <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -85,15 +85,15 @@ const TrackOrderPage = () => {
               </span>
             </h1>
 
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+            <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto">
               Enter your order ID or select from your recent orders to track
               your delivery
             </p>
           </div>
 
           {/* Order ID Search */}
-          <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6 mb-8">
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+          <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6 mb-8">
+            <h2 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-6 flex items-center">
               <Search className="w-6 h-6 text-amber-400 mr-3" />
               Track by Order ID
             </h2>
@@ -105,7 +105,7 @@ const TrackOrderPage = () => {
                   value={orderId}
                   onChange={(e) => setOrderId(e.target.value)}
                   placeholder="Enter your order ID (e.g., ORD123456)"
-                  className="w-full px-6 py-4 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors text-lg"
+                  className="w-full px-6 py-4 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors text-lg"
                 />
                 <Package className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-amber-400" />
               </div>
@@ -131,11 +131,11 @@ const TrackOrderPage = () => {
             <div className="bg-gradient-to-br from-blue-900/40 to-purple-900/40 backdrop-blur-sm border border-blue-700/30 rounded-3xl p-6 mb-8">
               <div className="flex items-center mb-4">
                 <User className="w-8 h-8 text-blue-400 mr-3" />
-                <h3 className="text-xl font-bold text-white">
+                <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)]">
                   Sign In for More Features
                 </h3>
               </div>
-              <p className="text-gray-300 mb-4">
+              <p className="text-[color:var(--nf-text-secondary)] mb-4">
                 Sign in to view your order history, save tracking preferences,
                 and get real-time updates.
               </p>
@@ -148,7 +148,7 @@ const TrackOrderPage = () => {
                 </Link>
                 <Link
                   to="/signup"
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-white font-semibold rounded-xl hover:from-gray-600 hover:to-gray-700 transition-all duration-300 border border-gray-600 text-center"
+                  className="flex-1 px-4 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-[color:var(--nf-text-primary)] font-semibold rounded-xl hover:from-gray-600 hover:to-gray-700 transition-all duration-300 border border-[var(--nf-border)] text-center"
                 >
                   Sign Up
                 </Link>
@@ -158,8 +158,8 @@ const TrackOrderPage = () => {
 
           {/* Recent Orders for Authenticated Users */}
           {isAuthenticated && (
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6">
-              <h3 className="text-xl font-bold text-white mb-6 flex items-center">
+            <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6">
+              <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)] mb-6 flex items-center">
                 <Clock className="w-6 h-6 text-amber-400 mr-3" />
                 Your Recent Orders
               </h3>
@@ -167,7 +167,7 @@ const TrackOrderPage = () => {
               {loading ? (
                 <div className="flex items-center justify-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-400"></div>
-                  <span className="ml-3 text-gray-400">Loading orders...</span>
+                  <span className="ml-3 text-[color:var(--nf-text-muted)]">Loading orders...</span>
                 </div>
               ) : orders.length > 0 ? (
                 <div className="space-y-3">
@@ -175,18 +175,18 @@ const TrackOrderPage = () => {
                     <Link
                       key={order.$id}
                       to={`/track-order/${order.$id}`}
-                      className="block p-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/20 rounded-xl hover:border-amber-500/50 transition-all duration-300 group"
+                      className="block p-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-amber-800/20 rounded-xl hover:border-amber-500/50 transition-all duration-300 group"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                            <Package className="w-5 h-5 text-white" />
+                            <Package className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                           </div>
                           <div>
-                            <p className="font-semibold text-white">
+                            <p className="font-semibold text-[color:var(--nf-text-primary)]">
                               Order #{order.$id.slice(-8)}
                             </p>
-                            <p className="text-sm text-gray-400">
+                            <p className="text-sm text-[color:var(--nf-text-muted)]">
                               {new Date(order.createdAt).toLocaleDateString()} •
                               {formatPrice(order.amount || 0)}
                             </p>
@@ -212,8 +212,8 @@ const TrackOrderPage = () => {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <ShoppingBag className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-                  <p className="text-gray-400 mb-4">No orders found</p>
+                  <ShoppingBag className="w-16 h-16 text-[color:var(--nf-text-muted)] mx-auto mb-4" />
+                  <p className="text-[color:var(--nf-text-muted)] mb-4">No orders found</p>
                   <Link
                     to="/shop"
                     className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-xl hover:from-amber-700 hover:to-amber-800 transition-all duration-300"

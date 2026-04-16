@@ -43,7 +43,7 @@ const PremiumDealsPage = () => {
   // Loading state
   if (statusLoading || loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
         <div className="container mx-auto px-4 py-8">
           <div className="animate-pulse">
             <div className="h-12 bg-white/10 rounded-2xl w-1/3 mb-8"></div>
@@ -61,7 +61,7 @@ const PremiumDealsPage = () => {
   // Non-premium user - show upgrade CTA
   if (!isPremium) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/30 to-gray-900">
+      <div className="min-h-screen bg-gradient-to-br bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-4xl mx-auto">
             <div className="relative bg-gradient-to-br from-purple-600/20 via-blue-600/20 to-indigo-700/20 backdrop-blur-xl border border-purple-500/30 rounded-3xl p-12 shadow-2xl overflow-hidden">
@@ -73,7 +73,7 @@ const PremiumDealsPage = () => {
                 {/* Lock Icon */}
                 <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-purple-900/50">
                   <svg
-                    className="w-12 h-12 text-white"
+                    className="w-12 h-12 text-[color:var(--nf-text-primary)]"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -92,7 +92,7 @@ const PremiumDealsPage = () => {
                 <p className="text-purple-100/80 text-lg md:text-xl mb-12 max-w-2xl mx-auto">
                   Unlock exclusive discounts, priority delivery, and 2x Nile
                   Miles with Nile Premium for just{" "}
-                  <span className="text-amber-300 font-bold">
+                  <span className="text-[color:var(--nf-accent)] font-bold">
                     200 Ksh/month
                   </span>
                 </p>
@@ -103,7 +103,7 @@ const PremiumDealsPage = () => {
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
                       <span className="text-3xl">🏷️</span>
                     </div>
-                    <h3 className="font-bold text-white text-lg mb-2">
+                    <h3 className="font-bold text-[color:var(--nf-text-primary)] text-lg mb-2">
                       Up to 40% Off
                     </h3>
                     <p className="text-purple-100/70 text-sm">
@@ -114,7 +114,7 @@ const PremiumDealsPage = () => {
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
                       <span className="text-3xl">🚀</span>
                     </div>
-                    <h3 className="font-bold text-white text-lg mb-2">
+                    <h3 className="font-bold text-[color:var(--nf-text-primary)] text-lg mb-2">
                       Priority Delivery
                     </h3>
                     <p className="text-purple-100/70 text-sm">
@@ -125,7 +125,7 @@ const PremiumDealsPage = () => {
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
                       <span className="text-3xl">⭐</span>
                     </div>
-                    <h3 className="font-bold text-white text-lg mb-2">
+                    <h3 className="font-bold text-[color:var(--nf-text-primary)] text-lg mb-2">
                       2x Miles
                     </h3>
                     <p className="text-purple-100/70 text-sm">
@@ -151,7 +151,7 @@ const PremiumDealsPage = () => {
                   </button>
                   <button
                     onClick={() => navigate("/")}
-                    className="px-10 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white font-semibold text-lg rounded-xl hover:bg-white/20 hover:scale-105 transition-all duration-300 shadow-xl"
+                    className="px-10 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-[color:var(--nf-text-primary)] font-semibold text-lg rounded-xl hover:bg-white/20 hover:scale-105 transition-all duration-300 shadow-xl"
                   >
                     Back to Home
                   </button>
@@ -178,7 +178,7 @@ const PremiumDealsPage = () => {
             <div className="bg-gradient-to-br from-red-600/20 via-red-500/20 to-red-700/20 backdrop-blur-xl border border-red-500/30 rounded-3xl p-12 text-center shadow-2xl">
               <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center mx-auto mb-6 shadow-xl">
                 <svg
-                  className="w-10 h-10 text-white"
+                  className="w-10 h-10 text-[color:var(--nf-text-primary)]"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -189,7 +189,7 @@ const PremiumDealsPage = () => {
                   />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold text-white mb-4">
+              <h2 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                 Failed to Load Premium Deals
               </h2>
               <p className="text-red-200 mb-8 text-lg">{error}</p>
@@ -208,14 +208,14 @@ const PremiumDealsPage = () => {
 
   // Premium user - show deals
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-3">
             <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center shadow-xl">
               <svg
-                className="w-7 h-7 text-white"
+                className="w-7 h-7 text-[color:var(--nf-text-primary)]"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -238,7 +238,7 @@ const PremiumDealsPage = () => {
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center shadow-lg flex-shrink-0">
               <svg
-                className="w-6 h-6 text-white"
+                className="w-6 h-6 text-[color:var(--nf-text-primary)]"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -250,8 +250,8 @@ const PremiumDealsPage = () => {
               </svg>
             </div>
             <div className="flex-1">
-              <p className="text-amber-100 font-medium">
-                <strong className="text-amber-300">Premium Perk:</strong> All
+              <p className="text-[color:var(--nf-text-secondary)] font-medium">
+                <strong className="text-[color:var(--nf-accent)]">Premium Perk:</strong> All
                 items here qualify for priority delivery (1-2 days) and earn 2x
                 Nile Miles
               </p>
@@ -265,7 +265,7 @@ const PremiumDealsPage = () => {
             <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 backdrop-blur-sm border border-purple-500/30 flex items-center justify-center mx-auto mb-6">
               <div className="text-6xl">🎁</div>
             </div>
-            <h2 className="text-3xl font-bold text-white mb-3">
+            <h2 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-3">
               New Deals Coming Soon
             </h2>
             <p className="text-purple-200/70 text-lg">

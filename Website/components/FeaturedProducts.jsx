@@ -61,10 +61,18 @@ const FeaturedProducts = () => {
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-red-900/30 to-amber-900/30 border border-red-700/30 mb-6">
             <Flame className="w-10 h-10 text-red-400" />
           </div>
-          <h3 className="text-2xl font-bold text-white mb-3">
+          <h3
+            className="text-2xl font-bold mb-3"
+            style={{ color: "var(--nf-text-primary)" }}
+          >
             Unable to Load Featured Products
           </h3>
-          <p className="text-gray-400 max-w-md mx-auto mb-8">{error}</p>
+          <p
+            className="max-w-md mx-auto mb-8"
+            style={{ color: "var(--nf-text-muted)" }}
+          >
+            {error}
+          </p>
           <button
             onClick={() => window.location.reload()}
             className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold rounded-xl hover:from-amber-700 hover:to-amber-800 transition-all duration-300"
@@ -87,9 +95,15 @@ const FeaturedProducts = () => {
       <div className="relative max-w-8xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16">
-          <div className="inline-flex items-center space-x-1 sm:space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl border border-amber-700/30 mb-3 sm:mb-4 md:mb-6">
-            <Crown className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide text-xs sm:text-sm md:text-base">
+          <div className="inline-flex items-center space-x-1 sm:space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl border border-[var(--nf-border-subtle)] mb-3 sm:mb-4 md:mb-6">
+            <Crown
+              className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5"
+              style={{ color: "var(--nf-accent)" }}
+            />
+            <span
+              className="font-medium tracking-wide text-xs sm:text-sm md:text-base"
+              style={{ color: "var(--nf-accent)" }}
+            >
               Premium Selection
             </span>
             <Star className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 fill-current" />
@@ -100,10 +114,15 @@ const FeaturedProducts = () => {
               Featured Excellence
             </span>
             <br />
-            <span className="text-white">Curated African Treasures</span>
+            <span style={{ color: "var(--nf-text-primary)" }}>
+              Curated African Treasures
+            </span>
           </h2>
 
-          <p className="text-gray-300 max-w-2xl mx-auto text-sm sm:text-base md:text-lg mb-6 sm:mb-8 md:mb-10">
+          <p
+            className="max-w-2xl mx-auto text-sm sm:text-base md:text-lg mb-6 sm:mb-8 md:mb-10"
+            style={{ color: "var(--nf-text-secondary)" }}
+          >
             Handpicked premium products showcasing the finest craftsmanship from
             across Africa
           </p>
@@ -112,19 +131,28 @@ const FeaturedProducts = () => {
           <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8 md:mb-12">
             <div className="flex items-center space-x-1 sm:space-x-2">
               <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r from-amber-500 to-emerald-500 animate-pulse"></div>
-              <span className="text-amber-200 text-xs sm:text-sm">
+              <span
+                className="text-xs sm:text-sm"
+                style={{ color: "var(--nf-text-secondary)" }}
+              >
                 Premium Quality Guaranteed
               </span>
             </div>
             <div className="flex items-center space-x-1 sm:space-x-2">
               <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r from-emerald-500 to-blue-500 animate-pulse"></div>
-              <span className="text-emerald-200 text-xs sm:text-sm">
+              <span
+                className="text-xs sm:text-sm"
+                style={{ color: "var(--nf-emerald)" }}
+              >
                 Authentic African Origin
               </span>
             </div>
             <div className="flex items-center space-x-1 sm:space-x-2">
               <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></div>
-              <span className="text-blue-200 text-xs sm:text-sm">
+              <span
+                className="text-xs sm:text-sm"
+                style={{ color: "var(--nf-info)" }}
+              >
                 Express Delivery Available
               </span>
             </div>
@@ -140,10 +168,16 @@ const FeaturedProducts = () => {
                 <Gem className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-amber-500 animate-pulse" />
               </div>
             </div>
-            <h3 className="mt-4 sm:mt-6 md:mt-8 text-lg sm:text-xl md:text-2xl font-bold text-amber-200">
+            <h3
+              className="mt-4 sm:mt-6 md:mt-8 text-lg sm:text-xl md:text-2xl font-bold"
+              style={{ color: "var(--nf-text-secondary)" }}
+            >
               Curating Premium Selection
             </h3>
-            <p className="text-gray-400 mt-1 sm:mt-2 text-sm sm:text-base">
+            <p
+              className="mt-1 sm:mt-2 text-sm sm:text-base"
+              style={{ color: "var(--nf-text-muted)" }}
+            >
               Discovering authentic African treasures...
             </p>
           </div>
@@ -166,7 +200,13 @@ const FeaturedProducts = () => {
                     ></div>
 
                     {/* Card */}
-                    <div className="relative bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-sm border border-amber-800/30 rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30">
+                    <div
+                      className="relative backdrop-blur-sm rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-500 group-hover:shadow-2xl"
+                      style={{
+                        background: "var(--nf-card-bg)",
+                        border: "1px solid var(--nf-card-border)",
+                      }}
+                    >
                       {/* Product Tag */}
                       {product.tag && (
                         <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-10">
@@ -178,28 +218,39 @@ const FeaturedProducts = () => {
                       )}
 
                       {/* Wishlist Button */}
-                      <button className="absolute top-2 sm:top-4 right-2 sm:right-4 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-700/30 flex items-center justify-center text-amber-400 hover:text-amber-300 hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                      <button className="absolute top-2 sm:top-4 right-2 sm:right-4 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm border border-[var(--nf-border-subtle)] flex items-center justify-center text-amber-400 hover:text-[color:var(--nf-accent)] hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100">
                         <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
                       </button>
 
                       {/* Image Container */}
-                      <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden bg-gradient-to-br from-gray-900 to-black">
+                      <div
+                        className="relative h-48 sm:h-56 md:h-64 overflow-hidden"
+                        style={{ background: "var(--nf-bg-subtle)" }}
+                      >
                         <Link to={`/products/${product.$id || product.id}`}>
                           <img
                             src={product.image}
                             alt={product.name || product.productName}
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                           loading="lazy" decoding="async" />
+                            loading="lazy"
+                            decoding="async"
+                          />
                         </Link>
 
                         {/* Overlay Gradient */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
 
                         {/* Premium Badge */}
-                        <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 bg-gradient-to-r from-amber-900/80 to-yellow-900/80 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-amber-700/30">
+                        <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 bg-gradient-to-r from-amber-900/80 to-yellow-900/80 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-[var(--nf-border-subtle)]">
                           <div className="flex items-center space-x-1">
-                            <Award className="w-2 h-2 sm:w-3 sm:h-3 text-amber-300" />
-                            <span className="text-xs font-bold text-amber-200">
+                            <Award
+                              className="w-2 h-2 sm:w-3 sm:h-3"
+                              style={{ color: "var(--nf-accent)" }}
+                            />
+                            <span
+                              className="text-xs font-bold"
+                              style={{ color: "var(--nf-accent)" }}
+                            >
                               Premium
                             </span>
                           </div>
@@ -210,12 +261,18 @@ const FeaturedProducts = () => {
                       <div className="p-3 sm:p-4 md:p-6">
                         <div className="mb-4">
                           <Link to={`/products/${product.$id || product.id}`}>
-                            <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white group-hover:text-amber-300 transition-colors duration-300 line-clamp-1">
+                            <h3
+                              className="text-sm sm:text-base md:text-lg lg:text-xl font-bold transition-colors duration-300 line-clamp-1"
+                              style={{ color: "var(--nf-text-primary)" }}
+                            >
                               {product.name || product.productName}
                             </h3>
                           </Link>
 
-                          <p className="text-gray-400 text-xs sm:text-sm mt-1 sm:mt-2 line-clamp-2">
+                          <p
+                            className="text-xs sm:text-sm mt-1 sm:mt-2 line-clamp-2"
+                            style={{ color: "var(--nf-text-muted)" }}
+                          >
                             {product.description ||
                               "Premium quality African product with authentic craftsmanship."}
                           </p>
@@ -224,21 +281,33 @@ const FeaturedProducts = () => {
                         {/* Price & Rating */}
                         <div className="flex items-center justify-between mb-3 sm:mb-4 md:mb-6">
                           <div className="flex flex-col">
-                            <span className="text-lg sm:text-xl md:text-2xl font-bold text-amber-300">
+                            <span
+                              className="text-lg sm:text-xl md:text-2xl font-bold"
+                              style={{ color: "var(--nf-accent)" }}
+                            >
                               {product.price
                                 ? formatPrice(product.price)
                                 : "Price on request"}
                             </span>
                             {product.originalPrice && (
-                              <span className="text-gray-500 line-through text-sm">
+                              <span
+                                className="text-[color:var(--nf-text-muted)] line-through text-sm"
+                                style={{ color: "var(--nf-text-muted)" }}
+                              >
                                 {formatPrice(product.originalPrice)}
                               </span>
                             )}
                           </div>
 
-                          <div className="flex items-center space-x-1 bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-amber-700/30">
-                            <Star className="w-2 h-2 sm:w-3 sm:h-3 text-amber-400 fill-current" />
-                            <span className="text-xs font-bold text-amber-200">
+                          <div className="flex items-center space-x-1 bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-[var(--nf-border-subtle)]">
+                            <Star
+                              className="w-2 h-2 sm:w-3 sm:h-3 fill-current"
+                              style={{ color: "var(--nf-accent)" }}
+                            />
+                            <span
+                              className="text-xs font-bold"
+                              style={{ color: "var(--nf-accent)" }}
+                            >
                               4.8
                             </span>
                           </div>
@@ -246,15 +315,27 @@ const FeaturedProducts = () => {
 
                         {/* Features */}
                         <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4 md:mb-6">
-                          <div className="flex items-center space-x-1 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg border border-amber-800/30">
-                            <Shield className="w-2 h-2 sm:w-3 sm:h-3 text-emerald-400" />
-                            <span className="text-xs text-emerald-100">
+                          <div
+                            className="flex items-center space-x-1 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg"
+                            style={{
+                              background: "var(--nf-bg-subtle)",
+                              border: "1px solid var(--nf-border-subtle)",
+                            }}
+                          >
+                            <Shield className="w-2 h-2 sm:w-3 sm:h-3 text-emerald-500" />
+                            <span className="text-xs text-emerald-600 dark:text-emerald-300">
                               Authentic
                             </span>
                           </div>
-                          <div className="flex items-center space-x-1 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg border border-amber-800/30">
-                            <Zap className="w-2 h-2 sm:w-3 sm:h-3 text-blue-400" />
-                            <span className="text-xs text-blue-100">
+                          <div
+                            className="flex items-center space-x-1 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg"
+                            style={{
+                              background: "var(--nf-bg-subtle)",
+                              border: "1px solid var(--nf-border-subtle)",
+                            }}
+                          >
+                            <Zap className="w-2 h-2 sm:w-3 sm:h-3 text-blue-500" />
+                            <span className="text-xs text-blue-600 dark:text-blue-300">
                               Fast Ship
                             </span>
                           </div>
@@ -294,18 +375,30 @@ const FeaturedProducts = () => {
               >
                 <div className="relative">
                   <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-full blur opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
-                  <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-amber-400 group-hover:text-amber-300 transition-colors duration-300 relative" />
+                  <ShoppingBag
+                    className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transition-colors duration-300 relative"
+                    style={{ color: "var(--nf-accent)" }}
+                  />
                 </div>
-                <span className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-amber-200 group-hover:text-white transition-colors duration-300">
+                <span
+                  className="text-sm sm:text-base md:text-lg lg:text-xl font-bold transition-colors duration-300"
+                  style={{ color: "var(--nf-text-secondary)" }}
+                >
                   Explore All Premium Products
                 </span>
                 <div className="relative">
                   <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-full blur opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
-                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-amber-400 group-hover:text-amber-300 group-hover:translate-x-1 transition-all duration-300 relative" />
+                  <ChevronRight
+                    className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 group-hover:translate-x-1 transition-all duration-300 relative"
+                    style={{ color: "var(--nf-accent)" }}
+                  />
                 </div>
               </Link>
 
-              <p className="text-gray-400 mt-3 sm:mt-4 md:mt-6 text-xs sm:text-sm">
+              <p
+                className="mt-3 sm:mt-4 md:mt-6 text-xs sm:text-sm"
+                style={{ color: "var(--nf-text-muted)" }}
+              >
                 Discover {products.length}+ premium African products in our
                 exclusive collection
               </p>
@@ -313,50 +406,74 @@ const FeaturedProducts = () => {
 
             {/* Trust Badges */}
             <div className="mt-10 sm:mt-12 md:mt-16 lg:mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 text-center">
+              <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 text-center">
                 <div className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 mb-2 sm:mb-3 md:mb-4">
-                  <Award className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
+                  <Award className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
-                <div className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-amber-300 mb-1 sm:mb-2">
+                <div
+                  className="text-sm sm:text-base md:text-lg lg:text-xl font-bold mb-1 sm:mb-2"
+                  style={{ color: "var(--nf-accent)" }}
+                >
                   Premium Quality
                 </div>
-                <div className="text-amber-100/80 text-xs sm:text-sm">
+                <div
+                  className="text-xs sm:text-sm"
+                  style={{ color: "var(--nf-text-secondary)" }}
+                >
                   Authentic African Products
                 </div>
               </div>
 
               <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 text-center">
                 <div className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 mb-2 sm:mb-3 md:mb-4">
-                  <Shield className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
+                  <Shield className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
-                <div className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-emerald-300 mb-1 sm:mb-2">
+                <div
+                  className="text-sm sm:text-base md:text-lg lg:text-xl font-bold mb-1 sm:mb-2"
+                  style={{ color: "var(--nf-emerald)" }}
+                >
                   Secure Payment
                 </div>
-                <div className="text-emerald-100/80 text-xs sm:text-sm">
+                <div
+                  className="text-xs sm:text-sm"
+                  style={{ color: "var(--nf-text-secondary)" }}
+                >
                   100% Protected
                 </div>
               </div>
 
               <div className="bg-gradient-to-br from-blue-900/20 to-transparent backdrop-blur-sm border border-blue-800/30 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 text-center">
                 <div className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 mb-2 sm:mb-3 md:mb-4">
-                  <Zap className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
+                  <Zap className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
-                <div className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-blue-300 mb-1 sm:mb-2">
+                <div
+                  className="text-sm sm:text-base md:text-lg lg:text-xl font-bold mb-1 sm:mb-2"
+                  style={{ color: "var(--nf-info)" }}
+                >
                   Fast Delivery
                 </div>
-                <div className="text-blue-100/80 text-xs sm:text-sm">
+                <div
+                  className="text-xs sm:text-sm"
+                  style={{ color: "var(--nf-text-secondary)" }}
+                >
                   Across Africa
                 </div>
               </div>
 
               <div className="bg-gradient-to-br from-red-900/20 to-transparent backdrop-blur-sm border border-red-800/30 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 text-center">
                 <div className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-red-500 to-red-600 mb-2 sm:mb-3 md:mb-4">
-                  <Star className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
+                  <Star className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
-                <div className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-red-300 mb-1 sm:mb-2">
+                <div
+                  className="text-sm sm:text-base md:text-lg lg:text-xl font-bold mb-1 sm:mb-2"
+                  style={{ color: "var(--nf-error)" }}
+                >
                   5-Star Support
                 </div>
-                <div className="text-red-100/80 text-xs sm:text-sm">
+                <div
+                  className="text-xs sm:text-sm"
+                  style={{ color: "var(--nf-text-secondary)" }}
+                >
                   24/7 Assistance
                 </div>
               </div>
@@ -367,13 +484,19 @@ const FeaturedProducts = () => {
         {/* No Products State */}
         {!loading && products.length === 0 && (
           <div className="text-center py-16 sm:py-20 md:py-24 lg:py-32">
-            <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-amber-700/30 mb-4 sm:mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-[var(--nf-border-subtle)] mb-4 sm:mb-6">
               <ShoppingBag className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-amber-400" />
             </div>
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 sm:mb-3 md:mb-4">
+            <h3
+              className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 md:mb-4"
+              style={{ color: "var(--nf-text-primary)" }}
+            >
               No Featured Products Available
             </h3>
-            <p className="text-gray-400 max-w-md mx-auto mb-6 sm:mb-8 text-sm sm:text-base">
+            <p
+              className="max-w-md mx-auto mb-6 sm:mb-8 text-sm sm:text-base"
+              style={{ color: "var(--nf-text-muted)" }}
+            >
               We're currently updating our featured collection. Check back soon
               for premium African products.
             </p>

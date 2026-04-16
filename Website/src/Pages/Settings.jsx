@@ -196,7 +196,7 @@ const SettingsPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -207,9 +207,9 @@ const SettingsPage = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-red-500/10 to-amber-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-8xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <SettingsIcon className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Premium Settings
             </span>
             <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -220,19 +220,19 @@ const SettingsPage = () => {
               Account Settings
             </span>
             <br />
-            <span className="text-white">Premium Control Panel</span>
+            <span className="text-[color:var(--nf-text-primary)]">Premium Control Panel</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Manage your Nile Flow experience with premium African marketplace
             settings
           </p>
 
           {/* User Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4">
-              <div className="text-2xl font-bold text-amber-300">Premium</div>
-              <div className="text-amber-100/80 text-sm">Account Tier</div>
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4">
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)]">Premium</div>
+              <div className="text-[color:var(--nf-text-muted)] text-sm">Account Tier</div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-4">
               <div className="text-2xl font-bold text-emerald-300">5</div>
@@ -257,14 +257,14 @@ const SettingsPage = () => {
           <div className="mb-12">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-2xl font-bold text-amber-200">
+                <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                   Security & Preferences
                 </h2>
-                <p className="text-amber-100/70">Premium account protection</p>
+                <p className="text-[color:var(--nf-text-muted)]">Premium account protection</p>
               </div>
               <div className="flex items-center space-x-2">
                 <Award className="w-6 h-6 text-amber-400" />
-                <span className="text-amber-300 font-bold">Premium</span>
+                <span className="text-[color:var(--nf-accent)] font-bold">Premium</span>
               </div>
             </div>
 
@@ -272,7 +272,7 @@ const SettingsPage = () => {
               {securityItems.map((item, index) => (
                 <div
                   key={index}
-                  className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6 transition-all duration-300 hover:border-amber-500/50"
+                  className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6 transition-all duration-300 hover:border-amber-500/50"
                 >
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-3">
@@ -282,10 +282,10 @@ const SettingsPage = () => {
                         {item.icon}
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold text-white">
+                        <h3 className="text-lg font-bold text-[color:var(--nf-text-primary)]">
                           {item.title}
                         </h3>
-                        <p className="text-amber-100/70 text-sm">
+                        <p className="text-[color:var(--nf-text-muted)] text-sm">
                           {item.enabled ? "Enabled" : "Disabled"}
                         </p>
                       </div>
@@ -295,7 +295,7 @@ const SettingsPage = () => {
                       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                         item.enabled
                           ? "bg-gradient-to-r from-emerald-600 to-emerald-700"
-                          : "bg-gradient-to-r from-gray-800 to-black border border-amber-800/30"
+                          : "bg-gradient-to-r from-gray-800 to-black border border-[var(--nf-border-subtle)]"
                       }`}
                     >
                       <span
@@ -313,10 +313,10 @@ const SettingsPage = () => {
           {/* Account Settings */}
           <div className="mb-12">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-amber-200">
+              <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                 {i18n.t("Account")}
               </h2>
-              <div className="text-amber-100/70 text-sm">
+              <div className="text-[color:var(--nf-text-muted)] text-sm">
                 {accountItems.length} settings
               </div>
             </div>
@@ -330,7 +330,7 @@ const SettingsPage = () => {
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                  <div className="relative bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6 transition-all duration-500 group-hover:border-amber-500/50">
+                  <div className="relative bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6 transition-all duration-500 group-hover:border-amber-500/50">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-4">
                         <div
@@ -339,10 +339,10 @@ const SettingsPage = () => {
                           {item.icon}
                         </div>
                         <div>
-                          <h3 className="text-lg font-bold text-white group-hover:text-amber-300 transition-colors duration-300">
+                          <h3 className="text-lg font-bold text-[color:var(--nf-text-primary)] group-hover:text-[color:var(--nf-accent)] transition-colors duration-300">
                             {item.title}
                           </h3>
-                          <p className="text-amber-100/70 text-sm mt-1">
+                          <p className="text-[color:var(--nf-text-muted)] text-sm mt-1">
                             {item.description}
                           </p>
                         </div>
@@ -350,8 +350,8 @@ const SettingsPage = () => {
 
                       <div className="flex items-center space-x-3">
                         {item.badge && (
-                          <div className="bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full border border-amber-800/30">
-                            <span className="text-xs text-amber-200 font-bold">
+                          <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm px-3 py-1.5 rounded-full border border-[var(--nf-border-subtle)]">
+                            <span className="text-xs text-[color:var(--nf-accent)] font-bold">
                               {item.badge}
                             </span>
                           </div>
@@ -370,7 +370,7 @@ const SettingsPage = () => {
             {/* Preferences */}
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-amber-200">
+                <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                   {i18n.t("Preferences")}
                 </h2>
                 <Settings2 className="w-6 h-6 text-amber-400" />
@@ -379,7 +379,7 @@ const SettingsPage = () => {
               <div className="space-y-4">
                 {preferencesItems.map((item, index) => (
                   <Link key={index} to={item.route} className="group block">
-                    <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4 transition-all duration-300 hover:border-amber-500/50 hover:bg-gradient-to-br hover:from-gray-900/80 hover:to-black/80">
+                    <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4 transition-all duration-300 hover:border-amber-500/50 hover:bg-gradient-to-br hover:from-gray-900/80 hover:to-black/80">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                           <div
@@ -388,18 +388,18 @@ const SettingsPage = () => {
                             {item.icon}
                           </div>
                           <div>
-                            <h3 className="font-bold text-white group-hover:text-amber-300 transition-colors duration-300">
+                            <h3 className="font-bold text-[color:var(--nf-text-primary)] group-hover:text-[color:var(--nf-accent)] transition-colors duration-300">
                               {item.title}
                             </h3>
-                            <p className="text-amber-100/70 text-sm">
+                            <p className="text-[color:var(--nf-text-muted)] text-sm">
                               {item.description}
                             </p>
                           </div>
                         </div>
                         <div className="flex items-center space-x-3">
                           {item.badge && (
-                            <div className="bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm px-3 py-1 rounded-full border border-amber-800/30">
-                              <span className="text-xs text-amber-200 font-bold">
+                            <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm px-3 py-1 rounded-full border border-[var(--nf-border-subtle)]">
+                              <span className="text-xs text-[color:var(--nf-accent)] font-bold">
                                 {item.badge}
                               </span>
                             </div>
@@ -416,7 +416,7 @@ const SettingsPage = () => {
             {/* Support */}
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-amber-200">
+                <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                   {i18n.t("Support")}
                 </h2>
                 <Headphones className="w-6 h-6 text-amber-400" />
@@ -425,7 +425,7 @@ const SettingsPage = () => {
               <div className="space-y-4">
                 {supportItems.map((item, index) => (
                   <Link key={index} to={item.route} className="group block">
-                    <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4 transition-all duration-300 hover:border-amber-500/50 hover:bg-gradient-to-br hover:from-gray-900/80 hover:to-black/80">
+                    <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4 transition-all duration-300 hover:border-amber-500/50 hover:bg-gradient-to-br hover:from-gray-900/80 hover:to-black/80">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                           <div
@@ -434,18 +434,18 @@ const SettingsPage = () => {
                             {item.icon}
                           </div>
                           <div>
-                            <h3 className="font-bold text-white group-hover:text-amber-300 transition-colors duration-300">
+                            <h3 className="font-bold text-[color:var(--nf-text-primary)] group-hover:text-[color:var(--nf-accent)] transition-colors duration-300">
                               {item.title}
                             </h3>
-                            <p className="text-amber-100/70 text-sm">
+                            <p className="text-[color:var(--nf-text-muted)] text-sm">
                               {item.description}
                             </p>
                           </div>
                         </div>
                         <div className="flex items-center space-x-3">
                           {item.badge && (
-                            <div className="bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm px-3 py-1 rounded-full border border-amber-800/30">
-                              <span className="text-xs text-amber-200 font-bold">
+                            <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm px-3 py-1 rounded-full border border-[var(--nf-border-subtle)]">
+                              <span className="text-xs text-[color:var(--nf-accent)] font-bold">
                                 {item.badge}
                               </span>
                             </div>
@@ -462,21 +462,21 @@ const SettingsPage = () => {
 
           {/* Trust Badges */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 text-center">
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center">
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 mb-4">
-                <Shield className="w-6 h-6 text-white" />
+                <Shield className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
               </div>
-              <div className="text-xl font-bold text-amber-300 mb-2">
+              <div className="text-xl font-bold text-[color:var(--nf-accent)] mb-2">
                 100% Secure
               </div>
-              <div className="text-amber-100/80 text-sm">
+              <div className="text-[color:var(--nf-text-muted)] text-sm">
                 Bank-level encryption
               </div>
             </div>
 
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-6 text-center">
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 mb-4">
-                <Clock className="w-6 h-6 text-white" />
+                <Clock className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
               </div>
               <div className="text-xl font-bold text-emerald-300 mb-2">
                 24/7 Support
@@ -488,7 +488,7 @@ const SettingsPage = () => {
 
             <div className="bg-gradient-to-br from-blue-900/20 to-transparent backdrop-blur-sm border border-blue-800/30 rounded-2xl p-6 text-center">
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 mb-4">
-                <Zap className="w-6 h-6 text-white" />
+                <Zap className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
               </div>
               <div className="text-xl font-bold text-blue-300 mb-2">
                 Premium
@@ -500,7 +500,7 @@ const SettingsPage = () => {
 
             <div className="bg-gradient-to-br from-red-900/20 to-transparent backdrop-blur-sm border border-red-800/30 rounded-2xl p-6 text-center">
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-red-500 to-red-600 mb-4">
-                <Star className="w-6 h-6 text-white" />
+                <Star className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
               </div>
               <div className="text-xl font-bold text-red-300 mb-2">5-Star</div>
               <div className="text-red-100/80 text-sm">

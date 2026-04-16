@@ -1,112 +1,130 @@
 /* eslint-disable react-refresh/only-export-components */
-// context/ThemeContext.js
+/**
+ * Nile Flow — Theme System
+ *
+ * Architecture:
+ *   - Themes are applied as data-theme="light|dark" on <html>.
+ *   - CSS variables (--nf-*) defined in index.css do the actual painting.
+ *   - React does NOT paint anything — it only flips the attribute.
+ *   - This means theme switching causes ZERO React re-renders in consumers
+ *     because nothing in the JS tree changes, only the DOM attribute.
+ *
+ * Persistence & FOUC prevention:
+ *   - An inline <script> in index.html reads localStorage and sets the
+ *     attribute synchronously before React hydrates (see index.html).
+ *   - This file is the runtime layer that exposes useTheme() to components.
+ */
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 
+export const THEMES = /** @type {const} */ ({
+  LIGHT: "light",
+  DARK: "dark",
+});
 
-const ThemeContext = createContext();
-const STORAGE_KEY = 'app_theme';
+const STORAGE_KEY = "nf_theme";
+const HTML_ATTR = "data-theme";
 
-const colorPalette = {
-  orange: {
-    100: '#FEE9DD',
-    200: '#F5A05C',
-    300: '#D96B29',
-    400: '#8C3E14',
-  },
-  brown: {
-    100: '#AF6432',
-    200: '#6E3C1A',
-  },
-  beige: {
-    100: '#FFF8F0',
-  },
-  black: {
-    100: '#000000',
-    200: '#222222',
-  },
-  white: {
-    100: '#FFFFFF',
-  },
-  lightGray: {
-  100: '#F5F5F5', // very light gray (almost white)
-  200: '#E5E5E5', // soft UI background gray
-  300: '#D4D4D4', // neutral form input gray
-  400: '#A3A3A3', // medium-light gray (good for placeholders)
-  500: '#737373', // baseline readable gray text
-}
-
+/** Read preference: localStorage → system → default light */
+const resolveInitialTheme = () => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === THEMES.LIGHT || stored === THEMES.DARK) return stored;
+  } catch {
+    /* localStorage blocked (private browsing etc.) */
+  }
+  const prefersDark =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+  return prefersDark ? THEMES.DARK : THEMES.LIGHT;
 };
 
-const themes = {
-   light: {
-    name: 'light',
-    background: '#FFFFFF',
-    text: '#000000',
-    card: '#F4F4F4',
-    primary: '#1D4ED8',
-    button: '#60A5FA',
-    accent: '#E5E7EB',
-    colors: {}, // No custom palette in light mode
-  },
-
-  dark: {
-    name: 'dark',
-    background: colorPalette.brown[200],
-    text: colorPalette.white[100],
-    card: colorPalette.brown[100],
-    primary: colorPalette.orange[400],
-    button: colorPalette.lightGray[200],
-    accent: colorPalette.orange[100],
-    colors: colorPalette,
-    background2: colorPalette.beige[200],
-    text2: colorPalette.black[100],
-    card2: colorPalette.orange[300],
-    primary2: colorPalette.orange[300],
-    button2: colorPalette.orange[200],
-    accent2: colorPalette.brown[100],
-    colors2: colorPalette,
-  },
+/** Imperatively set the attribute on <html> — no React paint involved */
+const applyThemeToDOM = (theme) => {
+  document.documentElement.setAttribute(HTML_ATTR, theme);
 };
+
+const ThemeContext = createContext(null);
 
 export const ThemeProvider = ({ children }) => {
-  const systemColorScheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  const [theme, setTheme] = useState(systemColorScheme || 'light');
-  const [loading, setLoading] = useState(true);
+  // Initialise from the resolved value immediately — never null/loading
+  const [theme, setTheme] = useState(() => resolveInitialTheme());
 
+  // Sync DOM attribute on mount (in case the inline script wasn't present)
+  // and whenever the theme changes.
   useEffect(() => {
-    const LoadTheme = async () => {
+    applyThemeToDOM(theme);
+    try {
+      localStorage.setItem(STORAGE_KEY, theme);
+    } catch {
+      /* ignore write failures */
+    }
+  }, [theme]);
+
+  // Listen for system preference changes while the app is open
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleSystemChange = (e) => {
+      // Only follow system if the user has not set an explicit preference
       try {
-        const storedTheme = localStorage.getItem(STORAGE_KEY);
-        if (storedTheme) {
-          setTheme(storedTheme)
-        } 
-      } catch (e) {
-        console.log('Failed to Load theme from storage', e)
-      } finally {
-        setLoading(false)
+        if (!localStorage.getItem(STORAGE_KEY)) {
+          setTheme(e.matches ? THEMES.DARK : THEMES.LIGHT);
+        }
+      } catch {
+        setTheme(e.matches ? THEMES.DARK : THEMES.LIGHT);
       }
-    }
-    LoadTheme();
-  }, [])
+    };
+    mq.addEventListener("change", handleSystemChange);
+    return () => mq.removeEventListener("change", handleSystemChange);
+  }, []);
 
-  const toggleTheme = async () => {
-     const newTheme = theme === 'light' ? 'dark' : 'light';
-    try{
-      localStorage.setItem(STORAGE_KEY, newTheme)
-    } catch (e) {
-      console.warn("Failed to save theme to stoarge", e)
-    }
-    setTheme(newTheme);
-  };
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => (prev === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT));
+  }, []);
 
-  if(loading) return null;
+  const setExplicitTheme = useCallback((newTheme) => {
+    if (newTheme === THEMES.LIGHT || newTheme === THEMES.DARK) {
+      setTheme(newTheme);
+    }
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      theme,
+      isDark: theme === THEMES.DARK,
+      isLight: theme === THEMES.LIGHT,
+      toggleTheme,
+      setTheme: setExplicitTheme,
+    }),
+    [theme, toggleTheme, setExplicitTheme],
+  );
 
   return (
-    <ThemeContext.Provider value={{ theme, themeStyles: themes[theme], toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 };
 
-export const useTheme = () => useContext(ThemeContext);
+/**
+ * useTheme — consume the theme in any component.
+ *
+ * Returns:
+ *   theme       — "light" | "dark"
+ *   isDark      — boolean
+ *   isLight     — boolean
+ *   toggleTheme — () => void
+ *   setTheme    — (theme: "light"|"dark") => void
+ */
+export const useTheme = () => {
+  const ctx = useContext(ThemeContext);
+  if (!ctx) throw new Error("useTheme must be used inside <ThemeProvider>");
+  return ctx;
+};
+
+export default ThemeProvider;

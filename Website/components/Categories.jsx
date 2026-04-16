@@ -93,9 +93,9 @@ const Categories = () => {
       <div className="relative max-w-8xl mx-auto">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
-          <div className="inline-flex items-center space-x-1 sm:space-x-2 bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl border border-amber-700/30 mb-3 sm:mb-4">
+          <div className="inline-flex items-center space-x-1 sm:space-x-2 bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl border border-[var(--nf-border-subtle)] mb-3 sm:mb-4">
             <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide text-xs sm:text-sm md:text-base">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide text-xs sm:text-sm md:text-base">
               Premium Collections
             </span>
           </div>
@@ -105,10 +105,12 @@ const Categories = () => {
               African Excellence
             </span>
             <br />
-            <span className="text-white mt-2 block">Curated Categories</span>
+            <span className="text-[color:var(--nf-text-primary)] mt-2 block">
+              Curated Categories
+            </span>
           </h2>
 
-          <p className="text-gray-300 max-w-2xl mx-auto text-sm sm:text-base md:text-lg lg:text-xl">
+          <p className="text-[color:var(--nf-text-secondary)] max-w-2xl mx-auto text-sm sm:text-base md:text-lg lg:text-xl">
             Discover authentic products from across Africa, handpicked for
             quality and cultural significance
           </p>
@@ -116,19 +118,14 @@ const Categories = () => {
 
         {/* Loading State */}
         {loading && (
-          <div className="flex flex-col items-center justify-center py-12 sm:py-16 md:py-20">
-            <div className="relative">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 border-2 sm:border-4 border-amber-900/30 border-t-amber-500 rounded-full animate-spin"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Leaf className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-amber-500 animate-pulse" />
-              </div>
-            </div>
-            <h3 className="mt-4 sm:mt-6 text-lg sm:text-xl md:text-2xl font-bold text-amber-200">
-              Loading Premium Categories
-            </h3>
-            <p className="text-gray-400 mt-1 sm:mt-2 text-sm sm:text-base">
-              Discovering authentic African products...
-            </p>
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="rounded-xl h-40 animate-pulse"
+                style={{ background: "var(--nf-bg-subtle)" }}
+              />
+            ))}
           </div>
         )}
 
@@ -153,7 +150,7 @@ const Categories = () => {
                   ></div>
 
                   {/* Card */}
-                  <div className="relative bg-gradient-to-b from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-2xl sm:rounded-3xl p-3 sm:p-4 md:p-6 h-full transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30">
+                  <div className="relative bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl sm:rounded-3xl p-3 sm:p-4 md:p-6 h-full transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30">
                     {/* Icon & Badge */}
                     <div className="flex items-start justify-between mb-3 sm:mb-4 md:mb-6">
                       <div
@@ -162,16 +159,16 @@ const Categories = () => {
                           "/30",
                         )} border border-amber-700/20 group-hover:scale-110 transition-transform duration-300`}
                       >
-                        <div className="text-amber-300">
+                        <div className="text-[color:var(--nf-accent)]">
                           <div className="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8">
                             {getCategoryIcon(cat.name)}
                           </div>
                         </div>
                       </div>
 
-                      <div className="flex items-center space-x-1 bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-amber-700/30">
+                      <div className="flex items-center space-x-1 bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-[var(--nf-border-subtle)]">
                         <Star className="w-2 h-2 sm:w-3 sm:h-3 text-amber-400" />
-                        <span className="text-xs font-bold text-amber-200">
+                        <span className="text-xs font-bold text-[color:var(--nf-accent)]">
                           Premium
                         </span>
                       </div>
@@ -179,18 +176,18 @@ const Categories = () => {
 
                     {/* Content */}
                     <div className="space-y-2 sm:space-y-3 md:space-y-4">
-                      <h3 className="text-base sm:text-lg md:text-xl font-bold text-white group-hover:text-amber-300 transition-colors duration-300">
+                      <h3 className="text-base sm:text-lg md:text-xl font-bold text-[color:var(--nf-text-primary)] group-hover:text-[color:var(--nf-accent)] transition-colors duration-300">
                         {cat.name}
                       </h3>
 
-                      <p className="text-gray-400 text-xs sm:text-sm md:text-base line-clamp-2 group-hover:text-gray-300 transition-colors duration-300">
+                      <p className="text-[color:var(--nf-text-muted)] text-xs sm:text-sm md:text-base line-clamp-2 group-hover:text-[color:var(--nf-text-secondary)] transition-colors duration-300">
                         {cat.description ||
                           `Discover premium ${cat.name.toLowerCase()} from across Africa`}
                       </p>
                     </div>
 
                     {/* Image Container */}
-                    <div className="mt-3 sm:mt-4 md:mt-6 relative h-32 sm:h-36 md:h-40 rounded-xl sm:rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-amber-800/20 group-hover:border-amber-500/30 transition-all duration-500">
+                    <div className="mt-3 sm:mt-4 md:mt-6 relative h-32 sm:h-36 md:h-40 rounded-xl sm:rounded-2xl overflow-hidden bg-[var(--nf-bg-subtle)] border border-amber-800/20 group-hover:border-amber-500/30 transition-all duration-500">
                       <img
                         src={cat.img || "/placeholder.png"}
                         alt={`${cat.name} category image`}
@@ -221,16 +218,16 @@ const Categories = () => {
                           {[1, 2, 3].map((i) => (
                             <div
                               key={i}
-                              className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border border-gray-900 sm:border-2 bg-gradient-to-br from-amber-500 to-yellow-600"
+                              className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border border-[var(--nf-border)] sm:border-2 bg-gradient-to-br from-amber-500 to-yellow-600"
                             ></div>
                           ))}
                         </div>
-                        <span className="text-xs text-gray-400 ml-1 sm:ml-2">
+                        <span className="text-xs text-[color:var(--nf-text-muted)] ml-1 sm:ml-2">
                           500+ products
                         </span>
                       </div>
 
-                      <div className="flex items-center space-x-1 sm:space-x-2 text-amber-400 group-hover:text-amber-300 transition-colors duration-300">
+                      <div className="flex items-center space-x-1 sm:space-x-2 text-amber-400 group-hover:text-[color:var(--nf-accent)] transition-colors duration-300">
                         <span className="text-xs sm:text-sm font-semibold">
                           Explore
                         </span>
@@ -260,12 +257,12 @@ const Categories = () => {
               to="/shop"
               className="group inline-flex items-center space-x-2 sm:space-x-3 px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm border border-amber-700/40 rounded-xl sm:rounded-2xl hover:border-amber-500/60 transition-all duration-300"
             >
-              <span className="text-sm sm:text-base md:text-lg font-bold text-amber-200 group-hover:text-white transition-colors duration-300">
+              <span className="text-sm sm:text-base md:text-lg font-bold text-[color:var(--nf-accent)] group-hover:text-[color:var(--nf-text-primary)] transition-colors duration-300">
                 Explore All Products
               </span>
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-full blur opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
-                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-amber-400 group-hover:text-amber-300 group-hover:translate-x-1 transition-all duration-300 relative" />
+                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-amber-400 group-hover:text-[color:var(--nf-accent)] group-hover:translate-x-1 transition-all duration-300 relative" />
               </div>
             </Link>
           </div>
@@ -274,13 +271,13 @@ const Categories = () => {
         {/* No Categories State */}
         {!loading && categories.length === 0 && (
           <div className="text-center py-12 sm:py-16 md:py-20">
-            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-amber-700/30 mb-4 sm:mb-6">
+            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-[var(--nf-border-subtle)] mb-4 sm:mb-6">
               <Gem className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-amber-400" />
             </div>
-            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3">
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[color:var(--nf-text-primary)] mb-2 sm:mb-3">
               No Categories Found
             </h3>
-            <p className="text-gray-400 max-w-md mx-auto text-sm sm:text-base">
+            <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto text-sm sm:text-base">
               We're currently curating premium African products for you. Check
               back soon for our exclusive collections.
             </p>
@@ -289,11 +286,11 @@ const Categories = () => {
 
         {/* Stats Bar */}
         <div className="mt-8 sm:mt-12 md:mt-16 grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
-          <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 text-center">
-            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-amber-300 mb-1 sm:mb-2">
+          <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 text-center">
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[color:var(--nf-accent)] mb-1 sm:mb-2">
               500+
             </div>
-            <div className="text-amber-100/80 text-xs sm:text-sm">
+            <div className="text-[color:var(--nf-text-muted)] text-xs sm:text-sm">
               Premium Products
             </div>
           </div>

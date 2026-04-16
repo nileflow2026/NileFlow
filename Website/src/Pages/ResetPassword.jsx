@@ -74,7 +74,7 @@ const ResetPassword = () => {
 
   if (resetSuccess) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
         <Header />
 
         <div className="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8">
@@ -86,7 +86,7 @@ const ResetPassword = () => {
             {/* Success Icon */}
             <div className="mb-8">
               <div className="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center mx-auto">
-                <CheckCircle className="w-12 h-12 text-white" />
+                <CheckCircle className="w-12 h-12 text-[color:var(--nf-text-primary)]" />
               </div>
             </div>
 
@@ -97,16 +97,16 @@ const ResetPassword = () => {
               </span>
             </h1>
 
-            <p className="text-gray-300 text-lg mb-8 max-w-md mx-auto">
+            <p className="text-[color:var(--nf-text-secondary)] text-lg mb-8 max-w-md mx-auto">
               Your password has been updated. You can now sign in with your new
               password.
             </p>
 
             {/* Success Card */}
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 mb-8">
+            <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 mb-8">
               <div className="flex items-center space-x-4 p-4 bg-gradient-to-r from-emerald-900/20 to-green-900/20 backdrop-blur-sm border border-emerald-800/30 rounded-2xl">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center flex-shrink-0">
-                  <Lock className="w-6 h-6 text-white" />
+                  <Lock className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div className="text-left">
                   <h3 className="text-lg font-bold text-emerald-100 mb-1">
@@ -118,7 +118,7 @@ const ResetPassword = () => {
                 </div>
               </div>
 
-              <div className="mt-6 text-amber-100/60 text-sm">
+              <div className="mt-6 text-[color:var(--nf-text-muted)] text-sm">
                 Redirecting you to sign in page in 3 seconds...
               </div>
             </div>
@@ -140,7 +140,7 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -151,9 +151,9 @@ const ResetPassword = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-red-500/10 to-amber-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <Key className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Secure Reset
             </span>
             <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -164,10 +164,10 @@ const ResetPassword = () => {
               Create New Password
             </span>
             <br />
-            <span className="text-white">Secure Your Account</span>
+            <span className="text-[color:var(--nf-text-primary)]">Secure Your Account</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Choose a strong password to protect your Nile Flow account and
             access premium features.
           </p>
@@ -177,17 +177,17 @@ const ResetPassword = () => {
       {/* Main Content */}
       <main className="pb-20 px-4 sm:px-6 lg:px-8">
         <div className="relative max-w-2xl mx-auto">
-          <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden">
-            <div className="p-8 border-b border-amber-800/30">
+          <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden">
+            <div className="p-8 border-b border-[var(--nf-border-subtle)]">
               <div className="flex items-center space-x-3 mb-2">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                  <Key className="w-6 h-6 text-white" />
+                  <Key className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-amber-200">
+                  <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                     Reset Password
                   </h2>
-                  <p className="text-amber-100/70">
+                  <p className="text-[color:var(--nf-text-muted)]">
                     Enter your new password below
                   </p>
                 </div>
@@ -197,7 +197,7 @@ const ResetPassword = () => {
             <form onSubmit={handleSubmit} className="p-8 space-y-6">
               {/* New Password Field */}
               <div>
-                <label className="block text-amber-100 font-medium mb-2">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                   <span className="flex items-center space-x-2">
                     <Lock className="w-4 h-4" />
                     <span>New Password</span>
@@ -209,7 +209,7 @@ const ResetPassword = () => {
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="relative w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors pl-12 pr-12"
+                    className="relative w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors pl-12 pr-12"
                     placeholder="Enter new password"
                     required
                   />
@@ -219,7 +219,7 @@ const ResetPassword = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-amber-500 hover:text-amber-300 transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-amber-500 hover:text-[color:var(--nf-accent)] transition-colors"
                   >
                     {showPassword ? (
                       <EyeOff className="w-5 h-5" />
@@ -228,14 +228,14 @@ const ResetPassword = () => {
                     )}
                   </button>
                 </div>
-                <p className="text-amber-100/60 text-sm mt-2">
+                <p className="text-[color:var(--nf-text-muted)] text-sm mt-2">
                   Must be at least 8 characters long
                 </p>
               </div>
 
               {/* Confirm Password Field */}
               <div>
-                <label className="block text-amber-100 font-medium mb-2">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                   <span className="flex items-center space-x-2">
                     <Lock className="w-4 h-4" />
                     <span>Confirm New Password</span>
@@ -247,7 +247,7 @@ const ResetPassword = () => {
                     type={showConfirmPassword ? "text" : "password"}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="relative w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors pl-12 pr-12"
+                    className="relative w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors pl-12 pr-12"
                     placeholder="Confirm new password"
                     required
                   />
@@ -257,7 +257,7 @@ const ResetPassword = () => {
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-amber-500 hover:text-amber-300 transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-amber-500 hover:text-[color:var(--nf-accent)] transition-colors"
                   >
                     {showConfirmPassword ? (
                       <EyeOff className="w-5 h-5" />
@@ -325,7 +325,7 @@ const ResetPassword = () => {
             </form>
 
             {/* Security Notice */}
-            <div className="p-8 border-t border-amber-800/30">
+            <div className="p-8 border-t border-[var(--nf-border-subtle)]">
               <div className="bg-gradient-to-r from-emerald-900/20 to-green-900/20 backdrop-blur-sm border border-emerald-800/30 rounded-xl p-4">
                 <div className="flex items-center space-x-3">
                   <Shield className="w-6 h-6 text-emerald-400 flex-shrink-0" />

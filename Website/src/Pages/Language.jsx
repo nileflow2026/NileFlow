@@ -129,12 +129,12 @@ const Language = () => {
       <div class="bg-gradient-to-r from-emerald-900/80 to-green-900/80 backdrop-blur-sm border border-emerald-700/50 rounded-2xl p-4 shadow-2xl">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-[color:var(--nf-text-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
             </svg>
           </div>
           <div>
-            <p class="font-bold text-white">Language Updated</p>
+            <p class="font-bold text-[color:var(--nf-text-primary)]">Language Updated</p>
             <p class="text-emerald-100 text-sm">Now browsing in ${
               langInfo?.label || lang
             }</p>
@@ -156,13 +156,13 @@ const Language = () => {
       <div class="bg-gradient-to-r from-amber-900/80 to-yellow-900/80 backdrop-blur-sm border border-amber-700/50 rounded-2xl p-4 shadow-2xl">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-[color:var(--nf-text-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
             </svg>
           </div>
           <div>
-            <p class="font-bold text-white">Coming Soon!</p>
-            <p class="text-amber-100 text-sm">${langInfo?.label || lang} translation is being developed</p>
+            <p class="font-bold text-[color:var(--nf-text-primary)]">Coming Soon!</p>
+            <p class="text-[color:var(--nf-text-secondary)] text-sm">${langInfo?.label || lang} translation is being developed</p>
           </div>
         </div>
       </div>
@@ -179,7 +179,7 @@ const Language = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -190,9 +190,9 @@ const Language = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-8xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <Languages className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Cultural Experience
             </span>
             <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -203,10 +203,10 @@ const Language = () => {
               Language Settings
             </span>
             <br />
-            <span className="text-white">African Cultural Interface</span>
+            <span className="text-[color:var(--nf-text-primary)]">African Cultural Interface</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Experience Nile Flow in your preferred language. Choose from our
             supported African and international languages for a personalized
             shopping experience.
@@ -214,9 +214,9 @@ const Language = () => {
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-4">
-              <div className="text-2xl font-bold text-amber-300">8+</div>
-              <div className="text-amber-100/80 text-sm">Languages</div>
+            <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4">
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)]">8+</div>
+              <div className="text-[color:var(--nf-text-muted)] text-sm">Languages</div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-4">
               <div className="text-2xl font-bold text-emerald-300">54</div>
@@ -241,31 +241,31 @@ const Language = () => {
         <div className="relative max-w-4xl mx-auto">
           {/* Current Language Indicator */}
           <div className="mb-8">
-            <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/30 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6">
+            <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/30 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                    <Globe className="w-8 h-8 text-white" />
+                    <Globe className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <div>
-                    <p className="text-amber-100 text-sm">
+                    <p className="text-[color:var(--nf-text-secondary)] text-sm">
                       Currently Browsing In
                     </p>
                     <div className="flex items-center space-x-2">
-                      <span className="text-2xl font-bold text-white">
+                      <span className="text-2xl font-bold text-[color:var(--nf-text-primary)]">
                         {
                           languages.find((l) => l.lang === selectedLanguage)
                             ?.flag
                         }
                       </span>
-                      <h2 className="text-2xl font-bold text-amber-300">
+                      <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                         {
                           languages.find((l) => l.lang === selectedLanguage)
                             ?.label
                         }
                       </h2>
                     </div>
-                    <p className="text-amber-100/70 text-sm mt-1">
+                    <p className="text-[color:var(--nf-text-muted)] text-sm mt-1">
                       {
                         languages.find((l) => l.lang === selectedLanguage)
                           ?.description
@@ -286,13 +286,13 @@ const Language = () => {
           </div>
 
           {/* Language Selection */}
-          <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
+          <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h2 className="text-2xl font-bold text-amber-200">
+                <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                   Available Languages
                 </h2>
-                <p className="text-amber-100/70">
+                <p className="text-[color:var(--nf-text-muted)]">
                   Select your preferred browsing language
                 </p>
               </div>
@@ -316,18 +316,18 @@ const Language = () => {
                         isSelected
                           ? "bg-gradient-to-r from-amber-600/30 to-amber-700/20 border-amber-500/50 shadow-lg shadow-amber-900/30"
                           : isAvailable
-                            ? "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 hover:border-amber-500/50"
-                            : "bg-gradient-to-r from-gray-900/30 to-black/30 border-gray-700/30 hover:border-gray-500/50 opacity-75"
+                            ? "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] hover:border-amber-500/50"
+                            : "bg-gradient-to-r from-gray-900/30 to-black/30 border-[var(--nf-border-subtle)] hover:border-gray-500/50 opacity-75"
                       }`}
                     >
                       {/* Selection Indicator or Coming Soon Badge */}
                       {isSelected && (
                         <div className="absolute -top-2 -right-2 w-10 h-10 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 flex items-center justify-center shadow-lg">
-                          <Check className="w-5 h-5 text-white" />
+                          <Check className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                         </div>
                       )}
                       {!isAvailable && (
-                        <div className="absolute -top-2 -right-2 bg-gradient-to-r from-gray-600 to-gray-700 text-white text-xs font-bold px-2 py-1 rounded-full border border-gray-500">
+                        <div className="absolute -top-2 -right-2 bg-gradient-to-r from-gray-600 to-gray-700 text-[color:var(--nf-text-primary)] text-xs font-bold px-2 py-1 rounded-full border border-gray-500">
                           Coming Soon
                         </div>
                       )}
@@ -339,8 +339,8 @@ const Language = () => {
                             isSelected
                               ? "bg-gradient-to-br from-amber-500 to-yellow-600"
                               : isAvailable
-                                ? "bg-gradient-to-br from-gray-800 to-black border border-amber-800/30"
-                                : "bg-gradient-to-br from-gray-700 to-gray-800 border border-gray-600/30 grayscale"
+                                ? "bg-gradient-to-br from-gray-800 to-black border border-[var(--nf-border-subtle)]"
+                                : "bg-gradient-to-br from-gray-700 to-gray-800 border border-[var(--nf-border)]/30 grayscale"
                           }`}
                         >
                           {flag}
@@ -350,18 +350,18 @@ const Language = () => {
                             <h3
                               className={`text-xl font-bold ${
                                 isSelected
-                                  ? "text-amber-300"
+                                  ? "text-[color:var(--nf-accent)]"
                                   : isAvailable
-                                    ? "text-white"
-                                    : "text-gray-300"
+                                    ? "text-[color:var(--nf-text-primary)]"
+                                    : "text-[color:var(--nf-text-secondary)]"
                               }`}
                             >
                               {label}
                             </h3>
                             {lang === "en" && (
-                              <div className="flex items-center space-x-1 bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-2 py-1 rounded border border-amber-700/30">
+                              <div className="flex items-center space-x-1 bg-gradient-to-r from-amber-900/40 to-yellow-900/30 backdrop-blur-sm px-2 py-1 rounded border border-[var(--nf-border-subtle)]">
                                 <Star className="w-3 h-3 text-amber-400" />
-                                <span className="text-xs text-amber-200">
+                                <span className="text-xs text-[color:var(--nf-accent)]">
                                   Available
                                 </span>
                               </div>
@@ -370,8 +370,8 @@ const Language = () => {
                           <p
                             className={`text-sm mt-1 ${
                               isAvailable
-                                ? "text-amber-100/70"
-                                : "text-gray-400/70"
+                                ? "text-[color:var(--nf-text-muted)]"
+                                : "text-[color:var(--nf-text-muted)]/70"
                             }`}
                           >
                             {description}
@@ -384,14 +384,14 @@ const Language = () => {
                         <div className="flex items-center space-x-2">
                           <Users
                             className={`w-4 h-4 ${
-                              isAvailable ? "text-amber-400" : "text-gray-500"
+                              isAvailable ? "text-amber-400" : "text-[color:var(--nf-text-muted)]"
                             }`}
                           />
                           <span
                             className={`text-xs ${
                               isAvailable
-                                ? "text-amber-100/80"
-                                : "text-gray-400/80"
+                                ? "text-[color:var(--nf-text-muted)]"
+                                : "text-[color:var(--nf-text-muted)]/80"
                             }`}
                           >
                             {speakers}
@@ -400,14 +400,14 @@ const Language = () => {
                         <div className="flex items-center space-x-2">
                           <Shield
                             className={`w-4 h-4 ${
-                              isAvailable ? "text-emerald-400" : "text-gray-500"
+                              isAvailable ? "text-emerald-400" : "text-[color:var(--nf-text-muted)]"
                             }`}
                           />
                           <span
                             className={`text-xs ${
                               isAvailable
                                 ? "text-emerald-100/80"
-                                : "text-gray-400/80"
+                                : "text-[color:var(--nf-text-muted)]/80"
                             }`}
                           >
                             {region}
@@ -425,7 +425,7 @@ const Language = () => {
                       >
                         <ChevronRight
                           className={`w-5 h-5 ${
-                            isSelected ? "text-amber-300" : "text-amber-400"
+                            isSelected ? "text-[color:var(--nf-accent)]" : "text-amber-400"
                           }`}
                         />
                       </div>
@@ -447,7 +447,7 @@ const Language = () => {
                   onClick={toggleAllLanguages}
                   className="group inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm border border-amber-700/40 rounded-xl hover:border-amber-500/60 transition-all duration-300"
                 >
-                  <span className="text-amber-200 font-medium">
+                  <span className="text-[color:var(--nf-accent)] font-medium">
                     {showAllLanguages
                       ? "Show Less Languages"
                       : "Show All African Languages"}
@@ -464,28 +464,28 @@ const Language = () => {
             )}
 
             {/* Language Benefits */}
-            <div className="mt-8 pt-8 border-t border-amber-800/30">
-              <h3 className="text-lg font-bold text-amber-200 mb-4">
+            <div className="mt-8 pt-8 border-t border-[var(--nf-border-subtle)]">
+              <h3 className="text-lg font-bold text-[color:var(--nf-accent)] mb-4">
                 Language Benefits
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4">
+                <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4">
                   <Award className="w-8 h-8 text-amber-400 mb-2" />
-                  <h4 className="text-amber-100 font-bold">
+                  <h4 className="text-[color:var(--nf-text-secondary)] font-bold">
                     Cultural Accuracy
                   </h4>
-                  <p className="text-amber-100/70 text-sm mt-1">
+                  <p className="text-[color:var(--nf-text-muted)] text-sm mt-1">
                     Authentic translations for African products
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4">
+                <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4">
                   <Shield className="w-8 h-8 text-emerald-400 mb-2" />
                   <h4 className="text-emerald-100 font-bold">Local Support</h4>
                   <p className="text-emerald-100/70 text-sm mt-1">
                     Native speakers for customer service
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4">
+                <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4">
                   <Globe className="w-8 h-8 text-blue-400 mb-2" />
                   <h4 className="text-blue-100 font-bold">Global Reach</h4>
                   <p className="text-blue-100/70 text-sm mt-1">

@@ -110,7 +110,7 @@ const DealsProductCard = ({ product }) => {
       ></div>
 
       {/* Main Card */}
-      <div className="relative bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30 h-full">
+      <div className="relative bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-900/30 h-full">
         {/* Discount Badge */}
         <div className="absolute top-4 right-4 z-10">
           <div className="bg-gradient-to-r from-red-600 to-orange-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg flex items-center space-x-1">
@@ -120,7 +120,7 @@ const DealsProductCard = ({ product }) => {
         </div>
 
         {/* Image Container */}
-        <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden bg-gradient-to-br from-gray-900 to-black">
+        <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden bg-[var(--nf-bg-subtle)]">
           <Link
             to={`/products/${product.productId || product.$id}`}
             className="block h-full"
@@ -149,7 +149,7 @@ const DealsProductCard = ({ product }) => {
           >
             <Link
               to={`/products/${product.productId || product.$id}`}
-              className="w-10 h-10 rounded-full bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-700/30 flex items-center justify-center text-amber-400 hover:text-amber-300 hover:scale-110 transition-all"
+              className="w-10 h-10 rounded-full bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm border border-[var(--nf-border-subtle)] flex items-center justify-center text-amber-400 hover:text-[color:var(--nf-accent)] hover:scale-110 transition-all"
             >
               <Eye className="w-5 h-5" />
             </Link>
@@ -160,7 +160,7 @@ const DealsProductCard = ({ product }) => {
         <div className="p-3 sm:p-4 md:p-6">
           <div className="mb-4">
             <Link to={`/products/${product.productId || product.$id}`}>
-              <h3 className="text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-amber-300 transition-colors duration-300 line-clamp-2 min-h-[2.5rem] sm:min-h-[3.5rem]">
+              <h3 className="text-sm sm:text-base md:text-lg font-bold text-[color:var(--nf-text-primary)] group-hover:text-[color:var(--nf-accent)] transition-colors duration-300 line-clamp-2 min-h-[2.5rem] sm:min-h-[3.5rem]">
                 {product.productName || product.name}
               </h3>
             </Link>
@@ -193,13 +193,13 @@ const DealsProductCard = ({ product }) => {
           {/* Price Section */}
           <div className="mb-6">
             <div className="flex items-baseline gap-3 mb-2">
-              <span className="text-xl sm:text-2xl md:text-3xl font-bold text-amber-300">
+              <span className="text-xl sm:text-2xl md:text-3xl font-bold text-[color:var(--nf-accent)]">
                 {formatPrice(product.dealPrice || product.price)}
               </span>
               {product.dealPrice &&
                 product.price &&
                 product.dealPrice !== product.price && (
-                  <span className="text-gray-500 line-through text-lg">
+                  <span className="text-[color:var(--nf-text-muted)] line-through text-lg">
                     {formatPrice(product.price)}
                   </span>
                 )}
@@ -219,7 +219,7 @@ const DealsProductCard = ({ product }) => {
 
             {/* Progress Bar (Limited Stock Indicator) */}
             <div className="mt-4">
-              <div className="flex items-center justify-between text-xs text-amber-100/70 mb-1">
+              <div className="flex items-center justify-between text-xs text-[color:var(--nf-text-muted)] mb-1">
                 <span>
                   {stockPercentage <= 20
                     ? "Almost gone!"
@@ -227,11 +227,11 @@ const DealsProductCard = ({ product }) => {
                       ? "Limited stock"
                       : "In stock"}
                 </span>
-                <span className="font-bold text-amber-200">
+                <span className="font-bold text-[color:var(--nf-accent)]">
                   {stockQuantity > 0 ? `${stockQuantity} left` : "Out of stock"}
                 </span>
               </div>
-              <div className="w-full h-2 bg-gray-800/50 rounded-full overflow-hidden">
+              <div className="w-full h-2 bg-[var(--nf-bg-subtle)] rounded-full overflow-hidden">
                 <div
                   className={`h-full bg-gradient-to-r ${stockColorClass} rounded-full transition-all duration-1000`}
                   style={{
@@ -263,13 +263,13 @@ const DealsProductCard = ({ product }) => {
           </div>
 
           {/* Countdown Timer */}
-          <div className="mt-4 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-3">
+          <div className="mt-4 bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <Timer
                   className={`w-4 h-4 text-red-400 ${displayTimeLeft.hours <= 1 ? "animate-pulse" : ""}`}
                 />
-                <span className="text-xs text-amber-100">
+                <span className="text-xs text-[color:var(--nf-text-secondary)]">
                   {displayTimeLeft.hours === 0 &&
                   displayTimeLeft.minutes === 0 &&
                   displayTimeLeft.seconds === 0
@@ -280,29 +280,29 @@ const DealsProductCard = ({ product }) => {
               <div className="flex items-center space-x-2">
                 <div className="text-center">
                   <div
-                    className={`text-sm font-bold ${displayTimeLeft.hours <= 1 ? "text-red-300" : "text-white"}`}
+                    className={`text-sm font-bold ${displayTimeLeft.hours <= 1 ? "text-red-300" : "text-[color:var(--nf-text-primary)]"}`}
                   >
                     {String(displayTimeLeft.hours).padStart(2, "0")}
                   </div>
-                  <div className="text-xs text-amber-100/70">HRS</div>
+                  <div className="text-xs text-[color:var(--nf-text-muted)]">HRS</div>
                 </div>
                 <div className="text-amber-400">:</div>
                 <div className="text-center">
                   <div
-                    className={`text-sm font-bold ${displayTimeLeft.hours <= 1 ? "text-red-300" : "text-white"}`}
+                    className={`text-sm font-bold ${displayTimeLeft.hours <= 1 ? "text-red-300" : "text-[color:var(--nf-text-primary)]"}`}
                   >
                     {String(displayTimeLeft.minutes).padStart(2, "0")}
                   </div>
-                  <div className="text-xs text-amber-100/70">MIN</div>
+                  <div className="text-xs text-[color:var(--nf-text-muted)]">MIN</div>
                 </div>
                 <div className="text-amber-400">:</div>
                 <div className="text-center">
                   <div
-                    className={`text-sm font-bold ${displayTimeLeft.hours <= 1 ? "text-red-300" : "text-white"}`}
+                    className={`text-sm font-bold ${displayTimeLeft.hours <= 1 ? "text-red-300" : "text-[color:var(--nf-text-primary)]"}`}
                   >
                     {String(displayTimeLeft.seconds).padStart(2, "0")}
                   </div>
-                  <div className="text-xs text-amber-100/70">SEC</div>
+                  <div className="text-xs text-[color:var(--nf-text-muted)]">SEC</div>
                 </div>
               </div>
             </div>
@@ -321,7 +321,7 @@ const DealsProductCard = ({ product }) => {
           }`}
         >
           <div className="w-12 h-12 rounded-full bg-gradient-to-r from-red-600 to-orange-600 flex items-center justify-center shadow-lg">
-            <Zap className="w-6 h-6 text-white" />
+            <Zap className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
           </div>
         </div>
       )}

@@ -57,7 +57,7 @@ const PremiumMonthlySummary = () => {
       } else {
         trackPremiumEvent.viewMonthlySummary(
           data.totalSavings || 0,
-          (data.totalSavings || 0) - 200
+          (data.totalSavings || 0) - 200,
         );
       }
     } catch (err) {
@@ -89,11 +89,11 @@ const PremiumMonthlySummary = () => {
     return (
       <div className="bg-white rounded-lg shadow-md p-6">
         <div className="animate-pulse">
-          <div className="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>
+          <div className="h-6 bg-[var(--nf-bg-subtle)] rounded w-1/3 mb-4"></div>
           <div className="grid grid-cols-3 gap-4">
-            <div className="h-20 bg-gray-200 rounded"></div>
-            <div className="h-20 bg-gray-200 rounded"></div>
-            <div className="h-20 bg-gray-200 rounded"></div>
+            <div className="h-20 bg-[var(--nf-bg-subtle)] rounded"></div>
+            <div className="h-20 bg-[var(--nf-bg-subtle)] rounded"></div>
+            <div className="h-20 bg-[var(--nf-bg-subtle)] rounded"></div>
           </div>
         </div>
       </div>
@@ -123,7 +123,7 @@ const PremiumMonthlySummary = () => {
     const totalDays = 30;
     const daysLeft = Math.max(
       0,
-      Math.ceil((expiry - now) / (1000 * 60 * 60 * 24))
+      Math.ceil((expiry - now) / (1000 * 60 * 60 * 24)),
     );
     const daysUsed = totalDays - daysLeft;
     const progressPercent = (daysUsed / totalDays) * 100;
@@ -135,14 +135,14 @@ const PremiumMonthlySummary = () => {
   const daysLeft = expiresAt
     ? Math.max(
         0,
-        Math.ceil((new Date(expiresAt) - new Date()) / (1000 * 60 * 60 * 24))
+        Math.ceil((new Date(expiresAt) - new Date()) / (1000 * 60 * 60 * 24)),
       )
     : 0;
 
   // Share functions
   const handleShare = (platform) => {
     const savingsText = `I've saved ${Math.round(
-      totalSavings
+      totalSavings,
     )} KSH this month with Nile Premium! 🎉 Get exclusive discounts, free delivery, and 2x miles. Join me!`;
     const url = "https://nileflowafrica.com";
 
@@ -152,23 +152,23 @@ const PremiumMonthlySummary = () => {
       case "twitter":
         window.open(
           `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-            savingsText
+            savingsText,
           )}&url=${encodeURIComponent(url)}`,
-          "_blank"
+          "_blank",
         );
         break;
       case "facebook":
         window.open(
           `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-            url
+            url,
           )}&quote=${encodeURIComponent(savingsText)}`,
-          "_blank"
+          "_blank",
         );
         break;
       case "whatsapp":
         window.open(
           `https://wa.me/?text=${encodeURIComponent(savingsText + " " + url)}`,
-          "_blank"
+          "_blank",
         );
         break;
       default:
@@ -179,7 +179,7 @@ const PremiumMonthlySummary = () => {
 
   const copyLink = () => {
     const text = `I've saved ${Math.round(
-      totalSavings
+      totalSavings,
     )} KSH this month with Nile Premium! Check it out: https://nileflowafrica.com`;
     navigator.clipboard.writeText(text);
     alert("Savings message copied to clipboard!");
@@ -195,9 +195,9 @@ const PremiumMonthlySummary = () => {
       {/* Header */}
       <div className="relative flex items-center justify-between mb-8">
         <div>
-          <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+          <h2 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-2 flex items-center gap-2">
             <svg
-              className="w-7 h-7 text-amber-300"
+              className="w-7 h-7 text-[color:var(--nf-accent)]"
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -224,7 +224,7 @@ const PremiumMonthlySummary = () => {
               className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-xl p-3 shadow-lg border border-white/30 transition-all duration-200"
               title="Share your savings"
             >
-              <Share2 className="w-5 h-5 text-white" />
+              <Share2 className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
             </button>
           )}
           <button
@@ -234,7 +234,7 @@ const PremiumMonthlySummary = () => {
             title="Refresh summary"
           >
             <svg
-              className={`w-5 h-5 text-white ${
+              className={`w-5 h-5 text-[color:var(--nf-text-primary)] ${
                 refreshing ? "animate-spin" : ""
               }`}
               fill="none"
@@ -251,7 +251,7 @@ const PremiumMonthlySummary = () => {
           </button>
           <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/30">
             <svg
-              className="w-8 h-8 text-amber-300"
+              className="w-8 h-8 text-[color:var(--nf-accent)]"
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -265,10 +265,12 @@ const PremiumMonthlySummary = () => {
       {expiresAt && (
         <div className="relative mb-6">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-white/90 text-sm font-medium">
+            <span className="text-[color:var(--nf-text-primary)]/90 text-sm font-medium">
               Subscription Period
             </span>
-            <span className="text-white/70 text-xs">{daysLeft} days left</span>
+            <span className="text-[color:var(--nf-text-primary)]/70 text-xs">
+              {daysLeft} days left
+            </span>
           </div>
           <div className="relative w-full h-3 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm border border-white/30">
             <div
@@ -279,8 +281,12 @@ const PremiumMonthlySummary = () => {
             </div>
           </div>
           <div className="flex items-center justify-between mt-1">
-            <span className="text-white/60 text-xs">Day 1</span>
-            <span className="text-white/60 text-xs">Day 30</span>
+            <span className="text-[color:var(--nf-text-primary)]/60 text-xs">
+              Day 1
+            </span>
+            <span className="text-[color:var(--nf-text-primary)]/60 text-xs">
+              Day 30
+            </span>
           </div>
         </div>
       )}
@@ -290,7 +296,7 @@ const PremiumMonthlySummary = () => {
         <div className="relative bg-white/20 backdrop-blur-sm border border-white/40 rounded-2xl p-6 mb-8">
           <div className="flex items-center gap-3">
             <svg
-              className="w-6 h-6 text-amber-300 flex-shrink-0"
+              className="w-6 h-6 text-[color:var(--nf-accent)] flex-shrink-0"
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -301,10 +307,10 @@ const PremiumMonthlySummary = () => {
               />
             </svg>
             <div>
-              <p className="text-white font-semibold text-sm">
+              <p className="text-[color:var(--nf-text-primary)] font-semibold text-sm">
                 Welcome to Nile Premium!
               </p>
-              <p className="text-white/80 text-xs mt-1">
+              <p className="text-[color:var(--nf-text-primary)]/80 text-xs mt-1">
                 Your savings will appear here as you shop. Enjoy free shipping,
                 2x miles, and 5-10% discounts!
               </p>
@@ -319,7 +325,7 @@ const PremiumMonthlySummary = () => {
           <div className="flex items-center gap-3 mb-3">
             <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-3 shadow-lg">
               <svg
-                className="w-6 h-6 text-white"
+                className="w-6 h-6 text-[color:var(--nf-text-primary)]"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -327,44 +333,52 @@ const PremiumMonthlySummary = () => {
                 <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z" />
               </svg>
             </div>
-            <span className="text-sm font-medium text-gray-700">
+            <span className="text-sm font-medium text-[color:var(--nf-text-primary)]">
               Fast Delivery
             </span>
           </div>
-          <p className="text-3xl font-bold text-gray-900 mb-1">
+          <p className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-1">
             {animatedDeliverySavings}{" "}
-            <span className="text-lg text-gray-600">Ksh</span>
+            <span className="text-lg text-[color:var(--nf-text-muted)]">
+              Ksh
+            </span>
           </p>
-          <p className="text-xs text-gray-500">Saved on shipping costs</p>
+          <p className="text-xs text-[color:var(--nf-text-muted)]">
+            Saved on shipping costs
+          </p>
         </div>
 
         <div className="group bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/50 hover:scale-105 transition-transform duration-300">
           <div className="flex items-center gap-3 mb-3">
             <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-3 shadow-lg">
               <svg
-                className="w-6 h-6 text-white"
+                className="w-6 h-6 text-[color:var(--nf-text-primary)]"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
             </div>
-            <span className="text-sm font-medium text-gray-700">
+            <span className="text-sm font-medium text-[color:var(--nf-text-primary)]">
               Bonus Miles
             </span>
           </div>
-          <p className="text-3xl font-bold text-gray-900 mb-1">
+          <p className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-1">
             {animatedMilesBonus}{" "}
-            <span className="text-lg text-gray-600">miles</span>
+            <span className="text-lg text-[color:var(--nf-text-muted)]">
+              miles
+            </span>
           </p>
-          <p className="text-xs text-gray-500">Extra from 2x multiplier</p>
+          <p className="text-xs text-[color:var(--nf-text-muted)]">
+            Extra from 2x multiplier
+          </p>
         </div>
 
         <div className="group bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/50 hover:scale-105 transition-transform duration-300">
           <div className="flex items-center gap-3 mb-3">
             <div className="bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl p-3 shadow-lg">
               <svg
-                className="w-6 h-6 text-white"
+                className="w-6 h-6 text-[color:var(--nf-text-primary)]"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -375,22 +389,26 @@ const PremiumMonthlySummary = () => {
                 />
               </svg>
             </div>
-            <span className="text-sm font-medium text-gray-700">
+            <span className="text-sm font-medium text-[color:var(--nf-text-primary)]">
               Discount Savings
             </span>
           </div>
-          <p className="text-3xl font-bold text-gray-900 mb-1">
+          <p className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-1">
             {animatedDiscountSavings}{" "}
-            <span className="text-lg text-gray-600">Ksh</span>
+            <span className="text-lg text-[color:var(--nf-text-muted)]">
+              Ksh
+            </span>
           </p>
-          <p className="text-xs text-gray-500">5-10% off orders</p>
+          <p className="text-xs text-[color:var(--nf-text-muted)]">
+            5-10% off orders
+          </p>
         </div>
       </div>
 
       {/* Total Summary */}
       <div className="relative bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/50">
         <div className="flex items-center justify-between mb-4">
-          <span className="text-gray-700 font-medium">
+          <span className="text-[color:var(--nf-text-primary)] font-medium">
             Total Value Received
           </span>
           <span className="text-3xl font-bold text-emerald-600">
@@ -398,13 +416,17 @@ const PremiumMonthlySummary = () => {
           </span>
         </div>
         <div className="flex items-center justify-between mb-4 text-sm">
-          <span className="text-gray-600">Subscription Cost</span>
-          <span className="text-gray-900 font-semibold text-lg">
+          <span className="text-[color:var(--nf-text-muted)]">
+            Subscription Cost
+          </span>
+          <span className="text-[color:var(--nf-text-primary)] font-semibold text-lg">
             - {subscriptionCost} Ksh
           </span>
         </div>
-        <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-          <span className="font-bold text-gray-900 text-lg">Net Savings</span>
+        <div className="border-t border-[var(--nf-border)] pt-4 flex items-center justify-between">
+          <span className="font-bold text-[color:var(--nf-text-primary)] text-lg">
+            Net Savings
+          </span>
           <span
             className={`text-3xl font-bold ${
               netSavings >= 0 ? "text-emerald-600" : "text-orange-600"
@@ -421,7 +443,7 @@ const PremiumMonthlySummary = () => {
         <div className="relative mt-6 bg-white/95 backdrop-blur-sm border-2 border-emerald-400 rounded-2xl p-5 flex items-start gap-3 shadow-lg">
           <div className="flex-shrink-0 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl p-2 shadow-md">
             <svg
-              className="w-6 h-6 text-white"
+              className="w-6 h-6 text-[color:var(--nf-text-primary)]"
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -448,7 +470,7 @@ const PremiumMonthlySummary = () => {
         <div className="relative mt-6 bg-white/95 backdrop-blur-sm border-2 border-blue-400 rounded-2xl p-5 flex items-start gap-3 shadow-lg">
           <div className="flex-shrink-0 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-2 shadow-md">
             <svg
-              className="w-6 h-6 text-white"
+              className="w-6 h-6 text-[color:var(--nf-text-primary)]"
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -478,12 +500,12 @@ const PremiumMonthlySummary = () => {
           onClick={() => setShowShareModal(false)}
         >
           <div
-            className="relative bg-gradient-to-br from-gray-900 to-black border-2 border-amber-500/50 rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl"
+            className="relative bg-[var(--nf-bg-subtle)] border-2 border-amber-500/50 rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setShowShareModal(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+              className="absolute top-4 right-4 text-[color:var(--nf-text-muted)] hover:text-[color:var(--nf-text-primary)] transition-colors"
             >
               <svg
                 className="w-6 h-6"
@@ -502,12 +524,12 @@ const PremiumMonthlySummary = () => {
 
             <div className="text-center mb-6">
               <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <Share2 className="w-8 h-8 text-white" />
+                <Share2 className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">
+              <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-2">
                 Share Your Savings!
               </h3>
-              <p className="text-gray-400">
+              <p className="text-[color:var(--nf-text-muted)]">
                 You've saved {Math.round(totalSavings)} KSH this month
               </p>
             </div>
@@ -539,7 +561,7 @@ const PremiumMonthlySummary = () => {
 
               <button
                 onClick={copyLink}
-                className="w-full flex items-center gap-3 bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg border border-gray-600"
+                className="w-full flex items-center gap-3 bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-[color:var(--nf-text-primary)] font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg border border-[var(--nf-border)]"
               >
                 <svg
                   className="w-5 h-5"

@@ -87,7 +87,7 @@ const SubscriptionSettings = () => {
 
   if (loading) {
     return (
-      <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8">
+      <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8">
         <div className="animate-pulse space-y-6">
           <div className="flex items-center space-x-4">
             <div className="w-16 h-16 bg-gradient-to-br from-purple-900/30 to-blue-900/20 rounded-2xl"></div>
@@ -106,19 +106,19 @@ const SubscriptionSettings = () => {
   }
 
   return (
-    <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden">
+    <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden">
       {/* Header */}
-      <div className="p-8 border-b border-amber-800/30">
+      <div className="p-8 border-b border-[var(--nf-border-subtle)]">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center shadow-lg shadow-purple-900/50">
-              <Crown className="w-8 h-8 text-white" />
+              <Crown className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
             </div>
             <div>
               <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-300 via-pink-300 to-blue-300 bg-clip-text text-transparent">
                 Premium Subscription
               </h2>
-              <p className="text-amber-100/70 mt-1">
+              <p className="text-[color:var(--nf-text-muted)] mt-1">
                 {isPremium
                   ? "Manage your premium membership"
                   : "Unlock exclusive benefits"}
@@ -165,7 +165,7 @@ const SubscriptionSettings = () => {
 
             {/* Premium Benefits */}
             <div>
-              <h3 className="text-xl font-bold text-amber-200 mb-4">
+              <h3 className="text-xl font-bold text-[color:var(--nf-accent)] mb-4">
                 Your Premium Benefits
               </h3>
               <div className="grid md:grid-cols-2 gap-4">
@@ -193,17 +193,17 @@ const SubscriptionSettings = () => {
                 ].map((benefit, index) => (
                   <div
                     key={index}
-                    className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-5 hover:border-amber-500/50 hover:scale-105 hover:shadow-xl hover:shadow-amber-900/20 transition-all duration-300"
+                    className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-5 hover:border-amber-500/50 hover:scale-105 hover:shadow-xl hover:shadow-amber-900/20 transition-all duration-300"
                   >
                     <div className="flex items-center space-x-3 mb-2">
                       <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                        <benefit.icon className="w-5 h-5 text-white" />
+                        <benefit.icon className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                       </div>
-                      <h4 className="font-bold text-amber-200">
+                      <h4 className="font-bold text-[color:var(--nf-accent)]">
                         {benefit.title}
                       </h4>
                     </div>
-                    <p className="text-amber-100/70 text-sm">{benefit.desc}</p>
+                    <p className="text-[color:var(--nf-text-muted)] text-sm">{benefit.desc}</p>
                   </div>
                 ))}
               </div>
@@ -214,14 +214,14 @@ const SubscriptionSettings = () => {
             {/* Non-Premium Header */}
             <div className="text-center mb-8">
               <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center mx-auto mb-4 shadow-xl shadow-purple-900/50">
-                <Crown className="w-10 h-10 text-white" />
+                <Crown className="w-10 h-10 text-[color:var(--nf-text-primary)]" />
               </div>
               <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-300 via-pink-300 to-blue-300 bg-clip-text text-transparent mb-2">
                 Upgrade to Premium
               </h3>
-              <p className="text-amber-100/70">
+              <p className="text-[color:var(--nf-text-muted)]">
                 Unlock exclusive benefits for just{" "}
-                <span className="text-amber-300 font-bold">200 Ksh/month</span>
+                <span className="text-[color:var(--nf-accent)] font-bold">200 Ksh/month</span>
               </p>
             </div>
 
@@ -255,17 +255,17 @@ const SubscriptionSettings = () => {
               ].map((benefit, index) => (
                 <div
                   key={index}
-                  className="group bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 hover:border-amber-500/50 hover:scale-105 hover:shadow-2xl hover:shadow-purple-900/30 transition-all duration-300"
+                  className="group bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 hover:border-amber-500/50 hover:scale-105 hover:shadow-2xl hover:shadow-purple-900/30 transition-all duration-300"
                 >
                   <div
                     className={`w-14 h-14 rounded-xl bg-gradient-to-br ${benefit.gradient} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}
                   >
-                    <benefit.icon className="w-7 h-7 text-white" />
+                    <benefit.icon className="w-7 h-7 text-[color:var(--nf-text-primary)]" />
                   </div>
-                  <h4 className="text-xl font-bold text-amber-200 mb-2">
+                  <h4 className="text-xl font-bold text-[color:var(--nf-accent)] mb-2">
                     {benefit.title}
                   </h4>
-                  <p className="text-amber-100/70">{benefit.desc}</p>
+                  <p className="text-[color:var(--nf-text-muted)]">{benefit.desc}</p>
                 </div>
               ))}
             </div>
@@ -282,7 +282,7 @@ const SubscriptionSettings = () => {
                   className={`p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-center space-x-3 font-bold ${
                     paymentMethod === "mpesa"
                       ? "border-emerald-500 bg-gradient-to-r from-emerald-600/20 to-green-600/10 text-emerald-300 shadow-lg shadow-emerald-900/30"
-                      : "border-amber-800/30 bg-gradient-to-r from-gray-900/50 to-black/50 text-gray-400 hover:border-amber-500/50"
+                      : "border-[var(--nf-border-subtle)] bg-[var(--nf-bg-elevated)] text-[color:var(--nf-text-muted)] hover:border-amber-500/50"
                   }`}
                 >
                   <span className="text-2xl">📱</span>
@@ -297,7 +297,7 @@ const SubscriptionSettings = () => {
                   className={`p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-center space-x-3 font-bold ${
                     paymentMethod === "stripe"
                       ? "border-purple-500 bg-gradient-to-r from-purple-600/20 to-indigo-600/10 text-purple-300 shadow-lg shadow-purple-900/30"
-                      : "border-amber-800/30 bg-gradient-to-r from-gray-900/50 to-black/50 text-gray-400 hover:border-amber-500/50"
+                      : "border-[var(--nf-border-subtle)] bg-[var(--nf-bg-elevated)] text-[color:var(--nf-text-muted)] hover:border-amber-500/50"
                   }`}
                 >
                   <span className="text-2xl">💳</span>
@@ -310,22 +310,22 @@ const SubscriptionSettings = () => {
 
               {paymentMethod === "mpesa" && (
                 <div className="mb-6">
-                  <label className="block text-amber-200 font-semibold mb-2">
+                  <label className="block text-[color:var(--nf-accent)] font-semibold mb-2">
                     M-Pesa Phone Number
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <span className="text-amber-100/70 text-lg">📱</span>
+                      <span className="text-[color:var(--nf-text-muted)] text-lg">📱</span>
                     </div>
                     <input
                       type="tel"
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value)}
                       placeholder="254XXXXXXXXX"
-                      className="w-full pl-12 pr-4 py-3 bg-gradient-to-r from-gray-900/80 to-black/80 border border-amber-800/30 rounded-xl text-white placeholder-amber-100/40 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all duration-300"
+                      className="w-full pl-12 pr-4 py-3 bg-gradient-to-r bg-[var(--nf-bg-subtle)] border border-[var(--nf-border-subtle)] rounded-xl text-[color:var(--nf-text-primary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all duration-300"
                     />
                   </div>
-                  <p className="text-amber-100/60 text-sm mt-2">
+                  <p className="text-[color:var(--nf-text-muted)] text-sm mt-2">
                     Enter your number in format: 254712345678
                   </p>
                 </div>
@@ -356,16 +356,16 @@ const SubscriptionSettings = () => {
       {/* Payment Pending Modal */}
       {showPaymentPending && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-gradient-to-br from-gray-900 to-black border border-amber-800/30 rounded-3xl p-8 max-w-md w-full shadow-2xl">
+          <div className="bg-[var(--nf-bg-subtle)] border border-[var(--nf-border-subtle)] rounded-3xl p-8 max-w-md w-full shadow-2xl">
             <div className="text-center">
               <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-amber-900/50">
                 <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
               </div>
 
-              <h3 className="text-2xl font-bold text-amber-200 mb-3">
+              <h3 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-3">
                 Processing Payment
               </h3>
-              <p className="text-amber-100/70 mb-6">
+              <p className="text-[color:var(--nf-text-muted)] mb-6">
                 {paymentMessage ||
                   "Please complete the payment on your phone..."}
               </p>
@@ -386,7 +386,7 @@ const SubscriptionSettings = () => {
                   setShowPaymentPending(false);
                   stopPolling();
                 }}
-                className="w-full px-6 py-3 bg-gradient-to-r from-gray-800 to-gray-900 text-white font-bold rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 border border-amber-800/30 flex items-center justify-center space-x-2"
+                className="w-full px-6 py-3 bg-gradient-to-r from-gray-800 to-gray-900 text-[color:var(--nf-text-primary)] font-bold rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 border border-[var(--nf-border-subtle)] flex items-center justify-center space-x-2"
               >
                 <X className="w-5 h-5" />
                 <span>Cancel</span>

@@ -21,7 +21,7 @@ export default function MilesProgress({ nileMilesData, nileMilesLoading }) {
       name: "Silver Pathfinder",
       threshold: 100,
       icon: "🥈",
-      color: "text-gray-400",
+      color: "text-[color:var(--nf-text-muted)]",
     },
     {
       name: "Gold Voyager",
@@ -64,12 +64,12 @@ export default function MilesProgress({ nileMilesData, nileMilesLoading }) {
 
   return (
     <div className="p-4 bg-white dark:bg-neutral-900 rounded-2xl shadow-md">
-      <h2 className="text-lg font-semibold mb-2 text-white">
+      <h2 className="text-lg font-semibold mb-2 text-[color:var(--nf-text-primary)]">
         Your Nile Miles Journey
       </h2>
 
       {/* Current Tier */}
-      <p className="text-sm font-medium mb-1 flex items-center gap-2 text-white">
+      <p className="text-sm font-medium mb-1 flex items-center gap-2 text-[color:var(--nf-text-primary)]">
         Current Rank:{" "}
         <span
           className={`font-bold flex items-center gap-1 ${currentTier.color}`}
@@ -79,15 +79,15 @@ export default function MilesProgress({ nileMilesData, nileMilesLoading }) {
       </p>
 
       {/* Miles + Next Goal */}
-      <p className="text-sm mb-4 text-white">
+      <p className="text-sm mb-4 text-[color:var(--nf-text-primary)]">
         {miles} miles → Next:{" "}
-        <span className="font-semibold flex items-center gap-1 text-white">
+        <span className="font-semibold flex items-center gap-1 text-[color:var(--nf-text-primary)]">
           {nextTier.icon} {nextTier.name}
         </span>{" "}
         at {nextTier.threshold} miles
       </p>
 
-      <div className="relative h-4 bg-gray-200 rounded-full overflow-hidden">
+      <div className="relative h-4 bg-[var(--nf-bg-subtle)] rounded-full overflow-hidden">
         {/* Progress fill */}
         <div
           className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 transition-all duration-700"
@@ -128,7 +128,7 @@ export default function MilesProgress({ nileMilesData, nileMilesLoading }) {
         ))}
       </div>
 
-      {/* <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4 overflow-hidden relative">
+      {/* <div className="w-full bg-[var(--nf-bg-subtle)] dark:bg-[var(--nf-bg-subtle)] rounded-full h-4 overflow-hidden relative">
         <div
           className="h-4 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 rounded-full shadow-inner transition-all duration-500"
           style={{ width: `${progress}%` }}
@@ -138,7 +138,7 @@ export default function MilesProgress({ nileMilesData, nileMilesLoading }) {
       </div> */}
 
       {/* Miles Left */}
-      <p className="text-xs mt-3 text-gray-600 dark:text-gray-300">
+      <p className="text-xs mt-3 text-[color:var(--nf-text-muted)] dark:text-[color:var(--nf-text-secondary)]">
         {nextTier.threshold - miles > 0
           ? `${nextTier.threshold - miles} miles left to reach ${
               nextTier.name

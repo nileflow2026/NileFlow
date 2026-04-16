@@ -19,6 +19,7 @@ import i18n from "../i18n";
 import { logoutCustomer } from "../authServices";
 import { useState, useEffect } from "react";
 import { useCustomerAuth } from "../Context/CustomerAuthContext";
+import ThemeToggle from "./ThemeToggle";
 
 const africanGradients = [
   "linear-gradient(135deg, #d4af37 0%, #c53030 50%, #2d5a27 100%)", // Gold, Red, Green
@@ -79,7 +80,7 @@ const Header = () => {
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Announcement Bar */}
         <div className="hidden md:flex justify-center py-1.5 bg-black/30 border-b border-amber-900/20">
-          <div className="flex items-center space-x-2 text-amber-200/90 text-xs font-medium">
+          <div className="flex items-center space-x-2 text-[color:var(--nf-accent)]/90 text-xs font-medium">
             <span className="inline-block w-1.5 h-1.5 bg-amber-400 rounded-full animate-pulse"></span>
             <span>
               ✨ Premium African Marketplace • Express Delivery • 100% Authentic
@@ -135,7 +136,7 @@ const Header = () => {
             {/* Search */}
             <Link
               to="/search"
-              className="p-2 rounded-full bg-black/20 hover:bg-black/30 text-amber-100 hover:text-white transition-all duration-300 transform hover:scale-105"
+              className="p-2 rounded-full bg-black/20 hover:bg-black/30 text-[color:var(--nf-text-secondary)] hover:text-white transition-all duration-300 transform hover:scale-105"
             >
               <FiSearch size={18} />
             </Link>
@@ -143,7 +144,7 @@ const Header = () => {
             {/* Cart */}
             <Link
               to="/cart"
-              className="relative p-2 rounded-full bg-black/20 hover:bg-black/30 text-amber-100 hover:text-white transition-all duration-300 transform hover:scale-105"
+              className="relative p-2 rounded-full bg-black/20 hover:bg-black/30 text-[color:var(--nf-text-secondary)] hover:text-white transition-all duration-300 transform hover:scale-105"
             >
               <FiShoppingCart size={18} />
               {cart.length > 0 && (
@@ -157,7 +158,7 @@ const Header = () => {
             {/* <div className="relative">
               <Link
                 to="/notification"
-                className="relative p-2 rounded-full bg-black/20 hover:bg-black/30 text-amber-100 hover:text-white transition-all duration-300 transform hover:scale-105"
+                className="relative p-2 rounded-full bg-black/20 hover:bg-black/30 text-[color:var(--nf-text-secondary)] hover:text-white transition-all duration-300 transform hover:scale-105"
               >
                 <FiBell
                   size={18}
@@ -184,7 +185,7 @@ const Header = () => {
             {/* Notifications */}
             <Link
               to="/notification"
-              className="relative p-2.5 rounded-full bg-black/20 hover:bg-black/30 text-amber-100 hover:text-white transition-all duration-300 transform hover:scale-110"
+              className="relative p-2.5 rounded-full bg-black/20 hover:bg-black/30 text-[color:var(--nf-text-secondary)] hover:text-white transition-all duration-300 transform hover:scale-110"
             >
               <FiBell size={20} />
               {notificationCount > 0 && (
@@ -193,6 +194,9 @@ const Header = () => {
                 </span>
               )}
             </Link>
+
+            {/* Theme Toggle */}
+            <ThemeToggle />
 
             {/* Profile/Login Desktop */}
             {!userLoading && (
@@ -214,7 +218,7 @@ const Header = () => {
                         />
                       </div>
                       <FiChevronDown
-                        className={`text-amber-100 transition-transform duration-300 ${
+                        className={`text-[color:var(--nf-text-secondary)] transition-transform duration-300 ${
                           dropdownOpen ? "rotate-180" : ""
                         }`}
                       />
@@ -227,30 +231,52 @@ const Header = () => {
                           onClick={() => setDropdownOpen(false)}
                         />
                         <div className="absolute right-0 mt-3 w-56 z-50 animate-fadeIn">
-                          <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl shadow-2xl border border-amber-900/50 overflow-hidden">
-                            <div className="p-4 border-b border-amber-900/30">
-                              <p className="font-bold text-amber-100 truncate">
+                          <div
+                            className="rounded-2xl shadow-2xl overflow-hidden"
+                            style={{
+                              background: "var(--nf-bg-elevated)",
+                              border: "1px solid var(--nf-border)",
+                            }}
+                          >
+                            <div
+                              className="p-4"
+                              style={{
+                                borderBottom:
+                                  "1px solid var(--nf-border-subtle)",
+                              }}
+                            >
+                              <p
+                                className="font-bold truncate"
+                                style={{ color: "var(--nf-text-primary)" }}
+                              >
                                 {user.username}
                               </p>
-                              <p className="text-xs text-amber-100/60">
+                              <p
+                                className="text-xs"
+                                style={{ color: "var(--nf-text-muted)" }}
+                              >
                                 {user.email || "Member"}
                               </p>
                             </div>
                             <div className="p-2">
                               <Link
                                 to="/profile"
-                                className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-amber-900/20 text-amber-100 transition-all duration-200"
+                                className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-[var(--nf-btn-ghost-hover)] transition-all duration-200"
+                                style={{ color: "var(--nf-text-primary)" }}
                                 onClick={() => setDropdownOpen(false)}
                               >
-                                <FiUser className="text-amber-400" />
+                                <FiUser style={{ color: "var(--nf-accent)" }} />
                                 <span>Profile</span>
                               </Link>
                               <Link
                                 to="/settings"
-                                className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-amber-900/20 text-amber-100 transition-all duration-200"
+                                className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-[var(--nf-btn-ghost-hover)] transition-all duration-200"
+                                style={{ color: "var(--nf-text-primary)" }}
                                 onClick={() => setDropdownOpen(false)}
                               >
-                                <FiSettings className="text-amber-400" />
+                                <FiSettings
+                                  style={{ color: "var(--nf-accent)" }}
+                                />
                                 <span>Settings</span>
                               </Link>
                               <button
@@ -282,7 +308,7 @@ const Header = () => {
 
             {/* Mobile Menu Button */}
             <button
-              className="lg:hidden p-2 min-w-[36px] min-h-[36px] rounded-full bg-black/40 hover:bg-black/60 text-amber-100 hover:text-white transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+              className="lg:hidden p-2 min-w-[36px] min-h-[36px] rounded-full bg-black/40 hover:bg-black/60 text-[color:var(--nf-text-secondary)] hover:text-white transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle mobile menu"
               style={{
@@ -318,9 +344,15 @@ const Header = () => {
           />
 
           {/* Menu Panel */}
-          <div className="mobile-menu-panel w-80 bg-gradient-to-b from-gray-900 to-black shadow-2xl animate-slideInRight">
+          <div
+            className="mobile-menu-panel w-80 shadow-2xl animate-slideInRight"
+            style={{ background: "var(--nf-bg-elevated)" }}
+          >
             {/* Menu Header */}
-            <div className="p-6 border-b border-amber-900/30">
+            <div
+              className="p-6"
+              style={{ borderBottom: "1px solid var(--nf-border-subtle)" }}
+            >
               {user ? (
                 <div className="flex items-center space-x-3">
                   <img
@@ -331,16 +363,32 @@ const Header = () => {
                     decoding="async"
                   />
                   <div>
-                    <p className="font-bold text-amber-100">{user.username}</p>
-                    <p className="text-sm text-amber-100/60">Welcome back!</p>
+                    <p
+                      className="font-bold"
+                      style={{ color: "var(--nf-text-primary)" }}
+                    >
+                      {user.username}
+                    </p>
+                    <p
+                      className="text-sm"
+                      style={{ color: "var(--nf-text-muted)" }}
+                    >
+                      Welcome back!
+                    </p>
                   </div>
                 </div>
               ) : (
                 <div className="flex flex-col items-center">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-emerald-500 flex items-center justify-center mb-3">
-                    <FiUser size={28} className="text-white" />
+                    <FiUser
+                      size={28}
+                      className="text-[color:var(--nf-text-primary)]"
+                    />
                   </div>
-                  <p className="text-amber-100 font-bold">
+                  <p
+                    className="font-bold"
+                    style={{ color: "var(--nf-text-primary)" }}
+                  >
                     Welcome to Nile Flow
                   </p>
                 </div>
@@ -362,7 +410,8 @@ const Header = () => {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className="flex items-center space-x-3 px-4 py-4 rounded-xl hover:bg-amber-900/20 text-amber-100 transition-all duration-200"
+                  className="flex items-center space-x-3 px-4 py-4 rounded-xl hover:bg-[var(--nf-btn-ghost-hover)] transition-all duration-200"
+                  style={{ color: "var(--nf-text-primary)" }}
                   onClick={() => setMenuOpen(false)}
                 >
                   <span className="text-xl">{item.icon}</span>
@@ -371,7 +420,10 @@ const Header = () => {
               ))}
 
               {/* Auth Buttons */}
-              <div className="pt-6 border-t border-amber-900/30">
+              <div
+                className="pt-6"
+                style={{ borderTop: "1px solid var(--nf-border-subtle)" }}
+              >
                 {user ? (
                   <button
                     onClick={async () => {
@@ -398,7 +450,7 @@ const Header = () => {
 
             {/* Footer */}
             <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
-              <p className="text-xs text-amber-100/50">
+              <p className="text-xs" style={{ color: "var(--nf-text-muted)" }}>
                 © 2026 Nile Flow Africa. Premium African E-commerce
               </p>
             </div>

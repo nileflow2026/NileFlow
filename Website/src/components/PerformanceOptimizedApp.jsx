@@ -29,7 +29,7 @@ const AppWrapper = ({ children }) => {
       <CustomerAuthProvider>
         <CurrencyProvider>
           <CartProvider>
-            <Suspense fallback={<div className="min-h-screen bg-black" />}>
+            <Suspense fallback={<div className="min-h-screen bg-[var(--nf-bg-primary)]" />}>
               <PremiumProvider>
                 <FavoritesProvider>
                   <NotificationProvider>{children}</NotificationProvider>

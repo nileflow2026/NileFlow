@@ -72,7 +72,7 @@ const PaymentCancelled = () => {
   }, [location, navigate]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -95,7 +95,7 @@ const PaymentCancelled = () => {
             </span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Your payment was not completed. Don't worry, your items are still
             available.
           </p>
@@ -105,7 +105,7 @@ const PaymentCancelled = () => {
       {/* Main Content */}
       <main className="pb-20 px-4 sm:px-6 lg:px-8">
         <div className="relative max-w-4xl mx-auto">
-          <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-red-800/30 rounded-3xl overflow-hidden">
+          <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-red-800/30 rounded-3xl overflow-hidden">
             <div className="p-8 border-b border-red-800/30">
               <div className="flex flex-col items-center justify-center text-center py-12">
                 {loading ? (
@@ -116,10 +116,10 @@ const PaymentCancelled = () => {
                         <RefreshCw className="w-12 h-12 text-red-500 animate-pulse" />
                       </div>
                     </div>
-                    <h2 className="text-2xl font-bold text-amber-200 mb-4">
+                    <h2 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-4">
                       Processing Cancellation...
                     </h2>
-                    <p className="text-gray-400">
+                    <p className="text-[color:var(--nf-text-muted)]">
                       Restoring your items to stock...
                     </p>
                   </>
@@ -139,20 +139,20 @@ const PaymentCancelled = () => {
                       )}
                     </div>
 
-                    <h2 className="text-3xl font-bold text-amber-200 mb-4">
+                    <h2 className="text-3xl font-bold text-[color:var(--nf-accent)] mb-4">
                       {stockRestored
                         ? "Stock Restored!"
                         : "Cancellation Complete"}
                     </h2>
 
-                    <p className="text-gray-300 mb-6 max-w-md">{message}</p>
+                    <p className="text-[color:var(--nf-text-secondary)] mb-6 max-w-md">{message}</p>
 
                     {orderId && (
-                      <div className="bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-4 mb-6">
-                        <p className="text-sm text-amber-100/70 mb-1">
+                      <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-4 mb-6">
+                        <p className="text-sm text-[color:var(--nf-text-muted)] mb-1">
                           Order Reference
                         </p>
-                        <p className="text-lg font-mono font-bold text-amber-300">
+                        <p className="text-lg font-mono font-bold text-[color:var(--nf-accent)]">
                           {orderId}
                         </p>
                       </div>
@@ -169,7 +169,7 @@ const PaymentCancelled = () => {
 
                       <Link
                         to="/"
-                        className="group px-8 py-4 bg-gradient-to-r from-gray-800 to-black text-white font-bold rounded-xl hover:from-gray-900 hover:to-black transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center space-x-2 border border-amber-800/30"
+                        className="group px-8 py-4 bg-gradient-to-r from-gray-800 to-black text-white font-bold rounded-xl hover:from-gray-900 hover:to-black transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center space-x-2 border border-[var(--nf-border-subtle)]"
                       >
                         <Home className="w-5 h-5" />
                         <span>Continue Shopping</span>
@@ -191,25 +191,25 @@ const PaymentCancelled = () => {
 
             {/* Help Section */}
             <div className="p-8 border-t border-red-800/30">
-              <h3 className="text-xl font-bold text-amber-200 mb-4">
+              <h3 className="text-xl font-bold text-[color:var(--nf-accent)] mb-4">
                 Need Help?
               </h3>
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-6">
-                  <h4 className="font-bold text-amber-100 mb-2">
+                <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-6">
+                  <h4 className="font-bold text-[color:var(--nf-text-secondary)] mb-2">
                     Why was my payment cancelled?
                   </h4>
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-[color:var(--nf-text-muted)] text-sm">
                     Payments can be cancelled for various reasons: insufficient
                     funds, browser issues, or if you manually cancelled the
                     payment.
                   </p>
                 </div>
-                <div className="bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border border-amber-800/30 rounded-xl p-6">
-                  <h4 className="font-bold text-amber-100 mb-2">
+                <div className="bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl p-6">
+                  <h4 className="font-bold text-[color:var(--nf-text-secondary)] mb-2">
                     Want to try again?
                   </h4>
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-[color:var(--nf-text-muted)] text-sm">
                     Your cart items are still saved. You can return to your cart
                     and try the payment again with a different method if needed.
                   </p>

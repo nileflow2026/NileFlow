@@ -101,26 +101,26 @@ const NotificationSettings = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-gradient-to-b from-gray-900 to-black border border-amber-800/30 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-[var(--nf-card-bg)] border border-[var(--nf-border-subtle)] rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm border-b border-amber-800/30 p-6">
+        <div className="sticky top-0 bg-gradient-to-r from-amber-900/20 to-emerald-900/20 backdrop-blur-sm border-b border-[var(--nf-border-subtle)] p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                <Settings className="w-6 h-6 text-white" />
+                <Settings className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-amber-200">
+                <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                   Notification Settings
                 </h2>
-                <p className="text-amber-100/70 text-sm">
+                <p className="text-[color:var(--nf-text-muted)] text-sm">
                   Manage your real-time alerts
                 </p>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="text-amber-400 hover:text-amber-300 transition-colors"
+              className="text-amber-400 hover:text-[color:var(--nf-accent)] transition-colors"
             >
               <X className="w-6 h-6" />
             </button>
@@ -145,9 +145,9 @@ const NotificationSettings = ({ isOpen, onClose }) => {
           )}
 
           {/* Browser Permission Status */}
-          <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-amber-800/30 rounded-xl p-6">
+          <div className="bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-amber-200 flex items-center space-x-2">
+              <h3 className="text-lg font-bold text-[color:var(--nf-accent)] flex items-center space-x-2">
                 <Shield className="w-5 h-5" />
                 <span>Browser Permissions</span>
               </h3>
@@ -160,7 +160,7 @@ const NotificationSettings = ({ isOpen, onClose }) => {
                 </span>
               </div>
             </div>
-            <p className="text-amber-100/70 text-sm mb-4">
+            <p className="text-[color:var(--nf-text-muted)] text-sm mb-4">
               Your browser permission status for receiving notifications
             </p>
             {Notification.permission === "denied" && (
@@ -175,11 +175,11 @@ const NotificationSettings = ({ isOpen, onClose }) => {
           </div>
 
           {/* Desktop Notifications */}
-          <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-amber-800/30 rounded-xl p-6">
+          <div className="bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-                  <Monitor className="w-5 h-5 text-white" />
+                  <Monitor className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-blue-200">
@@ -194,7 +194,7 @@ const NotificationSettings = ({ isOpen, onClose }) => {
                 onClick={handleToggleDesktopNotifications}
                 disabled={loading || Notification.permission === "denied"}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${
-                  desktopEnabled ? "bg-emerald-600" : "bg-gray-600"
+                  desktopEnabled ? "bg-emerald-600" : "bg-[var(--nf-text-muted)]"
                 } ${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
               >
                 <span
@@ -216,8 +216,8 @@ const NotificationSettings = ({ isOpen, onClose }) => {
           </div>
 
           {/* Notification Types */}
-          <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-amber-800/30 rounded-xl p-6">
-            <h3 className="text-lg font-bold text-amber-200 mb-4 flex items-center space-x-2">
+          <div className="bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] rounded-xl p-6">
+            <h3 className="text-lg font-bold text-[color:var(--nf-accent)] mb-4 flex items-center space-x-2">
               <Bell className="w-5 h-5" />
               <span>Notification Types</span>
             </h3>
@@ -226,7 +226,7 @@ const NotificationSettings = ({ isOpen, onClose }) => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center">
-                    <Check className="w-4 h-4 text-white" />
+                    <Check className="w-4 h-4 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <div>
                     <p className="text-emerald-200 font-medium">
@@ -240,7 +240,7 @@ const NotificationSettings = ({ isOpen, onClose }) => {
                 <button
                   onClick={() => setOrderUpdates(!orderUpdates)}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${
-                    orderUpdates ? "bg-emerald-600" : "bg-gray-600"
+                    orderUpdates ? "bg-emerald-600" : "bg-[var(--nf-text-muted)]"
                   }`}
                 >
                   <span
@@ -255,13 +255,13 @@ const NotificationSettings = ({ isOpen, onClose }) => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                    <Smartphone className="w-4 h-4 text-white" />
+                    <Smartphone className="w-4 h-4 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <div>
-                    <p className="text-amber-200 font-medium">
+                    <p className="text-[color:var(--nf-accent)] font-medium">
                       Promotions & Deals
                     </p>
-                    <p className="text-amber-100/70 text-sm">
+                    <p className="text-[color:var(--nf-text-muted)] text-sm">
                       Exclusive offers and discounts
                     </p>
                   </div>
@@ -269,7 +269,7 @@ const NotificationSettings = ({ isOpen, onClose }) => {
                 <button
                   onClick={() => setPromotions(!promotions)}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${
-                    promotions ? "bg-emerald-600" : "bg-gray-600"
+                    promotions ? "bg-emerald-600" : "bg-[var(--nf-text-muted)]"
                   }`}
                 >
                   <span
@@ -284,7 +284,7 @@ const NotificationSettings = ({ isOpen, onClose }) => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center">
-                    <Shield className="w-4 h-4 text-white" />
+                    <Shield className="w-4 h-4 text-[color:var(--nf-text-primary)]" />
                   </div>
                   <div>
                     <p className="text-red-200 font-medium">Security Alerts</p>
@@ -296,7 +296,7 @@ const NotificationSettings = ({ isOpen, onClose }) => {
                 <button
                   onClick={() => setSecurity(!security)}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${
-                    security ? "bg-emerald-600" : "bg-gray-600"
+                    security ? "bg-emerald-600" : "bg-[var(--nf-text-muted)]"
                   }`}
                 >
                   <span
@@ -310,14 +310,14 @@ const NotificationSettings = ({ isOpen, onClose }) => {
           </div>
 
           {/* Sound Settings */}
-          <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-amber-800/30 rounded-xl p-6">
+          <div className="bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-600 to-purple-700 flex items-center justify-center">
                   {soundEnabled ? (
-                    <Volume2 className="w-5 h-5 text-white" />
+                    <Volume2 className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                   ) : (
-                    <VolumeX className="w-5 h-5 text-white" />
+                    <VolumeX className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
                   )}
                 </div>
                 <div>
@@ -332,7 +332,7 @@ const NotificationSettings = ({ isOpen, onClose }) => {
               <button
                 onClick={() => setSoundEnabled(!soundEnabled)}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${
-                  soundEnabled ? "bg-emerald-600" : "bg-gray-600"
+                  soundEnabled ? "bg-emerald-600" : "bg-[var(--nf-text-muted)]"
                 }`}
               >
                 <span
@@ -366,11 +366,11 @@ const NotificationSettings = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="border-t border-amber-800/30 p-6">
+        <div className="border-t border-[var(--nf-border-subtle)] p-6">
           <div className="flex justify-end space-x-3">
             <button
               onClick={onClose}
-              className="px-6 py-2 bg-gray-900/50 border border-amber-800/30 rounded-lg text-amber-300 hover:text-amber-200 hover:border-amber-500/50 transition-all duration-300"
+              className="px-6 py-2 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border-subtle)] rounded-lg text-[color:var(--nf-accent)] hover:text-[color:var(--nf-accent)] hover:border-amber-500/50 transition-all duration-300"
             >
               Close
             </button>

@@ -192,12 +192,12 @@ const AddressesPage = () => {
           } flex items-center justify-center">
             ${
               isError
-                ? '<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>'
-                : '<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
+                ? '<svg class="w-6 h-6 text-[color:var(--nf-text-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>'
+                : '<svg class="w-6 h-6 text-[color:var(--nf-text-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
             }
           </div>
           <div>
-            <p class="font-bold text-white">${
+            <p class="font-bold text-[color:var(--nf-text-primary)]">${
               isError ? "Operation Failed" : "Success"
             }</p>
             <p class="${
@@ -215,7 +215,7 @@ const AddressesPage = () => {
 
   if (userLoading || loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex justify-center items-center">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] flex justify-center items-center">
         <div className="relative">
           <div className="w-20 h-20 border-4 border-amber-900/30 border-t-amber-500 rounded-full animate-spin"></div>
           <div className="absolute inset-0 flex items-center justify-center">
@@ -228,14 +228,14 @@ const AddressesPage = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)] flex flex-col items-center justify-center p-4">
         <Header />
         <div className="text-center">
           <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-red-900/30 to-amber-900/30 border border-red-700/30 mb-6">
             <Shield className="w-12 h-12 text-red-400" />
           </div>
-          <h2 className="text-3xl font-bold text-white mb-4">Access Denied</h2>
-          <p className="text-gray-400 max-w-md mx-auto mb-8">
+          <h2 className="text-3xl font-bold text-[color:var(--nf-text-primary)] mb-4">Access Denied</h2>
+          <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-8">
             Please log in to view and manage your premium delivery addresses.
           </p>
           <button
@@ -304,7 +304,7 @@ const AddressesPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -317,7 +317,7 @@ const AddressesPage = () => {
             <div className="flex-1">
               <button
                 onClick={() => navigate(-1)}
-                className="group flex items-center space-x-2 text-amber-300 hover:text-amber-200 transition-colors mb-6"
+                className="group flex items-center space-x-2 text-[color:var(--nf-accent)] hover:text-[color:var(--nf-accent)] transition-colors mb-6"
               >
                 <ArrowLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
                 <span className="font-medium">Back</span>
@@ -325,23 +325,23 @@ const AddressesPage = () => {
 
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                  <MapPin className="w-8 h-8 text-white" />
+                  <MapPin className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
                 </div>
                 <div>
-                  <h1 className="text-4xl md:text-5xl font-bold text-white">
+                  <h1 className="text-4xl md:text-5xl font-bold text-[color:var(--nf-text-primary)]">
                     Delivery Addresses
                   </h1>
-                  <p className="text-gray-300 mt-2">
+                  <p className="text-[color:var(--nf-text-secondary)] mt-2">
                     Manage your premium shipping destinations
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-4 mt-6">
-                <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/30 backdrop-blur-sm px-4 py-2 rounded-xl border border-amber-700/30">
+                <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/30 backdrop-blur-sm px-4 py-2 rounded-xl border border-[var(--nf-border-subtle)]">
                   <div className="flex items-center space-x-2">
                     <Shield className="w-4 h-4 text-amber-400" />
-                    <span className="text-amber-200 text-sm">
+                    <span className="text-[color:var(--nf-accent)] text-sm">
                       Secure Storage
                     </span>
                   </div>
@@ -379,8 +379,8 @@ const AddressesPage = () => {
               </button>
 
               <div className="text-center">
-                <p className="text-gray-400 text-sm">
-                  <span className="text-amber-300 font-bold">
+                <p className="text-[color:var(--nf-text-muted)] text-sm">
+                  <span className="text-[color:var(--nf-accent)] font-bold">
                     {addresses.length}
                   </span>{" "}
                   saved addresses
@@ -396,13 +396,13 @@ const AddressesPage = () => {
         <div className="relative max-w-8xl mx-auto">
           {addresses.length === 0 ? (
             <div className="text-center py-20">
-              <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-amber-700/30 mb-6">
+              <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-900/30 to-emerald-900/30 border border-[var(--nf-border-subtle)] mb-6">
                 <Navigation className="w-12 h-12 text-amber-400" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="text-2xl font-bold text-[color:var(--nf-text-primary)] mb-4">
                 No Addresses Found
               </h3>
-              <p className="text-gray-400 max-w-md mx-auto mb-8">
+              <p className="text-[color:var(--nf-text-muted)] max-w-md mx-auto mb-8">
                 Add your first delivery address to start ordering premium
                 African products.
               </p>
@@ -425,12 +425,12 @@ const AddressesPage = () => {
                   return (
                     <div
                       key={address.$id}
-                      className="group relative bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-6 hover:border-amber-500/50 transition-all duration-500 hover:-translate-y-2"
+                      className="group relative bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-6 hover:border-amber-500/50 transition-all duration-500 hover:-translate-y-2"
                     >
                       {/* Address Type Badge */}
                       <div className="absolute top-4 right-4">
                         <div
-                          className={`bg-gradient-to-r ${addressType?.color} text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-1`}
+                          className={`bg-gradient-to-r ${addressType?.color} text-[color:var(--nf-text-primary)] text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-1`}
                         >
                           {addressType?.icon}
                           <span>{addressType?.label}</span>
@@ -450,11 +450,11 @@ const AddressesPage = () => {
                       {/* Address Content */}
                       <div className="pt-8">
                         <div className="flex items-center space-x-3 mb-4">
-                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-900/30 to-yellow-900/30 border border-amber-700/30 flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-900/30 to-yellow-900/30 border border-[var(--nf-border-subtle)] flex items-center justify-center">
                             <User className="w-6 h-6 text-amber-400" />
                           </div>
                           <div>
-                            <h3 className="text-xl font-bold text-white">
+                            <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)]">
                               {address.fullName}
                             </h3>
                             <p className="text-amber-400">{address.phone}</p>
@@ -464,7 +464,7 @@ const AddressesPage = () => {
                         <div className="space-y-3">
                           <div className="flex items-start space-x-2">
                             <MapPin className="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0" />
-                            <p className="text-gray-300">{address.address}</p>
+                            <p className="text-[color:var(--nf-text-secondary)]">{address.address}</p>
                           </div>
 
                           <div className="grid grid-cols-2 gap-2">
@@ -482,10 +482,10 @@ const AddressesPage = () => {
                             </div>
                           </div>
 
-                          <div className="flex items-center justify-between pt-4 border-t border-amber-800/30">
+                          <div className="flex items-center justify-between pt-4 border-t border-[var(--nf-border-subtle)]">
                             <div className="flex items-center space-x-2">
-                              <Clock className="w-4 h-4 text-gray-400" />
-                              <span className="text-gray-400 text-xs">
+                              <Clock className="w-4 h-4 text-[color:var(--nf-text-muted)]" />
+                              <span className="text-[color:var(--nf-text-muted)] text-xs">
                                 Added recently
                               </span>
                             </div>
@@ -493,7 +493,7 @@ const AddressesPage = () => {
                             <div className="flex items-center space-x-3">
                               <button
                                 onClick={() => handleEditAddress(address)}
-                                className="p-2 text-amber-400 hover:text-amber-300 hover:bg-amber-900/20 rounded-lg transition-all duration-300"
+                                className="p-2 text-amber-400 hover:text-[color:var(--nf-accent)] hover:bg-amber-900/20 rounded-lg transition-all duration-300"
                               >
                                 <Edit2 className="w-5 h-5" />
                               </button>
@@ -517,11 +517,11 @@ const AddressesPage = () => {
 
               {/* Stats */}
               <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-amber-800/30 rounded-2xl p-6 text-center">
-                  <div className="text-2xl font-bold text-amber-300 mb-2">
+                <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-6 text-center">
+                  <div className="text-2xl font-bold text-[color:var(--nf-accent)] mb-2">
                     {addresses.length}
                   </div>
-                  <div className="text-amber-100/80">Saved Addresses</div>
+                  <div className="text-[color:var(--nf-text-muted)]">Saved Addresses</div>
                 </div>
                 <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-6 text-center">
                   <div className="text-2xl font-bold text-emerald-300 mb-2">
@@ -565,16 +565,16 @@ const AddressesPage = () => {
             <div className="flex items-center space-x-3">
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
                 {editMode ? (
-                  <Edit2 className="w-6 h-6 text-white" />
+                  <Edit2 className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                 ) : (
-                  <Plus className="w-6 h-6 text-white" />
+                  <Plus className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                 )}
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-white">
+                <h2 className="text-2xl font-bold text-[color:var(--nf-text-primary)]">
                   {editMode ? "Edit Address" : "Add New Address"}
                 </h2>
-                <p className="text-amber-100/70">Premium delivery details</p>
+                <p className="text-[color:var(--nf-text-muted)]">Premium delivery details</p>
               </div>
             </div>
             <button
@@ -584,7 +584,7 @@ const AddressesPage = () => {
                 setSelectedAddress(null);
                 resetForm();
               }}
-              className="p-2 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+              className="p-2 text-[color:var(--nf-text-muted)] hover:text-[color:var(--nf-text-primary)] hover:bg-[var(--nf-bg-subtle)] rounded-lg transition-colors"
             >
               &times;
             </button>
@@ -593,7 +593,7 @@ const AddressesPage = () => {
           <form onSubmit={handleAddAddress} className="space-y-6">
             {/* Address Type Selection */}
             <div>
-              <label className="block text-amber-100 font-medium mb-3">
+              <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-3">
                 Address Type
               </label>
               <div className="grid grid-cols-3 gap-3">
@@ -606,8 +606,8 @@ const AddressesPage = () => {
                     }
                     className={`group relative p-4 rounded-xl border backdrop-blur-sm transition-all duration-300 flex flex-col items-center justify-center space-y-2 ${
                       newAddress.addressType === type.value
-                        ? `bg-gradient-to-r ${type.color} border-transparent text-white`
-                        : "bg-gradient-to-r from-gray-900/50 to-black/50 border-amber-800/30 text-gray-300 hover:border-amber-500/50"
+                        ? `bg-gradient-to-r ${type.color} border-transparent text-[color:var(--nf-text-primary)]`
+                        : "bg-[var(--nf-bg-elevated)] border-[var(--nf-border-subtle)] text-[color:var(--nf-text-secondary)] hover:border-amber-500/50"
                     }`}
                   >
                     {newAddress.addressType === type.value && (
@@ -616,7 +616,7 @@ const AddressesPage = () => {
                     <div
                       className={`${
                         newAddress.addressType === type.value
-                          ? "text-white"
+                          ? "text-[color:var(--nf-text-primary)]"
                           : "text-amber-400"
                       }`}
                     >
@@ -630,7 +630,7 @@ const AddressesPage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-amber-100 font-medium mb-2">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                   <span className="flex items-center space-x-2">
                     <User className="w-4 h-4" />
                     <span>Full Name</span>
@@ -639,7 +639,7 @@ const AddressesPage = () => {
                 <input
                   type="text"
                   placeholder="Your full name"
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors"
                   value={newAddress.fullName}
                   onChange={(e) =>
                     setNewAddress({ ...newAddress, fullName: e.target.value })
@@ -649,7 +649,7 @@ const AddressesPage = () => {
               </div>
 
               <div>
-                <label className="block text-amber-100 font-medium mb-2">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                   <span className="flex items-center space-x-2">
                     <Truck className="w-4 h-4" />
                     <span>Phone Number</span>
@@ -658,7 +658,7 @@ const AddressesPage = () => {
                 <input
                   type="tel"
                   placeholder="+254 XXX XXX XXX"
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors"
                   value={newAddress.phone}
                   onChange={(e) =>
                     setNewAddress({ ...newAddress, phone: e.target.value })
@@ -669,7 +669,7 @@ const AddressesPage = () => {
             </div>
 
             <div>
-              <label className="block text-amber-100 font-medium mb-2">
+              <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                 <span className="flex items-center space-x-2">
                   <MapPin className="w-4 h-4" />
                   <span>Street Address</span>
@@ -678,7 +678,7 @@ const AddressesPage = () => {
               <input
                 type="text"
                 placeholder="Building, street, area"
-                className="w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors"
+                className="w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors"
                 value={newAddress.address}
                 onChange={(e) =>
                   setNewAddress({ ...newAddress, address: e.target.value })
@@ -689,13 +689,13 @@ const AddressesPage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-amber-100 font-medium mb-2">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                   City
                 </label>
                 <input
                   type="text"
                   placeholder="City"
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors"
                   value={newAddress.city}
                   onChange={(e) =>
                     setNewAddress({ ...newAddress, city: e.target.value })
@@ -704,13 +704,13 @@ const AddressesPage = () => {
               </div>
 
               <div>
-                <label className="block text-amber-100 font-medium mb-2">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                   State/Region
                 </label>
                 <input
                   type="text"
                   placeholder="State or Region"
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors"
                   value={newAddress.state}
                   onChange={(e) =>
                     setNewAddress({ ...newAddress, state: e.target.value })
@@ -721,13 +721,13 @@ const AddressesPage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-amber-100 font-medium mb-2">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                   Zip/Postal Code
                 </label>
                 <input
                   type="text"
                   placeholder="Postal code"
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors"
                   value={newAddress.zipCode}
                   onChange={(e) =>
                     setNewAddress({ ...newAddress, zipCode: e.target.value })
@@ -736,13 +736,13 @@ const AddressesPage = () => {
               </div>
 
               <div>
-                <label className="block text-amber-100 font-medium mb-2">
+                <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                   Country
                 </label>
                 <input
                   type="text"
                   placeholder="Country"
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors"
                   value={newAddress.country}
                   onChange={(e) =>
                     setNewAddress({ ...newAddress, country: e.target.value })
@@ -751,7 +751,7 @@ const AddressesPage = () => {
               </div>
             </div>
 
-            <div className="flex justify-end space-x-4 pt-6 border-t border-amber-800/30">
+            <div className="flex justify-end space-x-4 pt-6 border-t border-[var(--nf-border-subtle)]">
               <button
                 type="button"
                 onClick={() => {
@@ -760,7 +760,7 @@ const AddressesPage = () => {
                   setSelectedAddress(null);
                   resetForm();
                 }}
-                className="px-6 py-3 bg-gradient-to-r from-gray-900/50 to-black/50 border border-amber-800/30 text-amber-300 rounded-xl hover:border-amber-500/50 transition-all duration-300"
+                className="px-6 py-3 bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] text-[color:var(--nf-accent)] rounded-xl hover:border-amber-500/50 transition-all duration-300"
               >
                 Cancel
               </button>

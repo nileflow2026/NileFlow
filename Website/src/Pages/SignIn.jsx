@@ -64,7 +64,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Hero Section */}
@@ -75,9 +75,9 @@ const SignIn = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-red-500/10 to-amber-500/10 rounded-full blur-3xl translate-y-48 -translate-x-48"></div>
 
         <div className="relative max-w-8xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-700/30 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-900/30 to-emerald-900/30 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[var(--nf-border-subtle)] mb-6">
             <Shield className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 font-medium tracking-wide">
+            <span className="text-[color:var(--nf-accent)] font-medium tracking-wide">
               Secure Access
             </span>
             <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -88,10 +88,10 @@ const SignIn = () => {
               Welcome Back
             </span>
             <br />
-            <span className="text-white">Premium African Marketplace</span>
+            <span className="text-[color:var(--nf-text-primary)]">Premium African Marketplace</span>
           </h1>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
             Access your exclusive collection of authentic African products and
             personalized recommendations.
           </p>
@@ -104,17 +104,17 @@ const SignIn = () => {
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Left Column - Form */}
             <div className="lg:col-span-1">
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl overflow-hidden">
-                <div className="p-8 border-b border-amber-800/30">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl overflow-hidden">
+                <div className="p-8 border-b border-[var(--nf-border-subtle)]">
                   <div className="flex items-center space-x-3 mb-2">
                     <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
-                      <Crown className="w-6 h-6 text-white" />
+                      <Crown className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-amber-200">
+                      <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                         Premium Sign In
                       </h2>
-                      <p className="text-amber-100/70">
+                      <p className="text-[color:var(--nf-text-muted)]">
                         Access your Nile Flow account
                       </p>
                     </div>
@@ -124,7 +124,7 @@ const SignIn = () => {
                 <form onSubmit={handleSubmit} className="p-8 space-y-6">
                   {/* Email Field */}
                   <div>
-                    <label className="block text-amber-100 font-medium mb-2">
+                    <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                       <span className="flex items-center space-x-2">
                         <Mail className="w-4 h-4" />
                         <span>Email Address</span>
@@ -136,7 +136,7 @@ const SignIn = () => {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="relative w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors pl-12"
+                        className="relative w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors pl-12"
                         placeholder="Enter your email address"
                         required
                       />
@@ -148,7 +148,7 @@ const SignIn = () => {
 
                   {/* Password Field */}
                   <div>
-                    <label className="block text-amber-100 font-medium mb-2">
+                    <label className="block text-[color:var(--nf-text-secondary)] font-medium mb-2">
                       <span className="flex items-center space-x-2">
                         <Lock className="w-4 h-4" />
                         <span>Password</span>
@@ -160,7 +160,7 @@ const SignIn = () => {
                         type={showPassword ? "text" : "password"}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="relative w-full px-4 py-3 bg-gray-900/50 border border-amber-800/50 rounded-xl text-amber-100 placeholder-amber-100/50 focus:outline-none focus:border-amber-500 transition-colors pl-12 pr-12"
+                        className="relative w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-secondary)] placeholder-[color:var(--nf-text-muted)] focus:outline-none focus:border-amber-500 transition-colors pl-12 pr-12"
                         placeholder="Enter your password"
                         required
                       />
@@ -170,7 +170,7 @@ const SignIn = () => {
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-amber-500 hover:text-amber-300 transition-colors"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-amber-500 hover:text-[color:var(--nf-accent)] transition-colors"
                       >
                         {showPassword ? (
                           <EyeOff className="w-5 h-5" />
@@ -195,7 +195,7 @@ const SignIn = () => {
                           className={`w-5 h-5 rounded border flex items-center justify-center ${
                             rememberMe
                               ? "bg-gradient-to-r from-amber-600 to-amber-700 border-amber-500"
-                              : "border-amber-800/50"
+                              : "border-[var(--nf-border)]"
                           }`}
                         >
                           {rememberMe && (
@@ -203,13 +203,13 @@ const SignIn = () => {
                           )}
                         </div>
                       </div>
-                      <span className="text-amber-100/80 text-sm">
+                      <span className="text-[color:var(--nf-text-muted)] text-sm">
                         Remember me
                       </span>
                     </label>
                     <Link
                       to="/forgot-password"
-                      className="text-amber-400 hover:text-amber-300 text-sm transition-colors"
+                      className="text-amber-400 hover:text-[color:var(--nf-accent)] text-sm transition-colors"
                     >
                       Forgot password?
                     </Link>
@@ -247,10 +247,10 @@ const SignIn = () => {
                   {/* Divider */}
                   <div className="relative">
                     <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-amber-800/30"></div>
+                      <div className="w-full border-t border-[var(--nf-border-subtle)]"></div>
                     </div>
                     <div className="relative flex justify-center text-sm">
-                      <span className="px-4 bg-gradient-to-br from-gray-900/80 to-black/80 text-amber-100/50">
+                      <span className="px-4 bg-[var(--nf-card-bg)] text-[color:var(--nf-text-muted)]">
                         Or continue with
                       </span>
                     </div>
@@ -261,21 +261,21 @@ const SignIn = () => {
                     <button
                       type="button"
                       onClick={handleGoogleSignIn}
-                      className="flex items-center justify-center space-x-2 px-4 py-3 bg-gradient-to-r from-gray-900/50 to-black/50 border border-amber-800/30 rounded-xl hover:border-amber-500/50 transition-all duration-300"
+                      className="flex items-center justify-center space-x-2 px-4 py-3 bg-[var(--nf-bg-elevated)] border border-[var(--nf-border-subtle)] rounded-xl hover:border-amber-500/50 transition-all duration-300"
                     >
                       <Globe className="w-5 h-5 text-blue-400" />
-                      <span className="text-amber-100">Google</span>
+                      <span className="text-[color:var(--nf-text-secondary)]">Google</span>
                     </button>
                   </div>
                 </form>
 
                 {/* Sign Up Link */}
-                <div className="p-8 border-t border-amber-800/30 text-center">
-                  <p className="text-amber-100/70">
+                <div className="p-8 border-t border-[var(--nf-border-subtle)] text-center">
+                  <p className="text-[color:var(--nf-text-muted)]">
                     Don't have an account?{" "}
                     <Link
                       to="/signup"
-                      className="text-amber-400 hover:text-amber-300 font-bold transition-colors group inline-flex items-center space-x-1"
+                      className="text-amber-400 hover:text-[color:var(--nf-accent)] font-bold transition-colors group inline-flex items-center space-x-1"
                     >
                       <span>Create Account</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -287,26 +287,26 @@ const SignIn = () => {
 
             {/* Right Column - Benefits */}
             <div className="lg:col-span-1">
-              <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 h-full sticky top-8">
+              <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 h-full sticky top-8">
                 <div className="mb-8">
-                  <h3 className="text-2xl font-bold text-amber-200 mb-2">
+                  <h3 className="text-2xl font-bold text-[color:var(--nf-accent)] mb-2">
                     Premium Benefits
                   </h3>
-                  <p className="text-amber-100/70">
+                  <p className="text-[color:var(--nf-text-muted)]">
                     Unlock exclusive features with your Nile Flow account
                   </p>
                 </div>
 
                 <div className="space-y-6">
-                  <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-amber-900/20 to-yellow-900/20 backdrop-blur-sm border border-amber-800/30 rounded-2xl">
+                  <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-amber-900/20 to-yellow-900/20 backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center flex-shrink-0">
-                      <Award className="w-6 h-6 text-white" />
+                      <Award className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
-                      <h4 className="text-lg font-bold text-amber-100 mb-1">
+                      <h4 className="text-lg font-bold text-[color:var(--nf-text-secondary)] mb-1">
                         Exclusive Access
                       </h4>
-                      <p className="text-amber-100/70 text-sm">
+                      <p className="text-[color:var(--nf-text-muted)] text-sm">
                         Premium African products only available to members
                       </p>
                     </div>
@@ -314,7 +314,7 @@ const SignIn = () => {
 
                   <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-emerald-900/20 to-green-900/20 backdrop-blur-sm border border-emerald-800/30 rounded-2xl">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center flex-shrink-0">
-                      <Zap className="w-6 h-6 text-white" />
+                      <Zap className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
                       <h4 className="text-lg font-bold text-emerald-100 mb-1">
@@ -328,7 +328,7 @@ const SignIn = () => {
 
                   <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-blue-900/20 to-indigo-900/20 backdrop-blur-sm border border-blue-800/30 rounded-2xl">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center flex-shrink-0">
-                      <Sparkles className="w-6 h-6 text-white" />
+                      <Sparkles className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
                       <h4 className="text-lg font-bold text-blue-100 mb-1">
@@ -343,7 +343,7 @@ const SignIn = () => {
 
                   <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-red-900/20 to-pink-900/20 backdrop-blur-sm border border-red-800/30 rounded-2xl">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center flex-shrink-0">
-                      <Shield className="w-6 h-6 text-white" />
+                      <Shield className="w-6 h-6 text-[color:var(--nf-text-primary)]" />
                     </div>
                     <div>
                       <h4 className="text-lg font-bold text-red-100 mb-1">
@@ -357,13 +357,13 @@ const SignIn = () => {
                 </div>
 
                 {/* Trust Badges */}
-                <div className="mt-8 pt-8 border-t border-amber-800/30">
+                <div className="mt-8 pt-8 border-t border-[var(--nf-border-subtle)]">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-amber-300">
+                      <div className="text-2xl font-bold text-[color:var(--nf-accent)]">
                         100%
                       </div>
-                      <div className="text-amber-100/80 text-xs">
+                      <div className="text-[color:var(--nf-text-muted)] text-xs">
                         Secure Login
                       </div>
                     </div>
@@ -381,7 +381,7 @@ const SignIn = () => {
 
           {/* Trust Section */}
           <div className="mt-8 text-center">
-            <div className="inline-flex items-center space-x-2 text-amber-100/60 text-sm">
+            <div className="inline-flex items-center space-x-2 text-[color:var(--nf-text-muted)] text-sm">
               <Shield className="w-4 h-4 text-amber-400" />
               <span>
                 Your security is our priority. All data is encrypted and

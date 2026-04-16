@@ -92,12 +92,12 @@ const PickupAddressModal = ({ isOpen, onClose, onSubmit }) => {
       <div class="bg-gradient-to-r from-red-900/80 to-amber-900/80 backdrop-blur-sm border border-red-700/50 rounded-2xl p-4 shadow-2xl">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-full bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-[color:var(--nf-text-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </div>
           <div>
-            <p class="font-bold text-white">Error</p>
+            <p class="font-bold text-[color:var(--nf-text-primary)]">Error</p>
             <p class="text-red-100 text-sm">${message}</p>
           </div>
         </div>
@@ -119,13 +119,13 @@ const PickupAddressModal = ({ isOpen, onClose, onSubmit }) => {
         className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 max-w-md w-full mx-4 border border-emerald-700/50">
+        <div className="bg-[var(--nf-card-bg)] rounded-2xl p-8 max-w-md w-full mx-4 border border-emerald-700/50">
           <div className="text-center">
             <div className="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="w-8 h-8 text-white" />
+              <CheckCircle className="w-8 h-8 text-[color:var(--nf-text-primary)]" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">Perfect!</h3>
-            <p className="text-gray-300">
+            <h3 className="text-xl font-bold text-[color:var(--nf-text-primary)] mb-2">Perfect!</h3>
+            <p className="text-[color:var(--nf-text-secondary)]">
               Your pickup address has been saved successfully. You can now enjoy
               seamless delivery tracking!
             </p>
@@ -143,21 +143,21 @@ const PickupAddressModal = ({ isOpen, onClose, onSubmit }) => {
       onClick={onClose}
     >
       <div
-        className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl max-w-2xl w-full mx-4 border border-amber-700/50 shadow-2xl overflow-hidden"
+        className="bg-[var(--nf-card-bg)] rounded-2xl max-w-2xl w-full mx-4 border border-amber-700/50 shadow-2xl overflow-hidden"
         onClick={handleModalClick}
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-amber-900/30 to-emerald-900/30 px-6 py-4 border-b border-amber-700/30">
+        <div className="bg-gradient-to-r from-amber-900/30 to-emerald-900/30 px-6 py-4 border-b border-[var(--nf-border-subtle)]">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-emerald-500 rounded-full flex items-center justify-center">
-                <MapPin className="w-5 h-5 text-white" />
+                <MapPin className="w-5 h-5 text-[color:var(--nf-text-primary)]" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-white">
+                <h2 className="text-xl font-bold text-[color:var(--nf-text-primary)]">
                   Complete Your Profile
                 </h2>
-                <p className="text-gray-300 text-sm">
+                <p className="text-[color:var(--nf-text-secondary)] text-sm">
                   Add your pickup address for delivery tracking
                 </p>
               </div>
@@ -190,20 +190,20 @@ const PickupAddressModal = ({ isOpen, onClose, onSubmit }) => {
           <div className="space-y-4">
             {/* Street Address */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-[color:var(--nf-text-secondary)] mb-2">
                 Street Address *
               </label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[color:var(--nf-text-muted)]" />
                 <input
                   type="text"
                   name="address"
                   value={formData.address}
                   onChange={handleInputChange}
                   placeholder="Enter your street address"
-                  className={`w-full pl-10 pr-4 py-3 bg-gray-700/50 border ${
-                    errors.address ? "border-red-500" : "border-gray-600"
-                  } rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500`}
+                  className={`w-full pl-10 pr-4 py-3 bg-[var(--nf-bg-subtle)] border ${
+                    errors.address ? "border-red-500" : "border-[var(--nf-border)]"
+                  } rounded-xl text-[color:var(--nf-text-primary)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500`}
                   required
                 />
               </div>
@@ -214,20 +214,20 @@ const PickupAddressModal = ({ isOpen, onClose, onSubmit }) => {
 
             {/* Phone Number */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-[color:var(--nf-text-secondary)] mb-2">
                 Phone Number *
               </label>
               <div className="relative">
-                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[color:var(--nf-text-muted)]" />
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
                   placeholder="Enter your phone number"
-                  className={`w-full pl-10 pr-4 py-3 bg-gray-700/50 border ${
-                    errors.phone ? "border-red-500" : "border-gray-600"
-                  } rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500`}
+                  className={`w-full pl-10 pr-4 py-3 bg-[var(--nf-bg-subtle)] border ${
+                    errors.phone ? "border-red-500" : "border-[var(--nf-border)]"
+                  } rounded-xl text-[color:var(--nf-text-primary)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500`}
                   required
                 />
               </div>
@@ -239,7 +239,7 @@ const PickupAddressModal = ({ isOpen, onClose, onSubmit }) => {
             {/* City and State Row */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-[color:var(--nf-text-secondary)] mb-2">
                   City *
                 </label>
                 <input
@@ -248,9 +248,9 @@ const PickupAddressModal = ({ isOpen, onClose, onSubmit }) => {
                   value={formData.city}
                   onChange={handleInputChange}
                   placeholder="City"
-                  className={`w-full px-4 py-3 bg-gray-700/50 border ${
-                    errors.city ? "border-red-500" : "border-gray-600"
-                  } rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500`}
+                  className={`w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border ${
+                    errors.city ? "border-red-500" : "border-[var(--nf-border)]"
+                  } rounded-xl text-[color:var(--nf-text-primary)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500`}
                   required
                 />
                 {errors.city && (
@@ -259,7 +259,7 @@ const PickupAddressModal = ({ isOpen, onClose, onSubmit }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-[color:var(--nf-text-secondary)] mb-2">
                   State/Province *
                 </label>
                 <input
@@ -268,9 +268,9 @@ const PickupAddressModal = ({ isOpen, onClose, onSubmit }) => {
                   value={formData.state}
                   onChange={handleInputChange}
                   placeholder="State/Province"
-                  className={`w-full px-4 py-3 bg-gray-700/50 border ${
-                    errors.state ? "border-red-500" : "border-gray-600"
-                  } rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500`}
+                  className={`w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border ${
+                    errors.state ? "border-red-500" : "border-[var(--nf-border)]"
+                  } rounded-xl text-[color:var(--nf-text-primary)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500`}
                   required
                 />
                 {errors.state && (
@@ -281,7 +281,7 @@ const PickupAddressModal = ({ isOpen, onClose, onSubmit }) => {
 
             {/* Postal Code (Optional) */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-[color:var(--nf-text-secondary)] mb-2">
                 Postal Code (Optional)
               </label>
               <input
@@ -290,7 +290,7 @@ const PickupAddressModal = ({ isOpen, onClose, onSubmit }) => {
                 value={formData.postalCode}
                 onChange={handleInputChange}
                 placeholder="Enter postal/zip code"
-                className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500"
+                className="w-full px-4 py-3 bg-[var(--nf-bg-subtle)] border border-[var(--nf-border)] rounded-xl text-[color:var(--nf-text-primary)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500"
               />
             </div>
           </div>

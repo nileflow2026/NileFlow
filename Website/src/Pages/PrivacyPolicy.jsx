@@ -15,7 +15,7 @@ import {
 
 const PrivacyPolicy = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <Header />
 
       {/* Background Elements */}
@@ -28,7 +28,7 @@ const PrivacyPolicy = () => {
           {/* Back Button */}
           <Link
             to="/signup"
-            className="inline-flex items-center space-x-2 text-amber-300 hover:text-amber-200 mb-8 transition-colors"
+            className="inline-flex items-center space-x-2 text-[color:var(--nf-accent)] hover:text-[color:var(--nf-accent)] mb-8 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Sign Up</span>
@@ -37,20 +37,20 @@ const PrivacyPolicy = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-700 mb-6">
-              <Shield className="w-10 h-10 text-white" />
+              <Shield className="w-10 h-10 text-[color:var(--nf-text-primary)]" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               <span className="bg-gradient-to-r from-emerald-300 via-green-200 to-amber-200 bg-clip-text text-transparent">
                 Privacy Policy
               </span>
             </h1>
-            <p className="text-amber-100/70 text-lg">
+            <p className="text-[color:var(--nf-text-muted)] text-lg">
               Last Updated: December 21, 2025
             </p>
           </div>
 
           {/* Content */}
-          <div className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-amber-800/30 rounded-3xl p-8 md:p-12 space-y-8">
+          <div className="bg-[var(--nf-card-bg)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-3xl p-8 md:p-12 space-y-8">
             {/* Introduction */}
             <section>
               <div className="flex items-center space-x-3 mb-4">
@@ -59,7 +59,7 @@ const PrivacyPolicy = () => {
                   1. Introduction
                 </h2>
               </div>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 At Nile Flow Africa, we take your privacy seriously. This
                 Privacy Policy explains how we collect, use, disclose, and
                 safeguard your information when you use our platform. Please
@@ -76,9 +76,9 @@ const PrivacyPolicy = () => {
                   2. Information We Collect
                 </h2>
               </div>
-              <div className="text-amber-100/80 leading-relaxed space-y-4">
+              <div className="text-[color:var(--nf-text-muted)] leading-relaxed space-y-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-amber-200 mb-2">
+                  <h3 className="text-lg font-semibold text-[color:var(--nf-accent)] mb-2">
                     Personal Information
                   </h3>
                   <p className="mb-2">
@@ -99,7 +99,7 @@ const PrivacyPolicy = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-amber-200 mb-2">
+                  <h3 className="text-lg font-semibold text-[color:var(--nf-accent)] mb-2">
                     Usage Information
                   </h3>
                   <p className="mb-2">
@@ -117,7 +117,7 @@ const PrivacyPolicy = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-amber-200 mb-2">
+                  <h3 className="text-lg font-semibold text-[color:var(--nf-accent)] mb-2">
                     Cookies and Tracking
                   </h3>
                   <p>
@@ -137,7 +137,7 @@ const PrivacyPolicy = () => {
                   3. How We Use Your Information
                 </h2>
               </div>
-              <div className="text-amber-100/80 leading-relaxed space-y-3">
+              <div className="text-[color:var(--nf-text-muted)] leading-relaxed space-y-3">
                 <p>We use the information we collect to:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>Process and fulfill your orders</li>
@@ -162,7 +162,7 @@ const PrivacyPolicy = () => {
                   4. Information Sharing and Disclosure
                 </h2>
               </div>
-              <div className="text-amber-100/80 leading-relaxed space-y-3">
+              <div className="text-[color:var(--nf-text-muted)] leading-relaxed space-y-3">
                 <p>We may share your information with:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>
@@ -198,7 +198,7 @@ const PrivacyPolicy = () => {
                   5. Data Security
                 </h2>
               </div>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 We implement industry-standard security measures to protect your
                 personal information, including encryption, secure servers, and
                 regular security audits. However, no method of transmission over
@@ -216,7 +216,7 @@ const PrivacyPolicy = () => {
                   6. Your Rights and Choices
                 </h2>
               </div>
-              <div className="text-amber-100/80 leading-relaxed space-y-3">
+              <div className="text-[color:var(--nf-text-muted)] leading-relaxed space-y-3">
                 <p>You have the right to:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>
@@ -256,7 +256,7 @@ const PrivacyPolicy = () => {
               <h2 className="text-2xl font-bold text-emerald-200 mb-4">
                 7. Children's Privacy
               </h2>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 Our services are not intended for children under 13 years of
                 age. We do not knowingly collect personal information from
                 children. If you become aware that a child has provided us with
@@ -273,7 +273,7 @@ const PrivacyPolicy = () => {
                   8. International Data Transfers
                 </h2>
               </div>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 Your information may be transferred to and processed in
                 countries other than your own. We ensure that appropriate
                 safeguards are in place to protect your data in accordance with
@@ -286,7 +286,7 @@ const PrivacyPolicy = () => {
               <h2 className="text-2xl font-bold text-emerald-200 mb-4">
                 9. Data Retention
               </h2>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 We retain your personal information for as long as necessary to
                 fulfill the purposes outlined in this policy, comply with legal
                 obligations, resolve disputes, and enforce our agreements. When
@@ -300,7 +300,7 @@ const PrivacyPolicy = () => {
               <h2 className="text-2xl font-bold text-emerald-200 mb-4">
                 10. Third-Party Links
               </h2>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 Our platform may contain links to third-party websites. We are
                 not responsible for the privacy practices of these external
                 sites. We encourage you to review their privacy policies before
@@ -313,7 +313,7 @@ const PrivacyPolicy = () => {
               <h2 className="text-2xl font-bold text-emerald-200 mb-4">
                 11. Changes to This Privacy Policy
               </h2>
-              <p className="text-amber-100/80 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 We may update this Privacy Policy from time to time to reflect
                 changes in our practices or legal requirements. We will notify
                 you of significant changes by posting the updated policy on this
@@ -327,7 +327,7 @@ const PrivacyPolicy = () => {
               <h2 className="text-2xl font-bold text-emerald-200 mb-4">
                 12. Contact Us
               </h2>
-              <div className="text-amber-100/80 leading-relaxed space-y-2">
+              <div className="text-[color:var(--nf-text-muted)] leading-relaxed space-y-2">
                 <p>
                   If you have any questions, concerns, or requests regarding
                   this Privacy Policy or our data practices, please contact us:
@@ -336,7 +336,7 @@ const PrivacyPolicy = () => {
                   <p>Email: privacy@nileflowafrica.com</p>
                   <p>Phone: +254 703 115 359</p>
                   <p>Address: Kilimani, Nairobi, Kenya</p>
-                  <p className="mt-2 text-sm text-amber-100/60">
+                  <p className="mt-2 text-sm text-[color:var(--nf-text-muted)]">
                     Data Protection Officer: dpo@nileflowafrica.com
                   </p>
                 </div>
@@ -345,7 +345,7 @@ const PrivacyPolicy = () => {
 
             {/* Your Consent */}
             <section className="bg-gradient-to-r from-emerald-900/20 to-green-900/20 backdrop-blur-sm border border-emerald-800/30 rounded-xl p-6">
-              <p className="text-amber-100/90 leading-relaxed">
+              <p className="text-[color:var(--nf-text-muted)] leading-relaxed">
                 By using Nile Flow Africa, you consent to the collection, use,
                 and disclosure of your information as described in this Privacy
                 Policy. If you do not agree with this policy, please do not use
