@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "generate:sitemap": "node scripts/generate-sitemap.mjs",
+    "prerender": "node scripts/prerender.mjs",
     "prebuild": "npm run generate:sitemap",
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && npm run prerender",
     "build:analyze": "vite build --mode analyze",
     "lint": "eslint .",
     "start": "vite preview --port 10000 --host",
