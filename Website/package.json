@@ -7,7 +7,7 @@
     "generate:sitemap": "node scripts/generate-sitemap.mjs",
     "prebuild": "npm run generate:sitemap",
     "dev": "vite",
-    "build": "vite build && cpx _redirects dist",
+    "build": "vite build",
     "build:analyze": "vite build --mode analyze",
     "lint": "eslint .",
     "start": "vite preview --port 10000 --host",
