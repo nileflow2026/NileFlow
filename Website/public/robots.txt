@@ -15,6 +15,14 @@ Disallow: /payment
 Disallow: /payment-success
 Disallow: /payment-cancelled
 Disallow: /subscription/success
+Disallow: /notification
+Disallow: /redeem
+Disallow: /currency
+Disallow: /cancel-order
+Disallow: /track-order
+Disallow: /language
+Disallow: /apply/
+Disallow: /group/
 Disallow: /admin
 Allow: /
 

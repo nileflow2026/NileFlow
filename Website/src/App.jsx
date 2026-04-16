@@ -52,6 +52,7 @@ const CancelOrderPage = lazy(() => import("./Pages/CancelOrderPage"));
 const PremiumDealsPage = lazy(() => import("./Pages/PremiumDealsPage"));
 const SubscriptionSuccess = lazy(() => import("./Pages/SubscriptionSuccess"));
 const GroupBuyPage = lazy(() => import("./Pages/GroupBuyPage"));
+const NotFoundPage = lazy(() => import("./Pages/NotFoundPage"));
 
 // Lazy load heavy components
 const ApplicationForm = lazy(() => import("../components/ApplicationForm"));
@@ -203,7 +204,8 @@ const AppContent = () => {
             <Route path="/group/:id" element={<GroupBuyPage />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
-            {/* Add more routes here */}
+            {/* Catch-all: renders a proper 404 page for any unmatched URL */}
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </div>
