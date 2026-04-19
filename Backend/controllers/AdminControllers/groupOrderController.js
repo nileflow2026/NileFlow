@@ -13,6 +13,23 @@ const {
 } = require("../../services/groupBuyNotificationService");
 
 /**
+ * Safely parse a participants value stored as a JSON string in Appwrite.
+ */
+function parseParticipants(val) {
+  if (!val) return [];
+  if (Array.isArray(val)) return val;
+  if (typeof val === "string") {
+    try {
+      const parsed = JSON.parse(val);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+
+/**
  * Safely parse a tiers value that may be a JSON string, an array, or null.
  */
 function parseTiers(tiers) {
@@ -68,7 +85,7 @@ async function createGroupOrder(req, res) {
       productName: String(productName),
       productImage: String(productImage),
       creatorId: String(creatorId),
-      participants: [String(creatorId)],
+      participants: JSON.stringify([String(creatorId)]),
       maxParticipants: Number(maxParticipants),
       basePrice: Number(basePrice),
       currentPrice: initialPrice,
@@ -110,15 +127,17 @@ async function getGroupOrder(req, res) {
     );
     if (!order) return res.status(404).json({ error: "Not found" });
 
+    const participants = parseParticipants(order.participants);
     const frontendUrl = env.FRONTEND_URL || "https://nileflow.com";
     const shareLink = `${frontendUrl}/group/${order.$id}`;
     return res.json({
       ...order,
+      participants,
       savingsAmount: getSavingsAmount(order.basePrice, order.currentPrice),
       savingsPercent: getSavingsPercent(order.basePrice, order.currentPrice),
       remainingSlots: Math.max(
         0,
-        (order.maxParticipants || 0) - (order.participants?.length || 0),
+        (order.maxParticipants || 0) - participants.length,
       ),
       isExpired: order.expiresAt
         ? new Date(order.expiresAt) <= new Date()
@@ -165,7 +184,6 @@ async function listGroupOrders(req, res) {
       ),
       isExpired: g.expiresAt && new Date(g.expiresAt) <= new Date(),
     }));
-
     return res.json({ total: result.total, documents: enriched });
   } catch (err) {
     console.error("listGroupOrders:", err);
@@ -235,12 +253,13 @@ async function joinGroupOrder(req, res) {
           throw { code: 400, msg: "This group deal is no longer open" };
         if (order.expiresAt && new Date(order.expiresAt) <= new Date())
           throw { code: 400, msg: "This group deal has expired" };
-        if (order.participants && order.participants.includes(userId))
+        const currentParticipants = parseParticipants(order.participants);
+        if (currentParticipants.includes(userId))
           throw { code: 400, msg: "You have already joined this group" };
-        if (order.participants.length >= order.maxParticipants)
+        if (currentParticipants.length >= order.maxParticipants)
           throw { code: 400, msg: "This group is full" };
 
-        const newParticipants = [...order.participants, userId];
+        const newParticipants = [...currentParticipants, userId];
         const participantsCount = newParticipants.length;
 
         const newPrice = computeCurrentPrice({
@@ -263,12 +282,15 @@ async function joinGroupOrder(req, res) {
         }
 
         return {
-          participants: newParticipants,
+          participants: JSON.stringify(newParticipants),
           currentPrice: newPrice,
           status: newStatus,
         };
       },
     );
+
+    // Parse participants for the response
+    const resultParticipants = parseParticipants(result.participants);
 
     // Fire-and-forget notifications (don't block the response)
     setImmediate(async () => {
@@ -276,7 +298,7 @@ async function joinGroupOrder(req, res) {
         if (finalizedGroup) {
           await sendGroupBuyNotification("group_completed", {
             groupId: id,
-            participants: result.participants,
+            participants: resultParticipants,
             productId: result.productId,
             lockedPrice: result.currentPrice,
           });
@@ -285,7 +307,7 @@ async function joinGroupOrder(req, res) {
             groupId: id,
             userId,
             productId: result.productId,
-            currentSize: result.participants.length,
+            currentSize: resultParticipants.length,
             maxSize: result.maxParticipants,
             currentPrice: result.currentPrice,
           });
@@ -298,11 +320,12 @@ async function joinGroupOrder(req, res) {
     const frontendUrl = env.FRONTEND_URL || "https://nileflow.com";
     return res.json({
       ...result,
+      participants: resultParticipants,
       savingsAmount: getSavingsAmount(result.basePrice, result.currentPrice),
       savingsPercent: getSavingsPercent(result.basePrice, result.currentPrice),
       remainingSlots: Math.max(
         0,
-        (result.maxParticipants || 0) - (result.participants?.length || 0),
+        (result.maxParticipants || 0) - resultParticipants.length,
       ),
       shareLink: `${frontendUrl}/group/${id}`,
     });
@@ -327,10 +350,11 @@ async function leaveGroupOrder(req, res) {
       id,
       async (order) => {
         if (!order) throw { code: 404, msg: "Order not found" };
-        if (!order.participants.includes(userId))
+        const currentParticipants = parseParticipants(order.participants);
+        if (!currentParticipants.includes(userId))
           throw { code: 400, msg: "User not in group" };
         // remove user
-        const newParticipants = order.participants.filter((u) => u !== userId);
+        const newParticipants = currentParticipants.filter((u) => u !== userId);
         const participantsCount = newParticipants.length;
         // ensure at least creator remains; behavior: if creator leaves -> transfer ownership or cancel
         if (order.creatorId === userId) {
@@ -345,7 +369,7 @@ async function leaveGroupOrder(req, res) {
           });
           const newStatus = participantsCount === 0 ? "cancelled" : "pending";
           const update = {
-            participants: newParticipants,
+            participants: JSON.stringify(newParticipants),
             currentPrice: newPrice,
             status: newStatus,
           };
@@ -360,7 +384,7 @@ async function leaveGroupOrder(req, res) {
           });
           const newStatus = participantsCount === 0 ? "cancelled" : "pending";
           return {
-            participants: newParticipants,
+            participants: JSON.stringify(newParticipants),
             currentPrice: newPrice,
             status: newStatus,
           };
