@@ -97,7 +97,6 @@ const Home = () => {
       }}
     >
       <CurrencyUpdater />
-
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 100 }}
@@ -145,7 +144,7 @@ const Home = () => {
         <HeroCarousel />
 
         {/* Premium Banner */}
-        <PremiumBanner />
+        {/* <PremiumBanner /> */}
 
         {/* Categories Section */}
         <Categories
@@ -162,9 +161,8 @@ const Home = () => {
         {/* Premium Deals Section */}
         <PremiumDeals />
       </ScrollView>
-
       {/* AI Chat Assistant - Overlay on top */}
-      <AIChat />
+      {/* <AIChat /> */}
     </View>
   );
 };

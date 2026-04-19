@@ -211,7 +211,7 @@ const BottomTabs = () => {
           }}
         />
 
-        <BottomTab.Screen
+        {/* <BottomTab.Screen
           name="Feed"
           component={Feed}
           options={{
@@ -225,7 +225,7 @@ const BottomTabs = () => {
               />
             ),
           }}
-        />
+        /> */}
 
         <BottomTab.Screen
           name="Explore"
@@ -260,7 +260,7 @@ const BottomTabs = () => {
         />
 
         {/* {isPremium && ( */}
-        <BottomTab.Screen
+        {/* <BottomTab.Screen
           name="Create"
           component={CreatorMode}
           options={{
@@ -274,7 +274,7 @@ const BottomTabs = () => {
               />
             ),
           }}
-        />
+        /> */}
 
         <BottomTab.Screen
           name="Profile"

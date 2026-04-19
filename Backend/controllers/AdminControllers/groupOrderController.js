@@ -88,8 +88,12 @@ async function createGroupOrder(req, res) {
 
     return res.status(201).json(order);
   } catch (err) {
-    console.error("createGroupOrder:", err);
-    return res.status(500).json({ error: "Internal server error." });
+    console.error("createGroupOrder ERROR:", err.message);
+    console.error("createGroupOrder FULL ERROR:", JSON.stringify(err, null, 2));
+    console.error("createGroupOrder STACK:", err.stack);
+    return res
+      .status(500)
+      .json({ error: err.message || "Internal server error." });
   }
 }
 

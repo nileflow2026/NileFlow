@@ -32,7 +32,7 @@ const FeaturedProducts = () => {
   const fetchFeaturedProducts = async () => {
     try {
       const response = await axiosClient.get(
-        "/api/customerprofile/featured-products"
+        "/api/customerprofile/featured-products",
       );
       setProducts(response.data || []);
     } catch (error) {

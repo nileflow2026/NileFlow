@@ -10,7 +10,7 @@ const {
   sendOrderCancellationEmail,
 } = require("../../services/send-confirmation");
 const { createNotification } = require("../UserControllers/Clientnotification");
-const { ID, Query } = require("node-appwrite");
+const { ID, Query, Permission, Role } = require("node-appwrite");
 const { addNileMilesOnPurchase } = require("./rewardController");
 // Import the stock helper functions
 const {
@@ -328,6 +328,10 @@ const cashonDelivery = async (req, res) => {
       env.APPWRITE_ORDERS_COLLECTION,
       ID.unique(),
       orderDocument,
+      [
+        Permission.read(Role.user(userIdValue)),
+        Permission.update(Role.user(userIdValue)),
+      ],
     );
 
     orderId = result.$id;
@@ -1341,6 +1345,10 @@ const initiateMpesaPayment = async (req, res) => {
       env.APPWRITE_ORDERS_COLLECTION,
       orderId,
       orderDocument,
+      [
+        Permission.read(Role.user(userIdValue)),
+        Permission.update(Role.user(userIdValue)),
+      ],
     );
 
     console.log(`✅ M-Pesa order created: ${orderId}`);

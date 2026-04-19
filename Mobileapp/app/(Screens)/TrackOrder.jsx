@@ -2,8 +2,8 @@ import { useLocalSearchParams } from "expo-router";
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 
 import { useEffect, useState } from "react";
-import { client, Config, databases } from "../../Appwrite";
 import { useTheme } from "../../Context/ThemeProvider";
+import axiosClient from "../../api";
 
 const TrackOrder = () => {
   const { orderId, estimatedDelivery, orderTime } = useLocalSearchParams();
@@ -14,14 +14,12 @@ const TrackOrder = () => {
     if (!orderId) return;
     const fetchInitialStatus = async () => {
       try {
-        const response = await databases.getDocument(
-          Config.databaseId,
-          Config.orderCollectionId,
-          orderId
+        const response = await axiosClient.get(
+          `/api/orders/tracking/${orderId}`,
         );
-        console.log("Initial Order Status:", response);
-        if (response && response.orderStatus) {
-          setOrderStatus(response.orderStatus);
+        console.log("Initial Order Status:", response.data);
+        if (response.data?.success && response.data?.data?.orderStatus) {
+          setOrderStatus(response.data.data.orderStatus);
         }
       } catch (error) {
         console.error("Error fetching initial order status:", error);
@@ -30,19 +28,11 @@ const TrackOrder = () => {
 
     fetchInitialStatus();
 
-    const unsubscribe = client.subscribe(
-      `databases.${Config.orderCollectionId}.orders.documents.${orderId}`,
-      (response) => {
-        if (response.payload && response.payload.orderStatus) {
-          console.log("Live Update:", response.payload.orderStatus);
-          setOrderStatus(response.payload.orderStatus); // Update state dynamically
-        }
-      }
-    );
+    // Poll for updates every 15 seconds as fallback
+    const interval = setInterval(fetchInitialStatus, 15000);
 
-    // Cleanup subscription when component unmounts
     return () => {
-      unsubscribe();
+      clearInterval(interval);
     };
   }, [orderId]);
 
@@ -141,7 +131,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-
+    color: "#FFF",
     marginBottom: 20,
   },
   stepContainer: {
@@ -151,7 +141,7 @@ const styles = StyleSheet.create({
   },
   stepText: {
     fontSize: 16,
-    color: "#000",
+    color: "#fff",
   },
   completed: {
     color: "#4CAF50",

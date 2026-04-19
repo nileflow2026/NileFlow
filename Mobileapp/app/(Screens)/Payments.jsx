@@ -90,7 +90,7 @@ const Payments = () => {
                 0,
               orderStatus: navigationTrigger.orderStatus || "Processing",
               estimatedDelivery: new Date(
-                Date.now() + 5 * 24 * 60 * 60 * 1000
+                Date.now() + 5 * 24 * 60 * 60 * 1000,
               ).toLocaleDateString("en-US", {
                 weekday: "long",
                 year: "numeric",
@@ -104,14 +104,14 @@ const Payments = () => {
         } else {
           Alert.alert(
             "Success",
-            "Order completed successfully! Please check your orders in the profile section."
+            "Order completed successfully! Please check your orders in the profile section.",
           );
         }
       } catch (navError) {
         console.error("Navigation error:", navError);
         Alert.alert(
           "Success",
-          "Order completed successfully! Please check your orders in the profile section."
+          "Order completed successfully! Please check your orders in the profile section.",
         );
       }
       setNavigationTrigger(null); // Reset trigger
@@ -126,19 +126,19 @@ const Payments = () => {
     }
 
     setTotalAmount(
-      cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+      cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
     );
   }, [cart]);
 
   const paymentMethods = [
-    {
+    /* {
       id: "card",
       name: "Credit / Debit Card",
       icon: CreditCard,
       gradient: ["#F59E0B", "#D97706"],
       description: "Pay securely with your card",
       features: ["Secure", "Fast", "3D Secure"],
-    },
+    }, */
     {
       id: "cod",
       name: "Cash on Delivery",
@@ -151,14 +151,14 @@ const Payments = () => {
         "Extra charges may apply",
       ],
     },
-    {
+    /* {
       id: "mobile",
       name: "Mobile Money",
       icon: DollarSign,
       gradient: ["#8B5CF6", "#7C3AED"],
       description: "M-Pesa, Airtel Money, etc.",
       features: ["Instant", "Secure", "24/7"],
-    },
+    }, */
   ];
 
   const handleCashOnDelivery = async (user, token) => {
@@ -201,7 +201,7 @@ const Payments = () => {
       if (!username) {
         Alert.alert(
           "Error",
-          "Username is missing. Please update your profile."
+          "Username is missing. Please update your profile.",
         );
         return;
       }
@@ -230,7 +230,7 @@ const Payments = () => {
 
       const apiResponse = await axiosClient.post(
         "/api/payments/cash-on-delivery", // Ensure you have a dedicated backend endpoint for creating orders
-        payload
+        payload,
       );
 
       console.log("=== COD API RESPONSE ===");
@@ -275,7 +275,7 @@ const Payments = () => {
       }
 
       console.log(
-        "✅ Order completed successfully! Email already sent by backend."
+        "✅ Order completed successfully! Email already sent by backend.",
       );
 
       // Clear cart after successful payment
@@ -359,7 +359,7 @@ const Payments = () => {
 
       const apiResponse = await axiosClient.post(
         "/api/payments/mpesa/initiate",
-        payload
+        payload,
       );
 
       console.log("=== M-PESA API RESPONSE ===");
@@ -369,7 +369,7 @@ const Payments = () => {
       if (!result.success) {
         Alert.alert(
           "M-Pesa Error",
-          result.message || "Failed to initiate payment"
+          result.message || "Failed to initiate payment",
         );
         return;
       }
@@ -378,7 +378,7 @@ const Payments = () => {
       Alert.alert(
         "M-Pesa Payment",
         "Please check your phone and enter your M-Pesa PIN to complete the payment.",
-        [{ text: "OK" }]
+        [{ text: "OK" }],
       );
 
       // Start polling for payment status
@@ -410,7 +410,7 @@ const Payments = () => {
     const poll = async () => {
       try {
         const response = await axiosClient.get(
-          `/api/payments/mpesa/status/${orderId}`
+          `/api/payments/mpesa/status/${orderId}`,
         );
         const status = response.data;
 
@@ -455,7 +455,7 @@ const Payments = () => {
                   });
                 },
               },
-            ]
+            ],
           );
 
           return;
@@ -466,7 +466,7 @@ const Payments = () => {
           setPaymentPolling(false);
           Alert.alert(
             "Payment Failed",
-            "Your M-Pesa payment was unsuccessful. Please try again."
+            "Your M-Pesa payment was unsuccessful. Please try again.",
           );
           return;
         }
@@ -498,7 +498,7 @@ const Payments = () => {
                 },
               },
               { text: "Cancel", style: "cancel" },
-            ]
+            ],
           );
         }
       } catch (error) {
@@ -510,7 +510,7 @@ const Payments = () => {
           setPaymentPolling(false);
           Alert.alert(
             "Error",
-            "Unable to verify payment status. Please contact support."
+            "Unable to verify payment status. Please contact support.",
           );
         }
       }
@@ -592,7 +592,7 @@ const Payments = () => {
 
         const apiResponse = await axiosClient.post(
           "/api/payments/stripe-mobile-paymentsheet",
-          payload
+          payload,
         );
 
         const result = apiResponse.data;
@@ -623,7 +623,7 @@ const Payments = () => {
           console.error("PaymentSheet initialization error:", error);
           Alert.alert(
             "Error",
-            `Payment sheet failed to initialize: ${error.message}`
+            `Payment sheet failed to initialize: ${error.message}`,
           );
           return;
         }
@@ -696,7 +696,7 @@ const Payments = () => {
       console.log(
         "Order created with ID:",
         orderId,
-        "- waiting for payment completion"
+        "- waiting for payment completion",
       );
     }
   }, [orderId]);

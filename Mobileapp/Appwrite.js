@@ -15,7 +15,7 @@ import axiosClient from "./api"; // Keep this import for API calls
 export const Config = {
   endpoint: "https://fra.cloud.appwrite.io/v1",
   projectId: "6926c7df002fa7831d94",
-  platform: "com.nilemart.ssd",
+  platform: "nileflowafrica.com",
   databaseId: "6926c9bb00320db14571",
   userCollectionId: "6926d95b000583b78df2",
   reviewsCollectionId: "692745c20025084746dc",

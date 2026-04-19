@@ -85,10 +85,21 @@ export function GroupBuyProvider({ children }) {
           productName: options.productName ?? "",
           productImage: options.productImage ?? "",
         };
+        console.log("=== CREATE GROUP BUY REQUEST ===");
+        console.log("Payload:", JSON.stringify(payload, null, 2));
         const res = await axiosClient.post("/api/group-orders/create", payload);
+        console.log("=== CREATE GROUP BUY RESPONSE ===");
+        console.log("Response:", JSON.stringify(res.data, null, 2));
         setActiveGroup(res.data);
         return { data: res.data, error: null };
       } catch (err) {
+        console.error("=== CREATE GROUP BUY ERROR ===");
+        console.error("Status:", err?.response?.status);
+        console.error(
+          "Response data:",
+          JSON.stringify(err?.response?.data, null, 2),
+        );
+        console.error("Error message:", err.message);
         const msg =
           err?.response?.data?.error || "Failed to create group deal.";
         setError(msg);

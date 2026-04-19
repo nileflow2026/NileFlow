@@ -18,7 +18,6 @@ const getOrderStatus = async (req, res) => {
   try {
     const { orderId } = req.params;
 
-
     console.log("Fetching order status for:", orderId);
 
     if (!orderId) {
@@ -34,16 +33,16 @@ const getOrderStatus = async (req, res) => {
       // First try to get by document ID
       order = await db.getDocument(
         env.APPWRITE_DATABASE_ID,
-        env.APPWRITE_ORDER_COLLECTION || env.APPWRITE_ORDER_COLLECTION_ID,
-        orderId
+        env.APPWRITE_ORDERS_COLLECTION,
+        orderId,
       );
     } catch (error) {
       // If that fails, try to find by orderId field
       try {
         const orderQuery = await db.listDocuments(
           env.APPWRITE_DATABASE_ID,
-          env.APPWRITE_ORDER_COLLECTION || env.APPWRITE_ORDER_COLLECTION_ID,
-          [Query.equal("orderId", orderId), Query.limit(1)]
+          env.APPWRITE_ORDERS_COLLECTION,
+          [Query.equal("orderId", orderId), Query.limit(1)],
         );
 
         if (orderQuery.documents.length > 0) {
@@ -60,8 +59,6 @@ const getOrderStatus = async (req, res) => {
         message: "Order not found",
       });
     }
-
-
 
     // Prepare response data
     const responseData = {
@@ -97,21 +94,27 @@ const getOrderStatus = async (req, res) => {
 
     // If order has a rider, get rider details
     let riderDetails = null;
-    
+
     // First check if riderId exists directly on the order
     if (order.riderId) {
       try {
         riderDetails = await db.getDocument(
           env.RIDER_DATABASE_ID || env.APPWRITE_DATABASE_ID,
           env.RIDER_COLLECTION_ID || "riders",
-          order.riderId
+          order.riderId,
         );
-        console.log("Found rider details from order.riderId:", riderDetails.name);
+        console.log(
+          "Found rider details from order.riderId:",
+          riderDetails.name,
+        );
       } catch (riderError) {
-        console.log("Could not fetch rider details from order.riderId:", riderError.message);
+        console.log(
+          "Could not fetch rider details from order.riderId:",
+          riderError.message,
+        );
       }
     }
-    
+
     // If no rider found on order, check delivery record for assigned rider
     if (!riderDetails) {
       try {
@@ -119,18 +122,21 @@ const getOrderStatus = async (req, res) => {
         const delivery = await db.getDocument(
           env.RIDER_DATABASE_ID || env.APPWRITE_DATABASE_ID,
           env.DELIVERIES_COLLECTION_ID,
-          orderId // Using orderId as delivery ID since they're the same
+          orderId, // Using orderId as delivery ID since they're the same
         );
-        
+
         if (delivery.riderId) {
           console.log("Found riderId in delivery record:", delivery.riderId);
           riderDetails = await db.getDocument(
             env.RIDER_DATABASE_ID,
             env.RIDER_COLLECTION_ID,
-            delivery.riderId
+            delivery.riderId,
           );
-          console.log("Fetched rider details from delivery record:", riderDetails.name);
-          
+          console.log(
+            "Fetched rider details from delivery record:",
+            riderDetails.name,
+          );
+
           // Also add delivery-specific information to the response
           responseData.data.deliveryStatus = delivery.status;
           responseData.data.assignedAt = delivery.assignedAt;
@@ -138,7 +144,10 @@ const getOrderStatus = async (req, res) => {
           responseData.data.deliveryAddress = delivery.deliveryAddress;
         }
       } catch (deliveryError) {
-        console.log("Could not fetch delivery record or rider details:", deliveryError.message);
+        console.log(
+          "Could not fetch delivery record or rider details:",
+          deliveryError.message,
+        );
       }
     }
 
@@ -155,7 +164,7 @@ const getOrderStatus = async (req, res) => {
 
     console.log(
       "Order status fetched successfully:",
-      order.orderStatus || order.status
+      order.orderStatus || order.status,
     );
     res.json(responseData);
   } catch (error) {
@@ -205,7 +214,7 @@ const updateLiveLocation = async (req, res) => {
       env.RIDER_DATABASE_ID || env.APPWRITE_DATABASE_ID,
       env.DELIVERIES_COLLECTION_ID,
       orderId,
-      updateData
+      updateData,
     );
 
     console.log("✅ Delivery location updated successfully");
@@ -222,11 +231,14 @@ const updateLiveLocation = async (req, res) => {
           pickupAddress: updatedDelivery.pickupAddress,
           deliveryAddress: updatedDelivery.deliveryAddress,
         };
-        
+
         socketService.broadcastLocationUpdate(orderId, locationData);
         console.log("📡 Location update broadcasted via WebSocket");
       } catch (socketError) {
-        console.log("❌ Failed to broadcast via WebSocket:", socketError.message);
+        console.log(
+          "❌ Failed to broadcast via WebSocket:",
+          socketError.message,
+        );
       }
     }
 
@@ -245,7 +257,7 @@ const updateLiveLocation = async (req, res) => {
     });
   } catch (error) {
     console.error("Error updating location:", error);
-    
+
     if (error.code === 404) {
       return res.status(404).json({
         success: false,
@@ -292,7 +304,7 @@ const getUserOrders = async (req, res) => {
     const orders = await db.listDocuments(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_ORDERS_COLLECTION || env.APPWRITE_ORDERS_COLLECTION_ID,
-      queries
+      queries,
     );
 
     const processedOrders = orders.documents.map((order) => ({
@@ -347,7 +359,7 @@ const getLiveLocation = async (req, res) => {
       const delivery = await db.getDocument(
         env.RIDER_DATABASE_ID || env.APPWRITE_DATABASE_ID,
         env.DELIVERIES_COLLECTION_ID,
-        orderId
+        orderId,
       );
 
       // Return live location and delivery information
@@ -371,7 +383,7 @@ const getLiveLocation = async (req, res) => {
     } catch (deliveryError) {
       // If no delivery record found, return basic info without live location
       console.log("No delivery record found, order may not be assigned yet");
-      
+
       return res.json({
         success: true,
         data: {
