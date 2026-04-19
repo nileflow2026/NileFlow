@@ -29,7 +29,7 @@ if (
   !env.APPWRITE_USER_COLLECTION_ID
 ) {
   throw new Error(
-    "Missing Appwrite collection env variables. Please set APPWRITE_DATABASE_ID, APPWRITE_REFRESH_TOKEN_COLLECTION_ID, APPWRITE_USER_COLLECTION_ID."
+    "Missing Appwrite collection env variables. Please set APPWRITE_DATABASE_ID, APPWRITE_REFRESH_TOKEN_COLLECTION_ID, APPWRITE_USER_COLLECTION_ID.",
   );
 }
 
@@ -130,7 +130,7 @@ async function persistRefreshToken({
 }) {
   const hashedRefreshToken = hashToken(refreshToken);
   const expiresAt = new Date(
-    Date.now() + timeframeToMs(env.JWT_REFRESH_EXPIRES_IN || "30d")
+    Date.now() + timeframeToMs(env.JWT_REFRESH_EXPIRES_IN || "30d"),
   ).toISOString();
   const docId = ID.unique();
 
@@ -148,7 +148,7 @@ async function persistRefreshToken({
       userAgent,
       deviceId,
       rotatedFrom,
-    }
+    },
   );
 }
 
@@ -160,7 +160,7 @@ async function findRefreshTokenRecordByHash(refreshToken) {
   const result = await db.listDocuments(
     env.APPWRITE_DATABASE_ID,
     env.APPWRITE_REFRESH_TOKEN_COLLECTION_ID,
-    [Query.equal("refreshToken", tokenHash)]
+    [Query.equal("refreshToken", tokenHash)],
   );
 
   if (!result || !result.documents || result.documents.length === 0)
@@ -176,7 +176,7 @@ async function findTokensByUserAndDevice(userId, deviceId, userAgent) {
     const res = await db.listDocuments(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_REFRESH_TOKEN_COLLECTION_ID,
-      [Query.equal("userId", userId), Query.equal("deviceId", deviceId)]
+      [Query.equal("userId", userId), Query.equal("deviceId", deviceId)],
     );
     return res?.documents || [];
   }
@@ -184,14 +184,14 @@ async function findTokensByUserAndDevice(userId, deviceId, userAgent) {
     const res = await db.listDocuments(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_REFRESH_TOKEN_COLLECTION_ID,
-      [Query.equal("userId", userId), Query.equal("userAgent", userAgent)]
+      [Query.equal("userId", userId), Query.equal("userAgent", userAgent)],
     );
     return res?.documents || [];
   }
   const res = await db.listDocuments(
     env.APPWRITE_DATABASE_ID,
     env.APPWRITE_REFRESH_TOKEN_COLLECTION_ID,
-    [Query.equal("userId", userId)]
+    [Query.equal("userId", userId)],
   );
   return res?.documents || [];
 }
@@ -204,7 +204,7 @@ async function revokeRefreshTokenById(docId) {
     env.APPWRITE_DATABASE_ID,
     env.APPWRITE_REFRESH_TOKEN_COLLECTION_ID,
     docId,
-    { revoked: true, revokedAt: new Date().toISOString() }
+    { revoked: true, revokedAt: new Date().toISOString() },
   );
 }
 
@@ -215,7 +215,7 @@ async function revokeAllUserRefreshTokens(userId) {
   const res = await db.listDocuments(
     env.APPWRITE_DATABASE_ID,
     env.APPWRITE_REFRESH_TOKEN_COLLECTION_ID,
-    [Query.equal("userId", userId)]
+    [Query.equal("userId", userId)],
   );
 
   if (!res || !res.documents) return 0;
@@ -230,7 +230,7 @@ async function revokeAllUserRefreshTokens(userId) {
         {
           revoked: true,
           revokedAt: new Date().toISOString(),
-        }
+        },
       );
       count++;
     }
@@ -287,7 +287,7 @@ const signupcustomer = async (req, res) => {
       email,
       null,
       password,
-      username
+      username,
     );
 
     // 2) Get avatar initials
@@ -305,10 +305,9 @@ const signupcustomer = async (req, res) => {
       log.warn("Non-fatal: failed to update user prefs:", prefErr?.message);
     }
 
-    // 1. Generate a random 6-digit code for verification
-    const verificationCode = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
+    // 1. Generate a cryptographically secure 6-digit code for verification
+    const crypto = require("crypto");
+    const verificationCode = crypto.randomInt(100000, 999999).toString();
 
     // 2. Temporarily store the verification code with an expiration time
     // You should use a temporary cache like Redis or a database table with an expiry.
@@ -334,7 +333,7 @@ const signupcustomer = async (req, res) => {
         role: "customer",
         phone: phone || null,
         createdAt: new Date().toISOString(),
-      }
+      },
     );
 
     // 5) Issue tokens
@@ -553,7 +552,7 @@ const handleRefreshToken = async (req, res) => {
     if (!record) {
       log.warn("Refresh token record not found for user:", userId);
       await revokeAllUserRefreshTokens(userId).catch((e) =>
-        log.error("Error revoking all tokens:", e)
+        log.error("Error revoking all tokens:", e),
       );
       return res.status(401).json({ error: "Invalid refresh token." });
     }
@@ -562,14 +561,14 @@ const handleRefreshToken = async (req, res) => {
     if (record.revoked) {
       log.warn("Revoked refresh token used for user:", userId);
       await revokeAllUserRefreshTokens(userId).catch((e) =>
-        log.error("Error revoking all tokens:", e)
+        log.error("Error revoking all tokens:", e),
       );
       return res.status(401).json({ error: "Refresh token revoked." });
     }
 
     if (new Date(record.expiresAt) < new Date()) {
       await revokeRefreshTokenById(record.$id).catch((e) =>
-        log.error("Error revoking expired token:", e)
+        log.error("Error revoking expired token:", e),
       );
       return res.status(401).json({ error: "Refresh token expired." });
     }
@@ -582,13 +581,13 @@ const handleRefreshToken = async (req, res) => {
     const deviceTokens = await findTokensByUserAndDevice(
       userId,
       requestDeviceId,
-      requestUserAgent
+      requestUserAgent,
     );
 
     if (!deviceTokens || deviceTokens.length === 0) {
       log.warn("No device-scoped tokens found for user:", userId);
       await revokeAllUserRefreshTokens(userId).catch((e) =>
-        log.error("Error revoking all tokens:", e)
+        log.error("Error revoking all tokens:", e),
       );
       return res.status(401).json({ error: "Invalid refresh token." });
     }
@@ -611,7 +610,7 @@ const handleRefreshToken = async (req, res) => {
     if (foundNewer) {
       log.warn("Refresh token reuse detected for user:", userId);
       await revokeAllUserRefreshTokens(userId).catch((e) =>
-        log.error("Error revoking all tokens:", e)
+        log.error("Error revoking all tokens:", e),
       );
       return res.status(401).json({
         error: "Refresh token reuse detected. All sessions revoked.",
@@ -648,7 +647,7 @@ const handleRefreshToken = async (req, res) => {
     } catch (persistErr) {
       log.error(
         "Failed to persist rotated refresh token:",
-        persistErr?.message
+        persistErr?.message,
       );
 
       // Return access token only
@@ -681,7 +680,7 @@ const handleRefreshToken = async (req, res) => {
           {
             rotatedTo: newDoc.$id,
             rotatedAt: new Date().toISOString(),
-          }
+          },
         )
         .catch(() => {}); // Non-fatal
     } catch (revErr) {
@@ -749,14 +748,14 @@ const logoutcustomer = async (req, res) => {
       const result = await db.listDocuments(
         env.APPWRITE_DATABASE_ID,
         env.APPWRITE_REFRESH_TOKEN_COLLECTION_ID,
-        queries
+        queries,
       );
 
       if (result && result.documents && result.documents.length > 0) {
         for (const doc of result.documents) {
           if (!doc.revoked) {
             await revokeRefreshTokenById(doc.$id).catch((e) =>
-              log.error("Failed to revoke token in logout:", e)
+              log.error("Failed to revoke token in logout:", e),
             );
           }
         }
@@ -806,7 +805,7 @@ const getCurrentCustomer = async (req, res) => {
       profile = await db.getDocument(
         env.APPWRITE_DATABASE_ID,
         env.APPWRITE_USER_COLLECTION_ID,
-        decoded.sub
+        decoded.sub,
       );
     } catch (profileError) {
       log.warn("Profile not found for user:", decoded.sub);
@@ -1010,7 +1009,7 @@ async function googleOAuthCallback(req, res) {
       "https://www.googleapis.com/oauth2/v2/userinfo",
       {
         headers: { Authorization: `Bearer ${accessToken}` },
-      }
+      },
     );
 
     if (!profileRes.ok) {
@@ -1046,7 +1045,7 @@ async function googleOAuthCallback(req, res) {
     const redirectUrl = `${
       env.FRONTEND_URL
     }/oauth/callback?token=${encodeURIComponent(
-      accessJwt
+      accessJwt,
     )}&refreshToken=${encodeURIComponent(refreshJwt)}`;
     return res.redirect(302, redirectUrl);
   } catch (error) {
@@ -1137,7 +1136,7 @@ async function facebookOAuthCallback(req, res) {
     const profileUrl =
       "https://graph.facebook.com/me?fields=id,name,email,picture.type(large)";
     const profileRes = await fetch(
-      `${profileUrl}&access_token=${encodeURIComponent(accessToken)}`
+      `${profileUrl}&access_token=${encodeURIComponent(accessToken)}`,
     );
     if (!profileRes.ok) {
       const text = await profileRes.text();
@@ -1172,7 +1171,7 @@ async function facebookOAuthCallback(req, res) {
     const redirectUrl = `${
       env.FRONTEND_URL
     }/oauth/callback?token=${encodeURIComponent(
-      accessJwt
+      accessJwt,
     )}&refreshToken=${encodeURIComponent(refreshJwt)}`;
     return res.redirect(302, redirectUrl);
   } catch (error) {
@@ -1191,7 +1190,7 @@ async function upsertOAuthUser({ email, name, avatarUrl }) {
     const list = await db.listDocuments(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_USER_COLLECTION_ID,
-      [Query.equal("email", email)]
+      [Query.equal("email", email)],
     );
     if (list?.documents?.length) {
       existingProfile = list.documents[0];
@@ -1219,7 +1218,7 @@ async function upsertOAuthUser({ email, name, avatarUrl }) {
         {
           username: name,
           avatarUrl: avatarUrl || null,
-        }
+        },
       );
     } catch (e) {
       // ignore
@@ -1253,7 +1252,7 @@ async function upsertOAuthUser({ email, name, avatarUrl }) {
         avatarUrl: avatarUrl || null,
         phone: null,
         $createdAt: new Date().toISOString(),
-      }
+      },
     );
   } catch (e) {
     // ignore
@@ -1309,22 +1308,22 @@ const savePickupAddress = async (req, res) => {
         existingAddresses = await db.listDocuments(
           env.APPWRITE_DATABASE_ID,
           env.APPWRITE_ADDRESS_COLLECTION_ID,
-          [Query.equal("user", userId), Query.equal("type", "pickup")]
+          [Query.equal("user", userId), Query.equal("type", "pickup")],
         );
       } catch (queryError) {
         log.warn(
           "Query with type field failed, trying without type field:",
-          queryError.message
+          queryError.message,
         );
         // Fallback: query without type field if it doesn't exist
         existingAddresses = await db.listDocuments(
           env.APPWRITE_DATABASE_ID,
           env.APPWRITE_ADDRESS_COLLECTION_ID,
-          [Query.equal("user", userId)]
+          [Query.equal("user", userId)],
         );
         // Filter to find pickup addresses manually if needed
         existingAddresses.documents = existingAddresses.documents.filter(
-          (addr) => addr.type === "pickup" || !addr.type // Include addresses without type
+          (addr) => addr.type === "pickup" || !addr.type, // Include addresses without type
         );
       }
 
@@ -1344,7 +1343,7 @@ const savePickupAddress = async (req, res) => {
             state,
             zipCode: postalCode || "",
             $updatedAt: new Date().toISOString(),
-          }
+          },
         );
         log.info(`Updated pickup address for user ${userId}`);
       } else {
@@ -1366,7 +1365,7 @@ const savePickupAddress = async (req, res) => {
             fullName: "", // Will be populated from user profile if needed
             $createdAt: new Date().toISOString(),
             $updatedAt: new Date().toISOString(),
-          }
+          },
         );
         log.info(`Created new pickup address for user ${userId}`);
       }
@@ -1426,22 +1425,22 @@ const getPickupAddress = async (req, res) => {
         addresses = await db.listDocuments(
           env.APPWRITE_DATABASE_ID,
           env.APPWRITE_ADDRESS_COLLECTION_ID,
-          [Query.equal("user", userId), Query.equal("type", "pickup")]
+          [Query.equal("user", userId), Query.equal("type", "pickup")],
         );
       } catch (queryError) {
         log.warn(
           "Query with type field failed, trying without type field:",
-          queryError.message
+          queryError.message,
         );
         // Fallback: query without type field
         addresses = await db.listDocuments(
           env.APPWRITE_DATABASE_ID,
           env.APPWRITE_ADDRESS_COLLECTION_ID,
-          [Query.equal("user", userId)]
+          [Query.equal("user", userId)],
         );
         // Filter manually for pickup addresses
         addresses.documents = addresses.documents.filter(
-          (addr) => addr.type === "pickup"
+          (addr) => addr.type === "pickup",
         );
       }
 

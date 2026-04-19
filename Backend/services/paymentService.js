@@ -4,6 +4,7 @@ const { env } = require("../src/env");
 const logger = require("../utils/logger");
 const { client: paypalClient } = require("./paypal");
 const checkoutNodeJssdk = require("@paypal/checkout-server-sdk");
+const { convertKshToUsd } = require("../utils/serverPricing");
 
 class PaymentService {
   /**
@@ -44,7 +45,7 @@ class PaymentService {
       }
 
       logger.info(
-        `Processing M-Pesa payment for user ${userId}: ${amount} KSH`
+        `Processing M-Pesa payment for user ${userId}: ${amount} KSH`,
       );
 
       // Get M-Pesa access token
@@ -65,7 +66,7 @@ class PaymentService {
 
       // Generate password
       const password = Buffer.from(
-        env.MPESA_SHORTCODE + env.MPESA_PASSKEY + timestamp
+        env.MPESA_SHORTCODE + env.MPESA_PASSKEY + timestamp,
       ).toString("base64");
 
       // STK Push request
@@ -96,7 +97,7 @@ class PaymentService {
             Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       logger.info("M-Pesa STK Push response:", response.data);
@@ -122,7 +123,7 @@ class PaymentService {
     } catch (error) {
       logger.error(
         "M-Pesa payment error:",
-        error.response?.data || error.message
+        error.response?.data || error.message,
       );
       return {
         success: false,
@@ -140,7 +141,7 @@ class PaymentService {
   static async getMpesaAccessToken() {
     try {
       const auth = Buffer.from(
-        `${env.MPESA_CONSUMER_KEY}:${env.MPESA_CONSUMER_SECRET}`
+        `${env.MPESA_CONSUMER_KEY}:${env.MPESA_CONSUMER_SECRET}`,
       ).toString("base64");
 
       const tokenUrl =
@@ -183,7 +184,7 @@ class PaymentService {
         .slice(0, -3);
 
       const password = Buffer.from(
-        env.MPESA_SHORTCODE + env.MPESA_PASSKEY + timestamp
+        env.MPESA_SHORTCODE + env.MPESA_PASSKEY + timestamp,
       ).toString("base64");
 
       const queryUrl =
@@ -204,7 +205,7 @@ class PaymentService {
             Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       logger.info("M-Pesa query response:", response.data);
@@ -218,7 +219,7 @@ class PaymentService {
     } catch (error) {
       logger.error(
         "M-Pesa query error:",
-        error.response?.data || error.message
+        error.response?.data || error.message,
       );
       return {
         success: false,
@@ -239,15 +240,16 @@ class PaymentService {
   static async processPayPalPayment({ userId, amount, currency, description }) {
     try {
       logger.info(
-        `Processing PayPal payment for user ${userId}: ${amount} ${currency}`
+        `Processing PayPal payment for user ${userId}: ${amount} ${currency}`,
       );
 
-      // Convert KSH to USD for PayPal (approximate conversion: 1 USD = 130 KSH)
+      // Convert KSH to USD for PayPal using configurable exchange rate
       let paypalAmount = amount;
       let paypalCurrency = currency;
 
       if (currency === "KSH") {
-        paypalAmount = (amount / 130).toFixed(2);
+        const { amountUSD } = await convertKshToUsd(amount);
+        paypalAmount = amountUSD.toFixed(2);
         paypalCurrency = "USD";
       }
 
@@ -281,7 +283,7 @@ class PaymentService {
 
       // Get approval URL
       const approvalUrl = order.result.links.find(
-        (link) => link.rel === "approve"
+        (link) => link.rel === "approve",
       )?.href;
 
       return {
@@ -312,7 +314,7 @@ class PaymentService {
   static async capturePayPalPayment(orderId) {
     try {
       const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(
-        orderId
+        orderId,
       );
       request.requestBody({});
 
@@ -374,13 +376,13 @@ class PaymentService {
           const metadata = callback.CallbackMetadata?.Item || [];
           const amount = metadata.find((item) => item.Name === "Amount")?.Value;
           const mpesaReceiptNumber = metadata.find(
-            (item) => item.Name === "MpesaReceiptNumber"
+            (item) => item.Name === "MpesaReceiptNumber",
           )?.Value;
           const transactionDate = metadata.find(
-            (item) => item.Name === "TransactionDate"
+            (item) => item.Name === "TransactionDate",
           )?.Value;
           const phoneNumber = metadata.find(
-            (item) => item.Name === "PhoneNumber"
+            (item) => item.Name === "PhoneNumber",
           )?.Value;
 
           return {
@@ -431,15 +433,16 @@ class PaymentService {
   static async processStripePayment({ userId, amount, currency, description }) {
     try {
       logger.info(
-        `Processing Stripe payment for user ${userId}: ${amount} ${currency}`
+        `Processing Stripe payment for user ${userId}: ${amount} ${currency}`,
       );
 
       // Initialize Stripe
       const Stripe = require("stripe");
       const stripe = new Stripe(env.STRIPE_SECRET_KEY);
 
-      // Convert KSH to USD (approximate: 1 USD = 130 KSH)
-      const amountInUSD = currency === "KSH" ? amount / 130 : amount;
+      // Convert KSH to USD using configurable exchange rate
+      const { amountUSD: convertedAmount } = await convertKshToUsd(amount);
+      const amountInUSD = currency === "KSH" ? convertedAmount : amount;
       const stripeCurrency =
         currency === "KSH" ? "usd" : currency.toLowerCase();
 
@@ -500,15 +503,16 @@ class PaymentService {
   }) {
     try {
       logger.info(
-        `Processing Stripe mobile payment for user ${userId}: ${amount} ${currency}`
+        `Processing Stripe mobile payment for user ${userId}: ${amount} ${currency}`,
       );
 
       // Initialize Stripe
       const Stripe = require("stripe");
       const stripe = new Stripe(env.STRIPE_SECRET_KEY);
 
-      // Convert KSH to USD (approximate: 1 USD = 130 KSH)
-      const amountInUSD = currency === "KSH" ? amount / 130 : amount;
+      // Convert KSH to USD using configurable exchange rate
+      const { amountUSD: convertedAmount } = await convertKshToUsd(amount);
+      const amountInUSD = currency === "KSH" ? convertedAmount : amount;
       const stripeCurrency =
         currency === "KSH" ? "usd" : currency.toLowerCase();
       const amountInCents = Math.round(amountInUSD * 100);
@@ -557,7 +561,7 @@ class PaymentService {
       // Create ephemeral key for customer
       const ephemeralKey = await stripe.ephemeralKeys.create(
         { customer: customer.id },
-        { apiVersion: "2024-06-20" }
+        { apiVersion: "2024-06-20" },
       );
 
       logger.info(`Stripe PaymentIntent created: ${paymentIntent.id}`);

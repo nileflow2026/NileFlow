@@ -1,8 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
+import * as Sentry from "@sentry/react";
 import App from "./App";
 import "./index.css";
+
+// Initialize Sentry synchronously so it's ready before any user interaction
+Sentry.init({
+  dsn: "https://3aad5fac01fcd59243cc74a4d52bb5a0@o4510430501666816.ingest.us.sentry.io/4511229573464064",
+  sendDefaultPii: true,
+  tracesSampleRate: 0.1,
+});
 
 // Defer non-critical imports
 const loadNonCriticalAssets = () => {
@@ -12,16 +20,6 @@ const loadNonCriticalAssets = () => {
 
   // Load FontAwesome asynchronously
   import("@fortawesome/fontawesome-free");
-
-  // Initialize Sentry asynchronously
-  import("@sentry/react").then((Sentry) => {
-    Sentry.init({
-      dsn: "https://978e357623c4783aad6fbb289f6b5af1@o4509740889079808.ingest.us.sentry.io/4510052105191424",
-      sendDefaultPii: true,
-      // Reduce performance monitoring sample rate for better performance
-      tracesSampleRate: 0.1,
-    });
-  });
 };
 
 // Load non-critical assets after initial render

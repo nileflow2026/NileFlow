@@ -1,23 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import NetInfo from "@react-native-community/netinfo";
 import axios from "axios";
+import Constants from "expo-constants";
 
 // ========================================
 // BACKEND URL CONFIGURATION
 // ========================================
-// Choose ONE of the following based on your testing environment:
-
-// 1. For ANDROID EMULATOR - Use this to connect to localhost:
-// const API_BASE_URL = "http://10.0.2.2:3000";
-
-// 2. For PHYSICAL DEVICE or EXPO GO - Use your computer's local IP:
-// Your computer's IP: 192.168.1.4
-const API_BASE_URL = "https://nile-flow-backend.onrender.com";
-
-// 3. For IOS SIMULATOR - Use localhost:
-// const API_BASE_URL = "http://localhost:3000";
-
-// 4. For PRODUCTION - Use your deployed backend:
-// const API_BASE_URL = "https://new-nile-flow-backend.onrender.com";
+const API_BASE_URL =
+  Constants.expoConfig?.extra?.API_BASE_URL ||
+  "https://nile-flow-backend.onrender.com";
 
 // ========================================
 
@@ -40,13 +31,54 @@ const axiosClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    "X-Client-Type": "mobile", // Identify as mobile client
+    "X-Client-Type": "mobile",
   },
-  timeout: 30000, // Increased from 10000 to 30000 ms
-  withCredentials: true, // CRITICAL: Send cookies with requests
+  timeout: 30000,
+  withCredentials: true,
 });
 
-// NO REQUEST INTERCEPTOR NEEDED - cookies are sent automatically with withCredentials: true
+// ========================================
+// RETRY LOGIC WITH EXPONENTIAL BACKOFF
+// ========================================
+const MAX_RETRIES = 3;
+const RETRYABLE_STATUS_CODES = new Set([408, 429, 500, 502, 503, 504]);
+const RETRYABLE_METHODS = new Set(["get", "head", "options"]);
+
+async function retryRequest(config, retryCount = 0) {
+  try {
+    return await axiosClient.request(config);
+  } catch (error) {
+    const isRetryable =
+      RETRYABLE_METHODS.has(config.method?.toLowerCase()) &&
+      (error.code === "ECONNABORTED" ||
+        error.code === "ERR_NETWORK" ||
+        RETRYABLE_STATUS_CODES.has(error.response?.status));
+
+    if (isRetryable && retryCount < MAX_RETRIES) {
+      const delay = Math.min(1000 * Math.pow(2, retryCount), 10000);
+      await new Promise((resolve) => setTimeout(resolve, delay));
+      return retryRequest(config, retryCount + 1);
+    }
+    throw error;
+  }
+}
+
+// ========================================
+// OFFLINE DETECTION INTERCEPTOR
+// ========================================
+axiosClient.interceptors.request.use(
+  async (config) => {
+    const netState = await NetInfo.fetch();
+    if (!netState.isConnected) {
+      const offlineError = new Error("No internet connection");
+      offlineError.code = "ERR_OFFLINE";
+      offlineError.isOffline = true;
+      return Promise.reject(offlineError);
+    }
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 
 // Response interceptor - handle token refresh on 401
 axiosClient.interceptors.response.use(
@@ -88,8 +120,6 @@ axiosClient.interceptors.response.use(
         },
       );
 
-      console.log("[Axios Interceptor] Token refreshed successfully");
-
       // Process queued requests with success
       processQueue(null, true);
       isRefreshing = false;
@@ -111,9 +141,8 @@ axiosClient.interceptors.response.use(
       // Trigger logout for mobile - clear stored data and set user state
       try {
         await AsyncStorage.multiRemove(["user", "isGuest", "deviceId"]);
-        console.log("✅ Cleared storage after refresh token failure");
       } catch (clearError) {
-        console.error("Error clearing storage:", clearError);
+        // Silent fail — storage clear is best-effort
       }
 
       return Promise.reject(refreshError);

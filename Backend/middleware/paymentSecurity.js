@@ -1,20 +1,23 @@
 // middleware/paymentSecurity.js
 const logger = require("../utils/logger");
 const { env } = require("../src/env");
+const { computeCartSubtotal } = require("../utils/serverPricing");
 
 /**
  * Payment security middleware - validates payment requests and prevents fraud
+ * ZERO TRUST: All prices/fees are verified server-side from the database.
  */
 const paymentSecurity = {
   /**
-   * Validate payment amount and prevent manipulation
+   * Validate payment amount by recomputing from DB prices.
+   * Never trusts client-sent price, discount, tax, shipping, or serviceFee.
    */
-  validatePaymentAmount: (req, res, next) => {
+  validatePaymentAmount: async (req, res, next) => {
     try {
       const { amount, totalAmount, cart } = req.body;
-      const paymentAmount = amount || totalAmount;
+      const paymentAmount = parseFloat(amount || totalAmount);
 
-      if (!paymentAmount || paymentAmount <= 0) {
+      if (!paymentAmount || paymentAmount <= 0 || !isFinite(paymentAmount)) {
         return res.status(400).json({
           error: "Invalid payment amount",
           code: "INVALID_AMOUNT",
@@ -25,7 +28,7 @@ const paymentSecurity = {
       const maxAmount = 1000000; // 1M KES
       if (paymentAmount > maxAmount) {
         logger.warn(
-          `Suspicious large payment attempt: ${paymentAmount} from user ${req.user?.userId}`
+          `Suspicious large payment attempt: ${paymentAmount} from user ${req.user?.userId}`,
         );
         return res.status(400).json({
           error: "Payment amount exceeds maximum limit",
@@ -33,79 +36,56 @@ const paymentSecurity = {
         });
       }
 
-      // Server-side cart validation if cart provided
-      if (cart && Array.isArray(cart)) {
-        const {
-          shipping = 0,
-          deliveryFee = 0,
-          tax = 0,
-          discount = 0,
-          serviceFee = 0,
-          premiumDiscount = 0,
-          // Alternative field names
-          shippingFee = 0,
-          totalShipping = 0,
-          validDiscountAmount = 0,
-        } = req.body;
+      // Server-side cart validation - fetch real prices from product DB
+      if (cart && Array.isArray(cart) && cart.length > 0) {
+        const { subtotal, verifiedItems, errors } =
+          await computeCartSubtotal(cart);
 
-        // Calculate subtotal from cart items
-        const calculatedSubtotal = cart.reduce((sum, item) => {
-          const price = parseFloat(item.price || 0);
-          const quantity = parseInt(item.quantity || 1);
-
-          if (price < 0 || quantity < 1 || quantity > 100) {
-            throw new Error(
-              `Invalid item: price=${price}, quantity=${quantity}`
-            );
-          }
-
-          return sum + price * quantity;
-        }, 0);
-
-        // Use the highest shipping value provided (in case multiple fields are used)
-        const totalShippingCost = Math.max(
-          parseFloat(shipping),
-          parseFloat(deliveryFee),
-          parseFloat(shippingFee),
-          parseFloat(totalShipping)
-        );
-
-        // Use the highest discount value provided
-        const totalDiscountAmount = Math.max(
-          parseFloat(discount),
-          parseFloat(validDiscountAmount),
-          parseFloat(premiumDiscount)
-        );
-
-        // Calculate total with all fees and discounts
-        const calculatedTotal =
-          calculatedSubtotal +
-          totalShippingCost +
-          parseFloat(tax) +
-          parseFloat(serviceFee) -
-          totalDiscountAmount;
-
-        // Allow small discrepancy for floating point precision
-        const tolerance = 0.01;
-        if (Math.abs(calculatedTotal - paymentAmount) > tolerance) {
+        if (errors.length > 0 && subtotal === null) {
+          // Product collection not configured - log and allow (graceful degradation)
           logger.warn(
-            `Payment amount mismatch: calculated=${calculatedTotal}, provided=${paymentAmount}`,
-            {
-              calculatedSubtotal,
-              totalShippingCost,
-              tax: parseFloat(tax),
-              totalDiscountAmount,
-              serviceFee: parseFloat(serviceFee),
-              calculatedTotal,
-              providedAmount: paymentAmount,
-              requestBody: req.body, // Log full request for debugging
-            }
+            "Price verification unavailable - product collection not configured",
+          );
+          return next();
+        }
+
+        if (errors.length > 0) {
+          logger.warn("Cart validation errors:", errors);
+          return res.status(400).json({
+            error: "Invalid cart items",
+            code: "INVALID_CART",
+          });
+        }
+
+        // Attach the server-computed subtotal to req for downstream use
+        req.serverComputedSubtotal = subtotal;
+        req.verifiedCartItems = verifiedItems;
+
+        // The payment amount must be >= subtotal (it can be higher due to shipping/fees)
+        // but it must NOT be lower than the subtotal (that would mean the user is underpaying)
+        if (paymentAmount < subtotal - 1) {
+          // 1 KES tolerance for rounding
+          logger.warn(
+            `Payment amount ${paymentAmount} is less than server-computed subtotal ${subtotal}`,
+            { userId: req.user?.userId },
           );
           return res.status(400).json({
-            error: "Payment amount does not match cart total",
-            code: "AMOUNT_MISMATCH",
-            calculated: calculatedTotal,
-            provided: paymentAmount,
+            error: "Payment amount is less than cart value",
+            code: "AMOUNT_TOO_LOW",
+          });
+        }
+
+        // Reject if the overpayment is suspiciously large (> 50% above subtotal)
+        // This catches inflated discount/fee manipulation
+        const maxReasonableTotal = subtotal * 1.5 + 500; // 50% margin + 500 KES for fees
+        if (paymentAmount > maxReasonableTotal && subtotal > 0) {
+          logger.warn(
+            `Suspiciously high payment: ${paymentAmount} vs subtotal ${subtotal}`,
+            { userId: req.user?.userId },
+          );
+          return res.status(400).json({
+            error: "Payment amount is unreasonably high for the cart contents",
+            code: "AMOUNT_SUSPICIOUS",
           });
         }
       }
@@ -137,7 +117,7 @@ const paymentSecurity = {
 
       // Clean old attempts
       const recentAttempts = userAttempts.filter(
-        (time) => now - time < windowMs
+        (time) => now - time < windowMs,
       );
 
       if (recentAttempts.length >= maxAttempts) {
@@ -172,7 +152,7 @@ const paymentSecurity = {
     // Ensure user can only make payments for themselves
     if (userId && userId !== authenticatedUserId) {
       logger.warn(
-        `User ${authenticatedUserId} attempted to make payment for user ${userId}`
+        `User ${authenticatedUserId} attempted to make payment for user ${userId}`,
       );
       return res.status(403).json({
         error: "Cannot make payments for other users",

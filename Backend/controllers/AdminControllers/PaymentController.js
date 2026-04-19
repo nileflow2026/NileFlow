@@ -25,6 +25,10 @@ const {
   updateOrderWithPremiumData,
 } = require("../../services/premiumOrderTrackingService");
 const { commissionService } = require("../../services/commissionService");
+const {
+  computeCartSubtotal,
+  convertKshToUsd,
+} = require("../../utils/serverPricing");
 
 // Global cache for processed callbacks (in production, use Redis)
 const processedCallbacks = new Map();
@@ -247,10 +251,36 @@ const cashonDelivery = async (req, res) => {
       return res.status(400).json({ message: "Customer email is required" });
     if (!username)
       return res.status(400).json({ message: "Username is required" });
-    if (!totalAmount)
-      return res.status(400).json({ message: "Total amount is required" });
     if (!currency)
       return res.status(400).json({ message: "Currency is required" });
+
+    // ZERO TRUST: Recalculate total from DB prices, ignore client totalAmount
+    const {
+      subtotal: serverSubtotal,
+      verifiedItems,
+      errors: priceErrors,
+    } = await computeCartSubtotal(cart);
+
+    let trustedTotal;
+    if (serverSubtotal !== null && priceErrors.length === 0) {
+      trustedTotal = serverSubtotal;
+      if (
+        totalAmount &&
+        Math.abs(serverSubtotal - parseFloat(totalAmount)) > 1
+      ) {
+        console.warn(
+          `COD price mismatch: client sent ${totalAmount}, server computed ${serverSubtotal}`,
+        );
+      }
+    } else {
+      // Fallback if product collection unavailable - use client amount but log warning
+      trustedTotal = parseFloat(totalAmount);
+      console.warn("Product collection unavailable for COD price verification");
+    }
+
+    if (!trustedTotal || trustedTotal <= 0) {
+      return res.status(400).json({ message: "Invalid order total" });
+    }
 
     console.log("=== VALIDATION PASSED ===");
     console.log(`Processing order for ${username}, ${cart.length} items`);
@@ -279,7 +309,7 @@ const cashonDelivery = async (req, res) => {
         : customerEmail,
       username: Array.isArray(username) ? username[0] : username,
       items: JSON.stringify(cart),
-      amount: Math.round(parseFloat(totalAmount)), // Convert string to number
+      amount: Math.round(parseFloat(trustedTotal)), // ZERO TRUST: server-computed total
       currency: Array.isArray(currency) ? currency[0] : currency,
       paymentMethod: "Cash on Delivery",
       status: "Pending",
@@ -400,7 +430,7 @@ const cashonDelivery = async (req, res) => {
         customerEmail,
         customerName: username,
         orderId,
-        orderTotal: parseFloat(totalAmount),
+        orderTotal: parseFloat(trustedTotal),
         paymentMethod: "Cash on Delivery",
         status: "Pending",
       });
@@ -466,7 +496,6 @@ const cashonDelivery = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to create order.",
-      error: error.message,
     });
   }
 };
@@ -517,8 +546,23 @@ const stripewebpayment = async (req, res) => {
     // 2. CREATE ORDER ID AND ORDER DOCUMENT
     orderId = `ORD-${Date.now()}`;
 
-    // Calculate total for order record
-    const totalAmount = cart.reduce((t, i) => t + i.price * i.quantity, 0);
+    // ZERO TRUST: Calculate total from DB prices, not client cart prices
+    const {
+      subtotal: serverTotal,
+      verifiedItems: verifiedCartItems,
+      errors: priceErrors,
+    } = await computeCartSubtotal(cart);
+
+    let totalAmount;
+    if (serverTotal !== null && priceErrors.length === 0) {
+      totalAmount = serverTotal;
+    } else {
+      // Fallback if product collection unavailable
+      totalAmount = cart.reduce((t, i) => t + i.price * i.quantity, 0);
+      console.warn(
+        "Product collection unavailable for Stripe price verification",
+      );
+    }
 
     // Create order document for database (before stripe session)
     const orderDocument = {
@@ -557,17 +601,28 @@ const stripewebpayment = async (req, res) => {
     );
 
     // 4. CREATE STRIPE CHECKOUT SESSION
-    const lineItems = cart.map((item) => ({
-      price_data: {
-        currency: "usd",
-        product_data: {
-          name: item.productName || item.name,
-          images: [item.productImage],
+    // ZERO TRUST: Build line items from DB-verified prices when available
+    const priceMap = {};
+    if (verifiedCartItems && verifiedCartItems.length > 0) {
+      verifiedCartItems.forEach((v) => {
+        priceMap[v.productId] = v.dbPrice;
+      });
+    }
+
+    const lineItems = cart.map((item) => {
+      const unitPrice = priceMap[item.productId] || Number(item.price);
+      return {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: item.productName || item.name,
+            images: [item.productImage],
+          },
+          unit_amount: Math.round(unitPrice * 100),
         },
-        unit_amount: Math.round(Number(item.price) * 100),
-      },
-      quantity: item.quantity,
-    }));
+        quantity: item.quantity,
+      };
+    });
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -705,7 +760,6 @@ const stripewebpayment = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Checkout failed. Please try again.",
-      error: error.message,
     });
   }
 };
@@ -737,11 +791,23 @@ const stripeMobilePaymentSheet = async (req, res) => {
 
     const createdAt = new Date().toISOString();
 
-    // Calculate amount in KES
-    const totalAmountKES = cart.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0,
-    );
+    // ZERO TRUST: Calculate amount from DB prices, not client cart
+    const { subtotal: serverTotal, errors: priceErrors } =
+      await computeCartSubtotal(cart);
+
+    let totalAmountKES;
+    if (serverTotal !== null && priceErrors.length === 0) {
+      totalAmountKES = serverTotal;
+    } else {
+      // Fallback if product collection unavailable
+      totalAmountKES = cart.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0,
+      );
+      console.warn(
+        "Product collection unavailable for mobile Stripe price verification",
+      );
+    }
 
     console.log(`Total amount calculated: ${totalAmountKES} KES`);
 
@@ -889,7 +955,6 @@ const stripeMobilePaymentSheet = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Payment failed",
-      error: error.message,
     });
   }
 };
@@ -980,7 +1045,6 @@ const stripePaymentCancelled = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to process cancellation",
-      error: error.message,
     });
   }
 };
@@ -1023,8 +1087,31 @@ const PayPalCreateOrder = async (req, res) => {
   try {
     const { cart, totalAmount, userId } = req.body;
 
-    if (!cart || !totalAmount || !userId) {
+    if (!cart || !Array.isArray(cart) || cart.length === 0 || !userId) {
       return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    // ZERO TRUST: Recompute total from DB prices
+    const { subtotal: serverTotal, errors: priceErrors } =
+      await computeCartSubtotal(cart);
+
+    let trustedTotal;
+    if (serverTotal !== null && priceErrors.length === 0) {
+      trustedTotal = serverTotal;
+      if (totalAmount && Math.abs(serverTotal - parseFloat(totalAmount)) > 1) {
+        console.warn(
+          `PayPal price mismatch: client sent ${totalAmount}, server computed ${serverTotal}`,
+        );
+      }
+    } else {
+      trustedTotal = parseFloat(totalAmount);
+      console.warn(
+        "Product collection unavailable for PayPal price verification",
+      );
+    }
+
+    if (!trustedTotal || trustedTotal <= 0) {
+      return res.status(400).json({ error: "Invalid order total" });
     }
 
     const request = new checkoutNodeJssdk.orders.OrdersCreateRequest();
@@ -1035,7 +1122,7 @@ const PayPalCreateOrder = async (req, res) => {
         {
           amount: {
             currency_code: "USD",
-            value: totalAmount.toFixed(2), // dynamic amount
+            value: trustedTotal.toFixed(2),
           },
           description: `Order for user ${userId}`,
         },
@@ -1187,6 +1274,32 @@ const initiateMpesaPayment = async (req, res) => {
       }
     }
 
+    // ZERO TRUST: Recompute amount from DB prices if cart is provided
+    let trustedAmount = parseFloat(amount);
+    if (cart && Array.isArray(cart) && cart.length > 0) {
+      const { subtotal: serverTotal, errors: priceErrors } =
+        await computeCartSubtotal(cart);
+      if (serverTotal !== null && priceErrors.length === 0) {
+        trustedAmount = serverTotal;
+        if (Math.abs(serverTotal - parseFloat(amount)) > 1) {
+          console.warn(
+            `M-Pesa price mismatch: client sent ${amount}, server computed ${serverTotal}`,
+          );
+        }
+      } else {
+        console.warn(
+          "Product collection unavailable for M-Pesa price verification",
+        );
+      }
+    }
+
+    if (!trustedAmount || trustedAmount <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid payment amount",
+      });
+    }
+
     // Get access token
     const accessToken = await getMpesaAccessToken();
 
@@ -1210,7 +1323,7 @@ const initiateMpesaPayment = async (req, res) => {
       customerEmail,
       username,
       items: JSON.stringify(cart || []),
-      amount: Math.round(parseFloat(amount)),
+      amount: Math.round(trustedAmount), // ZERO TRUST: server-computed amount
       currency: currency || "KES",
       paymentMethod: "M-Pesa",
       status: "Pending",
@@ -1243,7 +1356,7 @@ const initiateMpesaPayment = async (req, res) => {
       Password: password,
       Timestamp: timestamp,
       TransactionType: "CustomerPayBillOnline",
-      Amount: Math.round(parseFloat(amount)),
+      Amount: Math.round(trustedAmount), // ZERO TRUST: server-computed amount
       PartyA: formattedPhone,
       PartyB: shortCode,
       PhoneNumber: formattedPhone,
@@ -1343,7 +1456,6 @@ const initiateMpesaPayment = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Failed to initiate M-Pesa payment",
-      error: error.message,
     });
   }
 };
@@ -1797,7 +1909,6 @@ const mpesaPaymentStatus = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Failed to check payment status",
-      error: error.message,
     });
   }
 };
@@ -1900,7 +2011,6 @@ const mpesaCancelPayment = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Failed to cancel payment",
-      error: error.message,
     });
   }
 };
@@ -2020,7 +2130,6 @@ const cancelCodOrder = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Failed to cancel order",
-      error: error.message,
     });
   }
 };

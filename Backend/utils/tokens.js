@@ -1,8 +1,8 @@
 // tokens.js
 const jwt = require("jsonwebtoken");
 
-const ACCESS_EXPIRES = parseInt(process.env.JWT_SECRET || "900"); // seconds
-const REFRESH_EXPIRES = parseInt(process.env.JWT_REFRESH_SECRET || "2592000");
+const ACCESS_EXPIRES = parseInt(process.env.JWT_ACCESS_EXPIRES || "900"); // seconds (15 min default)
+const REFRESH_EXPIRES = parseInt(process.env.JWT_REFRESH_EXPIRES || "2592000"); // seconds (30 day default)
 
 const generateAccessToken = (payload) => {
   return jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {

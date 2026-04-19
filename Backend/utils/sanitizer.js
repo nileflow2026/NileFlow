@@ -81,40 +81,10 @@ class Sanitizer {
       });
     }
 
-    // Escape SQL special characters
-    sanitized = this.escapeSql(sanitized);
+    // NOTE: No SQL escaping — this backend uses Appwrite (NoSQL).
+    // SQL escaping was corrupting data like names with apostrophes (O'Brien → O''Brien).
 
     return sanitized;
-  }
-
-  /**
-   * Escape SQL special characters
-   */
-  escapeSql(str) {
-    if (typeof str !== "string") return str;
-
-    return str.replace(/['"\\\x00\n\r\u2028\u2029]/g, (char) => {
-      switch (char) {
-        case "'":
-          return "''";
-        case '"':
-          return '""';
-        case "\\":
-          return "\\\\";
-        case "\x00":
-          return "\\0";
-        case "\n":
-          return "\\n";
-        case "\r":
-          return "\\r";
-        case "\u2028":
-          return "\\u2028";
-        case "\u2029":
-          return "\\u2029";
-        default:
-          return char;
-      }
-    });
   }
 
   /**
@@ -131,12 +101,13 @@ class Sanitizer {
       throw new Error("Invalid email format");
     }
 
-    // Normalize email (lowercase, remove dots in gmail, etc.)
+    // Normalize email (lowercase only — removing dots/subaddresses can cause
+    // different real addresses to collide, enabling account takeover)
     const normalized = validator.normalizeEmail(sanitized, {
       all_lowercase: true,
       gmail_lowercase: true,
-      gmail_remove_dots: true,
-      gmail_remove_subaddress: true,
+      gmail_remove_dots: false,
+      gmail_remove_subaddress: false,
       outlookdotcom_lowercase: true,
       yahoo_lowercase: true,
       icloud_lowercase: true,
@@ -164,7 +135,7 @@ class Sanitizer {
     if (!this.patterns.password.test(password)) {
       throw new Error(
         "Password must contain at least one uppercase letter, " +
-          "one lowercase letter, one number, and one special character"
+          "one lowercase letter, one number, and one special character",
       );
     }
 
@@ -186,7 +157,10 @@ class Sanitizer {
       throw new Error("Password contains too many repeated characters");
     }
 
-    return this.sanitize(password);
+    // IMPORTANT: Do NOT sanitize passwords — sanitization (XSS filtering, escaping)
+    // can alter the password, making it impossible for users to log in with the original.
+    // Passwords are hashed before storage, so XSS in passwords is not a risk.
+    return password;
   }
 
   /**
@@ -201,7 +175,7 @@ class Sanitizer {
 
     if (!this.patterns.username.test(sanitized)) {
       throw new Error(
-        "Username must be 3-30 characters and contain only letters, numbers, and underscores"
+        "Username must be 3-30 characters and contain only letters, numbers, and underscores",
       );
     }
 
@@ -290,7 +264,7 @@ class Sanitizer {
         sanitized[key] = this.sanitizeString(value);
       } else if (Array.isArray(value)) {
         sanitized[key] = value.map((item) =>
-          typeof item === "string" ? this.sanitizeString(item) : item
+          typeof item === "string" ? this.sanitizeString(item) : item,
         );
       } else {
         sanitized[key] = value;

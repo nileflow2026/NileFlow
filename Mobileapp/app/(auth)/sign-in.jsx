@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
-import { getCurrentUser, signIn } from "@/Appwrite";
+import { getCurrentUser, signIn } from "@/Context/GlobalProvider";
 import { images } from "@/constants";
 import { useGlobalContext } from "@/Context/GlobalProvider";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,13 +8,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Link, useRouter } from "expo-router";
 import { useState } from "react";
 import {
-    Alert,
-    Dimensions,
-    Image,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Dimensions,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "../../app/components/FormField";
@@ -217,16 +217,30 @@ const SignIn = () => {
                         <View className="w-2 h-2 rounded-full bg-white" />
                       )}
                     </View>
-                    <Text style={{ color: '#FCD34D', opacity: 0.8, fontSize: 14, minWidth: 100, flexShrink: 0 }}>
+                    <Text
+                      style={{
+                        color: "#FCD34D",
+                        opacity: 0.8,
+                        fontSize: 14,
+                        minWidth: 100,
+                        flexShrink: 0,
+                      }}
+                    >
                       Remember me
                     </Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
                     onPress={() => router.push("/(Screens)/ForgotPassword")}
-                    style={{ alignSelf: 'flex-end', paddingHorizontal: 4, paddingVertical: 2 }}
+                    style={{
+                      alignSelf: "flex-end",
+                      paddingHorizontal: 4,
+                      paddingVertical: 2,
+                    }}
                   >
-                    <Text style={{ color: '#FCD34D', fontSize: 14, minWidth: 120 }}>
+                    <Text
+                      style={{ color: "#FCD34D", fontSize: 14, minWidth: 120 }}
+                    >
                       Forgot password?
                     </Text>
                   </TouchableOpacity>
@@ -259,15 +273,17 @@ const SignIn = () => {
                   <View className="flex-row items-center">
                     <View className="flex-1 border-t border-amber-800/30" />
                     <View className="px-6">
-                      <Text style={{ 
-                        color: '#FCD34D', 
-                        opacity: 0.5, 
-                        fontSize: 14, 
-                        textAlign: 'center',
-                        backgroundColor: 'rgba(17, 24, 39, 0.8)',
-                        minWidth: 120,
-                        paddingHorizontal: 8
-                      }}>
+                      <Text
+                        style={{
+                          color: "#FCD34D",
+                          opacity: 0.5,
+                          fontSize: 14,
+                          textAlign: "center",
+                          backgroundColor: "rgba(17, 24, 39, 0.8)",
+                          minWidth: 120,
+                          paddingHorizontal: 8,
+                        }}
+                      >
                         Or continue with
                       </Text>
                     </View>
@@ -282,7 +298,15 @@ const SignIn = () => {
                     className="flex-1 flex-row items-center justify-center bg-gray-900/50 border border-amber-800/30 rounded-xl py-4 px-4"
                   >
                     <Ionicons name="logo-google" size={20} color="#60A5FA" />
-                    <Text style={{ color: '#FCD34D', fontSize: 14, fontWeight: '500', minWidth: 60, textAlign: 'center' }}>
+                    <Text
+                      style={{
+                        color: "#FCD34D",
+                        fontSize: 14,
+                        fontWeight: "500",
+                        minWidth: 60,
+                        textAlign: "center",
+                      }}
+                    >
                       Google
                     </Text>
                   </TouchableOpacity>
@@ -292,7 +316,15 @@ const SignIn = () => {
                     className="flex-1 flex-row items-center justify-center bg-gray-900/50 border border-amber-800/30 rounded-xl py-4 px-4"
                   >
                     <Ionicons name="logo-facebook" size={20} color="#A78BFA" />
-                    <Text style={{ color: '#FCD34D', fontSize: 14, fontWeight: '500', minWidth: 70, textAlign: 'center' }}>
+                    <Text
+                      style={{
+                        color: "#FCD34D",
+                        fontSize: 14,
+                        fontWeight: "500",
+                        minWidth: 70,
+                        textAlign: "center",
+                      }}
+                    >
                       Facebook
                     </Text>
                   </TouchableOpacity>

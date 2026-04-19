@@ -6,6 +6,8 @@ const PaymentService = require("../services/paymentService");
 const SubscriptionValidationService = require("../services/subscriptionValidation");
 const SubscriptionMetrics = require("../services/subscriptionMetrics");
 const logger = require("../utils/logger");
+const { getSubscriptionPlanPrice } = require("../utils/serverPricing");
+const crypto = require("crypto");
 
 class SubscriptionController {
   /**
@@ -86,7 +88,7 @@ class SubscriptionController {
             [
               Query.equal("checkoutRequestId", checkoutRequestId),
               Query.equal("userId", userId),
-            ]
+            ],
           );
 
           if (subscriptions.documents.length > 0) {
@@ -129,7 +131,7 @@ class SubscriptionController {
       }
 
       logger.info(
-        `Confirming Stripe payment for user ${userId}, PaymentIntent: ${paymentIntentId}`
+        `Confirming Stripe payment for user ${userId}, PaymentIntent: ${paymentIntentId}`,
       );
 
       // Initialize Stripe to check payment status
@@ -137,13 +139,12 @@ class SubscriptionController {
       const stripe = new Stripe(require("../src/env").env.STRIPE_SECRET_KEY);
 
       // Retrieve the PaymentIntent to check its status
-      const paymentIntent = await stripe.paymentIntents.retrieve(
-        paymentIntentId
-      );
+      const paymentIntent =
+        await stripe.paymentIntents.retrieve(paymentIntentId);
 
       if (paymentIntent.status !== "succeeded") {
         logger.warn(
-          `PaymentIntent ${paymentIntentId} status is ${paymentIntent.status}, not succeeded`
+          `PaymentIntent ${paymentIntentId} status is ${paymentIntent.status}, not succeeded`,
         );
         return res.status(400).json({
           error: "Payment not completed",
@@ -166,7 +167,7 @@ class SubscriptionController {
                 Query.equal("userId", userId),
                 Query.equal("status", "pending"),
                 Query.limit(1),
-              ]
+              ],
             );
           } else {
             // Search by paymentIntentId (transactionId)
@@ -178,7 +179,7 @@ class SubscriptionController {
                 Query.equal("userId", userId),
                 Query.equal("status", "pending"),
                 Query.limit(1),
-              ]
+              ],
             );
           }
 
@@ -198,7 +199,7 @@ class SubscriptionController {
             {
               status: "active",
               transactionId: paymentIntentId,
-            }
+            },
           );
 
           // Get user and update premium status
@@ -220,7 +221,7 @@ class SubscriptionController {
               const userDocs = await db.listDocuments(
                 env.APPWRITE_DATABASE_ID,
                 env.APPWRITE_USER_COLLECTION_ID,
-                [Query.equal("email", user.email)]
+                [Query.equal("email", user.email)],
               );
               if (userDocs.documents.length > 0) {
                 await db.updateDocument(
@@ -232,7 +233,7 @@ class SubscriptionController {
                     subscriptionId: subscription.subscriptionId,
                     startedAt: subscription.startedAt,
                     cancelledAt: null,
-                  }
+                  },
                 );
               }
             } catch (docError) {
@@ -241,7 +242,7 @@ class SubscriptionController {
           }
 
           logger.info(
-            `✅ Stripe payment confirmed! User ${userId} premium activated until ${subscription.expiresAt}`
+            `✅ Stripe payment confirmed! User ${userId} premium activated until ${subscription.expiresAt}`,
           );
 
           return res.json({
@@ -269,19 +270,27 @@ class SubscriptionController {
    * Subscribe user to premium
    */
   static async subscribe(req, res) {
-    const transactionId = `TXN-${Date.now()}-${Math.random()
-      .toString(36)
-      .substr(2, 9)}`;
+    const transactionId = `TXN-${Date.now()}-${crypto.randomUUID()}`;
 
     try {
       // Record metrics
       SubscriptionMetrics.recordSubscriptionAttempt();
 
       const userId = req.user.userId || req.user.$id;
-      const { paymentMethod, amount, currency, phoneNumber } = req.body;
+      const { paymentMethod, phoneNumber } = req.body;
+
+      // ZERO TRUST: Ignore client-sent amount/currency - use server-defined plan price
+      const plan = getSubscriptionPlanPrice("premium_monthly");
+      if (!plan) {
+        return res
+          .status(500)
+          .json({ error: "Subscription plan not configured" });
+      }
+      const amount = plan.amount;
+      const currency = plan.currency;
 
       logger.info(
-        `Subscription attempt - User: ${userId}, Method: ${paymentMethod}, TxnID: ${transactionId}`
+        `Subscription attempt - User: ${userId}, Method: ${paymentMethod}, TxnID: ${transactionId}`,
       );
 
       // Validate request using validation service
@@ -308,7 +317,7 @@ class SubscriptionController {
         await SubscriptionValidationService.canSubscribe(user);
       if (!canSubscribeCheck.canSubscribe) {
         logger.info(
-          `User ${userId} cannot subscribe: ${canSubscribeCheck.reason}`
+          `User ${userId} cannot subscribe: ${canSubscribeCheck.reason}`,
         );
         SubscriptionMetrics.recordSubscriptionFailure();
         return res.status(400).json({
@@ -398,10 +407,10 @@ class SubscriptionController {
               subscriptionId: paymentResult.subscriptionId,
               checkoutRequestId:
                 paymentResult.paymentDetails?.checkoutRequestId,
-            }
+            },
           );
           logger.info(
-            `Pending subscription created for user ${userId}, waiting for payment confirmation`
+            `Pending subscription created for user ${userId}, waiting for payment confirmation`,
           );
         } catch (dbError) {
           logger.error("Error creating subscription:", dbError);
@@ -479,14 +488,14 @@ class SubscriptionController {
           const userDocs = await db.listDocuments(
             env.APPWRITE_DATABASE_ID,
             env.APPWRITE_USER_COLLECTION_ID,
-            [Query.equal("email", user.email)]
+            [Query.equal("email", user.email)],
           );
           if (userDocs.documents.length > 0) {
             await db.updateDocument(
               env.APPWRITE_DATABASE_ID,
               env.APPWRITE_USER_COLLECTION_ID,
               userDocs.documents[0].$id,
-              { cancelledAt }
+              { cancelledAt },
             );
           }
         } catch (dbError) {
@@ -500,7 +509,7 @@ class SubscriptionController {
           const subscriptions = await db.listDocuments(
             env.APPWRITE_DATABASE_ID,
             env.APPWRITE_SUBSCRIPTIONS_COLLECTION_ID,
-            [Query.equal("userId", userId), Query.equal("status", "active")]
+            [Query.equal("userId", userId), Query.equal("status", "active")],
           );
 
           if (subscriptions.documents.length > 0) {
@@ -511,7 +520,7 @@ class SubscriptionController {
               {
                 status: "cancelled",
                 cancelledAt: new Date().toISOString(),
-              }
+              },
             );
           }
         } catch (dbError) {
@@ -527,7 +536,7 @@ class SubscriptionController {
       return res.json({
         success: true,
         message: `Subscription cancelled. Benefits will remain active until ${new Date(
-          subscriptionExpiresAt
+          subscriptionExpiresAt,
         ).toLocaleDateString()}`,
         expiresAt: subscriptionExpiresAt,
       });
@@ -622,7 +631,7 @@ class SubscriptionController {
           const subscriptions = await db.listDocuments(
             env.APPWRITE_DATABASE_ID,
             env.APPWRITE_SUBSCRIPTIONS_COLLECTION_ID,
-            [Query.equal("userId", userId)]
+            [Query.equal("userId", userId)],
           );
 
           if (subscriptions.documents.length > 0) {
@@ -636,7 +645,7 @@ class SubscriptionController {
                 expiresAt: newExpiresAt.toISOString(),
                 cancelledAt: null,
                 renewedAt: new Date().toISOString(),
-              }
+              },
             );
           } else {
             // Create new
@@ -653,7 +662,7 @@ class SubscriptionController {
                 expiresAt: newExpiresAt.toISOString(),
                 startedAt: new Date().toISOString(),
                 transactionId: paymentResult.transactionId,
-              }
+              },
             );
           }
         } catch (dbError) {
@@ -766,7 +775,7 @@ class SubscriptionController {
               Query.greaterThan("stock", 0),
               Query.limit(50),
               Query.orderDesc("$createdAt"),
-            ]
+            ],
           );
 
           premiumDeals = dealsResponse.documents;
@@ -782,7 +791,7 @@ class SubscriptionController {
                 Query.greaterThan("stock", 0),
                 Query.limit(50),
                 Query.orderDesc("$createdAt"),
-              ]
+              ],
             );
             premiumDeals = stringDealsResponse.documents;
           }

@@ -10,6 +10,7 @@ const { env } = require("../../src/env");
 const {
   checkStockAvailability,
 } = require("../AdminControllers/stockController");
+const { getProductPrice } = require("../../utils/serverPricing");
 
 const validateCartStock = async (req, res) => {
   try {
@@ -39,17 +40,26 @@ const validateCartStock = async (req, res) => {
 
 const addToCart = async (req, res) => {
   try {
-    const { userId, productId, productName, price, image, userName } = req.body;
+    // Use authenticated userId from middleware, not from request body
+    const userId = req.user?.userId || req.body.userId;
+    const { productId, productName, image, userName } = req.body;
 
     if (!userId || !productId) {
       return res.status(400).json({ error: "Missing userId or productId" });
     }
 
-    // Check if item already exists
+    // ZERO TRUST: Fetch authoritative price from product DB, never trust client
+    const productData = await getProductPrice(productId);
+    if (!productData) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+    const trustedPrice = productData.price;
+
+    // Check if item already exists — fix: each Query must be a separate array element
     const existing = await db.listDocuments(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_CART_COLLECTION_ID,
-      [(Query.equal("userId", userId), Query.equal("productId", productId))]
+      [Query.equal("userId", userId), Query.equal("productId", productId)],
     );
 
     if (existing.documents.length > 0) {
@@ -68,12 +78,12 @@ const addToCart = async (req, res) => {
         userId,
         productId,
         userName,
-        productName,
+        productName: productData.productName || productName,
         productImage: image ? encodeURI(image.trim()) : null,
-        price: Math.round(Number(price)),
+        price: Math.round(Number(trustedPrice)),
         quantity: 1,
         createdAt: new Date().toISOString(),
-      }
+      },
     );
 
     res.status(201).json({
@@ -94,14 +104,15 @@ const addToCart = async (req, res) => {
  */
 const fetchCart = async (req, res) => {
   try {
-    const { userId } = req.params;
+    // Enforce ownership: use auth middleware userId, fall back to params for backward compat
+    const userId = req.user?.userId || req.params.userId;
 
     if (!userId) return res.status(400).json({ error: "Missing userId" });
 
     const response = await db.listDocuments(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_CART_COLLECTION_ID,
-      [Query.equal("userId", userId)]
+      [Query.equal("userId", userId)],
     );
 
     res.status(200).json(response.documents);
@@ -127,7 +138,7 @@ const updateQuantity = async (req, res) => {
     const result = await db.listDocuments(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_CART_COLLECTION_ID,
-      [Query.equal("productId", cartItemId), Query.equal("userId", userId)]
+      [Query.equal("productId", cartItemId), Query.equal("userId", userId)],
     );
 
     if (result.total === 0) {
@@ -139,7 +150,7 @@ const updateQuantity = async (req, res) => {
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_CART_COLLECTION_ID,
       docId,
-      { quantity }
+      { quantity },
     );
 
     res.status(200).json(updated);
@@ -155,20 +166,34 @@ const updateQuantity = async (req, res) => {
 const removeFromCart = async (req, res) => {
   try {
     const { cartItemId } = req.params;
+    const userId = req.user?.userId;
 
     if (!cartItemId) {
       return res.status(400).json({ error: "Missing cartItemId" });
     }
 
+    // Ownership check: verify the item belongs to the authenticated user
+    if (userId) {
+      const doc = await db.getDocument(
+        env.APPWRITE_DATABASE_ID,
+        env.APPWRITE_CART_COLLECTION_ID,
+        cartItemId,
+      );
+      if (doc.userId !== userId) {
+        return res
+          .status(403)
+          .json({ error: "Not authorized to remove this item" });
+      }
+    }
+
     await db.deleteDocument(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_CART_COLLECTION_ID,
-      cartItemId
+      cartItemId,
     );
 
     res.status(200).json({ message: "Item removed successfully" });
   } catch (err) {
-    console.error("RemoveFromCart Error:", err);
     res.status(500).json({ error: "Failed to remove from cart" });
   }
 };
@@ -184,7 +209,7 @@ const loadCart = async (req, res) => {
     const response = await db.listDocuments(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_CART_COLLECTION_ID,
-      [Query.equal("userId", userId)]
+      [Query.equal("userId", userId)],
     );
 
     // Map into frontend-ready format
@@ -220,7 +245,7 @@ const clearCartAfterOrder = async (req, res) => {
     const cartItems = await db.listDocuments(
       env.APPWRITE_DATABASE_ID,
       env.APPWRITE_CART_COLLECTION_ID,
-      [Query.equal("userId", userId)]
+      [Query.equal("userId", userId)],
     );
 
     // Delete all items
@@ -228,13 +253,11 @@ const clearCartAfterOrder = async (req, res) => {
       db.deleteDocument(
         env.APPWRITE_DATABASE_ID,
         env.APPWRITE_CART_COLLECTION_ID,
-        item.$id
-      )
+        item.$id,
+      ),
     );
 
     await Promise.all(deletePromises);
-
-    console.log(`✅ Cleared ${cartItems.total} items for user ${userId}`);
 
     res.json({
       success: true,
@@ -242,7 +265,6 @@ const clearCartAfterOrder = async (req, res) => {
       itemsCleared: cartItems.total,
     });
   } catch (error) {
-    console.error("Clear cart error:", error);
     res.status(500).json({
       success: false,
       error: "Failed to clear cart",

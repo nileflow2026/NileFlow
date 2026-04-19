@@ -12,17 +12,13 @@ const {
  */
 const handleCancelRequest = async (req, res) => {
   try {
-    const {
-      orderId,
-      reason,
-      additionalDetails,
-      userId,
-      customerEmail,
-      customerName,
-    } = req.body;
+    const { orderId, reason, additionalDetails, customerEmail, customerName } =
+      req.body;
+
+    // ZERO TRUST: Use authenticated userId, not client-sent
+    const userId = req.user?.userId;
 
     console.log("=== ORDER CANCELLATION REQUEST ===");
-    console.log("Request Body:", JSON.stringify(req.body, null, 2));
 
     // Validate input
     if (!orderId) {
@@ -40,9 +36,9 @@ const handleCancelRequest = async (req, res) => {
     }
 
     if (!userId) {
-      return res.status(400).json({
+      return res.status(401).json({
         success: false,
-        message: "User ID is required",
+        message: "Authentication required",
       });
     }
 
@@ -52,7 +48,7 @@ const handleCancelRequest = async (req, res) => {
       order = await db.getDocument(
         env.APPWRITE_DATABASE_ID,
         env.APPWRITE_ORDERS_COLLECTION,
-        orderId
+        orderId,
       );
     } catch (error) {
       console.error("Order not found:", error);
@@ -101,8 +97,8 @@ const handleCancelRequest = async (req, res) => {
       // Still allow request but flag for manual review
       console.warn(
         `⚠️ Order ${orderId} is ${hoursSinceOrder.toFixed(
-          1
-        )} hours old (>24h), flagging for manual review`
+          1,
+        )} hours old (>24h), flagging for manual review`,
       );
     }
 
@@ -124,7 +120,7 @@ const handleCancelRequest = async (req, res) => {
         orderAmount: order.amount,
         orderStatus: order.orderStatus || order.status,
         paymentMethod: order.paymentMethod,
-      }
+      },
     );
 
     console.log(`✅ Cancellation request created: ${requestId}`);
@@ -171,7 +167,6 @@ const handleCancelRequest = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Failed to submit cancellation request",
-      error: error.message,
     });
   }
 };

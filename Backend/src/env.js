@@ -88,5 +88,15 @@ const schema = Joi.object({
   OPENAI_API_KEY: Joi.string().optional(),
 }).unknown();
 
-const env = schema.validate(process.env, { stripUnknown: true }).value;
+const { error, value: env } = schema.validate(process.env, {
+  stripUnknown: true,
+});
+
+if (error) {
+  const missing = error.details.map((d) => d.message).join(", ");
+  throw Object.assign(new Error(`Environment validation failed: ${missing}`), {
+    details: error.details,
+  });
+}
+
 module.exports = { env };

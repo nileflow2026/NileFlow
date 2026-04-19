@@ -29,6 +29,10 @@ const {
   stripeMobilePaymentSheet,
 } = require("../controllers/AdminControllers/PaymentController");
 
+const {
+  validateMpesaCallbackSource,
+} = require("../middleware/mpesaCallbackAuth");
+
 // Apply premium benefits middleware to payment routes with security
 router.post(
   "/stripewebpayment",
@@ -38,20 +42,20 @@ router.post(
   paymentSecurity.validatePaymentAmount,
   paymentSecurity.paymentRateLimit,
   applyPremiumBenefits,
-  stripewebpayment
+  stripewebpayment,
 );
 
 router.post(
   "/stripe-mobile-paymentsheet",
   authenticateToken,
   paymentSecurity.validateUserAuthorization,
-  stripeMobilePaymentSheet
+  stripeMobilePaymentSheet,
 );
 router.post(
   "/stripe-cancelled",
   authenticateToken,
   paymentSecurity.validateUserAuthorization,
-  stripePaymentCancelled
+  stripePaymentCancelled,
 );
 router.post(
   "/paypal-create-order",
@@ -61,21 +65,21 @@ router.post(
   paymentSecurity.validatePaymentAmount,
   paymentSecurity.paymentRateLimit,
   applyPremiumBenefits,
-  PayPalCreateOrder
+  PayPalCreateOrder,
 );
 router.post(
   "/paypal-capture-order",
   authenticateToken,
   paymentSecurity.validateUserAuthorization,
   awardNileMiles,
-  PayPalCaptureOrder
+  PayPalCaptureOrder,
 );
 router.post("/email-confirmation", authenticateToken, Emailconfirmation);
 router.get(
   "/payment-success",
   authenticateToken,
   awardNileMiles,
-  verifyStripePayment
+  verifyStripePayment,
 );
 
 // M-Pesa routes with security
@@ -87,21 +91,21 @@ router.post(
   paymentSecurity.validatePaymentAmount,
   paymentSecurity.paymentRateLimit,
   applyPremiumBenefits,
-  initiateMpesaPayment
+  initiateMpesaPayment,
 );
-router.post("/mpesa/callback", mpesaCallback); // No auth middleware for M-Pesa callback
+router.post("/mpesa/callback", validateMpesaCallbackSource, mpesaCallback); // IP-validated, no auth token
 router.get("/mpesa/status/:orderId", authenticateToken, mpesaPaymentStatus);
 router.post(
   "/mpesa/cancel",
   authenticateToken,
   paymentSecurity.validateUserAuthorization,
-  mpesaCancelPayment
+  mpesaCancelPayment,
 );
 
 router.post(
   "/email-orderStatus",
   authenticateToken,
-  sendOrderStatusUpdateEmail
+  sendOrderStatusUpdateEmail,
 );
 router.post(
   "/cash-on-delivery",
@@ -111,13 +115,13 @@ router.post(
   paymentSecurity.validatePaymentAmount,
   paymentSecurity.paymentRateLimit,
   applyPremiumBenefits,
-  cashonDelivery
+  cashonDelivery,
 );
 router.post(
   "/cash-on-delivery/cancel",
   authenticateToken,
   paymentSecurity.validateUserAuthorization,
-  cancelCodOrder
+  cancelCodOrder,
 );
 router.post(
   "/webhook",
@@ -130,7 +134,7 @@ router.post(
       event = Stripe.webhooks.constructEvent(
         req.body,
         sig,
-        env.STRIPE_WEBHOOK_SECRET
+        env.STRIPE_WEBHOOK_SECRET,
       );
     } catch (err) {
       console.error("⚠️ Webhook signature verification failed:", err.message);
@@ -160,7 +164,7 @@ router.post(
             amountTotal,
             currency,
             timestamp: new Date().toISOString(),
-          })
+          }),
         );
       }
 
@@ -174,7 +178,7 @@ router.post(
           JSON.stringify({
             sessionId: session.id,
             paymentStatus: "expired",
-          })
+          }),
         );
       }
 
@@ -183,7 +187,7 @@ router.post(
       console.error("❌ Webhook processing error:", error);
       res.status(500).send("Internal webhook error");
     }
-  }
+  },
 );
 
 module.exports = router;

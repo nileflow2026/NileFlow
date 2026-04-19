@@ -11,8 +11,16 @@ module.exports = function verifyJWT(req, res, next) {
       return res.status(401).json({ error: "Missing auth token" });
     }
 
-    // Verify token using configured secret
-    const payload = jwt.verify(token, env.JWT_SECRET || process.env.JWT_SECRET);
+    // Verify token using configured secret with explicit algorithm
+    const secret = env.JWT_SECRET || process.env.JWT_SECRET;
+    if (!secret) {
+      console.error("CRITICAL: JWT_SECRET is not configured");
+      return res
+        .status(500)
+        .json({ error: "Authentication service unavailable" });
+    }
+
+    const payload = jwt.verify(token, secret, { algorithms: ["HS256"] });
 
     req.user = {
       id: payload.sub,

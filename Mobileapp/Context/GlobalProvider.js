@@ -32,12 +32,12 @@ export const getCurrentUser = async () => {
 
   try {
     console.log(
-      "➡️ Making GET request to /api/customerauth/getCustomerProfile..."
+      "➡️ Making GET request to /api/customerauth/getCustomerProfile...",
     );
 
     // Use the cookie-based endpoint that matches your backend
     const response = await axiosClient.get(
-      "/api/customerauth/getCustomerProfile"
+      "/api/customerauth/getCustomerProfile",
     );
 
     // Adjust here depending on your API's response structure:
@@ -69,7 +69,7 @@ export const getCurrentUser = async () => {
   } catch (error) {
     console.log(
       "Error fetching current user:",
-      error.response?.data?.error || error.message
+      error.response?.data?.error || error.message,
     );
     return null; // Return null instead of throwing error - allow browsing without auth
   }
@@ -80,7 +80,7 @@ export const signUp = async (
   password,
   username,
   phone,
-  { setUser, setIsLogged, setIsGuest }
+  { setUser, setIsLogged, setIsGuest },
 ) => {
   // Note: If you want to include phone number in signup, add it to parameters and req.body
   try {
@@ -102,7 +102,7 @@ export const signUp = async (
         username,
         phone, // If you want to send a hardcoded phone or get it from props
         deviceId,
-      }
+      },
     );
 
     // Backend response structure: { message, user: { id, email, username, role, avatar }, profile }
@@ -129,11 +129,11 @@ export const signUp = async (
   } catch (error) {
     console.error(
       "Signup error:",
-      error.response?.data?.error || error.message || error
+      error.response?.data?.error || error.message || error,
     );
     // Rethrow a simplified error message for the UI
     throw new Error(
-      error.response?.data?.error || "Signup failed. Please try again."
+      error.response?.data?.error || "Signup failed. Please try again.",
     );
   }
 };
@@ -156,7 +156,7 @@ export const signIn = async (email, password) => {
         email,
         password,
         deviceId,
-      }
+      },
     );
 
     // Backend response structure: { message, user: { userId, email, username, role, avatar } }
@@ -174,23 +174,28 @@ export const signIn = async (email, password) => {
   } catch (error) {
     console.error(
       "Signin error details:",
-      error.response?.data || error.message || error
+      error.response?.data || error.message || error,
     );
     // Re-throw a specific error message from the backend or a generic one
     throw new Error(
       error.response?.data?.error ||
-        "Signin failed. Please check your credentials."
+        "Signin failed. Please check your credentials.",
     );
   }
 };
 
 export const signOut = async () => {
   try {
-    await account.deleteSession("current");
-    console.log("User signed out");
+    // Use the backend logout endpoint to clear httpOnly cookies
+    await axiosClient.post("/api/customerauth/logout/customer");
+    // Clear local storage
+    await AsyncStorage.multiRemove(["user", "isGuest", "deviceId"]);
   } catch (error) {
-    console.error("Error in signOut:", error);
-    throw new Error(`Sign-out failed: ${error.message}`);
+    // Still clear local state even if backend call fails
+    await AsyncStorage.multiRemove(["user", "isGuest", "deviceId"]).catch(
+      () => {},
+    );
+    throw new Error("Sign-out failed. Please try again.");
   }
 };
 
@@ -208,7 +213,8 @@ export const createGuestSession = async () => {
 };
 
 export const isGuestUser = async () => {
-  return AsyncStorage.getItem("isGuest") === "true";
+  const value = await AsyncStorage.getItem("isGuest");
+  return value === "true";
 };
 
 export const getGuestUser = async () => {
@@ -239,7 +245,7 @@ export const createNotification = async ({
         username,
         email,
         userId,
-      }
+      },
     );
 
     return response.data.notification;
@@ -259,7 +265,7 @@ export const saveRecentSearch = async (userId, query) => {
       {
         userId,
         query,
-      }
+      },
     );
 
     console.log(response.data.message);
@@ -278,13 +284,13 @@ export const getRecentSearches = async () => {
         params: {
           userId: userId, // 👈 send userId as a query parameter
         },
-      }
+      },
     );
     return response.data.searches || [];
   } catch (error) {
     console.error(
       "Error fetching recent searches:",
-      error.response?.data || error.message
+      error.response?.data || error.message,
     );
     return [];
   }
@@ -293,14 +299,14 @@ export const getRecentSearches = async () => {
 export const clearRecentSearches = async () => {
   try {
     const response = await axiosClient.delete(
-      "/api/customerprofile/clear-recent-search"
+      "/api/customerprofile/clear-recent-search",
     );
 
     return response.data;
   } catch (error) {
     console.error(
       "Error clearing recent searches:",
-      error.response?.data || error.message
+      error.response?.data || error.message,
     );
     throw error;
   }
@@ -311,11 +317,11 @@ export const getCustomerNotification = async () => {
 
   try {
     console.log(
-      "➡️ Making GET request to /api/customernotifications/customernotification..."
+      "➡️ Making GET request to /api/customernotifications/customernotification...",
     );
 
     const response = await axiosClient.get(
-      "/api/customernotifications/customernotification"
+      "/api/customernotifications/customernotification",
     );
 
     console.log("⬅️ Notification response received:", response.data);
@@ -356,7 +362,7 @@ export const submitReview = async ({
       reviewText,
       rating,
       imageId: imageFileId || "",
-    }
+    },
   );
 
   return response.data;
@@ -366,7 +372,7 @@ export const incrementProductRatingsCount = async (productId) => {
   try {
     const response = await axiosClient.post(
       "/api/customerprofile/increment-rating",
-      { productId } // Request body
+      { productId }, // Request body
     );
 
     console.log("Ratings count updated:", response.data.ratingsCount);
@@ -374,7 +380,7 @@ export const incrementProductRatingsCount = async (productId) => {
   } catch (error) {
     console.error(
       "Error incrementing product ratings count:",
-      error.response?.data || error.message
+      error.response?.data || error.message,
     );
     throw error;
   }
@@ -382,7 +388,7 @@ export const incrementProductRatingsCount = async (productId) => {
 
 export const getCustomerOrders = async () => {
   const response = await axiosClient.get(
-    "/api/customerprofile/customer-orders"
+    "/api/customerprofile/customer-orders",
   );
   return response.data.orders;
 };
@@ -390,7 +396,7 @@ export const getCustomerOrders = async () => {
 export const fetchReviews = async (productId) => {
   try {
     const response = await axiosClient.get(
-      `/api/customerprofile/fetch-reviews/${productId}`
+      `/api/customerprofile/fetch-reviews/${productId}`,
     );
     /* console.log('Review data:', response.data) */
     return response.data;
@@ -451,7 +457,7 @@ export const updateCurrencyRates = async () => {
   try {
     console.log("Updating currency rates...");
     const response = await axiosClient.get(
-      "/api/update-currencies/update-currencies"
+      "/api/update-currencies/update-currencies",
     );
 
     /* sendNotification(); */
@@ -508,40 +514,25 @@ export async function uploadFile(file) {
       name,
     });
 
-    const response = await fetch(
-      `${Config.endpoint}/storage/buckets/${Config.StorageId}/files`,
+    // Use axiosClient which automatically sends auth cookies
+    const response = await axiosClient.post(
+      `/api/customerprofile/upload-avatar`,
+      formData,
       {
-        method: "POST",
         headers: {
-          "X-Appwrite-Project": Config.projectId,
           "Content-Type": "multipart/form-data",
         },
-        body: formData,
-      }
+      },
     );
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error(
-        "uploadFile (FormData+ID): fetch failed:",
-        response.status,
-        errorText
-      );
-      throw new Error(`Fetch error: ${response.status} - ${errorText}`);
-    }
-
-    const uploadedFile = await response.json();
-    console.log(
-      "uploadFile (FormData+ID): Appwrite upload successful:",
-      uploadedFile
-    );
-    return uploadedFile.$id;
+    const uploadedFile = response.data;
+    return uploadedFile.$id || uploadedFile.fileId;
   } catch (error) {
     console.error("uploadFile (FormData+ID): Error uploading file:", error);
     console.log("uploadFile (FormData+ID): Error details:", error);
     Alert.alert(
       "Upload Error",
-      "Failed to upload the image. Please try again."
+      "Failed to upload the image. Please try again.",
     );
     return null;
   }
@@ -565,7 +556,7 @@ export const getlatestProducts = async () => {
     const result = await databases.listDocuments(
       Config.databaseId,
       Config.productCollectionId,
-      [Query.orderAsc("$createdAt"), Query.limit(5)]
+      [Query.orderAsc("$createdAt"), Query.limit(5)],
     );
     return result.documents;
   } catch (error) {
@@ -578,7 +569,7 @@ export const getlatestProducts = async () => {
 export const fetchProducts = async (
   category = "",
   searchTerm = "",
-  setLoading // Pass setLoading from component
+  setLoading, // Pass setLoading from component
 ) => {
   try {
     if (typeof setLoading === "function") setLoading(true);
@@ -593,7 +584,7 @@ export const fetchProducts = async (
     }
 
     const response = await axiosClient.get(
-      `/api/customerprofile/fetch-product-mobile?${params.toString()}`
+      `/api/customerprofile/fetch-product-mobile?${params.toString()}`,
     );
 
     const data = response.data;
@@ -669,7 +660,7 @@ export const fetchProduct = async ({
 export const getProducts = async () => {
   try {
     const response = await axiosClient.get(
-      "/api/customerprofile/fetch-product"
+      "/api/customerprofile/fetch-product",
     );
 
     if (response.data.success) {
@@ -765,7 +756,7 @@ const GlobalProvider = ({ children }) => {
       } else {
         // 3. No session found - user can browse without authentication
         console.log(
-          "No active session. User can browse without authentication."
+          "No active session. User can browse without authentication.",
         );
         setIsLogged(false);
         setIsGuest(false);
@@ -873,7 +864,7 @@ const GlobalProvider = ({ children }) => {
       startGuestSessionFlow,
       handleLogout,
     }),
-    [isLogged, user, loading, isGuest]
+    [isLogged, user, loading, isGuest],
   );
 
   return (

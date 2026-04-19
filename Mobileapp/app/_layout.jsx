@@ -14,6 +14,7 @@ import { STRIPE_PUBLISH_KEY } from "../config/config";
 import { CartProvider } from "../Context/CartContext_NEW";
 import { FavoritesProvider } from "../Context/FavoritesContext";
 import { SocialProvider } from "../Context/SocialContext";
+import ErrorBoundary from "./components/ErrorBoundary";
 import "../global.css";
 
 SplashScreen.preventAutoHideAsync();
@@ -25,27 +26,29 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider>
-        <StripeProvider publishableKey={STRIPE_PUBLISH_KEY}>
-          <PremiumProvider>
-            <NotificationProvider>
-              <GlobalProvider>
-                <SocialProvider>
-                  <CartProvider>
-                    <GroupBuyProvider>
-                      <FavoritesProvider>
-                        <Stack screenOptions={{ headerShown: false }} />
-                        <Toast />
-                      </FavoritesProvider>
-                    </GroupBuyProvider>
-                    <StatusBar style="auto" />
-                  </CartProvider>
-                </SocialProvider>
-              </GlobalProvider>
-            </NotificationProvider>
-          </PremiumProvider>
-        </StripeProvider>
-      </ThemeProvider>
+      <ErrorBoundary>
+        <ThemeProvider>
+          <StripeProvider publishableKey={STRIPE_PUBLISH_KEY}>
+            <GlobalProvider>
+              <PremiumProvider>
+                <NotificationProvider>
+                  <SocialProvider>
+                    <CartProvider>
+                      <GroupBuyProvider>
+                        <FavoritesProvider>
+                          <Stack screenOptions={{ headerShown: false }} />
+                          <Toast />
+                        </FavoritesProvider>
+                      </GroupBuyProvider>
+                      <StatusBar style="auto" />
+                    </CartProvider>
+                  </SocialProvider>
+                </NotificationProvider>
+              </PremiumProvider>
+            </GlobalProvider>
+          </StripeProvider>
+        </ThemeProvider>
+      </ErrorBoundary>
     </GestureHandlerRootView>
   );
 }

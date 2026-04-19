@@ -1,4 +1,5 @@
 import React, { Suspense, lazy } from "react";
+import * as Sentry from "@sentry/react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -140,11 +141,37 @@ const ScrollToTop = () => {
   return null;
 };
 
+// Temporary Sentry test button — remove after verifying errors appear in Sentry dashboard
+function ErrorButton() {
+  return (
+    <button
+      style={{
+        position: "fixed",
+        bottom: 16,
+        right: 16,
+        zIndex: 9999,
+        padding: "8px 16px",
+        background: "red",
+        color: "white",
+        borderRadius: 4,
+        cursor: "pointer",
+      }}
+      onClick={() => {
+        Sentry.captureException(new Error("This is your first error!"));
+        alert("Error sent to Sentry! Check your dashboard.");
+      }}
+    >
+      Break the world
+    </button>
+  );
+}
+
 // Separate component to use auth hooks
 const AppContent = () => {
   return (
     <>
       <SeoHead />
+      <ErrorButton />
       <ScrollToTop />
       <div
         className="font-sans min-h-screen relative"

@@ -12,26 +12,85 @@ class PaymentCallbackController {
   static processedWebhooks = new Map();
 
   /**
-   * Verify PayPal webhook signature
+   * Verify PayPal webhook signature using PayPal's verification API
    */
-  static verifyPayPalWebhookSignature(req) {
+  static async verifyPayPalWebhookSignature(req) {
     if (!env.PAYPAL_WEBHOOK_ID) {
-      logger.warn(
-        "PayPal webhook verification disabled - no PAYPAL_WEBHOOK_ID"
+      logger.error(
+        "CRITICAL: PayPal webhook verification disabled - PAYPAL_WEBHOOK_ID not set. Rejecting webhook.",
       );
-      return true; // Allow in dev, but log warning
+      return false; // MUST reject in production when webhook ID is not configured
     }
 
     try {
       const headers = req.headers;
       const body = JSON.stringify(req.body);
 
-      // PayPal signature verification logic would go here
-      // For now, return true but log that verification is needed
-      logger.warn(
-        "PayPal webhook signature verification not fully implemented"
+      // Verify using PayPal's verification endpoint
+      const verificationPayload = {
+        auth_algo: headers["paypal-auth-algo"],
+        cert_url: headers["paypal-cert-url"],
+        transmission_id: headers["paypal-transmission-id"],
+        transmission_sig: headers["paypal-transmission-sig"],
+        transmission_time: headers["paypal-transmission-time"],
+        webhook_id: env.PAYPAL_WEBHOOK_ID,
+        webhook_event: req.body,
+      };
+
+      // Check that all required headers are present
+      const requiredHeaders = [
+        "paypal-auth-algo",
+        "paypal-cert-url",
+        "paypal-transmission-id",
+        "paypal-transmission-sig",
+        "paypal-transmission-time",
+      ];
+      const missingHeaders = requiredHeaders.filter((h) => !headers[h]);
+      if (missingHeaders.length > 0) {
+        logger.error(
+          `PayPal webhook missing headers: ${missingHeaders.join(", ")}`,
+        );
+        return false;
+      }
+
+      // Call PayPal verification API
+      const paypalMode = env.PAYPAL_MODE || "sandbox";
+      const baseUrl =
+        paypalMode === "production"
+          ? "https://api-m.paypal.com"
+          : "https://api-m.sandbox.paypal.com";
+
+      const authResponse = await fetch(`${baseUrl}/v1/oauth2/token`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `Basic ${Buffer.from(
+            `${env.PAYPAL_CLIENT_ID}:${env.PAYPAL_CLIENT_SECRET}`,
+          ).toString("base64")}`,
+        },
+        body: "grant_type=client_credentials",
+      });
+      const authData = await authResponse.json();
+
+      const verifyResponse = await fetch(
+        `${baseUrl}/v1/notifications/verify-webhook-signature`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authData.access_token}`,
+          },
+          body: JSON.stringify(verificationPayload),
+        },
       );
-      return true;
+      const verifyData = await verifyResponse.json();
+
+      if (verifyData.verification_status === "SUCCESS") {
+        return true;
+      }
+
+      logger.error("PayPal webhook signature verification failed:", verifyData);
+      return false;
     } catch (error) {
       logger.error("PayPal webhook signature verification error:", error);
       return false;
@@ -55,7 +114,7 @@ class PaymentCallbackController {
           Query.equal("subscriptionId", orderId),
           Query.equal("status", "pending"),
           Query.limit(1),
-        ]
+        ],
       );
       return subscriptions.documents[0] || null;
     } catch (error) {
@@ -111,7 +170,7 @@ class PaymentCallbackController {
             transactionId: captureId,
             subscriptionId: orderId,
             createdAt: new Date().toISOString(),
-          }
+          },
         );
       }
     } catch (error) {
@@ -132,15 +191,14 @@ class PaymentCallbackController {
     try {
       logger.info(
         "Received M-Pesa callback:",
-        JSON.stringify(req.body, null, 2)
+        JSON.stringify(req.body, null, 2),
       );
 
       const callbackData = req.body;
 
       // Verify the callback
-      const verification = await PaymentService.verifyPaymentCallback(
-        callbackData
-      );
+      const verification =
+        await PaymentService.verifyPaymentCallback(callbackData);
 
       if (!verification.verified) {
         logger.error("Invalid M-Pesa callback:", verification.message);
@@ -157,7 +215,7 @@ class PaymentCallbackController {
       const { transactionId, amount, checkoutRequestId } = verification;
 
       logger.info(
-        `M-Pesa payment successful: ${transactionId}, Amount: ${amount}, CheckoutRequestID: ${checkoutRequestId}`
+        `M-Pesa payment successful: ${transactionId}, Amount: ${amount}, CheckoutRequestID: ${checkoutRequestId}`,
       );
 
       // Find the pending subscription by checkoutRequestId
@@ -169,7 +227,7 @@ class PaymentCallbackController {
             [
               Query.equal("checkoutRequestId", checkoutRequestId),
               Query.equal("status", "pending"),
-            ]
+            ],
           );
 
           if (subscriptions.documents.length > 0) {
@@ -184,7 +242,7 @@ class PaymentCallbackController {
               {
                 status: "active",
                 transactionId,
-              }
+              },
             );
 
             // Get user and update premium status
@@ -206,7 +264,7 @@ class PaymentCallbackController {
                 const userDocs = await db.listDocuments(
                   env.APPWRITE_DATABASE_ID,
                   env.APPWRITE_USER_COLLECTION_ID,
-                  [Query.equal("email", user.email)]
+                  [Query.equal("email", user.email)],
                 );
                 if (userDocs.documents.length > 0) {
                   await db.updateDocument(
@@ -218,19 +276,19 @@ class PaymentCallbackController {
                       subscriptionId: subscription.subscriptionId,
                       startedAt: subscription.startedAt,
                       cancelledAt: null,
-                    }
+                    },
                   );
                 }
               } catch (docError) {
                 logger.error(
                   "Error updating user document attributes:",
-                  docError
+                  docError,
                 );
               }
             }
 
             logger.info(
-              `User ${userId} premium activated until ${subscription.expiresAt}`
+              `User ${userId} premium activated until ${subscription.expiresAt}`,
             );
 
             // Send welcome email
@@ -251,7 +309,7 @@ class PaymentCallbackController {
             }
           } else {
             logger.warn(
-              `No pending subscription found for checkoutRequestId: ${checkoutRequestId}`
+              `No pending subscription found for checkoutRequestId: ${checkoutRequestId}`,
             );
           }
         } catch (dbError) {
@@ -284,9 +342,8 @@ class PaymentCallbackController {
         return res.status(400).json({ error: "Checkout request ID required" });
       }
 
-      const result = await PaymentService.queryMpesaTransaction(
-        checkoutRequestId
-      );
+      const result =
+        await PaymentService.queryMpesaTransaction(checkoutRequestId);
 
       return res.json(result);
     } catch (error) {
@@ -388,7 +445,7 @@ class PaymentCallbackController {
       // Verify user owns this payment attempt (security check)
       const existingSubscription = await this.findPendingSubscription(
         userId,
-        orderId
+        orderId,
       );
 
       // Capture the payment atomically
@@ -411,7 +468,7 @@ class PaymentCallbackController {
         userId,
         orderId,
         captureResult.captureId,
-        expiresAt
+        expiresAt,
       );
 
       logger.info(`PayPal payment captured for user ${userId}: ${orderId}`);
@@ -445,7 +502,7 @@ class PaymentCallbackController {
         const orders = await db.listDocuments(
           env.APPWRITE_DATABASE_ID,
           env.APPWRITE_ORDERS_COLLECTION,
-          [Query.equal("orderId", orderId), Query.limit(1)]
+          [Query.equal("orderId", orderId), Query.limit(1)],
         );
 
         if (orders.documents.length > 0) {
@@ -459,7 +516,7 @@ class PaymentCallbackController {
               orderStatus: "Confirmed",
               paypalTransactionId: capture.id,
               updatedAt: new Date().toISOString(),
-            }
+            },
           );
           logger.info(`PayPal capture completed for order ${orderId}`);
         }
@@ -481,7 +538,7 @@ class PaymentCallbackController {
         const orders = await db.listDocuments(
           env.APPWRITE_DATABASE_ID,
           env.APPWRITE_ORDERS_COLLECTION,
-          [Query.equal("orderId", orderId), Query.limit(1)]
+          [Query.equal("orderId", orderId), Query.limit(1)],
         );
 
         if (orders.documents.length > 0) {
@@ -495,7 +552,7 @@ class PaymentCallbackController {
               orderStatus: "Failed",
               failureReason: "PayPal capture denied",
               updatedAt: new Date().toISOString(),
-            }
+            },
           );
           logger.info(`PayPal capture denied for order ${orderId}`);
         }
@@ -526,7 +583,7 @@ class PaymentCallbackController {
             startDate: subscription.create_time,
             expiresAt: subscription.billing_info?.next_billing_time,
             createdAt: new Date().toISOString(),
-          }
+          },
         );
         logger.info(`PayPal subscription created for user ${userId}`);
       }
@@ -550,7 +607,7 @@ class PaymentCallbackController {
             Query.equal("subscriptionId", subscription.id),
             Query.equal("paymentMethod", "paypal"),
             Query.limit(1),
-          ]
+          ],
         );
 
         if (subscriptions.documents.length > 0) {
@@ -563,7 +620,7 @@ class PaymentCallbackController {
               status: "cancelled",
               cancelledAt: new Date().toISOString(),
               updatedAt: new Date().toISOString(),
-            }
+            },
           );
           logger.info(`PayPal subscription cancelled: ${subscription.id}`);
         }
@@ -596,12 +653,12 @@ class PaymentCallbackController {
         event = stripe.webhooks.constructEvent(
           payload,
           sig,
-          env.STRIPE_WEBHOOK_SECRET
+          env.STRIPE_WEBHOOK_SECRET,
         );
       } catch (err) {
         logger.error(
           "Stripe webhook signature verification failed:",
-          err.message
+          err.message,
         );
         return res.status(400).json({ error: `Webhook Error: ${err.message}` });
       }
@@ -622,7 +679,7 @@ class PaymentCallbackController {
           {
             sessionId,
             subscriptionType,
-          }
+          },
         );
 
         if (!userId) {
@@ -646,7 +703,7 @@ class PaymentCallbackController {
               [
                 Query.equal("transactionId", sessionId),
                 Query.equal("paymentMethod", "stripe"),
-              ]
+              ],
             );
 
             if (!subscriptions.documents.length) {
@@ -658,19 +715,19 @@ class PaymentCallbackController {
                   Query.equal("userId", userId),
                   Query.equal("status", "pending"),
                   Query.equal("paymentMethod", "stripe"),
-                ]
+                ],
               );
             }
 
             logger.info(
-              `Stripe webhook found ${subscriptions.documents.length} matching subscription(s) for user ${userId}`
+              `Stripe webhook found ${subscriptions.documents.length} matching subscription(s) for user ${userId}`,
             );
 
             if (subscriptions.documents.length > 0) {
               const subscription = subscriptions.documents[0];
 
               logger.info(
-                `Updating subscription ${subscription.$id} to active`
+                `Updating subscription ${subscription.$id} to active`,
               );
 
               // Update subscription to active
@@ -683,13 +740,13 @@ class PaymentCallbackController {
                   transactionId: sessionId,
                   stripeEventId: event.id,
                   paymentConfirmedAt: new Date().toISOString(),
-                }
+                },
               );
 
               logger.info(
                 `Subscription ${subscription.$id} updated: ${JSON.stringify(
-                  updated
-                )}`
+                  updated,
+                )}`,
               );
 
               // Get user and update premium status
@@ -711,7 +768,7 @@ class PaymentCallbackController {
                   const userDocs = await db.listDocuments(
                     env.APPWRITE_DATABASE_ID,
                     env.APPWRITE_USER_COLLECTION_ID,
-                    [Query.equal("email", user.email)]
+                    [Query.equal("email", user.email)],
                   );
                   if (userDocs.documents.length > 0) {
                     await db.updateDocument(
@@ -723,19 +780,19 @@ class PaymentCallbackController {
                         subscriptionId: subscription.subscriptionId,
                         startedAt: subscription.startedAt,
                         cancelledAt: null,
-                      }
+                      },
                     );
                   }
                 } catch (docError) {
                   logger.error(
                     "Error updating user document attributes:",
-                    docError
+                    docError,
                   );
                 }
               }
 
               logger.info(
-                `User ${userId} premium activated via Stripe until ${subscription.expiresAt}`
+                `User ${userId} premium activated via Stripe until ${subscription.expiresAt}`,
               );
 
               // Send welcome email
@@ -756,13 +813,13 @@ class PaymentCallbackController {
               }
             } else {
               logger.warn(
-                `No pending subscription found for user ${userId} with Stripe payment`
+                `No pending subscription found for user ${userId} with Stripe payment`,
               );
             }
           } catch (dbError) {
             logger.error(
               "Error processing Stripe subscription activation:",
-              dbError
+              dbError,
             );
           }
         }
@@ -786,7 +843,7 @@ class PaymentCallbackController {
     // Prevent concurrent processing of same payment
     if (this.processedWebhooks.has(lockKey)) {
       logger.warn(
-        `Stripe subscription processing already in progress for user ${userId}`
+        `Stripe subscription processing already in progress for user ${userId}`,
       );
       return;
     }
@@ -804,7 +861,7 @@ class PaymentCallbackController {
             Query.equal("transactionId", sessionId),
             Query.equal("paymentMethod", "stripe"),
             Query.limit(1),
-          ]
+          ],
         );
 
         if (!subscriptions.documents.length) {
@@ -817,7 +874,7 @@ class PaymentCallbackController {
               Query.equal("status", "pending"),
               Query.equal("paymentMethod", "stripe"),
               Query.limit(1),
-            ]
+            ],
           );
         }
 
@@ -828,11 +885,11 @@ class PaymentCallbackController {
           await this.atomicStripePaymentUpdate(userId, sessionId, subscription);
 
           logger.info(
-            `User ${userId} premium activated via Stripe until ${subscription.expiresAt}`
+            `User ${userId} premium activated via Stripe until ${subscription.expiresAt}`,
           );
         } else {
           logger.warn(
-            `No pending subscription found for Stripe session ${sessionId}`
+            `No pending subscription found for Stripe session ${sessionId}`,
           );
         }
       }
@@ -861,7 +918,7 @@ class PaymentCallbackController {
           status: "active",
           transactionId: sessionId,
           updatedAt: new Date().toISOString(),
-        }
+        },
       );
     } catch (error) {
       errors.push(`Failed to update subscription: ${error.message}`);
@@ -890,7 +947,7 @@ class PaymentCallbackController {
       } catch (emailError) {
         logger.error(
           "Failed to send welcome email after Stripe payment:",
-          emailError
+          emailError,
         );
         // Don't add to errors - email failure shouldn't fail payment
       }
