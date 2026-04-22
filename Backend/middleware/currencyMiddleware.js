@@ -179,7 +179,7 @@ async function currencyMiddleware(req, res, next) {
 
     // --- 3. Accept-Language header -----------------------------------------
     const localeCurrency = detectCurrencyFromLocale(
-      req.headers["accept-language"]
+      req.headers["accept-language"],
     );
     if (localeCurrency) {
       req.currency = localeCurrency;

@@ -16,18 +16,18 @@ const CURRENCY_META = {
   KES: { symbol: "KSh", locale: "en-KE", decimals: 0 },
   UGX: { symbol: "UGX", locale: "en-UG", decimals: 0 },
   TZS: { symbol: "TSh", locale: "en-TZ", decimals: 0 },
-  ETB: { symbol: "Br",  locale: "am-ET", decimals: 2 },
-  NGN: { symbol: "₦",   locale: "en-NG", decimals: 0 },
+  ETB: { symbol: "Br", locale: "am-ET", decimals: 2 },
+  NGN: { symbol: "₦", locale: "en-NG", decimals: 0 },
   GHS: { symbol: "GH₵", locale: "en-GH", decimals: 2 },
   RWF: { symbol: "RWF", locale: "rw-RW", decimals: 0 },
   SSP: { symbol: "SSP", locale: "en-SS", decimals: 2 },
-  ZMW: { symbol: "ZK",  locale: "en-ZM", decimals: 2 },
-  MZN: { symbol: "MT",  locale: "pt-MZ", decimals: 2 },
-  BWP: { symbol: "P",   locale: "en-BW", decimals: 2 },
-  ZAR: { symbol: "R",   locale: "en-ZA", decimals: 2 },
-  USD: { symbol: "$",   locale: "en-US", decimals: 2 },
-  EUR: { symbol: "€",   locale: "de-DE", decimals: 2 },
-  GBP: { symbol: "£",   locale: "en-GB", decimals: 2 },
+  ZMW: { symbol: "ZK", locale: "en-ZM", decimals: 2 },
+  MZN: { symbol: "MT", locale: "pt-MZ", decimals: 2 },
+  BWP: { symbol: "P", locale: "en-BW", decimals: 2 },
+  ZAR: { symbol: "R", locale: "en-ZA", decimals: 2 },
+  USD: { symbol: "$", locale: "en-US", decimals: 2 },
+  EUR: { symbol: "€", locale: "de-DE", decimals: 2 },
+  GBP: { symbol: "£", locale: "en-GB", decimals: 2 },
 };
 
 // ---------------------------------------------------------------------------
@@ -135,10 +135,12 @@ function enrichProductWithCurrency(
   product,
   currency,
   rate,
-  psychological = false
+  psychological = false,
 ) {
   const basePrice =
-    typeof product.price === "number" ? product.price : parseFloat(product.price) || 0;
+    typeof product.price === "number"
+      ? product.price
+      : parseFloat(product.price) || 0;
 
   const convertedPrice = convertPrice({
     amount: basePrice,
@@ -175,10 +177,10 @@ function enrichProductsWithCurrency(
   products,
   currency,
   rate,
-  psychological = false
+  psychological = false,
 ) {
   return products.map((p) =>
-    enrichProductWithCurrency(p, currency, rate, psychological)
+    enrichProductWithCurrency(p, currency, rate, psychological),
   );
 }
 

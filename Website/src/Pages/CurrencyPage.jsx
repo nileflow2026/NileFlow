@@ -12,17 +12,39 @@ import Footer from "../../components/Footer";
 import { useCurrency, CURRENCY_META } from "../../Context/CurrencyProvider";
 
 const CURRENCY_NAMES = {
-  KES: "Kenyan Shilling", UGX: "Ugandan Shilling", TZS: "Tanzanian Shilling",
-  ETB: "Ethiopian Birr", NGN: "Nigerian Naira", GHS: "Ghanaian Cedi",
-  RWF: "Rwandan Franc", SSP: "South Sudanese Pound", ZMW: "Zambian Kwacha",
-  MZN: "Mozambican Metical", BWP: "Botswana Pula", ZAR: "South African Rand",
-  USD: "US Dollar", EUR: "Euro", GBP: "British Pound",
+  KES: "Kenyan Shilling",
+  UGX: "Ugandan Shilling",
+  TZS: "Tanzanian Shilling",
+  ETB: "Ethiopian Birr",
+  NGN: "Nigerian Naira",
+  GHS: "Ghanaian Cedi",
+  RWF: "Rwandan Franc",
+  SSP: "South Sudanese Pound",
+  ZMW: "Zambian Kwacha",
+  MZN: "Mozambican Metical",
+  BWP: "Botswana Pula",
+  ZAR: "South African Rand",
+  USD: "US Dollar",
+  EUR: "Euro",
+  GBP: "British Pound",
 };
 
 const CURRENCY_FLAGS = {
-  KES: "🇰🇪", UGX: "🇺🇬", TZS: "🇹🇿", ETB: "🇪🇹", NGN: "🇳🇬",
-  GHS: "🇬🇭", RWF: "🇷🇼", SSP: "🇸🇸", ZMW: "🇿🇲", MZN: "🇲🇿",
-  BWP: "🇧🇼", ZAR: "🇿🇦", USD: "🇺🇸", EUR: "🇪🇺", GBP: "🇬🇧",
+  KES: "🇰🇪",
+  UGX: "🇺🇬",
+  TZS: "🇹🇿",
+  ETB: "🇪🇹",
+  NGN: "🇳🇬",
+  GHS: "🇬🇭",
+  RWF: "🇷🇼",
+  SSP: "🇸🇸",
+  ZMW: "🇿🇲",
+  MZN: "🇲🇿",
+  BWP: "🇧🇼",
+  ZAR: "🇿🇦",
+  USD: "🇺🇸",
+  EUR: "🇪🇺",
+  GBP: "🇬🇧",
 };
 
 const CurrencyPage = () => {
@@ -153,8 +175,8 @@ const CurrencyPage = () => {
             <p className="text-[color:var(--nf-text-secondary)]">
               All prices are stored in Kenyan Shillings (KES) and converted to
               your local currency in real time using live exchange rates. The
-              price you see already reflects your currency — no hidden conversion
-              charges.
+              price you see already reflects your currency — no hidden
+              conversion charges.
             </p>
           </div>
         </div>

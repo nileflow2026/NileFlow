@@ -398,7 +398,7 @@ const getProducts = async (req, res) => {
     const enrichedProducts = enrichProductsWithCurrency(
       paginatedProducts,
       targetCurrency,
-      rate
+      rate,
     );
 
     // Average base price (KES) for stats
@@ -539,7 +539,7 @@ const getProductsForMobile = async (req, res) => {
     const enrichedProducts = enrichProductsWithCurrency(
       productsWithReviews,
       targetCurrency,
-      rate
+      rate,
     );
 
     res.json({
@@ -1057,7 +1057,7 @@ const getDealProducts = async (req, res) => {
         { ...product, price: basePrice },
         targetCurrency,
         rate,
-        true // psychological pricing on deals
+        true, // psychological pricing on deals
       );
 
       return {
@@ -1071,7 +1071,7 @@ const getDealProducts = async (req, res) => {
           currency: targetCurrency,
           displayValue: require("../../utils/currencyConverter").formatCurrency(
             originalPrice * rate,
-            targetCurrency
+            targetCurrency,
           ),
         },
         isExpiringSoon: timeLeft.totalHours <= 6,
@@ -1511,7 +1511,11 @@ const getProducts2 = async (req, res) => {
     const targetCurrency = validateCurrencyCode(req.currency) || "KES";
     const rates = await getAllRates();
     const rate = rates[targetCurrency] ?? 1;
-    const enrichedProducts = enrichProductsWithCurrency(allProducts, targetCurrency, rate);
+    const enrichedProducts = enrichProductsWithCurrency(
+      allProducts,
+      targetCurrency,
+      rate,
+    );
 
     res.json({
       success: true,

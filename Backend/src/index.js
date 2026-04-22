@@ -699,7 +699,11 @@ safeMount("/api", africanFactsRoutes, "African Facts");
 
 // Currency routes (CAL)
 try {
-  safeMount("/api/currency", require("../routes/currencyRoutes"), "Currency CAL");
+  safeMount(
+    "/api/currency",
+    require("../routes/currencyRoutes"),
+    "Currency CAL",
+  );
 } catch (currencyError) {
   console.log("⚠️  Currency routes not available:", currencyError.message);
 }
@@ -989,7 +993,10 @@ async function startServer() {
       const { warmUpCache } = require("../services/exchangeRateService");
       warmUpCache();
     } catch (exchangeErr) {
-      console.warn("⚠️  Exchange rate cache warm-up skipped:", exchangeErr.message);
+      console.warn(
+        "⚠️  Exchange rate cache warm-up skipped:",
+        exchangeErr.message,
+      );
     }
 
     // Initialize newsletter scheduled campaigns processor

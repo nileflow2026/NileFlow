@@ -25,18 +25,18 @@ export const CURRENCY_META = {
   KES: { symbol: "KSh", locale: "en-KE", decimals: 0 },
   UGX: { symbol: "UGX", locale: "en-UG", decimals: 0 },
   TZS: { symbol: "TSh", locale: "en-TZ", decimals: 0 },
-  ETB: { symbol: "Br",  locale: "am-ET", decimals: 2 },
-  NGN: { symbol: "₦",   locale: "en-NG", decimals: 0 },
+  ETB: { symbol: "Br", locale: "am-ET", decimals: 2 },
+  NGN: { symbol: "₦", locale: "en-NG", decimals: 0 },
   GHS: { symbol: "GH₵", locale: "en-GH", decimals: 2 },
   RWF: { symbol: "RWF", locale: "rw-RW", decimals: 0 },
   SSP: { symbol: "SSP", locale: "en-SS", decimals: 2 },
-  ZMW: { symbol: "ZK",  locale: "en-ZM", decimals: 2 },
-  MZN: { symbol: "MT",  locale: "pt-MZ", decimals: 2 },
-  BWP: { symbol: "P",   locale: "en-BW", decimals: 2 },
-  ZAR: { symbol: "R",   locale: "en-ZA", decimals: 2 },
-  USD: { symbol: "$",   locale: "en-US", decimals: 2 },
-  EUR: { symbol: "€",   locale: "de-DE", decimals: 2 },
-  GBP: { symbol: "£",   locale: "en-GB", decimals: 2 },
+  ZMW: { symbol: "ZK", locale: "en-ZM", decimals: 2 },
+  MZN: { symbol: "MT", locale: "pt-MZ", decimals: 2 },
+  BWP: { symbol: "P", locale: "en-BW", decimals: 2 },
+  ZAR: { symbol: "R", locale: "en-ZA", decimals: 2 },
+  USD: { symbol: "$", locale: "en-US", decimals: 2 },
+  EUR: { symbol: "€", locale: "de-DE", decimals: 2 },
+  GBP: { symbol: "£", locale: "en-GB", decimals: 2 },
 };
 
 const BASE_CURRENCY = "KES";
@@ -49,9 +49,21 @@ const API_BASE_URL =
 
 // Hardcoded fallback rates (KES base)
 const FALLBACK_RATES = {
-  KES: 1, UGX: 27.5, TZS: 3.25, ETB: 0.65, NGN: 10.2,
-  GHS: 0.083, RWF: 13.8, SSP: 15.9, ZMW: 0.26, MZN: 0.77,
-  BWP: 0.083, ZAR: 0.11, USD: 0.0077, EUR: 0.0071, GBP: 0.0061,
+  KES: 1,
+  UGX: 27.5,
+  TZS: 3.25,
+  ETB: 0.65,
+  NGN: 10.2,
+  GHS: 0.083,
+  RWF: 13.8,
+  SSP: 15.9,
+  ZMW: 0.26,
+  MZN: 0.77,
+  BWP: 0.083,
+  ZAR: 0.11,
+  USD: 0.0077,
+  EUR: 0.0071,
+  GBP: 0.0061,
 };
 
 // ---------------------------------------------------------------------------
@@ -66,7 +78,11 @@ function getSupportedCurrency(code) {
 }
 
 function formatAmount(amount, currency) {
-  const meta = CURRENCY_META[currency] ?? { symbol: currency, locale: "en", decimals: 2 };
+  const meta = CURRENCY_META[currency] ?? {
+    symbol: currency,
+    locale: "en",
+    decimals: 2,
+  };
   const formatted = new Intl.NumberFormat(meta.locale, {
     minimumFractionDigits: meta.decimals,
     maximumFractionDigits: meta.decimals,
@@ -90,7 +106,7 @@ async function saveCachedRates(rates) {
   try {
     await AsyncStorage.setItem(
       RATES_STORAGE_KEY,
-      JSON.stringify({ rates, cachedAt: Date.now() })
+      JSON.stringify({ rates, cachedAt: Date.now() }),
     );
   } catch {
     // ignore
@@ -146,9 +162,15 @@ export function CurrencyProvider({ children }) {
 
     // 3. Device locale
     const localeMap = {
-      "en-KE": "KES", "sw-KE": "KES", "en-UG": "UGX",
-      "en-TZ": "TZS", "sw-TZ": "TZS", "en-NG": "NGN",
-      "en-GH": "GHS", "am-ET": "ETB", "rw-RW": "RWF",
+      "en-KE": "KES",
+      "sw-KE": "KES",
+      "en-UG": "UGX",
+      "en-TZ": "TZS",
+      "sw-TZ": "TZS",
+      "en-NG": "NGN",
+      "en-GH": "GHS",
+      "am-ET": "ETB",
+      "rw-RW": "RWF",
     };
     try {
       const { getLocales } = await import("expo-localization");
@@ -181,14 +203,14 @@ export function CurrencyProvider({ children }) {
         fetchRates(),
       ]);
 
-      const finalCurrency = getSupportedCurrency(detectedCurrency) || BASE_CURRENCY;
+      const finalCurrency =
+        getSupportedCurrency(detectedCurrency) || BASE_CURRENCY;
       setCurrency(finalCurrency);
       setLoading(false);
     };
 
     init();
   }, [detectCurrency, fetchRates]);
-
 
   // ── Display helpers ────────────────────────────────────────────────────
   /**
@@ -204,16 +226,15 @@ export function CurrencyProvider({ children }) {
         return priceOrObj.displayValue;
       }
 
-      const amount = typeof priceOrObj === "number"
-        ? priceOrObj
-        : parseFloat(priceOrObj);
+      const amount =
+        typeof priceOrObj === "number" ? priceOrObj : parseFloat(priceOrObj);
       if (!Number.isFinite(amount)) return "—";
 
       const rate = rates[currency] ?? 1;
       const converted = Math.round(amount * rate);
       return formatAmount(converted, currency);
     },
-    [currency, rates]
+    [currency, rates],
   );
 
   /**
@@ -225,10 +246,11 @@ export function CurrencyProvider({ children }) {
       if (from === to) return Number(amount);
       const fromRate = rates[from] ?? 1;
       const toRate = rates[to] ?? 1;
-      const inKES = from === BASE_CURRENCY ? Number(amount) : Number(amount) / fromRate;
+      const inKES =
+        from === BASE_CURRENCY ? Number(amount) : Number(amount) / fromRate;
       return inKES * toRate;
     },
-    [currency, rates]
+    [currency, rates],
   );
 
   const value = useMemo(
@@ -243,7 +265,7 @@ export function CurrencyProvider({ children }) {
       // Legacy compatibility
       exchangeRate: rates[currency] ?? 1,
     }),
-    [currency, rates, loading, displayPrice, convertPrice]
+    [currency, rates, loading, displayPrice, convertPrice],
   );
 
   return (
@@ -260,4 +282,3 @@ export function useCurrency() {
   }
   return ctx;
 }
-

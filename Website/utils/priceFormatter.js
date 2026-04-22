@@ -59,7 +59,10 @@ export function resolveDisplayPrice(priceField, fallbackCurrency = "KES") {
   if (typeof priceField === "object") {
     if (priceField.displayValue) return priceField.displayValue;
     if (typeof priceField.convertedPrice === "number") {
-      return formatPrice(priceField.convertedPrice, priceField.currency ?? fallbackCurrency);
+      return formatPrice(
+        priceField.convertedPrice,
+        priceField.currency ?? fallbackCurrency,
+      );
     }
     if (typeof priceField.basePrice === "number") {
       return formatPrice(priceField.basePrice, "KES");
@@ -109,4 +112,3 @@ export function applyCharmPricing(amount, currency = "KES") {
 export function formatCharmPrice(amount, currency = "KES") {
   return formatPrice(applyCharmPricing(amount, currency), currency);
 }
-

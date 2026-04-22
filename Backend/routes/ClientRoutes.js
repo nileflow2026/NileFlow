@@ -63,7 +63,11 @@ router.get("/categories/getcategories", getCategorie);
 router.get("/categories/:categoryId", getCategoryById);
 router.get("/mobile-categories", getMobileCategories);
 router.get("/mobile-products", currencyMiddleware, getProducts2);
-router.get("/products/category/:categoryId", currencyMiddleware, getProductsByCategory);
+router.get(
+  "/products/category/:categoryId",
+  currencyMiddleware,
+  getProductsByCategory,
+);
 router.get("/featured-products", getFeaturedProducts);
 router.get("/deal-products", currencyMiddleware, getDealProducts);
 router.get("/deal-analytics", getDealAnalytics);

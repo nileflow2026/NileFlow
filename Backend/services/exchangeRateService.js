@@ -65,7 +65,9 @@ async function fetchRatesFromAPI() {
     clearTimeout(timer);
 
     if (!response.ok) {
-      throw new Error(`Exchange rate API responded with HTTP ${response.status}`);
+      throw new Error(
+        `Exchange rate API responded with HTTP ${response.status}`,
+      );
     }
 
     const data = await response.json();
@@ -95,7 +97,7 @@ async function cacheRates(rates) {
       CACHE_KEY,
       JSON.stringify({ rates, cachedAt: Date.now() }),
       "EX",
-      CACHE_TTL_SECONDS
+      CACHE_TTL_SECONDS,
     );
   } catch (err) {
     console.error("[ExchangeRateService] Failed to write cache:", err.message);
@@ -139,7 +141,7 @@ async function getAllRates() {
   } catch (apiErr) {
     console.warn(
       "[ExchangeRateService] API fetch failed, using fallback rates:",
-      apiErr.message
+      apiErr.message,
     );
   }
 
@@ -176,7 +178,7 @@ function warmUpCache() {
   getAllRates()
     .then(() => console.log("[ExchangeRateService] Cache warmed up"))
     .catch((err) =>
-      console.warn("[ExchangeRateService] Warm-up failed:", err.message)
+      console.warn("[ExchangeRateService] Warm-up failed:", err.message),
     );
 }
 
