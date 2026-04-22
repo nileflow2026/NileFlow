@@ -1,11 +1,12 @@
 // rate-limiter.js
 const rateLimit = require("express-rate-limit");
 const RedisStore = require("rate-limit-redis");
+const { redis } = require("./redisClient");
 
 const authLimiter = rateLimit({
   store: new RedisStore({
     prefix: "rl:auth:",
-    client: redisClient,
+    client: redis,
   }),
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 10, // 10 attempts per window
@@ -22,7 +23,7 @@ const authLimiter = rateLimit({
 const sessionLimiter = rateLimit({
   store: new RedisStore({
     prefix: "rl:session:",
-    client: redisClient,
+    client: redis,
   }),
   windowMs: 60 * 1000, // 1 minute
   max: 100, // 100 requests per minute per session

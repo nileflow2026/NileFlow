@@ -6,9 +6,9 @@ import tailwindcss from "@tailwindcss/vite";
 // Packages that live exclusively on the server and must NEVER enter the browser bundle.
 // Keeping them here makes the intent explicit and helps Rollup skip them during tree-shaking.
 const SERVER_ONLY_PACKAGES = [
-  "ioredis",   // Redis client – Node.js only
-  "web-push",  // Push-notification server library – Node.js only
-  "crypto",    // Shadowed by a stub that re-exports the Node built-in – not needed in browser
+  "ioredis", // Redis client – Node.js only
+  "web-push", // Push-notification server library – Node.js only
+  "crypto", // Shadowed by a stub that re-exports the Node built-in – not needed in browser
   // "install" and "npm" are tooling packages with no import in frontend code;
   // Rollup's tree-shaking already skips them, but listing here is defensive.
 ];
@@ -44,7 +44,7 @@ export default defineConfig(({ mode }) => {
                   "console.debug",
                   "console.trace",
                 ],
-                passes: 2,       // Extra pass for smaller output
+                passes: 2, // Extra pass for smaller output
               },
               mangle: true,
             }
@@ -172,6 +172,14 @@ export default defineConfig(({ mode }) => {
     // Enable CORS in development
     server: {
       cors: true,
+      proxy: {
+        // Forward /api/* to the backend in development
+        "/api": {
+          target: "https://nile-flow-backend.onrender.com",
+          changeOrigin: true,
+          secure: true,
+        },
+      },
     },
 
     // Define for better tree shaking

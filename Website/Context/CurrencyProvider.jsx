@@ -44,6 +44,11 @@ const BASE_CURRENCY = "KES";
 const RATES_STORAGE_KEY = "nileflow:rates";
 const RATES_TTL_MS = 4 * 60 * 60 * 1_000; // 4 hours
 
+// Absolute backend URL — required because the website is served from a
+// different domain than the backend (nile-flow-backend.onrender.com).
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ?? "https://nile-flow-backend.onrender.com";
+
 // ---------------------------------------------------------------------------
 // Context
 // ---------------------------------------------------------------------------
@@ -126,7 +131,7 @@ export function CurrencyProvider({ children }) {
   // ── Fetch all rates from backend ──────────────────────────────────────────
   const fetchRates = useCallback(async () => {
     try {
-      const res = await fetch("/api/currency/rates");
+      const res = await fetch(`${API_BASE_URL}/api/currency/rates`);
       if (!res.ok) throw new Error("rate fetch failed");
       const data = await res.json();
       if (data.rates && typeof data.rates === "object") {
@@ -144,16 +149,18 @@ export function CurrencyProvider({ children }) {
 
   // ── Detect user's currency automatically from location ─────────────────────
   const detectCurrency = useCallback(async () => {
-    // 1. Backend IP-based geo-detection
+    // 1. Backend IP geo-detection (uses absolute URL — backend is on a different domain)
     try {
-      const res = await fetch("/api/currency/detect");
+      const res = await fetch(`${API_BASE_URL}/api/currency/detect`, {
+        signal: AbortSignal.timeout(4000),
+      });
       if (res.ok) {
         const data = await res.json();
         const detected = getSupportedCurrency(data.currency);
         if (detected) return detected;
       }
     } catch {
-      // ignore
+      // ignore — fall through to client-side geo
     }
 
     // 2. Browser locale

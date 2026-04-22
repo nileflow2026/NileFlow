@@ -47,6 +47,46 @@ const API_BASE_URL =
   Constants.expoConfig?.extra?.API_BASE_URL ||
   "https://nile-flow-backend.onrender.com";
 
+// Country → currency map for client-side IP geo fallback
+const COUNTRY_CURRENCY = {
+  KE: "KES",
+  UG: "UGX",
+  TZ: "TZS",
+  ET: "ETB",
+  NG: "NGN",
+  GH: "GHS",
+  RW: "RWF",
+  SS: "SSP",
+  ZM: "ZMW",
+  MZ: "MZN",
+  BW: "BWP",
+  ZA: "ZAR",
+  US: "USD",
+  GB: "GBP",
+  DE: "EUR",
+  FR: "EUR",
+};
+
+// Country → currency map for client-side IP geo fallback
+const COUNTRY_CURRENCY = {
+  KE: "KES",
+  UG: "UGX",
+  TZ: "TZS",
+  ET: "ETB",
+  NG: "NGN",
+  GH: "GHS",
+  RW: "RWF",
+  SS: "SSP",
+  ZM: "ZMW",
+  MZ: "MZN",
+  BW: "BWP",
+  ZA: "ZAR",
+  US: "USD",
+  GB: "GBP",
+  DE: "EUR",
+  FR: "EUR",
+};
+
 // Hardcoded fallback rates (KES base)
 const FALLBACK_RATES = {
   KES: 1,
@@ -142,19 +182,39 @@ export function CurrencyProvider({ children }) {
     return null;
   }, []);
 
-  // ── Detect user currency ───────────────────────────────────────────────
+  // ── Detect user currency automatically from location ─────────────────────
   const detectCurrency = useCallback(async () => {
-    // 1. Saved preference
-    const saved = getSupportedCurrency(await AsyncStorage.getItem(STORAGE_KEY));
-    if (saved) return saved;
-
-    // 2. Backend geo-detection
+    // 1. Backend geo-detection
     try {
-      const res = await fetch(`${API_BASE_URL}/api/currency/detect`);
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 4000);
+      const res = await fetch(`${API_BASE_URL}/api/currency/detect`, {
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
       if (res.ok) {
         const data = await res.json();
         const d = getSupportedCurrency(data.currency);
         if (d) return d;
+      }
+    } catch {
+      // ignore — fall through to client-side geo
+    }
+
+    // 2. Client-side IP geo fallback (ipapi.co, no API key needed)
+    try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 4000);
+      const res = await fetch("https://ipapi.co/json/", {
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
+      if (res.ok) {
+        const data = await res.json();
+        const fromCountry = getSupportedCurrency(
+          COUNTRY_CURRENCY[data.country_code],
+        );
+        if (fromCountry) return fromCountry;
       }
     } catch {
       // ignore
