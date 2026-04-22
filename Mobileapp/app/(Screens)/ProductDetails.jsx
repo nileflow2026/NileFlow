@@ -1343,7 +1343,7 @@ const ProductDetails = () => {
             onSubmit={handleRatingSubmit}
           />
           {/* ── Group Buying Section ────────────────────────────────── */}
-          <View style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
+          {/* <View style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
             <View
               style={{
                 backgroundColor: "#1a2e1a",
@@ -1458,7 +1458,7 @@ const ProductDetails = () => {
                 params: { orderId: group.$id },
               });
             }}
-          />
+          />  */}
 
           <RelatedProducts
             relatedProducts={relatedProducts}

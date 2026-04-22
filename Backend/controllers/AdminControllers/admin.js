@@ -290,7 +290,9 @@ const addProduct = async (req, res) => {
         sku,
         weight: weight ? parseFloat(weight) : null,
         dimensions: dimensions
-          ? [dimensions.length, dimensions.width, dimensions.height]
+          ? Array.isArray(dimensions)
+            ? dimensions.map((d) => String(d ?? ""))
+            : [dimensions.length, dimensions.width, dimensions.height].map((d) => String(d ?? ""))
           : [],
         tags: tags || [],
         metaDescription,
