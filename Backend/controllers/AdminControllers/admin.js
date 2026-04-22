@@ -292,7 +292,9 @@ const addProduct = async (req, res) => {
         dimensions: dimensions
           ? Array.isArray(dimensions)
             ? dimensions.map((d) => String(d ?? ""))
-            : [dimensions.length, dimensions.width, dimensions.height].map((d) => String(d ?? ""))
+            : [dimensions.length, dimensions.width, dimensions.height].map(
+                (d) => String(d ?? ""),
+              )
           : [],
         tags: tags || [],
         metaDescription,
