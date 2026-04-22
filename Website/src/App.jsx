@@ -142,7 +142,7 @@ const ScrollToTop = () => {
 };
 
 // Temporary Sentry test button — remove after verifying errors appear in Sentry dashboard
-function ErrorButton() {
+/* function ErrorButton() {
   return (
     <button
       style={{
@@ -164,14 +164,14 @@ function ErrorButton() {
       Break the world
     </button>
   );
-}
+} */
 
 // Separate component to use auth hooks
 const AppContent = () => {
   return (
     <>
       <SeoHead />
-      <ErrorButton />
+      {/* <ErrorButton /> */}
       <ScrollToTop />
       <div
         className="font-sans min-h-screen relative"

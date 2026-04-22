@@ -2,6 +2,12 @@ const { Query, ID } = require("node-appwrite");
 const { users, db } = require("../../services/appwriteService");
 const { storage } = require("../../src/appwrite");
 const { env } = require("../../src/env");
+const { getAllRates, getRate } = require("../../services/exchangeRateService");
+const {
+  enrichProductsWithCurrency,
+  enrichProductWithCurrency,
+  validateCurrencyCode,
+} = require("../../utils/currencyConverter");
 const { InputFile } = require("node-appwrite/file");
 
 const getCustomerProfile = async (req, res) => {
@@ -385,9 +391,29 @@ const getProducts = async (req, res) => {
       ...new Set(allProducts.map((p) => p.category).filter(Boolean)),
     ];
 
+    // --- Currency enrichment ---
+    const targetCurrency = validateCurrencyCode(req.currency) || "KES";
+    const rates = await getAllRates();
+    const rate = rates[targetCurrency] ?? 1;
+    const enrichedProducts = enrichProductsWithCurrency(
+      paginatedProducts,
+      targetCurrency,
+      rate
+    );
+
+    // Average base price (KES) for stats
+    const avgBasePrice =
+      allProducts.length > 0
+        ? (
+            allProducts.reduce((sum, p) => sum + (p.price || 0), 0) /
+            allProducts.length
+          ).toFixed(2)
+        : 0;
+
     res.json({
       success: true,
-      products: paginatedProducts,
+      products: enrichedProducts,
+      currency: targetCurrency,
       total: totalProducts,
       page: parseInt(page),
       limit: pageLimit,
@@ -404,13 +430,7 @@ const getProducts = async (req, res) => {
       stats: {
         totalProducts: totalProducts,
         outOfStock: allProducts.filter((p) => p.stock <= 0).length,
-        averagePrice:
-          allProducts.length > 0
-            ? (
-                allProducts.reduce((sum, p) => sum + (p.price || 0), 0) /
-                allProducts.length
-              ).toFixed(2)
-            : 0,
+        averagePrice: avgBasePrice,
       },
     });
   } catch (err) {
@@ -512,11 +532,22 @@ const getProductsForMobile = async (req, res) => {
       }),
     );
 
+    // --- Currency enrichment ---
+    const targetCurrency = validateCurrencyCode(req.currency) || "KES";
+    const rates = await getAllRates();
+    const rate = rates[targetCurrency] ?? 1;
+    const enrichedProducts = enrichProductsWithCurrency(
+      productsWithReviews,
+      targetCurrency,
+      rate
+    );
+
     res.json({
       success: true,
-      products: productsWithReviews,
+      products: enrichedProducts,
+      currency: targetCurrency,
       total: batch.total,
-      count: productsWithReviews.length,
+      count: enrichedProducts.length,
       nextCursor:
         batch.documents.length >= parseInt(limit)
           ? batch.documents[batch.documents.length - 1].$id
@@ -1007,19 +1038,42 @@ const getDealProducts = async (req, res) => {
       queries,
     );
 
-    // Enrich products with calculated data
+    // Enrich products with calculated data and currency
+    const targetCurrency = validateCurrencyCode(req.currency) || "KES";
+    const rates = await getAllRates();
+    const rate = rates[targetCurrency] ?? 1;
+
     const enrichedProducts = response.documents.map((product) => {
       const discount = product.discount || 0;
       const timeLeft = calculateTimeLeft(
         product.dealEndTime || new Date(Date.now() + 24 * 60 * 60 * 1000),
       );
 
+      const basePrice = product.dealPrice || product.price || 0;
+      const originalPrice = product.price || 0;
+
+      // Apply currency conversion with psychological pricing for deals
+      const converted = enrichProductWithCurrency(
+        { ...product, price: basePrice },
+        targetCurrency,
+        rate,
+        true // psychological pricing on deals
+      );
+
       return {
-        ...product,
-        discount: discount,
-        timeLeft: timeLeft,
-        originalPrice: product.price,
-        price: product.dealPrice || product.price,
+        ...converted,
+        discount,
+        timeLeft,
+        originalPrice: {
+          basePrice: originalPrice,
+          baseCurrency: "KES",
+          convertedPrice: originalPrice * rate,
+          currency: targetCurrency,
+          displayValue: require("../../utils/currencyConverter").formatCurrency(
+            originalPrice * rate,
+            targetCurrency
+          ),
+        },
         isExpiringSoon: timeLeft.totalHours <= 6,
         isHighDiscount: discount >= 40,
         isPremium: product.premiumDeal || false,
@@ -1453,10 +1507,17 @@ const getProducts2 = async (req, res) => {
       cursor = batch.documents[batch.documents.length - 1].$id;
     }
 
+    // --- Currency enrichment ---
+    const targetCurrency = validateCurrencyCode(req.currency) || "KES";
+    const rates = await getAllRates();
+    const rate = rates[targetCurrency] ?? 1;
+    const enrichedProducts = enrichProductsWithCurrency(allProducts, targetCurrency, rate);
+
     res.json({
       success: true,
-      products: allProducts,
-      total: allProducts.length,
+      products: enrichedProducts,
+      currency: targetCurrency,
+      total: enrichedProducts.length,
     });
   } catch (err) {
     console.error("❌ Error fetching products:", err);

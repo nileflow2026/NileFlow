@@ -86,6 +86,8 @@ const schema = Joi.object({
   STRIPE_WEBHOOK_SECRET: Joi.string().optional(),
   // OpenAI API
   OPENAI_API_KEY: Joi.string().optional(),
+  // Exchange Rate API (optional — free tier works without key)
+  EXCHANGE_RATE_API_KEY: Joi.string().optional(),
 }).unknown();
 
 const { error, value: env } = schema.validate(process.env, {

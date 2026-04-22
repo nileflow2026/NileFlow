@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const authenticateToken = require("../middleware/authMiddleware");
+const { currencyMiddleware } = require("../middleware/currencyMiddleware");
 const {
   getCustomerProfile,
   updateCurrencyRates,
@@ -48,8 +49,8 @@ router.get("/customer-orders", authenticateToken, getCustomerOrders);
 router.post("/customer-searches", saveRecentSearch);
 router.get("/customer-recent-search", getRecentSearches);
 router.get("/popular-searches", getPopularSearches);
-router.get("/fetch-product", getProducts);
-router.get("/fetch-product-mobile", getProductsForMobile);
+router.get("/fetch-product", currencyMiddleware, getProducts);
+router.get("/fetch-product-mobile", currencyMiddleware, getProductsForMobile);
 router.post("/increment-rating", incrementProductRatingsCount);
 router.post("/submit-review", authenticateToken, submitReview);
 router.delete("/clear-recent-search", authenticateToken, clearRecentSearches);
@@ -61,10 +62,10 @@ router.get("/categories", getCategories);
 router.get("/categories/getcategories", getCategorie);
 router.get("/categories/:categoryId", getCategoryById);
 router.get("/mobile-categories", getMobileCategories);
-router.get("/mobile-products", getProducts2);
-router.get("/products/category/:categoryId", getProductsByCategory);
+router.get("/mobile-products", currencyMiddleware, getProducts2);
+router.get("/products/category/:categoryId", currencyMiddleware, getProductsByCategory);
 router.get("/featured-products", getFeaturedProducts);
-router.get("/deal-products", getDealProducts);
+router.get("/deal-products", currencyMiddleware, getDealProducts);
 router.get("/deal-analytics", getDealAnalytics);
 router.get("/deal-countdown", getGlobalDealCountdown);
 router.get("/hero-products", getHeroProducts);

@@ -284,6 +284,7 @@ try {
         "Accept",
         "X-CSRF-Token",
         "X-Transaction-ID",
+        "X-Currency",
         "Cache-Control",
         "Pragma",
       ],
@@ -696,6 +697,13 @@ safeMount("/api/products", productsrouter, "Products");
 safeMount("/api/apply", applyRoutes, "Apply");
 safeMount("/api", africanFactsRoutes, "African Facts");
 
+// Currency routes (CAL)
+try {
+  safeMount("/api/currency", require("../routes/currencyRoutes"), "Currency CAL");
+} catch (currencyError) {
+  console.log("⚠️  Currency routes not available:", currencyError.message);
+}
+
 // Recommendations with fallback
 try {
   safeMount(
@@ -974,6 +982,14 @@ async function startServer() {
         groupBuyError.message,
       );
       // Non-critical — server continues
+    }
+
+    // Warm up exchange rate cache (non-blocking)
+    try {
+      const { warmUpCache } = require("../services/exchangeRateService");
+      warmUpCache();
+    } catch (exchangeErr) {
+      console.warn("⚠️  Exchange rate cache warm-up skipped:", exchangeErr.message);
     }
 
     // Initialize newsletter scheduled campaigns processor
