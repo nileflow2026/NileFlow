@@ -351,14 +351,10 @@ app.use("/api/vendor", (req, res, next) => {
   next();
 });
 
-// Manual CORS debugging and OPTIONS handling
+// Manual CORS fallback for OPTIONS preflight requests
 app.use((req, res, next) => {
-  console.log(`🔧 ${req.method} ${req.url} from origin: ${req.headers.origin}`);
-  console.log(`Request headers:`, JSON.stringify(req.headers, null, 2));
-
   // Handle preflight OPTIONS requests manually if CORS didn't handle them
   if (req.method === "OPTIONS") {
-    console.log("⚡ Handling OPTIONS preflight request");
     const origin = req.headers.origin;
     const allowedOrigins = [
       "http://localhost:5173",
@@ -381,7 +377,6 @@ app.use((req, res, next) => {
     ];
 
     if (!origin || allowedOrigins.includes(origin)) {
-      console.log(`🎯 Setting OPTIONS headers for origin: ${origin}`);
       res.header("Access-Control-Allow-Origin", origin || "*");
       res.header(
         "Access-Control-Allow-Methods",
@@ -393,18 +388,7 @@ app.use((req, res, next) => {
       );
       res.header("Access-Control-Allow-Credentials", "true");
       res.header("Access-Control-Max-Age", "86400");
-      console.log("✅ Manual OPTIONS response sent with headers:");
-      console.log(
-        "  Access-Control-Allow-Origin:",
-        res.getHeader("Access-Control-Allow-Origin"),
-      );
-      console.log(
-        "  Access-Control-Allow-Credentials:",
-        res.getHeader("Access-Control-Allow-Credentials"),
-      );
       return res.status(200).end();
-    } else {
-      console.log(`❌ OPTIONS request blocked for origin: ${origin}`);
     }
   }
 
@@ -466,20 +450,18 @@ try {
 }
 
 // ========== APPWRITE INITIALIZATION MIDDLEWARE ==========
-app.use(async (req, res, next) => {
-  try {
-    if (!appwriteService.isConnected) {
-      console.log("🔄 Initializing Appwrite connection for request:", req.path);
-      await appwriteService.initialize();
-      console.log("✅ Appwrite connection established");
-    }
-    next();
-  } catch (error) {
-    console.error("❌ Appwrite initialization failed for request:", req.path);
-    console.error("Error message:", error.message);
-    console.error("Error stack:", error.stack);
+// Track last failed attempt to avoid hammering Appwrite on every request
+let appwriteLastFailedAt = 0;
+const APPWRITE_RETRY_COOLDOWN_MS = 30000; // 30 seconds between reconnect attempts
 
-    // Don't crash on health checks or status endpoints
+app.use(async (req, res, next) => {
+  if (appwriteService.isConnected) {
+    return next();
+  }
+
+  // If last attempt failed recently, don't try again — just serve 503
+  const now = Date.now();
+  if (now - appwriteLastFailedAt < APPWRITE_RETRY_COOLDOWN_MS) {
     if (
       req.path === "/health" ||
       req.path === "/api/health" ||
@@ -487,10 +469,33 @@ app.use(async (req, res, next) => {
       req.path === "/" ||
       req.path.startsWith("/api/cors-test")
     ) {
-      console.log(
-        "⚠️  Allowing request to continue without Appwrite for:",
-        req.path,
-      );
+      return next();
+    }
+    return res.status(503).json({
+      error: "Service temporarily unavailable",
+      code: "APPWRITE_UNAVAILABLE",
+      message: "Authentication service is down. Please try again later.",
+      timestamp: new Date().toISOString(),
+      path: req.path,
+    });
+  }
+
+  try {
+    console.log("🔄 Initializing Appwrite connection...");
+    await appwriteService.initialize();
+    console.log("✅ Appwrite connection established");
+    next();
+  } catch (error) {
+    appwriteLastFailedAt = Date.now();
+    console.error("❌ Appwrite initialization failed:", error.message);
+
+    if (
+      req.path === "/health" ||
+      req.path === "/api/health" ||
+      req.path === "/status" ||
+      req.path === "/" ||
+      req.path.startsWith("/api/cors-test")
+    ) {
       return next();
     }
 

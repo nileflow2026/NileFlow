@@ -28,16 +28,33 @@ const processQueue = (error, success = false) => {
   failedQueue = [];
 };
 
+// Exponential backoff delay helper
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 // NO REQUEST INTERCEPTOR NEEDED - cookies are sent automatically with withCredentials: true
 
-// Response interceptor - handle token refresh on 401
+// Response interceptor - handle token refresh on 401, and retry on 503
 axiosClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    const status = error.response?.status;
 
-    // If error is not 401 or request already retried, reject
-    if (error.response?.status !== 401 || originalRequest._retry) {
+    // ── 503 Service Unavailable: Render cold-start or temporary outage ──
+    // Retry up to 3 times with exponential backoff (1s, 2s, 4s)
+    if (status === 503 || status === 502 || status === 504) {
+      originalRequest._retryCount = (originalRequest._retryCount || 0) + 1;
+      if (originalRequest._retryCount <= 3) {
+        const delay = Math.pow(2, originalRequest._retryCount - 1) * 1000; // 1s, 2s, 4s
+        await wait(delay);
+        return axiosClient(originalRequest);
+      }
+      // All retries exhausted — let the caller handle the error
+      return Promise.reject(error);
+    }
+
+    // ── 401 Unauthorized: attempt token refresh ──
+    if (status !== 401 || originalRequest._retry) {
       return Promise.reject(error);
     }
 
@@ -57,8 +74,6 @@ axiosClient.interceptors.response.use(
       // Get deviceId from sessionStorage if available
       const deviceId = sessionStorage.getItem("customerDeviceId") || null;
 
-      console.log("[Axios Interceptor] Refreshing token...");
-
       // Refresh token is sent via httpOnly cookie automatically
       // IMPORTANT: Use a separate axios instance to avoid interceptor loop
       const response = await axios.post(
@@ -69,8 +84,6 @@ axiosClient.interceptors.response.use(
           headers: { "Content-Type": "application/json" },
         },
       );
-
-      console.log("[Axios Interceptor] Token refreshed successfully");
 
       // Process queued requests with success
       processQueue(null, true);
@@ -84,11 +97,6 @@ axiosClient.interceptors.response.use(
 
       // Clear queued requests
       failedQueue = [];
-
-      console.error(
-        "[Axios Interceptor] Refresh token failed:",
-        refreshError.response?.data || refreshError.message,
-      );
 
       // Trigger logout event (only once)
       if (!window.__customer_auth_logout_triggered) {
