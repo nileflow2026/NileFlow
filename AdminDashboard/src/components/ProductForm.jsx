@@ -86,8 +86,27 @@ export default function ProductForm({ product, onProductAdded, onCancel }) {
         category: normalizeCategory(),
         subcategoryId: product.subcategoryId || "",
         image: product.image || "",
-        images: product.images || [],
-        specifications: product.specifications || [""],
+        images: (() => {
+          const imgs = product.images;
+          if (!imgs) return [];
+          if (Array.isArray(imgs)) return imgs;
+          try {
+            return JSON.parse(imgs);
+          } catch {
+            return [];
+          }
+        })(),
+        specifications: (() => {
+          const specs = product.specifications;
+          if (!specs) return [""];
+          if (Array.isArray(specs)) return specs;
+          try {
+            const parsed = JSON.parse(specs);
+            return Array.isArray(parsed) ? parsed : [""];
+          } catch {
+            return [""];
+          }
+        })(),
         colors: (() => {
           const c = product.colors;
           if (!c) return [];
@@ -123,7 +142,17 @@ export default function ProductForm({ product, onProductAdded, onCancel }) {
                 height: product.dimensions.height ?? "",
               }
             : { length: "", width: "", height: "" },
-        tags: product.tags || [],
+        tags: (() => {
+          const t = product.tags;
+          if (!t) return [];
+          if (Array.isArray(t)) return t;
+          try {
+            const parsed = JSON.parse(t);
+            return Array.isArray(parsed) ? parsed : [];
+          } catch {
+            return [];
+          }
+        })(),
         metaDescription: product.metaDescription || "",
         warranty: product.warranty || "",
         careInstructions: product.careInstructions || "",
