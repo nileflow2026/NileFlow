@@ -49,8 +49,9 @@ export default function ProductForm({ product, onProductAdded, onCancel }) {
         const response = await axiosClient.get(
           "/api/customerprofile/categories",
         ); // Replace with your categories endpoint
-        setCategories(response.data);
-        console.log("Fetched categories:", response.data);
+        const cats = response.data;
+        setCategories(Array.isArray(cats) ? cats : []);
+        console.log("Fetched categories:", cats);
       } catch (error) {
         console.error("Failed to fetch categories:", error);
       }
@@ -139,7 +140,8 @@ export default function ProductForm({ product, onProductAdded, onCancel }) {
             `/api/products/categories/${form.category}/subcategories`, // Use your correct endpoint
           );
           // Assuming your backend returns an object like { subcategories: [...] }
-          setSubcategories(response.data.subcategories);
+          const subs = response.data?.subcategories;
+          setSubcategories(Array.isArray(subs) ? subs : []);
         } catch (error) {
           console.error("Failed to fetch subcategories:", error);
           setSubcategories([]); // Clear subcategories on error or if none exist

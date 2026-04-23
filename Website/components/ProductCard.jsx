@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useFavorites } from "../Context/FavoritesContext.jsx";
-import { formatPrice } from "../utils/priceFormatter";
+import { formatPrice, resolveDisplayPrice } from "../utils/priceFormatter";
 import {
   Star,
   Heart,
@@ -286,7 +286,7 @@ const ProductCard = ({
                 className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl font-bold"
                 style={{ color: "var(--nf-accent)" }}
               >
-                {formatPrice(product.price)}
+                {resolveDisplayPrice(product.price)}
               </span>
               {product.originalPrice && (
                 <>
@@ -294,11 +294,16 @@ const ProductCard = ({
                     className="line-through text-[10px] xs:text-xs sm:text-sm md:text-base"
                     style={{ color: "var(--nf-text-muted)" }}
                   >
-                    {formatPrice(product.originalPrice)}
+                    {resolveDisplayPrice(product.originalPrice)}
                   </span>
                   <span className="text-red-400 text-[10px] xs:text-xs sm:text-sm md:text-base font-bold">
                     {Math.round(
-                      (1 - product.price / product.originalPrice) * 100,
+                      (1 -
+                        (typeof product.price === "object"
+                          ? product.price?.raw ?? product.price?.basePrice ?? 0
+                          : product.price || 0) /
+                          (product.originalPrice || 1)) *
+                        100,
                     )}
                     % OFF
                   </span>

@@ -149,9 +149,16 @@ const Shop = () => {
   // Memoized filtering — only recomputes when dependencies change
   const filteredProducts = useMemo(() => {
     const query = debouncedSearch.toLowerCase();
+
+    // price may be a number (category endpoint) or an enriched object (all-products endpoint)
+    const getRawPrice = (p) =>
+      typeof p.price === "object"
+        ? p.price?.raw ?? p.price?.basePrice ?? 0
+        : p.price || 0;
+
     return products
       .filter((product) => {
-        const price = product.price || 0;
+        const price = getRawPrice(product);
         return price >= priceRange.min && price <= priceRange.max;
       })
       .filter((product) => {
@@ -163,9 +170,9 @@ const Shop = () => {
       .sort((a, b) => {
         switch (sortBy) {
           case "price-low":
-            return (a.price || 0) - (b.price || 0);
+            return getRawPrice(a) - getRawPrice(b);
           case "price-high":
-            return (b.price || 0) - (a.price || 0);
+            return getRawPrice(b) - getRawPrice(a);
           case "rating":
             return (
               (ratings[b.$id]?.average || 0) - (ratings[a.$id]?.average || 0)

@@ -101,8 +101,9 @@ export default function Products() {
         const response = await axiosClient.get(
           "/api/customerprofile/categories",
         );
-        setCategories(response.data);
-        console.log("Raw categories data:", response.data);
+        const cats = response.data;
+        setCategories(Array.isArray(cats) ? cats : []);
+        console.log("Raw categories data:", cats);
       } catch (error) {
         console.error("Failed to fetch categories:", error);
         toast.error("Failed to load categories");
