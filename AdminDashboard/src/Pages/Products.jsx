@@ -46,7 +46,8 @@ const parseArrayField = (field) => {
   if (Array.isArray(field)) return field;
   if (typeof field === "string") {
     try {
-      return JSON.parse(field);
+      const parsed = JSON.parse(field);
+      return Array.isArray(parsed) ? parsed : [];
     } catch {
       return [];
     }
