@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { Component, useEffect, useState } from "react";
 import { checkForUpdate } from "../core/versionManager";
 
 const CHECK_INTERVAL_MS = 60_000; // 60 seconds
 
-export default function UpdateNotifier() {
+function UpdateBanner() {
   const [updateAvailable, setUpdateAvailable] = useState(false);
 
   useEffect(() => {
@@ -74,5 +74,31 @@ export default function UpdateNotifier() {
         Update now
       </button>
     </div>
+  );
+}
+
+// Error boundary ensures a crash inside UpdateBanner never blanks the whole app.
+class UpdateNotifierBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { crashed: false };
+  }
+  static getDerivedStateFromError() {
+    return { crashed: true };
+  }
+  componentDidCatch(err) {
+    console.error("[UpdateNotifier] Isolated error:", err);
+  }
+  render() {
+    if (this.state.crashed) return null;
+    return this.props.children;
+  }
+}
+
+export default function UpdateNotifier() {
+  return (
+    <UpdateNotifierBoundary>
+      <UpdateBanner />
+    </UpdateNotifierBoundary>
   );
 }
