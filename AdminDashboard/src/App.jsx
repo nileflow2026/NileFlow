@@ -18,6 +18,7 @@ import AuthProvider from "./context/AuthContext";
 import ProductApprovals from "./Pages/ProductApprovals";
 import Finance from "./Pages/FinancePage";
 import GroupBuyManagement from "./Pages/GroupBuyManagement";
+import UpdateNotifier from "./components/UpdateNotifier";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
             </Routes>
           </main>
         </div>
+        <UpdateNotifier />
       </Router>
     </AuthProvider>
   );

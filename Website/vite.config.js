@@ -2,6 +2,16 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import { execSync } from "child_process";
+
+// Auto-detect the current git commit SHA for cache-busting.
+const getAppVersion = () => {
+  try {
+    return execSync("git rev-parse --short HEAD").toString().trim();
+  } catch {
+    return Date.now().toString();
+  }
+};
 
 // Packages that live exclusively on the server and must NEVER enter the browser bundle.
 // Keeping them here makes the intent explicit and helps Rollup skip them during tree-shaking.
@@ -17,6 +27,10 @@ const SERVER_ONLY_PACKAGES = [
 export default defineConfig(({ mode }) => {
   const config = {
     base: "/",
+    define: {
+      // Injected at build time — no manual .env editing required.
+      __APP_VERSION__: JSON.stringify(getAppVersion()),
+    },
     plugins: [
       react({
         // Enable Fast Refresh in development
@@ -131,6 +145,7 @@ export default defineConfig(({ mode }) => {
           },
 
           // Optimize asset filenames for long-term caching
+          entryFileNames: "assets/[name].[hash].js",
           chunkFileNames: () => `assets/js/[name]-[hash].js`,
           assetFileNames: (assetInfo) => {
             const extType = assetInfo.name.split(".").pop();

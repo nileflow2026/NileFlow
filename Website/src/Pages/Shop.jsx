@@ -153,7 +153,7 @@ const Shop = () => {
     // price may be a number (category endpoint) or an enriched object (all-products endpoint)
     const getRawPrice = (p) =>
       typeof p.price === "object"
-        ? p.price?.raw ?? p.price?.basePrice ?? 0
+        ? (p.price?.raw ?? p.price?.basePrice ?? 0)
         : p.price || 0;
 
     return products
@@ -215,7 +215,9 @@ const Shop = () => {
               African Treasures
             </span>
             <br />
-            <span className="text-[color:var(--nf-text-primary)]">Premium Collection</span>
+            <span className="text-[color:var(--nf-text-primary)]">
+              Premium Collection
+            </span>
           </h1>
 
           <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
@@ -594,7 +596,9 @@ const Shop = () => {
                   <div className="space-y-2">
                     {selectedCategory !== "all" && (
                       <div className="px-3 py-2 bg-gradient-to-r from-amber-900/30 to-yellow-900/30 border border-[var(--nf-border-subtle)] rounded-lg flex items-center justify-between">
-                        <span className="text-[color:var(--nf-accent)]">Category</span>
+                        <span className="text-[color:var(--nf-accent)]">
+                          Category
+                        </span>
                         <span className="text-[color:var(--nf-accent)] font-medium">
                           {
                             categories.find((c) => c.id === selectedCategory)
@@ -790,7 +794,9 @@ const Shop = () => {
                 <div className="text-2xl font-bold text-[color:var(--nf-accent)] mb-2">
                   100%
                 </div>
-                <div className="text-[color:var(--nf-text-muted)]">Authentic Products</div>
+                <div className="text-[color:var(--nf-text-muted)]">
+                  Authentic Products
+                </div>
               </div>
               <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-6 text-center">
                 <div className="text-2xl font-bold text-emerald-300 mb-2">

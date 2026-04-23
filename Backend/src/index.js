@@ -537,6 +537,52 @@ app.get("/", (req, res) => {
 app.use("/health", healthRoutes);
 app.use("/api/health", healthRoutes);
 
+// ========== CACHE CONTROL HEADERS ==========
+// HTML must always be fresh; hashed assets are safe to cache forever.
+app.use((req, res, next) => {
+  if (req.url === "/" || req.url.includes("index.html")) {
+    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+  } else if (req.url.startsWith("/assets/")) {
+    res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+  }
+  next();
+});
+
+// ========== VERSION CONTROL ENDPOINT ==========
+// Never cache this endpoint — clients rely on it to detect new deployments.
+// APP_VERSION env var should be set by CI/CD to the git SHA (e.g. git rev-parse --short HEAD).
+// Falls back to auto-detecting the SHA at runtime if the env var is absent.
+const getServerVersion = (() => {
+  let cached;
+  return () => {
+    if (cached) return cached;
+    if (process.env.APP_VERSION) {
+      cached = process.env.APP_VERSION;
+      return cached;
+    }
+    try {
+      cached = require("child_process")
+        .execSync("git rev-parse --short HEAD")
+        .toString()
+        .trim();
+    } catch {
+      cached = "unknown";
+    }
+    return cached;
+  };
+})();
+
+app.get("/api/version", (req, res) => {
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.json({
+    version: getServerVersion(),
+    forceUpdate: process.env.FORCE_UPDATE === "true",
+    timestamp: Date.now(),
+  });
+});
+
 // ========== CORS TEST ENDPOINT ==========
 app.get("/api/cors-test", (req, res) => {
   /* console.log("🧪 CORS Test endpoint hit");

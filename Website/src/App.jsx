@@ -74,6 +74,7 @@ import ScrollToTopButton from "../components/ScrollToTopButton.jsx";
 import NotificationToast from "../components/NotificationToast";
 import SeoHead from "./components/SeoHead";
 import { ThemeProvider } from "../Context/ThemeProvider";
+import UpdateNotifier from "./components/UpdateNotifier";
 
 // Loading component for lazy routes
 const PageLoader = () => (
@@ -274,6 +275,7 @@ const App = () => {
             </PremiumProvider>
           </CurrencyProvider>
         </CustomerAuthProvider>
+        <UpdateNotifier />
       </Router>
     </ThemeProvider>
   );

@@ -300,7 +300,9 @@ const ProductCard = ({
                     {Math.round(
                       (1 -
                         (typeof product.price === "object"
-                          ? product.price?.raw ?? product.price?.basePrice ?? 0
+                          ? (product.price?.raw ??
+                            product.price?.basePrice ??
+                            0)
                           : product.price || 0) /
                           (product.originalPrice || 1)) *
                         100,

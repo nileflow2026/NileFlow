@@ -25,6 +25,7 @@ import CustomerDetail from "./pages/CustomerDetail";
 import MaintenancePage from "./pages/MaintenancePage";
 import { isMaintenanceModeActive } from "./config/maintenance";
 import { initializeDevToolsProtection } from "./utils/devToolsProtection";
+import UpdateNotifier from "./components/UpdateNotifier";
 
 // Public route that redirects to dashboard if already authenticated
 const PublicRoute = ({ children }) => {
@@ -145,6 +146,7 @@ function App() {
     <Router>
       <VendorAuthProvider>
         <AppContent />
+        <UpdateNotifier />
       </VendorAuthProvider>
     </Router>
   );

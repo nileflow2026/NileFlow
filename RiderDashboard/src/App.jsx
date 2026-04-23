@@ -10,6 +10,7 @@ import { RiderProtectedRoute } from "./components/RiderProtectedRoute";
 import RiderLogin from "./Pages/RiderLogin";
 import RiderRegister from "./Pages/RiderRegister";
 import RiderDashboard from "./Pages/RiderDashboard";
+import UpdateNotifier from "./components/UpdateNotifier";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
 
           {/* Other routes... */}
         </Routes>
+        <UpdateNotifier />
       </RiderAuthProvider>
     </Router>
   );
