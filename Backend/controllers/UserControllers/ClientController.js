@@ -495,6 +495,7 @@ const getProductsForMobile = async (req, res) => {
             price: doc.price,
             brand: doc.brand,
             image: doc.image,
+            images: doc.images || [],
             description: doc.description,
             stock: doc.stock,
             category: doc.category,
@@ -518,6 +519,7 @@ const getProductsForMobile = async (req, res) => {
             price: doc.price,
             brand: doc.brand,
             image: doc.image,
+            images: doc.images || [],
             description: doc.description,
             stock: doc.stock,
             category: doc.category,
@@ -559,6 +561,91 @@ const getProductsForMobile = async (req, res) => {
     res
       .status(500)
       .json({ success: false, message: "Failed to fetch products" });
+  }
+};
+
+// Normalize an images array (from Appwrite) to plain URL strings.
+// Handles: string URLs, objects like { url, id, filename }, and JSON-stringified objects.
+const normalizeImagesToUrls = (images) => {
+  if (!Array.isArray(images)) return [];
+  return images
+    .map((img) => {
+      if (!img) return null;
+      if (typeof img === "string") {
+        try {
+          const parsed = JSON.parse(img);
+          if (parsed && typeof parsed === "object" && parsed.url)
+            return parsed.url;
+        } catch (_) {}
+        return img;
+      }
+      if (typeof img === "object") return img.url ?? null;
+      return null;
+    })
+    .filter(Boolean);
+};
+
+const getProductImages = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    if (!productId) {
+      return res.status(400).json({ success: false, images: [] });
+    }
+
+    let primaryImage = null;
+    let mainImages = [];
+    let vendorImages = [];
+
+    // 1. Fetch from main products collection
+    try {
+      const doc = await db.getDocument(
+        env.APPWRITE_DATABASE_ID,
+        env.APPWRITE_PRODUCT_COLLECTION_ID,
+        productId,
+      );
+      primaryImage = doc.image || null;
+      mainImages = normalizeImagesToUrls(doc.images);
+    } catch (_) {
+      // Product may not exist in main collection
+    }
+
+    // 2. Fetch from vendor products collection (may have more uploaded images)
+    try {
+      const vendorDoc = await db.getDocument(
+        env.VENDOR_DATABASE_ID,
+        env.VENDOR_PRODUCTS_COLLECTION_ID,
+        productId,
+      );
+      vendorImages = normalizeImagesToUrls(vendorDoc.images);
+    } catch (_) {
+      // Product may not exist in vendor collection
+    }
+
+    // 3. Merge all images, deduplicating by URL — primary image always first
+    const seen = new Set();
+    const allImages = [];
+
+    if (primaryImage && !seen.has(primaryImage)) {
+      seen.add(primaryImage);
+      allImages.push(primaryImage);
+    }
+    for (const url of mainImages) {
+      if (!seen.has(url)) {
+        seen.add(url);
+        allImages.push(url);
+      }
+    }
+    for (const url of vendorImages) {
+      if (!seen.has(url)) {
+        seen.add(url);
+        allImages.push(url);
+      }
+    }
+
+    return res.json({ success: true, images: allImages });
+  } catch (error) {
+    console.error("Error fetching product images:", error);
+    return res.status(500).json({ success: false, images: [] });
   }
 };
 
@@ -1560,4 +1647,5 @@ module.exports = {
   getCategoryById,
   getProducts2,
   getPopularSearches,
+  getProductImages,
 };

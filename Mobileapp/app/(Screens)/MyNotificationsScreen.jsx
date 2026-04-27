@@ -1,8 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { MaterialIcons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   ActivityIndicator,
   Alert,
@@ -14,16 +14,17 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axiosClient from "../../api";
-import { client, Config } from "../../Appwrite";
 import {
   getCustomerNotification,
   useGlobalContext,
 } from "../../Context/GlobalProvider";
 import { useNotification } from "../../Context/NotificationContext";
-import { useTheme } from "../../Context/ThemeProvider";
+import {
+  applyMuteSetting,
+  MUTE_SOUND_KEY,
+} from "../../hooks/usePushNotifications";
 
 export default function MyNotificationsScreen() {
-  const { theme, themeStyles } = useTheme();
   const [notifications, setNotifications] = useState([]);
   const { setNotificationCount } = useNotification();
   const { user } = useGlobalContext();
@@ -31,12 +32,23 @@ export default function MyNotificationsScreen() {
   const [filter, setFilter] = useState("all"); // all, unread, important, promotions
   const [showSettings, setShowSettings] = useState(false);
   const [muteSound, setMuteSound] = useState(false);
-  const [readAll, setReadAll] = useState(false);
+
+  // Load persisted mute preference on mount
+  useEffect(() => {
+    AsyncStorage.getItem(MUTE_SOUND_KEY).then((val) => {
+      if (val === "true") setMuteSound(true);
+    });
+  }, []);
+
+  const handleToggleMute = async (newValue) => {
+    setMuteSound(newValue);
+    await applyMuteSetting(newValue);
+  };
 
   useFocusEffect(
     useCallback(() => {
       const markAllAsRead = async () => {
-        if (!user) return; // ✅ Check for user existence
+        if (!user) return;
 
         try {
           await axiosClient.post("/api/customernotifications/mark-read");
@@ -44,12 +56,22 @@ export default function MyNotificationsScreen() {
         } catch (error) {
           console.error(
             "❌ Error marking notifications as read:",
-            error.message
+            error.message,
           );
         }
       };
       markAllAsRead();
-    }, [user]) // ✅ Dependency on user object
+    }, [user, setNotificationCount]),
+  );
+
+  // Refresh notifications list every time the screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      if (!user) return;
+      getCustomerNotification()
+        .then((data) => setNotifications(data))
+        .catch(() => {});
+    }, [user]),
   );
 
   useEffect(() => {
@@ -63,24 +85,6 @@ export default function MyNotificationsScreen() {
         const notificationsData = await getCustomerNotification();
         setNotifications(notificationsData);
         setNotificationCount(notificationsData.length);
-
-        const unsubscribe = client.subscribe(
-          `databases.${Config.databaseId}.collections.${Config.NOTIFICATIONS_COLLECTION_ID}.documents`,
-          (response) => {
-            if (
-              response.events.includes("databases.*.documents.*.create") &&
-              response.payload.userId === user.$id &&
-              response.payload.type === "userNotification"
-            ) {
-              setNotifications((prev) => {
-                const updated = [response.payload, ...prev];
-                setNotificationCount(updated.length);
-                return updated;
-              });
-            }
-          }
-        );
-        return () => unsubscribe();
       } catch (error) {
         console.error("❌ Failed to fetch notifications:", error.message);
         setNotifications([]);
@@ -90,19 +94,19 @@ export default function MyNotificationsScreen() {
     };
 
     initNotifications();
-  }, [user]);
+  }, [user, setNotificationCount]);
 
   // Helper functions
   const handleMarkAsRead = async (notificationId) => {
     setNotifications((prev) =>
       prev.map((note) =>
-        note.$id === notificationId ? { ...note, read: true } : note
-      )
+        note.$id === notificationId ? { ...note, read: true } : note,
+      ),
     );
 
     try {
       await axiosClient.post(
-        `/api/customernotifications/${notificationId}/read`
+        `/api/customernotifications/${notificationId}/read`,
       );
     } catch (error) {
       console.error("Failed to mark as read:", error);
@@ -111,7 +115,6 @@ export default function MyNotificationsScreen() {
 
   const handleMarkAllAsRead = async () => {
     setNotifications((prev) => prev.map((note) => ({ ...note, read: true })));
-    setReadAll(true);
 
     try {
       await axiosClient.post("/api/customernotifications/mark-all-read");
@@ -132,18 +135,18 @@ export default function MyNotificationsScreen() {
           style: "destructive",
           onPress: async () => {
             setNotifications((prev) =>
-              prev.filter((note) => note.$id !== notificationId)
+              prev.filter((note) => note.$id !== notificationId),
             );
             try {
               await axiosClient.delete(
-                `/api/customernotifications/${notificationId}`
+                `/api/customernotifications/${notificationId}`,
               );
             } catch (error) {
               console.error("Failed to delete notification:", error);
             }
           },
         },
-      ]
+      ],
     );
   };
 
@@ -166,7 +169,7 @@ export default function MyNotificationsScreen() {
             }
           },
         },
-      ]
+      ],
     );
   };
 
@@ -204,65 +207,6 @@ export default function MyNotificationsScreen() {
           style={styles.scrollView}
           showsVerticalScrollIndicator={false}
         >
-          {/* Hero Section */}
-          <LinearGradient
-            colors={["#92400e", "#451a03", "#059669"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.heroSection}
-          >
-            {/* Premium Badge */}
-            <View style={styles.premiumBadge}>
-              <MaterialIcons name="notifications" size={20} color="#fbbf24" />
-              <Text style={styles.premiumBadgeText}>Premium Alerts</Text>
-              <MaterialIcons name="auto-awesome" size={16} color="#fde047" />
-            </View>
-
-            <Text style={styles.heroTitle}>Notifications</Text>
-            <Text style={styles.heroSubtitle}>Stay Updated</Text>
-            <Text style={styles.heroDescription}>
-              Get real-time updates on your orders, exclusive deals, and premium
-              African product launches
-            </Text>
-
-            {/* Stats */}
-            <View style={styles.statsGrid}>
-              <LinearGradient
-                colors={["#92400e", "rgba(146, 64, 14, 0.1)"]}
-                style={styles.statCard}
-              >
-                <Text style={styles.statNumber}>{notifications.length}</Text>
-                <Text style={styles.statLabel}>Total Alerts</Text>
-              </LinearGradient>
-
-              <LinearGradient
-                colors={["#059669", "rgba(5, 150, 105, 0.1)"]}
-                style={styles.statCard}
-              >
-                <Text style={styles.statNumber}>
-                  {notifications.filter((n) => !n.read).length}
-                </Text>
-                <Text style={styles.statLabel}>Unread</Text>
-              </LinearGradient>
-
-              <LinearGradient
-                colors={["#2563eb", "rgba(37, 99, 235, 0.1)"]}
-                style={styles.statCard}
-              >
-                <Text style={styles.statNumber}>24/7</Text>
-                <Text style={styles.statLabel}>Real-time</Text>
-              </LinearGradient>
-
-              <LinearGradient
-                colors={["#dc2626", "rgba(220, 38, 38, 0.1)"]}
-                style={styles.statCard}
-              >
-                <Text style={styles.statNumber}>100%</Text>
-                <Text style={styles.statLabel}>Secure</Text>
-              </LinearGradient>
-            </View>
-          </LinearGradient>
-
           {/* Controls Bar */}
           <LinearGradient
             colors={["#1f2937", "#000000", "#1f2937"]}
@@ -364,7 +308,7 @@ export default function MyNotificationsScreen() {
                         Notification Sound
                       </Text>
                       <TouchableOpacity
-                        onPress={() => setMuteSound(!muteSound)}
+                        onPress={() => handleToggleMute(!muteSound)}
                         style={[
                           styles.soundToggle,
                           muteSound
@@ -435,7 +379,7 @@ export default function MyNotificationsScreen() {
                       key={notification.$id}
                       colors={getNotificationColor(
                         notification.type,
-                        notification.priority
+                        notification.priority,
                       )}
                       style={[
                         styles.notificationCard,
@@ -455,7 +399,7 @@ export default function MyNotificationsScreen() {
                           <MaterialIcons
                             name={getNotificationIcon(
                               notification.type,
-                              notification.priority
+                              notification.priority,
                             )}
                             size={24}
                             color={notification.read ? "#9ca3af" : "#ffffff"}
@@ -484,7 +428,7 @@ export default function MyNotificationsScreen() {
                               <Text style={styles.timestampText}>
                                 {new Date(
                                   notification.timestamp ||
-                                    notification.$createdAt
+                                    notification.$createdAt,
                                 ).toLocaleDateString("en-US", {
                                   month: "short",
                                   day: "numeric",
@@ -587,73 +531,6 @@ export default function MyNotificationsScreen() {
                   </View>
                 )}
               </View>
-
-              {/* Trust Badges */}
-              <View style={styles.trustBadges}>
-                <LinearGradient
-                  colors={["#92400e", "rgba(146, 64, 14, 0.1)"]}
-                  style={styles.trustBadge}
-                >
-                  <LinearGradient
-                    colors={["#fbbf24", "#d97706"]}
-                    style={styles.trustIcon}
-                  >
-                    <MaterialIcons name="security" size={24} color="#ffffff" />
-                  </LinearGradient>
-                  <Text style={styles.trustTitle}>Secure Alerts</Text>
-                  <Text style={styles.trustDescription}>
-                    Encrypted notifications
-                  </Text>
-                </LinearGradient>
-
-                <LinearGradient
-                  colors={["#059669", "rgba(5, 150, 105, 0.1)"]}
-                  style={styles.trustBadge}
-                >
-                  <LinearGradient
-                    colors={["#10b981", "#059669"]}
-                    style={styles.trustIcon}
-                  >
-                    <MaterialIcons name="language" size={24} color="#ffffff" />
-                  </LinearGradient>
-                  <Text style={styles.trustTitle}>Real-time Updates</Text>
-                  <Text style={styles.trustDescription}>
-                    Instant African market news
-                  </Text>
-                </LinearGradient>
-
-                <LinearGradient
-                  colors={["#2563eb", "rgba(37, 99, 235, 0.1)"]}
-                  style={styles.trustBadge}
-                >
-                  <LinearGradient
-                    colors={["#3b82f6", "#2563eb"]}
-                    style={styles.trustIcon}
-                  >
-                    <MaterialIcons name="star" size={24} color="#ffffff" />
-                  </LinearGradient>
-                  <Text style={styles.trustTitle}>Priority Support</Text>
-                  <Text style={styles.trustDescription}>
-                    24/7 customer service
-                  </Text>
-                </LinearGradient>
-
-                <LinearGradient
-                  colors={["#dc2626", "rgba(220, 38, 38, 0.1)"]}
-                  style={styles.trustBadge}
-                >
-                  <LinearGradient
-                    colors={["#ef4444", "#dc2626"]}
-                    style={styles.trustIcon}
-                  >
-                    <MaterialIcons name="flash-on" size={24} color="#ffffff" />
-                  </LinearGradient>
-                  <Text style={styles.trustTitle}>Instant Delivery</Text>
-                  <Text style={styles.trustDescription}>
-                    Order updates in seconds
-                  </Text>
-                </LinearGradient>
-              </View>
             </View>
           )}
         </ScrollView>
@@ -692,7 +569,7 @@ export default function MyNotificationsScreen() {
                   </Text>
                 </View>
                 <TouchableOpacity
-                  onPress={() => setMuteSound(!muteSound)}
+                  onPress={() => handleToggleMute(!muteSound)}
                   style={[
                     styles.modalToggle,
                     muteSound ? styles.modalToggleOff : styles.modalToggleOn,
@@ -723,77 +600,6 @@ const styles = {
   },
   scrollView: {
     flex: 1,
-  },
-  heroSection: {
-    paddingTop: 60,
-    paddingBottom: 48,
-    paddingHorizontal: 16,
-    alignItems: "center",
-  },
-  premiumBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "rgba(146, 64, 14, 0.3)",
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: "rgba(251, 191, 36, 0.3)",
-    marginBottom: 24,
-  },
-  premiumBadgeText: {
-    color: "#fbbf24",
-    fontWeight: "600",
-    marginLeft: 8,
-    marginRight: 8,
-  },
-  heroTitle: {
-    fontSize: 42,
-    fontWeight: "bold",
-    color: "#fbbf24",
-    marginBottom: 8,
-    textAlign: "center",
-  },
-  heroSubtitle: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#ffffff",
-    marginBottom: 16,
-    textAlign: "center",
-  },
-  heroDescription: {
-    color: "#d1d5db",
-    fontSize: 16,
-    textAlign: "center",
-    marginBottom: 40,
-    lineHeight: 24,
-    maxWidth: 320,
-  },
-  statsGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    width: "100%",
-    maxWidth: 400,
-  },
-  statCard: {
-    width: "48%",
-    padding: 16,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: "rgba(251, 191, 36, 0.2)",
-    alignItems: "center",
-    marginBottom: 12,
-  },
-  statNumber: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#fbbf24",
-  },
-  statLabel: {
-    color: "#d1d5db",
-    fontSize: 12,
-    marginTop: 4,
   },
   controlsBar: {
     marginHorizontal: 16,
@@ -1151,41 +957,6 @@ const styles = {
   viewAllButtonText: {
     color: "#ffffff",
     fontWeight: "bold",
-  },
-  trustBadges: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 16,
-    marginTop: 64,
-    marginBottom: 32,
-  },
-  trustBadge: {
-    flex: 1,
-    minWidth: 160,
-    padding: 24,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: "rgba(251, 191, 36, 0.2)",
-    alignItems: "center",
-  },
-  trustIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 12,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 16,
-  },
-  trustTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#fbbf24",
-    marginBottom: 8,
-  },
-  trustDescription: {
-    color: "#d1d5db",
-    fontSize: 14,
-    textAlign: "center",
   },
   modalOverlay: {
     flex: 1,

@@ -828,6 +828,23 @@ safeMount(
 safeMount("/api/rider", riderRoutes, "Rider Management");
 safeMount("/api/rider", riderTrackingRoutes, "Rider Tracking");
 
+// Account Deletion Routes (GDPR / Play Store compliance)
+try {
+  const accountDeletionRoutes = require("../routes/accountDeletionRoutes");
+  safeMount("/api/account/deletion", accountDeletionRoutes, "Account Deletion");
+  // Public status alias required by Google Play Data Safety policy
+  safeMount(
+    "/account-deletion",
+    accountDeletionRoutes,
+    "Account Deletion (Public)",
+  );
+} catch (deletionError) {
+  console.error(
+    "⚠️  Account deletion routes failed to load:",
+    deletionError.message,
+  );
+}
+
 console.log("🎯 All routes mounted successfully!");
 
 // ========== ERROR HANDLING MIDDLEWARE ==========
@@ -1035,6 +1052,22 @@ async function startServer() {
       console.error(
         "⚠️  Group buy cron service failed to initialize:",
         groupBuyError.message,
+      );
+      // Non-critical — server continues
+    }
+
+    // Initialize account deletion cron (GDPR / Play Store compliance)
+    console.log("Initializing account deletion cron service...");
+    try {
+      const DeletionService = require("../services/DeletionService");
+      DeletionService.initializeCron();
+      console.log(
+        "✅ Account deletion cron service initialized (runs daily at 03:00 AM)",
+      );
+    } catch (deletionCronError) {
+      console.error(
+        "⚠️  Account deletion cron service failed to initialize:",
+        deletionCronError.message,
       );
       // Non-critical — server continues
     }

@@ -11,6 +11,11 @@ const {
   checkStockAvailability,
 } = require("../AdminControllers/stockController");
 const { getProductPrice } = require("../../utils/serverPricing");
+const {
+  enrichProductsWithCurrency,
+  validateCurrencyCode,
+} = require("../../utils/currencyConverter");
+const { getAllRates } = require("../../services/exchangeRateService");
 
 const validateCartStock = async (req, res) => {
   try {
@@ -115,7 +120,16 @@ const fetchCart = async (req, res) => {
       [Query.equal("userId", userId)],
     );
 
-    res.status(200).json(response.documents);
+    const targetCurrency = validateCurrencyCode(req.currency) || "KES";
+    const rates = await getAllRates();
+    const rate = rates[targetCurrency] ?? 1;
+    const enriched = enrichProductsWithCurrency(
+      response.documents,
+      targetCurrency,
+      rate,
+    );
+
+    res.status(200).json(enriched);
   } catch (err) {
     console.error("FetchCart Error:", err);
     res.status(500).json({ error: "Failed to fetch cart" });
@@ -225,7 +239,16 @@ const loadCart = async (req, res) => {
       price: doc.price ?? 0,
     }));
 
-    res.status(200).json(cartItems);
+    const targetCurrency = validateCurrencyCode(req.currency) || "KES";
+    const rates = await getAllRates();
+    const rate = rates[targetCurrency] ?? 1;
+    const enriched = enrichProductsWithCurrency(
+      cartItems,
+      targetCurrency,
+      rate,
+    );
+
+    res.status(200).json(enriched);
   } catch (err) {
     console.error("LoadCart Error:", err);
     res.status(500).json({ error: "Failed to load cart" });

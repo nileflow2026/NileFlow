@@ -48,7 +48,7 @@ const Settings = () => {
     try {
       /* onsole.log("📡 Fetching with userId:", user.id); */
       const res = await axiosClient.get(
-        `/api/nilemiles/nilemiles/status?userId=${user.id}`
+        `/api/nilemiles/nilemiles/status?userId=${user.id}`,
       );
       /* console.log("✅ Raw response:", res);
       console.log("📦 Data:", res.data); */
@@ -99,7 +99,7 @@ const Settings = () => {
       if (status !== "granted") {
         Alert.alert(
           "Permission required",
-          "Please allow photo library access."
+          "Please allow photo library access.",
         );
         return;
       }
@@ -140,7 +140,7 @@ const Settings = () => {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data", // ✅ required for file upload
           },
-        }
+        },
       );
 
       if (user) {
@@ -335,6 +335,67 @@ const Settings = () => {
               {i18n.t("Log out")}
             </Text>
           </TouchableOpacity>
+
+          {/* Privacy & Data Deletion — GDPR / Play Store compliance */}
+          <View
+            style={{
+              marginTop: 24,
+              borderTopWidth: 1,
+              borderTopColor: "rgba(255,255,255,0.08)",
+              paddingTop: 16,
+            }}
+          >
+            <Text
+              style={{
+                color: "#64748b",
+                fontSize: 12,
+                marginBottom: 10,
+                textTransform: "uppercase",
+                letterSpacing: 1,
+              }}
+            >
+              Privacy &amp; Data
+            </Text>
+            <TouchableOpacity
+              onPress={() => router.push("/AccountDeletion")}
+              style={{
+                backgroundColor: "rgba(239,68,68,0.08)",
+                borderWidth: 1,
+                borderColor: "rgba(239,68,68,0.25)",
+                borderRadius: 10,
+                padding: itemPadding,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <MaterialIcons
+                  name="delete-forever"
+                  size={iconSize}
+                  color="#f87171"
+                  style={{ marginRight: 10 }}
+                />
+                <View>
+                  <Text
+                    style={{
+                      color: "#f87171",
+                      fontSize: itemTextFontSize,
+                      fontWeight: "600",
+                    }}
+                  >
+                    Delete Account &amp; Data
+                  </Text>
+                  <Text
+                    style={{ color: "#64748b", fontSize: 11, marginTop: 2 }}
+                  >
+                    GDPR &amp; Play Store compliant
+                  </Text>
+                </View>
+              </View>
+              <MaterialIcons name="chevron-right" size={18} color="#64748b" />
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

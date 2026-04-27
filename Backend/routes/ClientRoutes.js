@@ -28,6 +28,7 @@ const {
   getPopularSearches,
   getGlobalDealCountdown,
   getDealAnalytics,
+  getProductImages,
 } = require("../controllers/UserControllers/ClientController");
 const {
   handleCancelRequest,
@@ -73,6 +74,9 @@ router.get("/deal-products", currencyMiddleware, getDealProducts);
 router.get("/deal-analytics", getDealAnalytics);
 router.get("/deal-countdown", getGlobalDealCountdown);
 router.get("/hero-products", getHeroProducts);
+
+// Single product images (fetches from both main + vendor collections)
+router.get("/product/:productId/images", getProductImages);
 
 // Order cancellation request
 router.post("/orders/cancel-request", authenticateToken, handleCancelRequest);

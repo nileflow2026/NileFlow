@@ -41,6 +41,7 @@ import ReviewForm from "../components/ReviewForm";
 import ReviewList from "../components/ReviewList";
 import GroupBuyCard from "../components/GroupBuyCard";
 import GroupBuyStarter from "../components/GroupBuyStarter";
+import { useRef } from "react";
 
 const { width } = Dimensions.get("window");
 
@@ -116,6 +117,8 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [activeImage, setActiveImage] = useState(null);
+  const [fetchedImages, setFetchedImages] = useState(null); // null = not yet fetched
+  const imageScrollRef = useRef(null);
   const { theme, themeStyles } = useTheme();
   const isDarkMode = theme === "dark";
 
@@ -131,6 +134,54 @@ const ProductDetails = () => {
       product = null; // Set to null in case of parsing error
     }
   }
+
+  // Numeric base price (KES) — handles both plain number and enriched price object
+  const numericPrice = useMemo(() => {
+    if (!product?.price) return 0;
+    if (typeof product.price === "object")
+      return product.price.raw ?? product.price.basePrice ?? 0;
+    return parseFloat(product.price) || 0;
+  }, [product?.price]);
+
+  // Real average rating computed from fetched reviews
+  const averageRating = useMemo(() => {
+    if (!reviews.length) return 0;
+    const sum = reviews.reduce((acc, r) => acc + (r.rating || 0), 0);
+    return parseFloat((sum / reviews.length).toFixed(1));
+  }, [reviews]);
+
+  // All images for the gallery — prefers server-fetched data, normalizes objects to URL strings
+  const allImages = useMemo(() => {
+    // Helper: extract URL string from an image that may be:
+    //   - a plain URL string
+    //   - a JSON-stringified object like '{"url":"http://..."}'
+    //   - an object like { url, id, filename, ... }
+    const toUrl = (img) => {
+      if (!img) return null;
+      if (typeof img === "object") return img.url ?? null;
+      if (typeof img === "string") {
+        // Try JSON parse — Appwrite sometimes stores uploaded image objects as JSON strings
+        try {
+          const parsed = JSON.parse(img);
+          if (parsed && typeof parsed === "object" && parsed.url)
+            return parsed.url;
+        } catch (_) {}
+        return img; // It's a plain URL string
+      }
+      return null;
+    };
+
+    // Prefer freshly fetched images (from the /product/:id/images endpoint)
+    if (fetchedImages && fetchedImages.length > 0) return fetchedImages;
+
+    // Fall back to what was passed via navigation params
+    if (product?.images?.length > 0) {
+      const normalized = product.images.map(toUrl).filter(Boolean);
+      if (normalized.length > 0) return normalized;
+    }
+    if (product?.image) return [product.image];
+    return [];
+  }, [fetchedImages, product?.images, product?.image]);
 
   // Now you can safely use 'product' (it will be an object or null)
   useEffect(() => {
@@ -223,47 +274,16 @@ const ProductDetails = () => {
         // On error, related remains an empty array
       }
 
-      // Step 2: Fetch ratings and review counts for the fetched related products
+      // Step 2: Use bundled avgRating/totalRatings from fetch-product-mobile (no extra API calls)
       const ratingsData = {};
-      if (related.length > 0) {
-        for (const relatedProduct of related) {
-          if (!relatedProduct.$id) continue;
-          try {
-            /* console.log(`Fetching reviews for product ID: ${relatedProduct.$id}`); // Log 1 */
-            const reviews = await fetchReviews(relatedProduct.$id);
-            /* console.log(`Reviews fetched for ${relatedProduct.$id}:`, reviews); // Log 2 */
-
-            if (reviews.length > 0) {
-              const totalRating = reviews.reduce(
-                (sum, review) => sum + review.rating,
-                0,
-              );
-              const averageRating = totalRating / reviews.length;
-              ratingsData[relatedProduct.$id] = {
-                averageRating: averageRating,
-                totalCount: reviews.length,
-              };
-            } else {
-              ratingsData[relatedProduct.$id] = {
-                averageRating: 0,
-                totalCount: 0,
-              };
-            }
-          } catch (error) {
-            console.error(
-              `Error fetching reviews for product ${relatedProduct.$id}:`,
-              error,
-            );
-            ratingsData[relatedProduct.$id] = {
-              averageRating: 0,
-              totalCount: 0,
-            };
-          }
-        }
-      }
+      related.forEach((p) => {
+        ratingsData[p.$id] = {
+          averageRating: p.avgRating ?? 0,
+          totalCount: p.totalRatings ?? 0,
+        };
+      });
       setRelatedProducts(related);
       setRatings(ratingsData);
-      /* console.log("Final related products state:", related); // Log 3 */
       console.log("Final ratings state:", ratingsData); // Log 4
     };
 
@@ -275,14 +295,29 @@ const ProductDetails = () => {
   // Removed duplicate fetchAllRatings useEffect - ratings are already fetched for related products above
 
   useEffect(() => {
-    const fetchPrice = async () => {
-      if (product.price) {
-        const priceInUserCurrency = `$${Number(product.price).toFixed(2)}`; // Direct formatting
-        setConvertedPrice(priceInUserCurrency);
-      }
-    };
-    fetchPrice();
-  }, [product.price]);
+    if (!product?.price) return;
+    // Handle enriched price object from the backend currency middleware
+    if (typeof product.price === "object" && product.price.displayValue) {
+      setConvertedPrice(product.price.displayValue);
+      return;
+    }
+    setConvertedPrice(`$${(parseFloat(product.price) || 0).toFixed(2)}`);
+  }, [product?.price]);
+
+  // Fetch all images for this product from the server (main + vendor collections)
+  useEffect(() => {
+    if (!product?.$id) return;
+    axiosClient
+      .get(`/api/customerprofile/product/${product.$id}/images`)
+      .then((res) => {
+        if (res.data?.images?.length > 0) {
+          setFetchedImages(res.data.images);
+        }
+      })
+      .catch(() => {
+        // Non-fatal — gallery falls back to navigation param images
+      });
+  }, [product?.$id]);
 
   // Initialize active image
   useEffect(() => {
@@ -309,22 +344,26 @@ const ProductDetails = () => {
 
   const handleImageNavigation = useCallback(
     (direction) => {
-      if (!product?.images?.length) return;
+      if (allImages.length <= 1) return;
 
       let newIndex;
       if (direction === "next") {
-        newIndex = (currentImageIndex + 1) % product.images.length;
+        newIndex = (currentImageIndex + 1) % allImages.length;
       } else {
         newIndex =
           currentImageIndex === 0
-            ? product.images.length - 1
+            ? allImages.length - 1
             : currentImageIndex - 1;
       }
 
       setCurrentImageIndex(newIndex);
-      setActiveImage(product.images[newIndex]);
+      setActiveImage(allImages[newIndex]);
+      imageScrollRef.current?.scrollTo({
+        x: newIndex * (width - 32),
+        animated: true,
+      });
     },
-    [currentImageIndex, product?.images],
+    [currentImageIndex, allImages],
   );
 
   const handleRatingSubmit = useCallback(
@@ -674,26 +713,7 @@ const ProductDetails = () => {
         contentContainerStyle={{ paddingBottom: 100 }}
       >
         <View className="w-full">
-          <View
-            className={
-              "absolute z-20 w-full flex-row justify-start items-center"
-            }
-          >
-            <TouchableOpacity onPress={() => router.back()}>
-              <MaterialIcons
-                name="arrow-back"
-                size={32}
-                color={"#fbbf24"}
-                style={{
-                  backgroundColor: "rgba(0,0,0,0.8)",
-                  borderRadius: 20,
-                  padding: 8,
-                  marginLeft: 16,
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-          {/* Enhanced Image Gallery */}
+          {/* Swipeable Image Gallery */}
           <View
             style={{
               height: 400,
@@ -704,146 +724,184 @@ const ProductDetails = () => {
               marginTop: 60,
             }}
           >
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                position: "relative",
+            {/* Horizontal paged ScrollView — swipe between images */}
+            <ScrollView
+              ref={imageScrollRef}
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              scrollEnabled={allImages.length > 1}
+              nestedScrollEnabled={true}
+              disableScrollViewPanResponder={true}
+              onMomentumScrollEnd={(e) => {
+                const newIndex = Math.round(
+                  e.nativeEvent.contentOffset.x / (width - 32),
+                );
+                if (newIndex !== currentImageIndex) {
+                  setCurrentImageIndex(newIndex);
+                  setActiveImage(allImages[newIndex]);
+                }
               }}
+              style={{ flex: 1 }}
             >
-              {activeImage && (
-                <Image
-                  source={{ uri: activeImage }}
-                  style={{ width: "100%", height: "100%" }}
-                  resizeMode="contain"
-                />
-              )}
-
-              {/* Premium Badge */}
-              <View
-                style={{
-                  position: "absolute",
-                  top: 16,
-                  left: 16,
-                  flexDirection: "column",
-                  gap: 8,
-                }}
-              >
-                <LinearGradient
-                  colors={["#f59e0b", "#d97706"]}
-                  style={{
-                    paddingHorizontal: 12,
-                    paddingVertical: 6,
-                    borderRadius: 20,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 4,
-                  }}
-                >
-                  <MaterialIcons name="star" size={16} color="#fff" />
-                  <Text
-                    style={{ color: "#fff", fontSize: 12, fontWeight: "bold" }}
-                  >
-                    PREMIUM
-                  </Text>
-                </LinearGradient>
-              </View>
-
-              {/* Navigation Arrows */}
-              {product?.images?.length > 1 && (
-                <>
-                  <TouchableOpacity
-                    onPress={() => handleImageNavigation("prev")}
-                    style={{
-                      position: "absolute",
-                      left: 16,
-                      top: "50%",
-                      width: 48,
-                      height: 48,
-                      backgroundColor: "rgba(0,0,0,0.8)",
-                      borderRadius: 24,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <MaterialIcons name="chevron-left" size={24} color="#fff" />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => handleImageNavigation("next")}
-                    style={{
-                      position: "absolute",
-                      right: 16,
-                      top: "50%",
-                      width: 48,
-                      height: 48,
-                      backgroundColor: "rgba(0,0,0,0.8)",
-                      borderRadius: 24,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <MaterialIcons
-                      name="chevron-right"
-                      size={24}
-                      color="#fff"
-                    />
-                  </TouchableOpacity>
-                </>
-              )}
-
-              {/* Wishlist Button */}
-              <TouchableOpacity
-                onPress={handletogglefavorite}
-                style={{
-                  position: "absolute",
-                  top: 16,
-                  right: 16,
-                  width: 48,
-                  height: 48,
-                  backgroundColor: isFavorite(product.$id)
-                    ? "#dc2626"
-                    : "rgba(0,0,0,0.8)",
-                  borderRadius: 24,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <MaterialIcons
-                  name={
-                    isFavorite(product.$id) ? "favorite" : "favorite-border"
-                  }
-                  size={24}
-                  color={isFavorite(product.$id) ? "#fff" : "#fbbf24"}
-                />
-              </TouchableOpacity>
-            </View>
-
-            {/* Image Thumbnails */}
-            {product?.images?.length > 1 && (
-              <View style={{ flexDirection: "row", padding: 16, gap: 12 }}>
-                {product.images.map((img, index) => (
-                  <TouchableOpacity
+              {allImages.length > 0 ? (
+                allImages.map((img, index) => (
+                  <View
                     key={index}
-                    onPress={() => {
-                      setCurrentImageIndex(index);
-                      setActiveImage(img);
-                    }}
                     style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 12,
-                      borderWidth: 2,
-                      borderColor: activeImage === img ? "#fbbf24" : "#374151",
-                      overflow: "hidden",
+                      width: width - 32,
+                      height: 400,
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     <Image
                       source={{ uri: img }}
                       style={{ width: "100%", height: "100%" }}
-                      resizeMode="cover"
+                      resizeMode="contain"
                     />
-                  </TouchableOpacity>
+                  </View>
+                ))
+              ) : (
+                <View
+                  style={{
+                    width: width - 32,
+                    height: 400,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <MaterialIcons
+                    name="image-not-supported"
+                    size={64}
+                    color="#374151"
+                  />
+                </View>
+              )}
+            </ScrollView>
+
+            {/* Premium Badge */}
+            <View
+              style={{
+                position: "absolute",
+                top: 16,
+                left: 16,
+                zIndex: 10,
+              }}
+            >
+              <LinearGradient
+                colors={["#f59e0b", "#d97706"]}
+                style={{
+                  paddingHorizontal: 12,
+                  paddingVertical: 6,
+                  borderRadius: 20,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 4,
+                }}
+              >
+                <MaterialIcons name="star" size={16} color="#fff" />
+                <Text
+                  style={{ color: "#fff", fontSize: 12, fontWeight: "bold" }}
+                >
+                  PREMIUM
+                </Text>
+              </LinearGradient>
+            </View>
+
+            {/* Arrow buttons (complement swipe; hidden for single images) */}
+            {allImages.length > 1 && (
+              <>
+                <TouchableOpacity
+                  onPress={() => handleImageNavigation("prev")}
+                  style={{
+                    position: "absolute",
+                    left: 12,
+                    top: "40%",
+                    zIndex: 10,
+                    width: 40,
+                    height: 40,
+                    backgroundColor: "rgba(0,0,0,0.6)",
+                    borderRadius: 20,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <MaterialIcons name="chevron-left" size={24} color="#fff" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => handleImageNavigation("next")}
+                  style={{
+                    position: "absolute",
+                    right: 12,
+                    top: "40%",
+                    zIndex: 10,
+                    width: 40,
+                    height: 40,
+                    backgroundColor: "rgba(0,0,0,0.6)",
+                    borderRadius: 20,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <MaterialIcons name="chevron-right" size={24} color="#fff" />
+                </TouchableOpacity>
+              </>
+            )}
+
+            {/* Wishlist Button */}
+            <TouchableOpacity
+              onPress={handletogglefavorite}
+              style={{
+                position: "absolute",
+                top: 16,
+                right: 16,
+                zIndex: 10,
+                width: 40,
+                height: 40,
+                backgroundColor: isFavorite(product.$id)
+                  ? "#dc2626"
+                  : "rgba(0,0,0,0.8)",
+                borderRadius: 20,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <MaterialIcons
+                name={isFavorite(product.$id) ? "favorite" : "favorite-border"}
+                size={22}
+                color={isFavorite(product.$id) ? "#fff" : "#fbbf24"}
+              />
+            </TouchableOpacity>
+
+            {/* Dot indicators — only shown when there are multiple images */}
+            {allImages.length > 1 && (
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: 12,
+                  left: 0,
+                  right: 0,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 6,
+                  zIndex: 10,
+                }}
+              >
+                {allImages.map((_, i) => (
+                  <View
+                    key={i}
+                    style={{
+                      width: i === currentImageIndex ? 20 : 8,
+                      height: 8,
+                      borderRadius: 4,
+                      backgroundColor:
+                        i === currentImageIndex
+                          ? "#fbbf24"
+                          : "rgba(255,255,255,0.4)",
+                    }}
+                  />
                 ))}
               </View>
             )}
@@ -899,9 +957,9 @@ const ProductDetails = () => {
                 marginBottom: 16,
               }}
             >
-              <StarRating rating={4.8} size="lg" />
+              <StarRating rating={averageRating} size="lg" />
               <Text style={{ color: "#e5e7eb" }}>
-                4.8 ({reviews.length} reviews)
+                {averageRating.toFixed(1)} ({reviews.length} reviews)
               </Text>
             </View>
 
@@ -993,7 +1051,7 @@ const ProductDetails = () => {
                         fontWeight: "bold",
                       }}
                     >
-                      Save ${(product.originalPrice - product.price).toFixed(2)}
+                      Save ${(product.originalPrice - numericPrice).toFixed(2)}
                     </Text>
                   </View>
                 </LinearGradient>
@@ -1196,7 +1254,7 @@ const ProductDetails = () => {
                       color: "#fbbf24",
                     }}
                   >
-                    4.8
+                    {averageRating.toFixed(1)}
                   </Text>
                   <Text style={{ color: "#e5e7eb", fontSize: 12 }}>
                     Average Rating

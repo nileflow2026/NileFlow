@@ -68,7 +68,7 @@ const productController = {
         const vendor = await db.getDocument(
           env.VENDOR_DATABASE_ID,
           env.VENDOR_COLLECTION_ID,
-          vendorId
+          vendorId,
         );
         vendorDetails = {
           id: vendor.$id,
@@ -122,7 +122,7 @@ const productController = {
           reviewCount: 0,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-        }
+        },
       );
 
       const MAIN_VENDOR_COLLECTION_ID = env.MAIN_VENDORS_COLLECTION_ID; // Define this in your env or here
@@ -132,7 +132,7 @@ const productController = {
         await db.getDocument(
           env.APPWRITE_DATABASE_ID,
           MAIN_VENDOR_COLLECTION_ID,
-          vendorId
+          vendorId,
         );
         console.log(`✅ Vendor ${vendorId} already exists in main database`);
       } catch (error) {
@@ -154,15 +154,15 @@ const productController = {
               status: vendorDetails.status,
               syncedAt: new Date().toISOString(),
               // Add any other fields from your main vendor schema
-            }
+            },
           );
           console.log(
-            `✅ Vendor synced to main database: ${vendorDetails.storeName}`
+            `✅ Vendor synced to main database: ${vendorDetails.storeName}`,
           );
         } catch (syncError) {
           console.error(
             "❌ Failed to sync vendor to main database:",
-            syncError.message
+            syncError.message,
           );
           // Continue anyway - you might want to handle this differently
         }
@@ -236,7 +236,7 @@ const productController = {
             publishedAt: new Date().toISOString(),
             source: "vendor", // To identify this came from vendor platform
             vendorProductId: productId, // Reference back to vendor's product
-          }
+          },
         );
         console.log("✅ Product added to main collection (pending approval)");
 
@@ -245,7 +245,7 @@ const productController = {
           const admins = await db.listDocuments(
             env.APPWRITE_DATABASE_ID, // Or your users database
             env.APPWRITE_ADMIN_COLLECTION_ID, // Your users collection
-            [Query.equal("role", "admin"), Query.limit(10)]
+            [Query.equal("role", "admin"), Query.limit(10)],
           );
 
           // Create notification for each admin
@@ -292,24 +292,24 @@ const productController = {
         } catch (notificationError) {
           console.error(
             "Notification error (product still saved):",
-            notificationError
+            notificationError,
           );
           // Don't fail the whole request if notification fails
         }
       } catch (mainProductError) {
         console.error(
           "❌ Failed to add product to main collection:",
-          mainProductError
+          mainProductError,
         );
         // Log the specific error
         if (mainProductError.response) {
           console.error(
             "Appwrite response status:",
-            mainProductError.response.status
+            mainProductError.response.status,
           );
           console.error(
             "Appwrite response data:",
-            JSON.stringify(mainProductError.response.data, null, 2)
+            JSON.stringify(mainProductError.response.data, null, 2),
           );
         }
         // Don't fail the whole request, but log for manual fix
@@ -343,7 +343,7 @@ const productController = {
       const vendor = await db.getDocument(
         env.VENDOR_DATABASE_ID,
         env.VENDOR_COLLECTION_ID,
-        vendorId
+        vendorId,
       );
 
       // Update or create in main database
@@ -362,7 +362,7 @@ const productController = {
             totalSales: vendor.totalSales || 0,
             status: vendor.status || "active",
             syncedAt: new Date().toISOString(),
-          }
+          },
         );
         console.log(`✅ Vendor ${vendorId} updated in main database`);
       } catch (updateError) {
@@ -384,7 +384,7 @@ const productController = {
               status: vendor.status || "active",
 
               syncedAt: new Date().toISOString(),
-            }
+            },
           );
           console.log(`✅ Vendor ${vendorId} created in main database`);
         } else {
@@ -425,7 +425,7 @@ const productController = {
           Query.orderDesc("createdAt"),
           Query.limit(parseInt(limit)),
           Query.offset((parseInt(page) - 1) * parseInt(limit)),
-        ]
+        ],
       );
 
       /* console.log("✅ Vendor products fetched:", products.total); */
@@ -456,7 +456,7 @@ const productController = {
       const product = await db.getDocument(
         env.VENDOR_DATABASE_ID,
         env.VENDOR_PRODUCTS_COLLECTION_ID,
-        productId
+        productId,
       );
 
       // Verify product belongs to vendor
@@ -497,7 +497,7 @@ const productController = {
       const product = await db.getDocument(
         env.VENDOR_DATABASE_ID,
         env.VENDOR_PRODUCTS_COLLECTION_ID,
-        productId
+        productId,
       );
 
       if (product.vendorId !== vendorId) {
@@ -514,7 +514,7 @@ const productController = {
         {
           ...updates,
           updatedAt: new Date().toISOString(),
-        }
+        },
       );
 
       res.json({
@@ -541,7 +541,7 @@ const productController = {
       const product = await db.getDocument(
         env.VENDOR_DATABASE_ID,
         env.VENDOR_PRODUCTS_COLLECTION_ID,
-        productId
+        productId,
       );
 
       if (product.vendorId !== vendorId) {
@@ -554,7 +554,7 @@ const productController = {
       await db.deleteDocument(
         env.VENDOR_DATABASE_ID,
         env.VENDOR_PRODUCTS_COLLECTION_ID,
-        productId
+        productId,
       );
 
       res.json({
@@ -602,7 +602,7 @@ const productController = {
         product = await db.getDocument(
           env.VENDOR_DATABASE_ID,
           env.VENDOR_PRODUCTS_COLLECTION_ID,
-          productId
+          productId,
         );
       } catch (error) {
         return res.status(404).json({
@@ -622,13 +622,13 @@ const productController = {
       console.log(
         "Uploading file to Appwrite:",
         req.file.originalname,
-        req.file.size
+        req.file.size,
       );
 
       const image = await storage.createFile(
         env.APPWRITE_STORAGE_ID || "product-images",
         ID.unique(),
-        req.file.buffer
+        req.file.buffer,
       );
 
       const imageUrl = `${env.APPWRITE_ENDPOINT}/storage/buckets/${env.APPWRITE_STORAGE_ID || "product-images"}/files/${image.$id}/view?project=${env.APPWRITE_PROJECT_ID}`;
@@ -641,7 +641,7 @@ const productController = {
         mimetype: req.file.mimetype,
       };
 
-      // Update product with new image
+      // Update vendor product with new image (stores full object for vendor dashboard)
       const updatedProduct = await db.updateDocument(
         env.VENDOR_DATABASE_ID,
         env.VENDOR_PRODUCTS_COLLECTION_ID,
@@ -649,8 +649,34 @@ const productController = {
         {
           images: [...(product.images || []), uploadedImage],
           updatedAt: new Date().toISOString(),
-        }
+        },
       );
+
+      // Also sync image URL to the main products collection so Explore/mobile can see it
+      try {
+        const mainProduct = await db.getDocument(
+          env.APPWRITE_DATABASE_ID,
+          env.APPWRITE_PRODUCT_COLLECTION_ID,
+          productId,
+        );
+        const existingUrls = (mainProduct.images || []).filter(
+          (u) => typeof u === "string" && !u.startsWith("{"),
+        );
+        if (!existingUrls.includes(imageUrl)) {
+          await db.updateDocument(
+            env.APPWRITE_DATABASE_ID,
+            env.APPWRITE_PRODUCT_COLLECTION_ID,
+            productId,
+            { images: [...existingUrls, imageUrl] },
+          );
+        }
+      } catch (syncErr) {
+        // Non-fatal — vendor upload succeeds even if main collection sync fails
+        console.warn(
+          "⚠️  Could not sync image to main collection:",
+          syncErr.message,
+        );
+      }
 
       console.log("✅ Image uploaded successfully:", imageUrl);
 
@@ -696,7 +722,7 @@ const productController = {
         product = await db.getDocument(
           env.VENDOR_DATABASE_ID,
           env.VENDOR_PRODUCTS_COLLECTION_ID,
-          productId
+          productId,
         );
       } catch (error) {
         return res.status(404).json({
@@ -722,7 +748,7 @@ const productController = {
           const image = await storage.createFile(
             env.APPWRITE_STORAGE_ID || "product-images",
             ID.unique(),
-            buffer
+            buffer,
           );
 
           const imageUrl = `${env.APPWRITE_ENDPOINT}/storage/buckets/${env.APPWRITE_STORAGE_ID || "product-images"}/files/${image.$id}/view?project=${env.APPWRITE_PROJECT_ID}`;
@@ -755,7 +781,7 @@ const productController = {
         {
           images: [...(product.images || []), ...uploadedImages],
           updatedAt: new Date().toISOString(),
-        }
+        },
       );
 
       res.json({
@@ -808,7 +834,7 @@ const productController = {
           type: mimeType,
           size: buffer.length,
           buffer,
-        }
+        },
       );
 
       const imageUrl = `${env.APPWRITE_ENDPOINT}/storage/buckets/${env.APPWRITE_STORAGE_ID || "product-images"}/files/${file.$id}/view?project=${env.APPWRITE_PROJECT_ID}`;

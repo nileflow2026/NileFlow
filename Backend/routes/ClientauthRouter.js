@@ -8,6 +8,7 @@ const {
   logoutcustomer,
   getCustomerPreferences,
   updateCustomerPreferences,
+  updateCustomerProfile,
   getGoogleOAuthUrl,
   googleOAuthCallback,
   getFacebookOAuthUrl,
@@ -34,6 +35,7 @@ router.get("/getCustomerProfile", authMiddleware, getCurrentCustomer);
 // routes/ClientauthRouter.js
 router.get("/preferences", authMiddleware, getCustomerPreferences);
 router.put("/preferences", authMiddleware, updateCustomerPreferences);
+router.put("/update-profile", authMiddleware, updateCustomerProfile);
 router.post("/logoutCustomer", authMiddleware, logoutcustomer);
 
 // OAuth routes

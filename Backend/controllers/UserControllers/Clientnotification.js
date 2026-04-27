@@ -1,6 +1,9 @@
 const { ID, Permission, Query } = require("node-appwrite");
 const { db } = require("../../services/appwriteService");
 const { env } = require("../../src/env");
+const {
+  sendPushNotification,
+} = require("../../services/pushNotificationService");
 
 const createNotificationInternal = async (notificationData) => {
   try {
@@ -34,6 +37,10 @@ const createNotificationInternal = async (notificationData) => {
     );
 
     console.log("Notification created:", response);
+
+    // Send push notification (fire-and-forget — never blocks or throws)
+    sendPushNotification({ userId, message, type }).catch(() => {});
+
     return response;
   } catch (error) {
     console.error("❌ Internal notification creation failed:", error.message);
@@ -150,6 +157,13 @@ const createNotification = async (req, res) => {
         Permission.delete(`user:${userId}`),
       ],
     );
+
+    // Send push notification (fire-and-forget — never blocks or throws)
+    sendPushNotification({
+      userId,
+      message: message || `New ${type} notification`,
+      type,
+    }).catch(() => {});
 
     // ✅ FIX: Only use res if it exists and has status method
     if (res && typeof res.status === "function") {
@@ -268,9 +282,53 @@ const markAllNotificationsAsRead = async (req, res) => {
   }
 };
 
+/**
+ * Save or update the Expo push token for the authenticated user.
+ * The token is stored on the user's document so the backend can send
+ * targeted push notifications (e.g. on order status change).
+ */
+const registerPushToken = async (req, res) => {
+  try {
+    if (!req.user || !req.user.userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const { pushToken } = req.body;
+
+    if (!pushToken || typeof pushToken !== "string") {
+      return res.status(400).json({ error: "pushToken is required" });
+    }
+
+    // Validate it looks like an Expo push token
+    if (
+      !pushToken.startsWith("ExponentPushToken[") &&
+      !pushToken.startsWith("ExpoPushToken[")
+    ) {
+      return res.status(400).json({ error: "Invalid Expo push token format" });
+    }
+
+    const userId = req.user.userId;
+
+    await db.updateDocument(
+      env.APPWRITE_DATABASE_ID,
+      env.APPWRITE_USER_COLLECTION_ID,
+      userId,
+      { pushToken },
+    );
+
+    return res
+      .status(200)
+      .json({ message: "Push token registered successfully" });
+  } catch (error) {
+    console.error("Failed to register push token:", error.message);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   createNotification,
   fetchCustomerNotification,
   createNotificationInternal,
   markAllNotificationsAsRead,
+  registerPushToken,
 };

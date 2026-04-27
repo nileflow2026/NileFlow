@@ -53,6 +53,9 @@ const schema = Joi.object({
   APPWRITE_GROUP_BUY_SETTINGS_COLLECTION_ID: Joi.string().optional(),
   // Refresh tokens collection used by auth controllers
   APPWRITE_REFRESH_TOKEN_COLLECTION_ID: Joi.string().required(),
+  // Account & Data Deletion System
+  APPWRITE_DELETION_REQUESTS_COLLECTION_ID: Joi.string().optional(),
+  DELETION_GRACE_PERIOD_DAYS: Joi.number().integer().min(1).max(30).default(7),
   // Vendor Payout System Collections
   APPWRITE_VENDOR_PAYOUT_BATCHES_COLLECTION_ID: Joi.string().optional(),
   APPWRITE_VENDOR_PAYOUTS_COLLECTION_ID: Joi.string().optional(),

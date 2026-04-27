@@ -53,7 +53,7 @@ const Index = () => {
               }}
             >
               <Image
-                source={require("../assets/images/icon.png")}
+                source={require("../assets/images/newlogo.png")}
                 style={{ width: 160, height: 160 }}
                 resizeMode="contain"
               />

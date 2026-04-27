@@ -9,6 +9,7 @@ const { env } = require("../../src/env");
 const {
   sendVerificationEmail,
   storeVerificationCode,
+  sendLoginAlertEmail,
 } = require("../../services/send-confirmation");
 const {
   addNileMilesOnReferral,
@@ -249,6 +250,7 @@ function sanitizeUser(userObj) {
     role: userObj.prefs?.role || "customer",
     avatar: userObj.prefs?.avatar || null,
     phone: userObj.prefs?.phone || userObj.phone || null,
+    createdAt: userObj.$registration || null,
   };
 }
 
@@ -500,6 +502,19 @@ const signincustomer = async (req, res) => {
     });
 
     log.info("Customer signin successful:", user.email);
+
+    // Send login alert email if the user has opted in (best-effort, non-blocking)
+    const loginAlertsEnabled =
+      user.prefs?.loginAlerts === true || user.prefs?.loginAlerts === "true";
+    if (loginAlertsEnabled) {
+      sendLoginAlertEmail({
+        customerEmail: user.email,
+        customerName: user.name || user.prefs?.username || null,
+        ip: req.ip || null,
+        userAgent: req.headers?.["user-agent"] || null,
+        timestamp: new Date().toISOString(),
+      }).catch(() => {}); // fire-and-forget
+    }
 
     return res.status(200).json({
       message: "Signin successful",
@@ -901,6 +916,53 @@ const updateCustomerPreferences = async (req, res) => {
   }
 };
 
+/**
+ * Update customer profile (username, phone)
+ */
+const updateCustomerProfile = async (req, res) => {
+  try {
+    const accessToken = req.cookies.accessToken;
+    if (!accessToken) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    const decoded = verifyAccessToken(accessToken);
+    const { username, phone } = req.body;
+
+    if (
+      !username ||
+      typeof username !== "string" ||
+      username.trim().length < 2
+    ) {
+      return res
+        .status(400)
+        .json({ error: "Username must be at least 2 characters." });
+    }
+
+    const trimmedUsername = username.trim().slice(0, 128);
+
+    // Update Appwrite name
+    await users.updateName(decoded.sub, trimmedUsername);
+
+    // Update phone in prefs
+    const user = await users.get(decoded.sub);
+    const currentPrefs = user.prefs || {};
+    await users.updatePrefs(decoded.sub, {
+      ...currentPrefs,
+      phone: phone ? phone.trim() : currentPrefs.phone || "",
+    });
+
+    return res.status(200).json({
+      message: "Profile updated successfully",
+      username: trimmedUsername,
+      phone: phone ? phone.trim() : currentPrefs.phone || "",
+    });
+  } catch (error) {
+    log.error("Update customer profile failed:", error?.message || error);
+    return res.status(500).json({ error: "Failed to update profile" });
+  }
+};
+
 module.exports = {
   signupcustomer,
   signincustomer,
@@ -909,6 +971,7 @@ module.exports = {
   getCurrentCustomer,
   getCustomerPreferences,
   updateCustomerPreferences,
+  updateCustomerProfile,
   // OAuth endpoints
   getGoogleOAuthUrl,
   googleOAuthCallback,

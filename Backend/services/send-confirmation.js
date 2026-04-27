@@ -1754,4 +1754,122 @@ module.exports = {
   verifyCustomerMobile,
   sendOrderCancellationEmail,
   sendCancellationRequestEmail,
+  sendLoginAlertEmail,
 };
+
+async function sendLoginAlertEmail({
+  customerEmail,
+  customerName,
+  ip,
+  userAgent,
+  timestamp,
+}) {
+  const date = new Date(timestamp).toLocaleString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZoneName: "short",
+  });
+
+  try {
+    await resend.emails.send({
+      from: "Nile Flow Security <no-reply@nileflowafrica.com>",
+      to: customerEmail,
+      subject: "🔐 New Sign-In to Your Nile Flow Account",
+      html: `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>New Sign-In Alert | Nile Flow Africa</title>
+        </head>
+        <body style="margin:0;padding:0;background:#0f172a;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;padding:40px 0;">
+            <tr>
+              <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:linear-gradient(135deg,#111827 0%,#1e293b 100%);border-radius:24px;border:1px solid rgba(245,158,11,0.2);overflow:hidden;">
+                  <!-- Header -->
+                  <tr>
+                    <td style="background:linear-gradient(135deg,#92400e,#1e293b);padding:32px 40px;text-align:center;">
+                      <div style="font-size:32px;font-weight:900;background:linear-gradient(135deg,#fbbf24,#10b981);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;">
+                        NILE FLOW
+                      </div>
+                      <div style="color:#9ca3af;font-size:13px;margin-top:4px;letter-spacing:2px;text-transform:uppercase;">Security Alert</div>
+                    </td>
+                  </tr>
+                  <!-- Shield Icon -->
+                  <tr>
+                    <td align="center" style="padding:32px 40px 0;">
+                      <div style="width:72px;height:72px;background:rgba(37,99,235,0.2);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;border:2px solid rgba(37,99,235,0.4);">
+                        <span style="font-size:36px;">🔐</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- Body -->
+                  <tr>
+                    <td style="padding:24px 40px 32px;text-align:center;">
+                      <h1 style="color:#f1f5f9;font-size:22px;font-weight:700;margin:0 0 8px;">New Sign-In Detected</h1>
+                      <p style="color:#9ca3af;font-size:15px;margin:0 0 28px;">
+                        Hi ${customerName || "there"}, we noticed a new sign-in to your Nile Flow account.
+                      </p>
+
+                      <!-- Details Card -->
+                      <table width="100%" cellpadding="0" cellspacing="0" style="background:rgba(17,24,39,0.8);border:1px solid rgba(245,158,11,0.2);border-radius:16px;overflow:hidden;margin-bottom:24px;">
+                        <tr>
+                          <td style="padding:20px 24px;border-bottom:1px solid rgba(255,255,255,0.06);">
+                            <div style="color:#9ca3af;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Time</div>
+                            <div style="color:#f1f5f9;font-size:15px;font-weight:600;">${date}</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding:20px 24px;border-bottom:1px solid rgba(255,255,255,0.06);">
+                            <div style="color:#9ca3af;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">IP Address</div>
+                            <div style="color:#f1f5f9;font-size:15px;font-weight:600;">${ip || "Unknown"}</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding:20px 24px;">
+                            <div style="color:#9ca3af;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Device</div>
+                            <div style="color:#f1f5f9;font-size:14px;word-break:break-word;">${userAgent || "Unknown device"}</div>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- Was it you? -->
+                      <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:16px 20px;margin-bottom:24px;text-align:left;">
+                        <p style="color:#fcd34d;font-size:14px;font-weight:600;margin:0 0 6px;">Was this you?</p>
+                        <p style="color:#9ca3af;font-size:13px;margin:0;">
+                          If this was you, no action is needed. If you don't recognise this sign-in, please change your password immediately and contact our support team.
+                        </p>
+                      </div>
+
+                      <p style="color:#6b7280;font-size:12px;margin:0;">
+                        You're receiving this because Login Alerts are enabled for your account. You can turn them off in Security &amp; Privacy settings.
+                      </p>
+                    </td>
+                  </tr>
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background:rgba(0,0,0,0.3);padding:20px 40px;text-align:center;border-top:1px solid rgba(255,255,255,0.06);">
+                      <p style="color:#4b5563;font-size:12px;margin:0;">
+                        © ${new Date().getFullYear()} Nile Flow Africa · Kilimani, Nairobi, Kenya
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>
+      `,
+    });
+  } catch (err) {
+    console.error("sendLoginAlertEmail error:", err?.message || err);
+    // Non-fatal — do not rethrow
+  }
+}

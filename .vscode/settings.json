@@ -1,0 +1,8 @@
+{
+  "chat.tools.terminal.autoApprove": {
+    "/^cd \"C:\\\\Users\\\\ANTHONY WAI\\\\Desktop\\\\NileFlow\\\\Mobileapp\" ; npx expo install expo-notifications$/": {
+      "approve": true,
+      "matchCommandLine": true
+    }
+  }
+}

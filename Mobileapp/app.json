@@ -4,7 +4,7 @@
     "slug": "nile-flow",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/newlogo.png",
     "scheme": "nileflowapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -17,6 +17,7 @@
       }
     },
     "ios": {
+      "bundleIdentifier": "com.nileflowafrica.app",
       "supportsTablet": true
     },
     "android": {
@@ -35,8 +36,23 @@
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
+    "notification": {
+      "icon": "./assets/images/notification.png",
+      "color": "#F59E0B",
+      "androidMode": "default",
+      "androidCollapsedTitle": "#{unread_notifications} new notifications"
+    },
     "plugins": [
       "expo-router",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification.png",
+          "color": "#F59E0B",
+          "defaultChannel": "default",
+          "sounds": []
+        }
+      ],
       [
         "expo-splash-screen",
         {

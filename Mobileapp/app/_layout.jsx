@@ -4,7 +4,8 @@ import { PremiumProvider } from "@/Context/PremiumContext";
 import { ThemeProvider } from "@/Context/ThemeProvider";
 import { GroupBuyProvider } from "../Context/GroupBuyContext";
 import { StripeProvider } from "@stripe/stripe-react-native";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
+import * as Notifications from "expo-notifications";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
@@ -19,11 +20,31 @@ import "../global.css";
 
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+function AppContent() {
+  const router = useRouter();
+
   useEffect(() => {
     SplashScreen.hideAsync();
   }, []);
 
+  // Handle case where app is opened from a killed state via notification tap
+  useEffect(() => {
+    Notifications.getLastNotificationResponseAsync().then((response) => {
+      if (response) {
+        router.push("/(Screens)/MyNotificationsScreen");
+      }
+    });
+  }, []);
+
+  return (
+    <>
+      <Stack screenOptions={{ headerShown: false }} />
+      <Toast />
+    </>
+  );
+}
+
+export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ErrorBoundary>
@@ -36,8 +57,7 @@ export default function RootLayout() {
                     <CartProvider>
                       <GroupBuyProvider>
                         <FavoritesProvider>
-                          <Stack screenOptions={{ headerShown: false }} />
-                          <Toast />
+                          <AppContent />
                         </FavoritesProvider>
                       </GroupBuyProvider>
                       <StatusBar style="auto" />

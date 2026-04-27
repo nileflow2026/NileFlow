@@ -48,27 +48,29 @@ const CategoryDetailsScreen = () => {
 
       // 1. Load category details
       const categoryResponse = await axiosClient.get(
-        `/api/customerprofile/categories/${categoryId}`
+        `/api/customerprofile/categories/${categoryId}`,
       );
       setCategoryDetails(categoryResponse.data);
       console.log("Category Details:", categoryResponse.data);
 
       // 2. Load subcategories
       const subResponse = await axiosClient.get(
-        `/api/products/categories/${categoryId}/subcategories`
+        `/api/products/categories/${categoryId}/subcategories`,
       );
       const allSubcategories = subResponse.data.subcategories || [];
       const filteredSubcategories = allSubcategories.filter(
-        (sub) => sub.name.toLowerCase() !== "all products"
+        (sub) => sub.name.toLowerCase() !== "all products",
       );
       setSubcategories(filteredSubcategories);
       console.log("Filtered Subcategories:", filteredSubcategories);
 
-      // 3. Load products
-      const productsUrl = `/api/customerprofile/products/category/${categoryId}`;
+      // 3. Load products — use fetch-product-mobile for currency enrichment + bundled ratings
+      const productsUrl = `/api/customerprofile/fetch-product-mobile`;
       console.log("📞 Calling products endpoint:", productsUrl);
 
-      const productsResponse = await axiosClient.get(productsUrl);
+      const productsResponse = await axiosClient.get(productsUrl, {
+        params: { category: categoryId, limit: 100 },
+      });
       console.log("📦 Products response:", productsResponse.data);
 
       if (productsResponse.data.success) {
@@ -101,12 +103,12 @@ const CategoryDetailsScreen = () => {
       // Filter products by subcategory
       const filtered = allProducts.filter(
         (product) =>
-          product.subcategoryId === subId || product.subcategory === subId
+          product.subcategoryId === subId || product.subcategory === subId,
       );
       setProducts(filtered);
       console.log(
         `✅ Filtered products for subcategory ${subId}:`,
-        filtered.length
+        filtered.length,
       );
     }
   };
@@ -180,7 +182,11 @@ const CategoryDetailsScreen = () => {
 
           <View style={styles.priceRow}>
             <Text style={styles.price}>
-              {item.price ? `$${item.price.toFixed(2)}` : "Price on request"}
+              {item.price
+                ? typeof item.price === "object" && item.price.displayValue
+                  ? item.price.displayValue
+                  : `$${(parseFloat(item.price) || 0).toFixed(2)}`
+                : "Price on request"}
             </Text>
             {item.reviewCount > 0 && (
               <View style={styles.ratingContainer}>

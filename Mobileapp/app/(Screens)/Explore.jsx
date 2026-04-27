@@ -34,7 +34,6 @@ const Explore = () => {
   const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [ratings, setRatings] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [refreshing, setRefreshing] = useState(false);
   const [categories, setCategories] = useState([{ id: "all", name: "All" }]);
@@ -47,6 +46,8 @@ const Explore = () => {
 
   const spinValue = useRef(new Animated.Value(0)).current;
   const searchInputRef = useRef(null);
+  // Cursor for the fetch-product-mobile endpoint (cursor-based pagination)
+  const nextCursorRef = useRef(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -72,25 +73,28 @@ const Explore = () => {
         let freshProducts = [];
 
         if (categoryId === "all") {
-          // Fetch all products
+          // Use the mobile-optimised endpoint (bundles ratings + currency)
+          const params = { limit: 20 };
+          if (pageNum > 1 && nextCursorRef.current) {
+            params.cursor = nextCursorRef.current;
+          } else {
+            nextCursorRef.current = null; // reset on fresh load
+          }
           const response = await axiosClient.get(
-            `/api/customerprofile/fetch-product`,
-            {
-              params: {
-                category: "",
-                page: pageNum,
-                limit: 20,
-              },
-            }
+            `/api/customerprofile/fetch-product-mobile`,
+            { params },
           );
 
           if (response.data.success) {
             freshProducts = response.data.products || [];
+            nextCursorRef.current = response.data.nextCursor || null;
+            // Use server-reported hasMore for accuracy
+            setHasMore(response.data.hasMore ?? freshProducts.length === 20);
           }
         } else {
           // Fetch products by category ID (like the website does)
           const response = await axiosClient.get(
-            `/api/customerprofile/products/category/${categoryId}`
+            `/api/customerprofile/products/category/${categoryId}`,
           );
           // Handle different response formats
           freshProducts = Array.isArray(response.data)
@@ -102,7 +106,7 @@ const Explore = () => {
           "✅ Fetched",
           freshProducts.length,
           "products for category:",
-          categoryId
+          categoryId,
         );
 
         if (pageNum === 1) {
@@ -115,20 +119,10 @@ const Explore = () => {
           setProducts((prev) => [...prev, ...freshProducts]);
         }
 
-        // Disable pagination for specific categories (endpoint doesn't support it)
+        // Disable pagination for category-specific endpoint (no cursor support)
         if (categoryId !== "all") {
           setHasMore(false);
-        } else {
-          setHasMore(freshProducts.length === 20);
         }
-
-        const ratingsData = {};
-        freshProducts.forEach((product) => {
-          if (product.$id && product.reviewCount !== undefined) {
-            ratingsData[product.$id] = product.reviewCount;
-          }
-        });
-        setRatings((prev) => ({ ...prev, ...ratingsData }));
 
         setLastUpdated(new Date());
       } catch (error) {
@@ -139,7 +133,7 @@ const Explore = () => {
         setLoadingMore(false);
       }
     },
-    []
+    [],
   );
 
   // Fetch categories on mount
@@ -199,7 +193,7 @@ const Explore = () => {
       setProducts(allProducts);
     } else {
       const filtered = allProducts.filter((product) =>
-        product.productName.toLowerCase().includes(searchQuery.toLowerCase())
+        product.productName.toLowerCase().includes(searchQuery.toLowerCase()),
       );
       setProducts(filtered);
     }
@@ -217,7 +211,7 @@ const Explore = () => {
         fetchAllData(selectedCategory, true, 1);
       }
       return () => {};
-    }, [selectedCategory, lastUpdated, fetchAllData])
+    }, [selectedCategory, lastUpdated, fetchAllData]),
   );
 
   // Load more products
@@ -243,12 +237,10 @@ const Explore = () => {
         }
         price={item.price}
         title={
-          item.productName.length > 20
+          item.productName && item.productName.length > 20
             ? `${item.productName.slice(0, 20)}...`
             : item.productName
         }
-        totalRatings={ratings[item.$id] || 0}
-        rating={ratings[item.$id] || 0}
         onPress={() =>
           router.push({
             pathname: "/(Screens)/ProductDetails",
@@ -257,7 +249,7 @@ const Explore = () => {
         }
       />
     ),
-    [ratings, router]
+    [router],
   );
 
   const onRefresh = useCallback(async () => {
@@ -299,7 +291,7 @@ const Explore = () => {
         ))}
       </ScrollView>
     ),
-    [categories, selectedCategory]
+    [categories, selectedCategory],
   );
 
   return (

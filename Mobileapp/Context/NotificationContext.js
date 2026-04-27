@@ -1,10 +1,33 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useRouter } from "expo-router";
 import { getCurrentUser, getCustomerNotification } from "./GlobalProvider";
+import { usePushNotifications } from "../hooks/usePushNotifications";
 
 const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {
   const [notificationCount, setNotificationCount] = useState(0);
+
+  // Use try/catch so that if expo-router isn't ready it degrades gracefully
+  let routerInstance = null;
+  try {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    routerInstance = useRouter();
+  } catch (_) {}
+
+  const handleNotificationReceived = (notification) => {
+    // Increment badge count when a push arrives while app is open
+    setNotificationCount((prev) => prev + 1);
+  };
+
+  const handleNotificationResponse = (response) => {
+    // Navigate to notifications screen when user taps a notification
+    try {
+      routerInstance?.push?.("/(Screens)/MyNotificationsScreen");
+    } catch (_) {}
+  };
+
+  usePushNotifications(handleNotificationReceived, handleNotificationResponse);
 
   useEffect(() => {
     const init = async () => {
@@ -13,7 +36,7 @@ export const NotificationProvider = ({ children }) => {
         if (!user) {
           // User not logged in, skip notification initialization
           console.log(
-            "User not logged in, skipping notification initialization"
+            "User not logged in, skipping notification initialization",
           );
           return;
         }

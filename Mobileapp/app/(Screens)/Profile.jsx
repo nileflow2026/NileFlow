@@ -87,11 +87,11 @@ const ProfilePage = () => {
       console.warn("⚠️ No user ID found, skipping Nile Miles fetch.");
       return;
     }
-    
+
     try {
       /* console.log("📡 Fetching with userId:", user.id); */
       const res = await axiosClient.get(
-        `/api/nilemiles/nilemiles/status?userId=${user.id}`
+        `/api/nilemiles/nilemiles/status?userId=${user.id}`,
       );
       /* console.log("✅ Raw response:", res);
       console.log("📦 Data:", res.data); */
@@ -123,7 +123,7 @@ const ProfilePage = () => {
         setOrders([]);
         Alert.alert(
           "Error",
-          "Failed to load your orders. Please try again later."
+          "Failed to load your orders. Please try again later.",
         );
       } finally {
         setOrdersLoading(false);
@@ -141,7 +141,7 @@ const ProfilePage = () => {
       if (status !== "granted") {
         Alert.alert(
           "Permission required",
-          "Please allow photo library access."
+          "Please allow photo library access.",
         );
         return;
       }
@@ -183,7 +183,7 @@ const ProfilePage = () => {
       } catch (connectError) {
         console.error("❌ Server connectivity failed:", connectError);
         throw new Error(
-          "Cannot connect to server. Please check your network connection."
+          "Cannot connect to server. Please check your network connection.",
         );
       }
 
@@ -194,7 +194,7 @@ const ProfilePage = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
       );
 
       console.log("✅ Avatar upload successful:", res.data);
@@ -365,7 +365,7 @@ const ProfilePage = () => {
   const renderOverviewTab = () => (
     <View style={styles.tabContent}>
       {/* Nile Miles Card */}
-      <LinearGradient
+      {/* <LinearGradient
         colors={["rgba(17, 24, 39, 0.8)", "rgba(0, 0, 0, 0.8)"]}
         style={styles.card}
       >
@@ -456,7 +456,7 @@ const ProfilePage = () => {
             <ChevronRight size={20} color="white" />
           </LinearGradient>
         </TouchableOpacity>
-      </LinearGradient>
+      </LinearGradient> */}
 
       {/* Order History */}
       <LinearGradient
@@ -792,9 +792,9 @@ const ProfilePage = () => {
     </View>
   );
 
-  const renderMilesTab = () => (
+  /*   const renderMilesTab = () => (
     <View style={styles.tabContent}>
-      {/* Nile Miles Card */}
+       Nile Miles Card 
       <LinearGradient
         colors={["rgba(17, 24, 39, 0.8)", "rgba(0, 0, 0, 0.8)"]}
         style={styles.card}
@@ -888,7 +888,7 @@ const ProfilePage = () => {
         </TouchableOpacity>
       </LinearGradient>
 
-      {/* Miles History */}
+       Miles History 
       <LinearGradient
         colors={["rgba(17, 24, 39, 0.8)", "rgba(0, 0, 0, 0.8)"]}
         style={styles.card}
@@ -990,7 +990,7 @@ const ProfilePage = () => {
         </View>
       </LinearGradient>
     </View>
-  );
+  ); */
 
   const renderSettingsTab = () => (
     <View style={styles.tabContent}>
@@ -998,10 +998,7 @@ const ProfilePage = () => {
         colors={["rgba(17, 24, 39, 0.8)", "rgba(0, 0, 0, 0.8)"]}
         style={styles.card}
       >
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={{ marginBottom: 32 }}
-        >
+        <View style={{ marginBottom: 32 }}>
           <View style={{ marginTop: 40, paddingHorizontal: 16 }}>
             <Text
               style={{
@@ -1021,7 +1018,7 @@ const ProfilePage = () => {
               },
               {
                 title: "Payment Methods",
-                route: "/Payments",
+                route: "/PaymentMethods",
                 icon: require("../../assets/icons/payment.png"),
               },
               {
@@ -1204,7 +1201,7 @@ const ProfilePage = () => {
               </Text>
             </TouchableOpacity>
           </View>
-        </ScrollView>
+        </View>
       </LinearGradient>
     </View>
   );
@@ -1274,7 +1271,10 @@ const ProfilePage = () => {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.editProfileButton}>
+        <TouchableOpacity
+          style={styles.editProfileButton}
+          onPress={() => router.push("/EditProfile")}
+        >
           <LinearGradient
             colors={["rgba(17, 24, 39, 0.5)", "rgba(0, 0, 0, 0.5)"]}
             style={styles.editProfileGradient}
@@ -1311,7 +1311,7 @@ const ProfilePage = () => {
 
           <TouchableOpacity
             style={styles.quickActionItem}
-            onPress={() => router.push("/addresses")}
+            onPress={() => router.push("/PaymentMethods")}
           >
             <View style={styles.quickActionLeft}>
               <LinearGradient
@@ -1327,7 +1327,7 @@ const ProfilePage = () => {
 
           <TouchableOpacity
             style={styles.quickActionItem}
-            onPress={() => router.push("/help-center")}
+            onPress={() => router.push("/Security")}
           >
             <View style={styles.quickActionLeft}>
               <LinearGradient
@@ -1343,7 +1343,7 @@ const ProfilePage = () => {
 
           <TouchableOpacity
             style={styles.quickActionItem}
-            onPress={() => setActiveTab("settings")}
+            onPress={() => router.push("/AccountSettings")}
           >
             <View style={styles.quickActionLeft}>
               <LinearGradient
@@ -1436,7 +1436,12 @@ const ProfilePage = () => {
                   )}
                 </View>
                 <Text style={styles.userEmail}>{demoUser.email}</Text>
-                <Text style={styles.memberSince}>Member since 2023</Text>
+                <Text style={styles.memberSince}>
+                  Member since{" "}
+                  {isLogged && user?.createdAt
+                    ? new Date(user.createdAt).getFullYear()
+                    : new Date().getFullYear()}
+                </Text>
               </View>
             </View>
 
@@ -1487,7 +1492,7 @@ const ProfilePage = () => {
               isActive={activeTab === "orders"}
               onPress={() => setActiveTab("orders")}
             />
-            <TabButton
+            {/* <TabButton
               title="miles"
               isActive={activeTab === "miles"}
               onPress={() => setActiveTab("miles")}
@@ -1497,7 +1502,7 @@ const ProfilePage = () => {
               isActive={activeTab === "premium"}
               onPress={() => setActiveTab("premium")}
               icon={Crown}
-            />
+            /> */}
             <TabButton
               title="settings"
               isActive={activeTab === "settings"}
@@ -1523,7 +1528,7 @@ const ProfilePage = () => {
               <View style={styles.fullWidthColumn}>
                 {activeTab === "wishlist" && renderWishlistTab()}
                 {activeTab === "orders" && renderOrdersTab()}
-                {activeTab === "miles" && renderMilesTab()}
+                {/* {activeTab === "miles" && renderMilesTab()} */}
                 {activeTab === "premium" &&
                   (isPremium ? (
                     <PremiumMonthlySummary />

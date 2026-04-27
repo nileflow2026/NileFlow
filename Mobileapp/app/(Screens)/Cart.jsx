@@ -26,19 +26,36 @@ const Cart = () => {
   const { theme } = useTheme();
   const isDarkMode = theme === "dark";
 
-  // Cart calculations
+  // Resolve price from either enriched object or plain number
+  const resolvePrice = (price) => {
+    if (price && typeof price === "object")
+      return price.raw ?? price.convertedPrice ?? 0;
+    return price || 0;
+  };
+
+  const displayPrice = (price) => {
+    if (price && typeof price === "object" && price.displayValue)
+      return price.displayValue;
+    return `KES ${(price || 0).toFixed(2)}`;
+  };
+
+  // Cart calculations — use raw KES value for arithmetic
   const subtotal = cart.reduce(
-    (total, item) => total + (item.price || 0) * (item.quantity || 1),
-    0
+    (total, item) => total + resolvePrice(item.price) * (item.quantity || 1),
+    0,
   );
   const shipping = subtotal > 100 ? 0 : 15;
   const tax = subtotal * 0.08;
   const total = subtotal + shipping + tax;
 
-  const formattedSubtotal = `KES ${subtotal.toFixed(2)}`;
-  const formattedShipping = `KES ${shipping.toFixed(2)}`;
-  const formattedTax = `KES ${tax.toFixed(2)}`;
-  const formattedTotal = `KES ${total.toFixed(2)}`;
+  // Use the currency from the first cart item's enriched price (all same currency)
+  const activeCurrency = cart[0]?.price?.currency || "KES";
+  const fmt = (n) => `${activeCurrency} ${n.toFixed(2)}`;
+
+  const formattedSubtotal = fmt(subtotal);
+  const formattedShipping = fmt(shipping);
+  const formattedTax = fmt(tax);
+  const formattedTotal = fmt(total);
 
   const handleCheckout = () => {
     setIsLoading(true);
@@ -85,18 +102,20 @@ const Cart = () => {
               Premium Items
             </Text>
           </View>
-          <View style={[styles.summaryBox, { backgroundColor: "#1e3a2a" }]}>
-            <Text style={styles.summaryValue}>
-              {subtotal > 100 ? "FREE" : formattedShipping}
-            </Text>
-            <Text
-              style={styles.summaryLabel}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
-              Shipping
-            </Text>
-          </View>
+          {cart.length > 0 && (
+            <View style={[styles.summaryBox, { backgroundColor: "#1e3a2a" }]}>
+              <Text style={styles.summaryValue}>
+                {subtotal > 100 ? "FREE" : formattedShipping}
+              </Text>
+              <Text
+                style={styles.summaryLabel}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                Shipping
+              </Text>
+            </View>
+          )}
           <View style={[styles.summaryBox, { backgroundColor: "#1e293b" }]}>
             <Text style={styles.summaryValue}>100%</Text>
             <Text
@@ -160,10 +179,10 @@ const Cart = () => {
                       {item.productName}
                     </Text>
                     <Text style={styles.cartItemPrice}>
-                      KES {(item.price || 0).toFixed(2)}
+                      {displayPrice(item.price)}
                     </Text>
                     <Text style={styles.cartItemQuantity}>
-                      {item.quantity} × KES {(item.price || 0).toFixed(2)}
+                      {item.quantity} × {displayPrice(item.price)}
                     </Text>
                   </View>
                   <View style={styles.cartItemActions}>
@@ -171,7 +190,7 @@ const Cart = () => {
                       onPress={() =>
                         handleQuantityChange(
                           item.id || item.$id || item.productId,
-                          (item.quantity || 1) - 1
+                          (item.quantity || 1) - 1,
                         )
                       }
                       style={[
@@ -189,7 +208,7 @@ const Cart = () => {
                       onPress={() =>
                         handleQuantityChange(
                           item.id || item.$id || item.productId,
-                          (item.quantity || 1) + 1
+                          (item.quantity || 1) + 1,
                         )
                       }
                       style={styles.quantityButton}
@@ -209,7 +228,10 @@ const Cart = () => {
                 <View style={styles.cartItemTotalBox}>
                   <Text style={styles.cartItemTotalLabel}>Total:</Text>
                   <Text style={styles.cartItemTotalValue}>
-                    KES {((item.price || 0) * (item.quantity || 1)).toFixed(2)}
+                    {activeCurrency}{" "}
+                    {(resolvePrice(item.price) * (item.quantity || 1)).toFixed(
+                      2,
+                    )}
                   </Text>
                 </View>
               </View>

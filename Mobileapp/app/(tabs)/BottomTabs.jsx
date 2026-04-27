@@ -16,7 +16,10 @@ import Feed from "../(Screens)/Feed";
 import Home from "../(Screens)/Home";
 import CreatorMode from "../(Screens)/CreatorMode";
 import Profile from "../(Screens)/Profile";
+import MyNotificationsScreen from "../(Screens)/MyNotificationsScreen";
 import { icons } from "../../constants";
+import { useCart } from "../../Context/CartContext_NEW";
+import { useNotification } from "../../Context/NotificationContext";
 import { useTheme } from "../../Context/ThemeProvider";
 import i18n from "../../i18n";
 
@@ -145,6 +148,9 @@ const TabIcon = ({ focused, icon, title, theme, notificationCount = 0 }) => {
 
 const BottomTabs = () => {
   const { theme } = useTheme();
+  const { cart } = useCart();
+  const { notificationCount } = useNotification();
+  const cartCount = cart?.length ?? 0;
   const tabBarHeight = width < 350 ? 60 : 70;
   const isDark = theme === "dark";
 
@@ -254,6 +260,7 @@ const BottomTabs = () => {
                 focused={focused}
                 title={i18n.t("Cart")}
                 theme={theme}
+                notificationCount={cartCount}
               />
             ),
           }}
@@ -275,6 +282,23 @@ const BottomTabs = () => {
             ),
           }}
         /> */}
+
+        <BottomTab.Screen
+          name="Notifications"
+          component={MyNotificationsScreen}
+          options={{
+            title: "Notifications",
+            tabBarIcon: ({ focused }) => (
+              <TabIcon
+                icon={icons.notifications}
+                focused={focused}
+                title={i18n.t("Notifications")}
+                theme={theme}
+                notificationCount={notificationCount}
+              />
+            ),
+          }}
+        />
 
         <BottomTab.Screen
           name="Profile"

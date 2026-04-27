@@ -220,7 +220,9 @@ const SettingsPage = () => {
               Account Settings
             </span>
             <br />
-            <span className="text-[color:var(--nf-text-primary)]">Premium Control Panel</span>
+            <span className="text-[color:var(--nf-text-primary)]">
+              Premium Control Panel
+            </span>
           </h1>
 
           <p className="text-[color:var(--nf-text-secondary)] text-lg max-w-2xl mx-auto mb-10">
@@ -231,8 +233,12 @@ const SettingsPage = () => {
           {/* User Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
             <div className="bg-gradient-to-br from-amber-900/20 to-transparent backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-2xl p-4">
-              <div className="text-2xl font-bold text-[color:var(--nf-accent)]">Premium</div>
-              <div className="text-[color:var(--nf-text-muted)] text-sm">Account Tier</div>
+              <div className="text-2xl font-bold text-[color:var(--nf-accent)]">
+                Premium
+              </div>
+              <div className="text-[color:var(--nf-text-muted)] text-sm">
+                Account Tier
+              </div>
             </div>
             <div className="bg-gradient-to-br from-emerald-900/20 to-transparent backdrop-blur-sm border border-emerald-800/30 rounded-2xl p-4">
               <div className="text-2xl font-bold text-emerald-300">5</div>
@@ -260,11 +266,15 @@ const SettingsPage = () => {
                 <h2 className="text-2xl font-bold text-[color:var(--nf-accent)]">
                   Security & Preferences
                 </h2>
-                <p className="text-[color:var(--nf-text-muted)]">Premium account protection</p>
+                <p className="text-[color:var(--nf-text-muted)]">
+                  Premium account protection
+                </p>
               </div>
               <div className="flex items-center space-x-2">
                 <Award className="w-6 h-6 text-amber-400" />
-                <span className="text-[color:var(--nf-accent)] font-bold">Premium</span>
+                <span className="text-[color:var(--nf-accent)] font-bold">
+                  Premium
+                </span>
               </div>
             </div>
 
@@ -507,6 +517,34 @@ const SettingsPage = () => {
                 Customer Satisfaction
               </div>
             </div>
+          </div>
+
+          {/* Privacy & Account Deletion */}
+          <div className="mt-10 pt-10 border-t border-[var(--nf-border-subtle)]">
+            <h2 className="text-lg font-bold text-slate-400 mb-4 flex items-center gap-2">
+              <Shield className="w-5 h-5 text-red-500" />
+              Privacy & Data
+            </h2>
+            <Link
+              to="/account-deletion"
+              className="group flex items-center justify-between bg-red-950/20 hover:bg-red-950/40 border border-red-800/30 hover:border-red-700/50 rounded-2xl p-5 transition-all duration-300"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-700 to-red-900 flex items-center justify-center">
+                  <AlertCircle className="w-5 h-5 text-red-300" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-red-300 group-hover:text-red-200 transition-colors">
+                    Delete Account & All Data
+                  </h3>
+                  <p className="text-red-500/70 text-sm">
+                    Permanently remove your account — GDPR & Play Store
+                    compliant
+                  </p>
+                </div>
+              </div>
+              <ChevronRight className="w-5 h-5 text-red-500 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
         </div>
       </main>

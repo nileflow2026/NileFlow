@@ -10,17 +10,22 @@ const {
   fetchCustomerNotification,
   createNotification,
   markAllNotificationsAsRead,
+  registerPushToken,
 } = require("../controllers/UserControllers/Clientnotification");
 
 // Protected route
 router.get(
   "/customernotification",
   authenticateToken,
-  fetchCustomerNotification
+  fetchCustomerNotification,
 );
 router.post("/createnotification", authenticateToken, createNotification);
 
 router.post("/mark-read", authenticateToken, markAllNotificationsAsRead);
+
+// Register Expo push token so backend can send targeted push notifications
+router.post("/register-token", authenticateToken, registerPushToken);
+
 /* router.get('/admin', authenticateToken, fetchAdminNotifications);
 router.post('/clear',  authenticateToken, clearAllNotifications);
 router.post('/mark-as-read',  authenticateToken, markNotificationsAsRead) */

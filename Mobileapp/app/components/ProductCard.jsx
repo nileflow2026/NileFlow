@@ -43,6 +43,16 @@ const ProductCard = ({
   const { addToCart } = useCart();
 
   useEffect(() => {
+    // If the product already has bundled rating data (from fetch-product-mobile), use it directly
+    if (
+      productData.totalRatings !== undefined &&
+      productData.avgRating !== undefined
+    ) {
+      setTotalRatings(productData.totalRatings);
+      setAverageRating(productData.avgRating);
+      return;
+    }
+
     const fetchReviewCount = async () => {
       try {
         const reviewsData = await fetchReviews(String(productId));
@@ -57,7 +67,7 @@ const ProductCard = ({
 
         const totalRatingScore = reviewsData.reduce(
           (acc, review) => acc + (review.rating || 0),
-          0
+          0,
         );
         const avgRating =
           reviewsData.length > 0 ? totalRatingScore / reviewsData.length : 0;
@@ -70,7 +80,7 @@ const ProductCard = ({
     if (productId) {
       fetchReviewCount();
     }
-  }, [productId]);
+  }, [productId, productData.totalRatings, productData.avgRating]);
 
   useEffect(() => {
     const stock = productData.stock || 10;
@@ -223,16 +233,22 @@ const ProductCard = ({
           <View style={styles.priceSection}>
             <View style={styles.priceRow}>
               <Text style={styles.price}>
-                ${(price || productData.price).toFixed(2)}
+                {(() => {
+                  const raw = price ?? productData.price;
+                  if (raw && typeof raw === "object" && raw.displayValue) {
+                    return raw.displayValue;
+                  }
+                  return `$${(parseFloat(raw) || 0).toFixed(2)}`;
+                })()}
               </Text>
               {productData.originalPrice && (
                 <View style={styles.discountContainer}>
                   <Text style={styles.originalPrice}>
-                    ${productData.originalPrice.toFixed(2)}
+                    ${(parseFloat(productData.originalPrice) || 0).toFixed(2)}
                   </Text>
                   <Text style={styles.discountBadge}>
                     {Math.round(
-                      (1 - productData.price / productData.originalPrice) * 100
+                      (1 - productData.price / productData.originalPrice) * 100,
                     )}
                     % OFF
                   </Text>
@@ -279,7 +295,7 @@ const ProductCard = ({
             onPress={() =>
               addToCart(
                 { ...productData, $id: productId, id: productId },
-                user?.id
+                user?.id,
               )
             }
             activeOpacity={0.8}
