@@ -45,6 +45,44 @@ const Orders = () => {
     textSecondary: "#cbd5e1", // slate-300
   };
 
+  const CURRENCY_SYMBOLS = {
+    KES: "KSh",
+    UGX: "UGX",
+    TZS: "TSh",
+    ETB: "ETB",
+    NGN: "₦",
+    GHS: "GH₵",
+    RWF: "RWF",
+    SSP: "SSP",
+    USD: "$",
+    GBP: "£",
+    EUR: "€",
+  };
+  const CURRENCY_DECIMALS = {
+    KES: 0,
+    UGX: 0,
+    TZS: 0,
+    RWF: 0,
+    SSP: 0,
+    ETB: 2,
+    NGN: 2,
+    GHS: 2,
+    USD: 2,
+    GBP: 2,
+    EUR: 2,
+  };
+
+  const fmtOrderAmount = (amount, currency) => {
+    const code = (currency || "KES").toUpperCase();
+    const symbol = CURRENCY_SYMBOLS[code] || code;
+    const decimals = CURRENCY_DECIMALS[code] ?? 2;
+    const n = typeof amount === "number" ? amount : parseFloat(amount) || 0;
+    return `${symbol} ${n.toLocaleString("en", {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    })}`;
+  };
+
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
       case "delivered":
@@ -138,7 +176,7 @@ const Orders = () => {
       ? orders
       : orders.filter(
           (order) =>
-            order.status?.toLowerCase() === selectedStatus.toLowerCase()
+            order.status?.toLowerCase() === selectedStatus.toLowerCase(),
         );
 
   // Status counts for filter badges
@@ -184,11 +222,11 @@ const Orders = () => {
             // TODO: Implement order cancellation
             Alert.alert(
               "Order Cancelled",
-              "Your order has been cancelled successfully."
+              "Your order has been cancelled successfully.",
             );
           },
         },
-      ]
+      ],
     );
   };
 
@@ -437,7 +475,7 @@ const Orders = () => {
                                 </Text>
                                 <Text style={styles.orderDate}>
                                   {moment(order.createdAt).format(
-                                    "MMM D, YYYY"
+                                    "MMM D, YYYY",
                                   )}
                                 </Text>
                               </View>
@@ -492,7 +530,10 @@ const Orders = () => {
                                     Amount
                                   </Text>
                                   <Text style={styles.orderDetailValue}>
-                                    ${order.amount?.toFixed(2) || "0.00"}
+                                    {fmtOrderAmount(
+                                      order.amount,
+                                      order.currency,
+                                    )}
                                   </Text>
                                 </View>
                               </View>

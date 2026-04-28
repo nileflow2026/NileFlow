@@ -183,7 +183,8 @@ export default function MyNotificationsScreen() {
 
   const getNotificationIcon = (type, priority) => {
     if (priority === "high") return "priority-high";
-    if (type === "order") return "local-shipping";
+    if (type === "order" || type === "userNotification")
+      return "local-shipping";
     if (type === "promotion") return "local-offer";
     if (type === "message") return "message";
     return "notifications";
@@ -191,7 +192,8 @@ export default function MyNotificationsScreen() {
 
   const getNotificationColor = (type, priority) => {
     if (priority === "high") return ["#dc2626", "#991b1b"];
-    if (type === "order") return ["#d97706", "#92400e"];
+    if (type === "order" || type === "userNotification")
+      return ["#d97706", "#92400e"];
     if (type === "promotion") return ["#ca8a04", "#a16207"];
     if (type === "message") return ["#2563eb", "#1d4ed8"];
     return ["#059669", "#047857"];

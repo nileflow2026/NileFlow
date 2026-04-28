@@ -963,6 +963,29 @@ const updateCustomerProfile = async (req, res) => {
   }
 };
 
+module.exports = {
+  signupcustomer,
+  signincustomer,
+  handleRefreshToken,
+  logoutcustomer,
+  getCurrentCustomer,
+  getCustomerPreferences,
+  updateCustomerPreferences,
+  updateCustomerProfile,
+  // OAuth endpoints
+  getGoogleOAuthUrl,
+  googleOAuthCallback,
+  getFacebookOAuthUrl,
+  facebookOAuthCallback,
+  // Export helper functions for testing if needed
+  _internal: {
+    persistRefreshToken,
+    findRefreshTokenRecordByHash,
+    revokeRefreshTokenById,
+    revokeAllUserRefreshTokens,
+  },
+};
+
 /**
  * Generate Google OAuth authorization URL
  */
@@ -1525,7 +1548,6 @@ module.exports = {
   logoutcustomer,
   getCustomerPreferences,
   updateCustomerPreferences,
-  updateCustomerProfile,
   getGoogleOAuthUrl,
   googleOAuthCallback,
   getFacebookOAuthUrl,

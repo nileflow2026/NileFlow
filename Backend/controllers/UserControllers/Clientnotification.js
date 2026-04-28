@@ -232,11 +232,7 @@ const fetchCustomerNotification = async (req, res) => {
     const result = await db.listDocuments(
       process.env.APPWRITE_DATABASE_ID,
       process.env.APPWRITE_NOTIFICATIONS_COLLECTION_ID,
-      [
-        Query.equal("userId", userId),
-        Query.equal("type", "userNotification"),
-        Query.orderDesc("$createdAt"),
-      ],
+      [Query.equal("userId", userId), Query.orderDesc("$createdAt")],
     );
     /*  console.log('Fetched admin notifications:', result.documents); */
     res.status(200).json({ result: result.documents });

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -272,8 +273,8 @@ const Payments = () => {
 
       try {
         await createNotification({
-          message: `🛍️ New COD order #${result.orderId} placed by ${customerEmail} for $${validTotalAmount.toFixed(2)}.`,
-          type: "order",
+          message: `🛍️ New COD order #${result.orderId} placed by ${customerEmail} for ${orderCurrency} ${Math.round(validTotalAmount)}.`,
+          type: "userNotification",
           username: username,
           userId: userId,
           email: customerEmail,
@@ -432,8 +433,8 @@ const Payments = () => {
           // Create notification
           try {
             await createNotification({
-              message: `🛍️ New M-Pesa order #${orderId} completed successfully for KES ${totalAmount.toFixed(2)}.`,
-              type: "order",
+              message: `🛍️ New M-Pesa order #${orderId} completed successfully for ${orderCurrency} ${Math.round(totalAmount)}.`,
+              type: "userNotification",
               username: user?.username || user?.email,
               userId: user?.id || user?.$id,
               email: user?.email,
@@ -656,8 +657,8 @@ const Payments = () => {
         console.log("=== CREATING POST-PAYMENT NOTIFICATION ===");
         try {
           await createNotification({
-            message: `🛍️ New order #${result.orderId} placed by ${customerEmail} totaling ${currency} ${totalAmount.toFixed(2)}.`,
-            type: "order",
+            message: `🛍️ New order #${result.orderId} placed by ${customerEmail} totaling ${currency} ${Math.round(totalAmount)}.`,
+            type: "userNotification",
             username: username,
             userId,
             email: customerEmail,
