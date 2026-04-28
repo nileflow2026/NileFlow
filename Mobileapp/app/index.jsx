@@ -5,6 +5,7 @@ import { Image, InteractionManager, Text, View } from "react-native";
 import { useGlobalContext } from "../Context/GlobalProvider";
 import CustomButton from "./components/CusttomButton";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Index = () => {
   const router = useRouter();
@@ -24,7 +25,8 @@ const Index = () => {
   if (isLogged) {
     return null;
   } */
-
+  /* AsyncStorage.removeItem("nileflow_detected_currency"); */
+  /* AsyncStorage.clear(); */ // Clear AsyncStorage on app launch for testing purposes
   return (
     <LinearGradient
       colors={["#0f172a", "#1e293b", "#0f172a"]}

@@ -14,7 +14,7 @@ import {
   View,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import axiosClient from "../../api";
+import axiosClient, { setDetectedCurrency } from "../../api";
 import {
   getCurrentUser,
   updateCurrencyRates,
@@ -108,6 +108,12 @@ const Explore = () => {
           "products for category:",
           categoryId,
         );
+
+        // Lock in the currency the server used — more reliable than client geo-IP.
+        // This sets the x-currency header for all subsequent requests (cart, etc.)
+        if (freshProducts.length > 0 && freshProducts[0].price?.currency) {
+          setDetectedCurrency(freshProducts[0].price.currency);
+        }
 
         if (pageNum === 1) {
           setAllProducts(freshProducts);

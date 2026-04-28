@@ -2,10 +2,25 @@
 /* eslint-disable no-unused-vars */
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import Toast from "react-native-toast-message";
-import axiosClient from "../api";
+import axiosClient, { initCurrency, setDetectedCurrency } from "../api";
 import { fetchUserId, fetchUserName } from "./GlobalProvider";
+
+// Read the detected currency (set by initCurrency) — used as query param
+// on cart fetch calls so the correct enrichment is guaranteed regardless
+// of whether the default header has been applied yet.
+async function getActiveCurrency() {
+  const currency = await initCurrency();
+  return currency || "KES";
+}
 
 export const CartContext = createContext();
 
@@ -27,7 +42,7 @@ export const CartProvider = ({ children }) => {
     try {
       await AsyncStorage.setItem(
         `@wishlist_items_${userId}`,
-        JSON.stringify(items)
+        JSON.stringify(items),
       );
     } catch (error) {
       console.error("Error saving wishlist:", error);
@@ -43,7 +58,7 @@ export const CartProvider = ({ children }) => {
       }
 
       const storedWishlist = await AsyncStorage.getItem(
-        `@wishlist_items_${id}`
+        `@wishlist_items_${id}`,
       );
       if (storedWishlist) {
         setWishlist(JSON.parse(storedWishlist));
@@ -54,49 +69,26 @@ export const CartProvider = ({ children }) => {
   };
 
   const loadCartFromStorage = async () => {
+    // Cart is NOT stored in AsyncStorage — cached cart items have a baked-in
+    // currency (e.g. KES) that may differ from the user's current location.
+    // All cart data comes from the server via fetchCartItems (called by
+    // Cart.jsx's useFocusEffect) with the correct currency attached.
+    // Purge any stale key left over from before this change.
+    setCart([]);
     try {
       const id = await fetchUserId();
-      if (!id) {
-        setCart([]);
-        return;
-      }
-
-      const res = await axiosClient.get(`/cart/load/${id}`);
-
-      if (res.status === 200) {
-        setCart(res.data);
-
-        // Cache for offline support
-        await AsyncStorage.setItem(
-          `@cart_items_${id}`,
-          JSON.stringify(res.data)
-        );
-      } else {
-        setCart([]);
-      }
-    } catch (error) {
-      console.error("Error loading cart:", error);
-      // Try loading from AsyncStorage as fallback
-      try {
-        const id = await fetchUserId();
-        const localCart = await AsyncStorage.getItem(`@cart_items_${id}`);
-        if (localCart) {
-          setCart(JSON.parse(localCart));
-        } else {
-          setCart([]);
-        }
-      } catch (err) {
-        setCart([]);
-      }
-    }
+      if (id) await AsyncStorage.removeItem(`@cart_items_${id}`);
+    } catch (_) {}
   };
 
   const loadUserId = async () => {
     setLoadingUser(true); // Start loading
     try {
-      const id = await fetchUserId(); // Fetch the user ID
-      setUserId(id); // Set the user ID in your app's state
-      await loadCartFromStorage(); // Load the cart using the user ID
+      const id = await fetchUserId();
+      setUserId(id);
+      // Don't call loadCartFromStorage here — it already runs at mount.
+      // Calling it again here causes a race condition that can overwrite
+      // correctly-enriched cart state with stale data.
     } catch (error) {
       console.error("Error fetching user ID:", error);
     } finally {
@@ -106,6 +98,17 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = async (product, userId) => {
     try {
+      // Lock in the currency from the product's own enriched price IMMEDIATELY.
+      // This ensures that even if a stale in-flight fetchCartItems response
+      // arrives later, the correct currency is already re-asserted here.
+      if (
+        product.price &&
+        typeof product.price === "object" &&
+        product.price.currency
+      ) {
+        setDetectedCurrency(product.price.currency);
+      }
+
       console.log("Adding to cart:", {
         userId,
         productId: product.$id || product.id,
@@ -150,13 +153,34 @@ export const CartProvider = ({ children }) => {
 
       const data = res.data;
       if (data.success) {
-        setCart((prev) => [...prev, data.item]);
+        // OPTIMISTIC UPDATE: The product already has an enriched price object
+        // (e.g. { currency: "SSP", displayValue: "SSP 28,592", raw: 800 })
+        // set by the backend when Explore/ProductDetails fetched it.
+        // Use it directly so the Cart shows the correct currency immediately
+        // without waiting for a round-trip backend re-fetch.
+        const enrichedPrice =
+          product.price && typeof product.price === "object"
+            ? product.price
+            : data.item.price;
+
+        setCart((prev) => {
+          // If item already exists (duplicate add), don't add again
+          const alreadyIn = prev.some(
+            (i) => i.productId === productId || i.$id === data.item.$id,
+          );
+          if (alreadyIn) return prev;
+          return [...prev, { ...data.item, price: enrichedPrice }];
+        });
+
         Toast.show({
           type: "success",
           text1: "Added to Cart",
           visibilityTime: 2000,
           autoHide: true,
         });
+        // No background fetchCartItems here — the optimistic update already shows
+        // the correct enriched price. Cart.jsx's useFocusEffect will sync when
+        // the user navigates to the Cart tab.
       } else {
         Toast.show({
           type: "error",
@@ -185,16 +209,9 @@ export const CartProvider = ({ children }) => {
           (item) =>
             item.$id !== cartItemId &&
             item.id !== cartItemId &&
-            item.productId !== cartItemId
+            item.productId !== cartItemId,
         );
         setCart(updatedCart);
-
-        // Update AsyncStorage cache
-        const id = await fetchUserId();
-        await AsyncStorage.setItem(
-          `@cart_items_${id}`,
-          JSON.stringify(updatedCart)
-        );
 
         Toast.show({
           type: "info",
@@ -259,7 +276,7 @@ export const CartProvider = ({ children }) => {
         (item) =>
           item.id === cartItemId ||
           item.$id === cartItemId ||
-          item.productId === cartItemId
+          item.productId === cartItemId,
       );
 
       if (!cartItem) {
@@ -282,15 +299,9 @@ export const CartProvider = ({ children }) => {
           item.$id === cartItemId ||
           item.productId === cartItemId
             ? { ...item, quantity: updated.quantity }
-            : item
+            : item,
         );
         setCart(updatedCart);
-
-        // Update AsyncStorage cache
-        await AsyncStorage.setItem(
-          `@cart_items_${id}`,
-          JSON.stringify(updatedCart)
-        );
 
         Toast.show({
           type: "success",
@@ -310,7 +321,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const fetchCartItems = async () => {
+  const fetchCartItems = useCallback(async () => {
     try {
       const id = await fetchUserId();
       if (!id) {
@@ -319,37 +330,36 @@ export const CartProvider = ({ children }) => {
         return;
       }
 
-      const res = await axiosClient.get(`/cart/fetch/${id}`);
+      // Use the globally detected currency (set by setDetectedCurrency in Explore).
+      // By the time the user reaches the Cart tab, Explore has already called
+      // setDetectedCurrency("SSP"), so initCurrency() returns "SSP" instantly.
+      // Do NOT read from cart items — old AsyncStorage items at index 0 may have
+      // a stale "KES" currency that would cause the wrong enrichment.
+      const currency = await getActiveCurrency();
+
+      const res = await axiosClient.get(`/cart/fetch/${id}`, {
+        params: { currency },
+      });
 
       if (res.status === 200) {
         setCart(res.data);
-
-        // Update AsyncStorage cache
-        await AsyncStorage.setItem(
-          `@cart_items_${id}`,
-          JSON.stringify(res.data)
-        );
+        // Do NOT call setDetectedCurrency here — a stale KES response from an
+        // in-flight request that started before Explore set "SSP" would override
+        // the correct currency. Currency is set by Explore and addToCart only.
       } else {
         setCart([]);
       }
     } catch (error) {
       console.error("Error fetching cart:", error);
-      // Try loading from AsyncStorage as fallback
-      try {
-        const id = await fetchUserId();
-        const localCart = await AsyncStorage.getItem(`@cart_items_${id}`);
-        if (localCart) {
-          setCart(JSON.parse(localCart));
-        } else {
-          setCart([]);
-        }
-      } catch (err) {
-        setCart([]);
-      }
+      // On failure, keep whatever cart state is already in memory.
+      // Do NOT fall back to AsyncStorage here — it may contain stale
+      // KES-enriched items that would overwrite a correct SSP optimistic
+      // update. AsyncStorage fallback is handled by loadCartFromStorage
+      // (initial load only).
     } finally {
       setLoadingCart(false);
     }
-  };
+  }, []); // stable reference — currency comes from initCurrency() singleton, not closure
 
   // Validate cart stock before checkout
   const validateCartStock = async () => {
@@ -420,7 +430,7 @@ export const CartProvider = ({ children }) => {
       validateCartStock,
       wishlist,
     }),
-    [cart, wishlist]
+    [cart, wishlist],
   );
 
   return (

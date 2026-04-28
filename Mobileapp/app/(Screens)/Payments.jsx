@@ -120,13 +120,23 @@ const Payments = () => {
 
   useEffect(() => {
     if (cart.length > 0) {
-      // 🟢 Get the currency from the first item in the cart
-      const cartCurrency = cart[0].currency;
+      // price is an enriched object { currency, convertedPrice, raw, displayValue }
+      const cartCurrency = cart[0].price?.currency || "KES";
       setCurrency(cartCurrency);
     }
 
+    // Resolve numeric value from enriched price object or plain number
+    const resolvePrice = (price) => {
+      if (price && typeof price === "object")
+        return price.convertedPrice ?? price.raw ?? 0;
+      return typeof price === "number" ? price : parseFloat(price) || 0;
+    };
+
     setTotalAmount(
-      cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+      cart.reduce(
+        (sum, item) => sum + resolvePrice(item.price) * (item.quantity || 1),
+        0,
+      ),
     );
   }, [cart]);
 

@@ -14,6 +14,7 @@ import Toast from "react-native-toast-message";
 import { STRIPE_PUBLISH_KEY } from "../config/config";
 import { CartProvider } from "../Context/CartContext_NEW";
 import { FavoritesProvider } from "../Context/FavoritesContext";
+import { initCurrency } from "../api";
 import { SocialProvider } from "../Context/SocialContext";
 import ErrorBoundary from "./components/ErrorBoundary";
 import "../global.css";
@@ -24,6 +25,10 @@ function AppContent() {
   const router = useRouter();
 
   useEffect(() => {
+    // Kick off currency detection immediately so it resolves before any
+    // screen (Cart, Explore) tries to fetch data. initCurrency() is a
+    // singleton — subsequent calls from screens return the same promise.
+    initCurrency();
     SplashScreen.hideAsync();
   }, []);
 

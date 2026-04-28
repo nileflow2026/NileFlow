@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useFocusEffect, useRouter } from "expo-router";
+import { useCallback, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
@@ -19,24 +19,48 @@ import { useTheme } from "../../Context/ThemeProvider";
 const { width } = Dimensions.get("window");
 
 const Cart = () => {
-  const { cart, removeFromCart, updateQuantity } = useCart();
+  const { cart, removeFromCart, updateQuantity, fetchCartItems } = useCart();
 
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  // Mirror cart into a ref so useFocusEffect can read the current length
+  // without adding `cart` to its deps (which would re-run the effect on
+  // every cart state change while the tab is focused).
+  const cartRef = useRef(cart);
+  cartRef.current = cart;
+
+  // Refresh cart with correct currency each time the tab is focused —
+  // BUT only when the cart is empty. If items already exist (e.g. from
+  // an addToCart optimistic update with SSP prices), do NOT re-fetch.
+  // A re-fetch risks sending ?currency=KES (if the singleton hasn't
+  // resolved to SSP yet) and overwriting the correct SSP display data.
   const { theme } = useTheme();
   const isDarkMode = theme === "dark";
 
-  // Resolve price from either enriched object or plain number
+  useFocusEffect(
+    useCallback(() => {
+      if (cartRef.current.length === 0) {
+        fetchCartItems();
+      }
+    }, [fetchCartItems]),
+  );
+
+  // Resolve price from either enriched object or plain number.
+  // Prefer convertedPrice (already in the user's local currency, e.g. SSP)
+  // over raw (base KES integer). raw is only a fallback for un-enriched items.
   const resolvePrice = (price) => {
     if (price && typeof price === "object")
-      return price.raw ?? price.convertedPrice ?? 0;
+      return price.convertedPrice ?? price.raw ?? 0;
     return price || 0;
   };
 
   const displayPrice = (price) => {
     if (price && typeof price === "object" && price.displayValue)
       return price.displayValue;
-    return `KES ${(price || 0).toFixed(2)}`;
+    // Fallback for un-enriched plain numbers — still use symbol not ISO code
+    const n = typeof price === "number" ? price : parseFloat(price) || 0;
+    return `KSh ${n.toLocaleString("en", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
   };
 
   // Cart calculations — use raw KES value for arithmetic
@@ -48,9 +72,43 @@ const Cart = () => {
   const tax = subtotal * 0.08;
   const total = subtotal + shipping + tax;
 
+  // Currency symbol map — mirrors backend CURRENCY_META
+  const CURRENCY_SYMBOLS = {
+    KES: "KSh",
+    UGX: "UGX",
+    TZS: "TSh",
+    ETB: "ETB",
+    NGN: "₦",
+    GHS: "GH₵",
+    RWF: "RWF",
+    SSP: "SSP",
+    USD: "$",
+    GBP: "£",
+    EUR: "€",
+  };
+  const CURRENCY_DECIMALS = {
+    KES: 0,
+    UGX: 0,
+    TZS: 0,
+    RWF: 0,
+    SSP: 0,
+    ETB: 2,
+    NGN: 2,
+    GHS: 2,
+    USD: 2,
+    GBP: 2,
+    EUR: 2,
+  };
+
   // Use the currency from the first cart item's enriched price (all same currency)
   const activeCurrency = cart[0]?.price?.currency || "KES";
-  const fmt = (n) => `${activeCurrency} ${n.toFixed(2)}`;
+  const currencySymbol = CURRENCY_SYMBOLS[activeCurrency] || activeCurrency;
+  const currencyDecimals = CURRENCY_DECIMALS[activeCurrency] ?? 2;
+  const fmt = (n) =>
+    `${currencySymbol} ${n.toLocaleString("en", {
+      minimumFractionDigits: currencyDecimals,
+      maximumFractionDigits: currencyDecimals,
+    })}`;
 
   const formattedSubtotal = fmt(subtotal);
   const formattedShipping = fmt(shipping);
@@ -228,10 +286,7 @@ const Cart = () => {
                 <View style={styles.cartItemTotalBox}>
                   <Text style={styles.cartItemTotalLabel}>Total:</Text>
                   <Text style={styles.cartItemTotalValue}>
-                    {activeCurrency}{" "}
-                    {(resolvePrice(item.price) * (item.quantity || 1)).toFixed(
-                      2,
-                    )}
+                    {fmt(resolvePrice(item.price) * (item.quantity || 1))}
                   </Text>
                 </View>
               </View>

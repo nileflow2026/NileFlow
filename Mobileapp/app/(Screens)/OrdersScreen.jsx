@@ -27,13 +27,67 @@ const OrdersScreen = () => {
 
   const items = itemsString ? JSON.parse(itemsString) : [];
 
+  // ── Currency helpers ──────────────────────────────────────────────
+  // Derive currency from the first item's enriched price object.
+  // Falls back to KES if items are un-enriched plain numbers.
+  const CURRENCY_SYMBOLS = {
+    KES: "KSh",
+    UGX: "UGX",
+    TZS: "TSh",
+    ETB: "ETB",
+    NGN: "₦",
+    GHS: "GH₵",
+    RWF: "RWF",
+    SSP: "SSP",
+    USD: "$",
+    GBP: "£",
+    EUR: "€",
+  };
+  const CURRENCY_DECIMALS = {
+    KES: 0,
+    UGX: 0,
+    TZS: 0,
+    RWF: 0,
+    SSP: 0,
+    ETB: 2,
+    NGN: 2,
+    GHS: 2,
+    USD: 2,
+    GBP: 2,
+    EUR: 2,
+  };
+
+  const activeCurrency = items[0]?.price?.currency || "KES";
+  const currencySymbol = CURRENCY_SYMBOLS[activeCurrency] || activeCurrency;
+  const currencyDecimals = CURRENCY_DECIMALS[activeCurrency] ?? 2;
+
+  // Resolve numeric value from enriched price object or plain number
+  const resolvePrice = (price) => {
+    if (price && typeof price === "object")
+      return price.convertedPrice ?? price.raw ?? 0;
+    return typeof price === "number" ? price : parseFloat(price) || 0;
+  };
+
+  // Format a plain number in the detected currency
+  const fmt = (n) => {
+    const num = typeof n === "number" ? n : parseFloat(n) || 0;
+    return `${currencySymbol} ${num.toLocaleString("en", {
+      minimumFractionDigits: currencyDecimals,
+      maximumFractionDigits: currencyDecimals,
+    })}`;
+  };
+
+  // Display an item's price — prefer the server's displayValue if present
+  const displayItemPrice = (price) => {
+    if (price && typeof price === "object" && price.displayValue)
+      return price.displayValue;
+    return fmt(resolvePrice(price));
+  };
+
+  // Format summary/total amounts that arrive as plain numbers
   const formatCurrency = (amount) => {
-    if (!amount) return "KSh 0.00";
-    const numAmount = typeof amount === "string" ? parseFloat(amount) : amount;
-    return new Intl.NumberFormat("en-KE", {
-      style: "currency",
-      currency: "KES",
-    }).format(numAmount || 0);
+    if (!amount) return `${currencySymbol} 0`;
+    return fmt(typeof amount === "string" ? parseFloat(amount) : amount);
   };
 
   // Debug log - Enhanced
@@ -131,11 +185,11 @@ const OrdersScreen = () => {
                     {item.productName || item.name || "Product"}
                   </Text>
                   <Text style={styles.itemPrice}>
-                    {formatCurrency(item.price)} x {item.quantity || 1}
+                    {displayItemPrice(item.price)} x {item.quantity || 1}
                   </Text>
                 </View>
                 <Text style={styles.itemTotal}>
-                  {formatCurrency((item.price || 0) * (item.quantity || 1))}
+                  {fmt(resolvePrice(item.price) * (item.quantity || 1))}
                 </Text>
               </View>
             ))

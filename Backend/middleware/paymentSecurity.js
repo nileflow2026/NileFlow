@@ -61,32 +61,46 @@ const paymentSecurity = {
         req.serverComputedSubtotal = subtotal;
         req.verifiedCartItems = verifiedItems;
 
-        // The payment amount must be >= subtotal (it can be higher due to shipping/fees)
-        // but it must NOT be lower than the subtotal (that would mean the user is underpaying)
-        if (paymentAmount < subtotal - 1) {
-          // 1 KES tolerance for rounding
-          logger.warn(
-            `Payment amount ${paymentAmount} is less than server-computed subtotal ${subtotal}`,
-            { userId: req.user?.userId },
-          );
-          return res.status(400).json({
-            error: "Payment amount is less than cart value",
-            code: "AMOUNT_TOO_LOW",
-          });
+        // The payment amount must be >= subtotal (underpayment check).
+        // Only applies when the client currency matches KES — for foreign
+        // currencies the client amount is a converted value that is not
+        // comparable to the KES subtotal. The controller re-validates from DB.
+        if ((req.body.currency || "KES").toUpperCase() === "KES") {
+          if (paymentAmount < subtotal - 1) {
+            // 1 KES tolerance for rounding
+            logger.warn(
+              `Payment amount ${paymentAmount} is less than server-computed subtotal ${subtotal}`,
+              { userId: req.user?.userId },
+            );
+            return res.status(400).json({
+              error: "Payment amount is less than cart value",
+              code: "AMOUNT_TOO_LOW",
+            });
+          }
         }
 
-        // Reject if the overpayment is suspiciously large (> 50% above subtotal)
-        // This catches inflated discount/fee manipulation
-        const maxReasonableTotal = subtotal * 1.5 + 500; // 50% margin + 500 KES for fees
-        if (paymentAmount > maxReasonableTotal && subtotal > 0) {
-          logger.warn(
-            `Suspiciously high payment: ${paymentAmount} vs subtotal ${subtotal}`,
-            { userId: req.user?.userId },
-          );
-          return res.status(400).json({
-            error: "Payment amount is unreasonably high for the cart contents",
-            code: "AMOUNT_SUSPICIOUS",
-          });
+        // Reject if the overpayment is suspiciously large (> 50% above subtotal).
+        // IMPORTANT: Only apply this check when the client currency matches KES
+        // (the currency used by computeCartSubtotal / the Appwrite DB).
+        // For non-KES currencies (e.g. SSP, UGX) the client sends a converted
+        // amount that is legitimately much larger than the KES subtotal, so the
+        // comparison is meaningless. The controller already re-computes the
+        // authoritative KES total from DB prices (zero-trust), so skipping this
+        // check for foreign currencies does not reduce security.
+        const requestCurrency = (req.body.currency || "KES").toUpperCase();
+        if (requestCurrency === "KES") {
+          const maxReasonableTotal = subtotal * 1.5 + 500; // 50% margin + 500 KES for fees
+          if (paymentAmount > maxReasonableTotal && subtotal > 0) {
+            logger.warn(
+              `Suspiciously high payment: ${paymentAmount} vs subtotal ${subtotal}`,
+              { userId: req.user?.userId },
+            );
+            return res.status(400).json({
+              error:
+                "Payment amount is unreasonably high for the cart contents",
+              code: "AMOUNT_SUSPICIOUS",
+            });
+          }
         }
       }
 
