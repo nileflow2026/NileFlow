@@ -37,7 +37,7 @@
       "favicon": "./assets/images/favicon.png"
     },
     "notification": {
-      "icon": "./assets/images/notification.png",
+      "icon": "./assets/images/newlogo.png",
       "color": "#F59E0B",
       "androidMode": "default",
       "androidCollapsedTitle": "#{unread_notifications} new notifications"
@@ -47,7 +47,7 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/images/notification.png",
+          "icon": "./assets/images/newlogo.png",
           "color": "#F59E0B",
           "defaultChannel": "default",
           "sounds": []
