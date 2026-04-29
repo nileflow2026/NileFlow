@@ -67,26 +67,6 @@ const COUNTRY_CURRENCY = {
   FR: "EUR",
 };
 
-// Country → currency map for client-side IP geo fallback
-const COUNTRY_CURRENCY = {
-  KE: "KES",
-  UG: "UGX",
-  TZ: "TZS",
-  ET: "ETB",
-  NG: "NGN",
-  GH: "GHS",
-  RW: "RWF",
-  SS: "SSP",
-  ZM: "ZMW",
-  MZ: "MZN",
-  BW: "BWP",
-  ZA: "ZAR",
-  US: "USD",
-  GB: "GBP",
-  DE: "EUR",
-  FR: "EUR",
-};
-
 // Hardcoded fallback rates (KES base)
 const FALLBACK_RATES = {
   KES: 1,

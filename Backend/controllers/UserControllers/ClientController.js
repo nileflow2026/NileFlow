@@ -121,10 +121,10 @@ const updateCurrencyRates = async (req, res) => {
     }
 
     console.log("✅ Currency rates updated successfully");
-    return { success: true, updated: Object.keys(data.rates).length };
+    return res.json({ success: true, updated: Object.keys(data.rates).length });
   } catch (err) {
     console.error("❌ Error updating currency rates:", err.message);
-    return { success: false, error: err.message };
+    return res.status(500).json({ success: false, error: err.message });
   }
 };
 
