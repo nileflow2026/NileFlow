@@ -304,6 +304,20 @@ const ROUTE_SEO = [
     canonicalPath: "/language",
     noindex: true,
   },
+  {
+    pattern: "/report-issue",
+    title: "Report a Problem | Nile Flow Africa",
+    description: "Report an issue with your Nile Flow Africa account or order.",
+    canonicalPath: "/report-issue",
+    noindex: true,
+  },
+  {
+    pattern: "/account-deletion",
+    title: "Account Deletion | Nile Flow Africa",
+    description: "Request deletion of your Nile Flow Africa account.",
+    canonicalPath: "/account-deletion",
+    noindex: true,
+  },
 ];
 
 const buildAbsoluteUrl = (path = "/") => {

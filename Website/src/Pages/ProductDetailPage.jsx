@@ -92,7 +92,9 @@ const StarRating = ({
               {/* Star Icon */}
               <svg
                 className={`relative ${sizes[size]} ${
-                  isFilled ? "text-yellow-300 fill-current" : "text-[color:var(--nf-text-muted)]"
+                  isFilled
+                    ? "text-yellow-300 fill-current"
+                    : "text-[color:var(--nf-text-muted)]"
                 }`}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
@@ -390,6 +392,7 @@ const ProductDetailPage = () => {
           title="Loading Product | Nile Flow Africa"
           description="Loading product details on Nile Flow Africa."
           canonicalPath={`/products/${id}`}
+          noindex={true}
           type="product"
         />
         <Header />
@@ -418,7 +421,7 @@ const ProductDetailPage = () => {
         <SeoHead
           title="Product Not Found | Nile Flow Africa"
           description="The requested product could not be found on Nile Flow Africa."
-          canonicalPath={`/products/${id}`}
+          canonicalPath="/shop"
           noindex={true}
           type="product"
         />
@@ -819,7 +822,10 @@ const ProductDetailPage = () => {
               Home
             </Link>
             <ChevronRight className="w-4 h-4 text-amber-500/50" />
-            <Link to="/categories" className="hover:text-[color:var(--nf-accent)]">
+            <Link
+              to="/categories"
+              className="hover:text-[color:var(--nf-accent)]"
+            >
               Categories
             </Link>
             <ChevronRight className="w-4 h-4 text-amber-500/50" />
@@ -1009,7 +1015,9 @@ const ProductDetailPage = () => {
 
               {/* Quantity Selector */}
               <div className="space-y-4">
-                <label className="text-[color:var(--nf-accent)] font-medium">Quantity</label>
+                <label className="text-[color:var(--nf-accent)] font-medium">
+                  Quantity
+                </label>
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center bg-[var(--nf-bg-elevated)] backdrop-blur-sm border border-[var(--nf-border-subtle)] rounded-xl overflow-hidden">
                     <button

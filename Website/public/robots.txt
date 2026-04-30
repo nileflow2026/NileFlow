@@ -21,9 +21,12 @@ Disallow: /currency
 Disallow: /cancel-order
 Disallow: /track-order
 Disallow: /language
+Disallow: /search
 Disallow: /apply/
 Disallow: /group/
 Disallow: /admin
+Disallow: /report-issue
+Disallow: /account-deletion
 Allow: /
 
 # Allow external resources for SEO

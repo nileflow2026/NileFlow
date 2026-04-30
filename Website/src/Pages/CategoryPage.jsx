@@ -292,16 +292,18 @@ const CategoryPage = () => {
     return <Navigate to="/shop" replace />;
   }
 
+  const isEmpty = !loading && products.length === 0;
+
   return (
     <div className="min-h-screen bg-[var(--nf-bg-primary)] text-[color:var(--nf-text-primary)]">
       <SeoHead
         title={`${categoryDetails?.name || "Category"} Products | Nile Flow Africa`}
         description={`Shop ${categoryDetails?.name || "category"} products with authentic African quality on Nile Flow Africa.`}
-        canonicalPath={canonicalPath}
-        prevPagePath={prevPagePath}
-        nextPagePath={nextPagePath}
-        noindex={hasFacetedFilters || (!loading && products.length === 0)}
-        structuredData={categorySchema}
+        canonicalPath={isEmpty ? "/categories" : canonicalPath}
+        prevPagePath={isEmpty ? null : prevPagePath}
+        nextPagePath={isEmpty ? null : nextPagePath}
+        noindex={hasFacetedFilters || isEmpty}
+        structuredData={isEmpty ? null : categorySchema}
       />
       <Header />
 
@@ -407,7 +409,9 @@ const CategoryPage = () => {
                 >
                   <Grid
                     className={`w-4 h-4 sm:w-5 sm:h-5 ${
-                      viewMode === "grid" ? "text-amber-400" : "text-[color:var(--nf-text-muted)]"
+                      viewMode === "grid"
+                        ? "text-amber-400"
+                        : "text-[color:var(--nf-text-muted)]"
                     }`}
                   />
                 </button>
@@ -419,7 +423,9 @@ const CategoryPage = () => {
                 >
                   <List
                     className={`w-4 h-4 sm:w-5 sm:h-5 ${
-                      viewMode === "list" ? "text-amber-400" : "text-[color:var(--nf-text-muted)]"
+                      viewMode === "list"
+                        ? "text-amber-400"
+                        : "text-[color:var(--nf-text-muted)]"
                     }`}
                   />
                 </button>
